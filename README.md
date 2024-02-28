@@ -1,4 +1,4 @@
-# CS4416_Group_Project
+# CS4116_Group_Project
 
 ## This is a porject for the module CS4116 -> Software Development Project
 | Names               |  Student ID's  | 
