@@ -8,4 +8,4 @@
 | **Adam Collins**    | `21332967`     |  
 | **Caoimhe Cahill**  | `21331308`     |
 
-UL Thrift is a second hand clothing store for UL Student looking to reduce their carbon footprint.
+UL Singles is an onine dating application tailored specifically for students in the University of Limerick.
