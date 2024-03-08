@@ -19,4 +19,4 @@ jobs:
           server: ftpupload.net
           username: if0_36038205
           password: cs41162024
-          local-dir: ./src
+          local-dir: ./
