@@ -8,6 +8,4 @@
 | **Adam Collins**    | `21332967`     |  
 | **Caoimhe Cahill**  | `21331308`     |
 
-UL Singles is an onine dating application tailored specifically for students in the University of Limerick.
-
-
+UL Singles is an online dating application tailored specifically for students in the University of Limerick.
