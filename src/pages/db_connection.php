@@ -1,6 +1,7 @@
 <?php
 
-used for connecting to the database on server
+
+//used for connecting to the database on server
 $sname= "sql313.infinityfree.com";
 $unmae= "if0_36038205";
 $password = "cs41162024";

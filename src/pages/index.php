@@ -8,6 +8,7 @@
     <link rel=""stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
+    <!-- login form -->
     <form action="login.php" method="post">
         <h2>LOGIN</h2>
         <?php if (isset($_GET['error'])) { ?>
