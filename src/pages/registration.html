@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Registration</title>
+</head>
+<body>
+
+    <h2>Test Registration Form</h2>
+
+    <form action="registration.php" method="post">
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+
+        <label for="password-repeat">Confirm Password:</label>
+        <input type="password" name="password-repeat" required>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" required>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" required>
+
+        <input type="checkbox" name="agreed" required>
+        <label for="agreed">I agree to the terms and conditions</label>
+
+        <input type="hidden" name="submitted" value="1">
+
+        <button type="submit">Register</button>
+    </form>
+
+</body>
+</html>

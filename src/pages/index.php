@@ -19,6 +19,10 @@
         <input type="password" name="password" placeholder="Password"><br>
 
         <button type="submit">Login</button>
+
+
+         <!-- Link to Registration page via button -->
+        <p>Don't have an account? <a href="registration.php">Register here</a></p>
     </form>
 </body>
 </html>
