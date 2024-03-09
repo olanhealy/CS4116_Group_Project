@@ -20,3 +20,4 @@ jobs:
           username: if0_36038205
           password: cs41162024
           local-dir: ./
+          remote-dir: htdocs  
