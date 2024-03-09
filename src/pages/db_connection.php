@@ -16,7 +16,7 @@ $db_name = "if0_36038205_ulsingles";
 //connect to the database
 $conn = mysqli_connect($sname, $unmae, $password, $db_name);
 
-//error check
+
 if (!$conn) {
     $error_message = "Connection failed: " . mysqli_connect_error();
     error_log($error_message, 3, "error.log");
