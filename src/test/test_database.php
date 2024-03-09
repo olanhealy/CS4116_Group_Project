@@ -1,5 +1,5 @@
 <?php
-// Include the database connection file
+
 include "../pages/db_connection.php";
 
 // Define your SQL query
