@@ -31,7 +31,7 @@
     }
 
     //sql query
-    $sql = "SELECT * FROM Account WHERE email='$email' AND password_hash='$pass'";
+    $sql = "SELECT * FROM Account WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
 
     //check if user exists
@@ -39,7 +39,7 @@
         $row = mysqli_fetch_assoc($result);
 
         //if user exists, log them in
-        if ($row['email'] === $email && $row['password_hash'] === $pass) {
+        if ($row ['email'] == $email && password_verify($pass, $row['password_hash'])) {
             echo "Logged in!";
 
             $_SESSION['email'] = $row['email'];

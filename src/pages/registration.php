@@ -76,11 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert_new_account->execute();
 
             if ($insert_new_account->affected_rows > 0) {
-                // Registration successful
-                //echo "Registration successful!\n";
-                //echo "Email: $email\n";
-                //echo "First Name: $first_name\n";
-                //echo "Last Name: $last_name\n";
+                session_start();
+                $_SESSION['email'] = $email;
+                $_SESSION['id'] = $insert_new_account->insert_id; 
                 header("Location: home.php");
             } else {
                 echo "<script>alert('Error occurred during registration')</script>";
