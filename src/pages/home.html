@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -18,31 +18,36 @@
 </head>
 <body>
 
-    <header class="header p-3 position-absolute start-0 top-0 end-0" style="background-color: beige;"> <!-- beige for now to see header clearly-->
-        <div class="d-flex justify-content-between align-items-center">
-            <img src="../assets/images/UL_logo.jpg" alt="UL Image" style="width:150px;height:100px;">
-            <img src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image" style="width:150px;height:100px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand navbarNav ms-start" href="#">
+            <img class="ullogo" src="../assets/images/UL_logo.jpg" alt="UL Image" style="width:100px;height:100px;">
+            <img class="logo" src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image" style="width:150px;height:100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
 
-            <nav class="navbar navbar-light bg-light">
-                <form class="form-inline">
-                  <button class="btn btn-outline-success" type="button">Explore</button>
-                  <button class="btn btn-outline-success" type="button">Log Out</button>
-                </form>
-            </nav>
+            <form class="btn-group navbarNav ms-auto">
+                <button class="btn btn-outline-success" style="color: white; background-color: green;" type="button">Explore</button>
+                <button class="btn btn-outline-success" style="color: green; background-color: white;" type="button">Log Out</button>
+            </form>
 
-            <div>
-                <button class="navbar-toggler text-green">
-                    <!-- Profile Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                      </svg>
-                </button>
-            </div>
+            <button class="btn text-green navbarNav ms-end" type="button" style="color: green;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>
+            </button>
+
+            
+
         </div>
-
-    </header>
-
+        
+      </nav>
+    
+    
      <!-- WIP
     <nav>
         <ul>
@@ -65,5 +70,13 @@
     </main>
 
     --> 
+
+    <footer class="py-4 mt-5" style="background-color: bisque;">
+     <div class="container text-bisque text-center">
+        <p class="mb-1"></p>
+
+     </div>
+    </footer>
+
 </body>
 </html>
