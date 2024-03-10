@@ -55,7 +55,7 @@
             header("Location: index.php?error=Incorect User name or password");
             exit();
         }
-    
+    //if there is an error, return to login page
 }else{
     header("Location: index.php");
     exit();
