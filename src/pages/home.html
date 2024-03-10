@@ -17,7 +17,33 @@
 
 </head>
 <body>
-    <h1>Home Page</h1>
+
+    <header class="header p-3 position-absolute start-0 top-0 end-0" style="background-color: beige;"> <!-- beige for now to see header clearly-->
+        <div class="d-flex justify-content-between align-items-center">
+            <img src="../assets/images/UL_logo.jpg" alt="UL Image" style="width:150px;height:100px;">
+            <img src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image" style="width:150px;height:100px;">
+
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline">
+                  <button class="btn btn-outline-success" type="button">Explore</button>
+                  <button class="btn btn-outline-success" type="button">Log Out</button>
+                </form>
+            </nav>
+
+            <div>
+                <button class="navbar-toggler text-green">
+                    <!-- Profile Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                </button>
+            </div>
+        </div>
+
+    </header>
+
+     <!-- WIP
     <nav>
         <ul>
             <li><a href="profile.php">Profile</a></li>
@@ -27,14 +53,17 @@
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
+    -->
 
+    <!-- WIP
     <main>
         <section>
             <h2>Homepage Content</h2>
-            <!-- Placeholder image -->
-            <img src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image">
+             Placeholder image 
+             <img src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image"> 
         </section>
     </main>
 
+    --> 
 </body>
 </html>
