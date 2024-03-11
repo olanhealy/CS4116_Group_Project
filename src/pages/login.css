@@ -1,48 +1,46 @@
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  border-bottom: #000000ca;
+}
 
-/* Style for the line */
 .line {
-    width: 0.5px;
-    height: 100px;
-    background-color: #000000ca;
+  width: 0.5px;
+  height: 85px;
+  background-color: #d3d3d3;
 }
 
-#ul_logo {
-    width: 80px;
-    height: auto;
+.header-img {
+  max-width: 130px;
+  margin-right: 10px;
+  height: 80px;
 }
 
-#ulSingles_logo {
-    width: 80px;
-    height: auto;
+.images{
+  display: flex;
+  align-items: left;
+  max-width: 500px;
 }
 
 .button {
-    background-color: #79cf9d; 
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    float: right;
+  background-color: white; 
+  color: #abc99d; 
+  border: 3px solid #abc99d;
+  padding: 13px 29px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  float: right;
+}
+  
+.button:hover {
+  background-color: #abc99d;
+  color: white;
 }
 
-.button1 {
-    background-color: white; 
-    color: #79cf9d; 
-    border: 2px solid #79cf9d;
-  }
-  
-  .button1:hover {
-    background-color: #79cf9d;
-    color: white;
-  }
