@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['submitted'])) {
         // Check if email already exists in account table
-        $sql_check_email = "SELECT email FROM account WHERE email = ?";
+        $sql_check_email = "SELECT Email FROM Account WHERE email = ?";
         $successful_account_creation = $conn->prepare($sql_check_email);
         $successful_account_creation->bind_param('s', $email);
         $successful_account_creation->execute();
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Make sure all conditions met
         if ($_POST['email'] !== "" and isset($_POST['agreed']) and $_POST['password'] == $_POST['password-repeat'] and strlen($_POST['password']) > 5) {
             // Insert the newly succesful registered account into the database
-            $sql_insert = "INSERT INTO account (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)";
+            $sql_insert = "INSERT INTO Account (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)";
             $insert_new_account = $conn->prepare($sql_insert);
             $insert_new_account->bind_param('ssss', $email, $hashed_password, $first_name, $last_name);
             $insert_new_account->execute();
