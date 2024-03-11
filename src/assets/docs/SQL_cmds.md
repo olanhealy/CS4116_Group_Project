@@ -1,4 +1,4 @@
-Used to Create Database
+-- Used to Create Database
 
 CREATE TABLE Account (
     user_id INT(11) PRIMARY KEY AUTO_INCREMENT,
@@ -85,8 +85,8 @@ VALUES ('21344256@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Collins', 'st
 
 -- Dummy data for Profile table
 INSERT INTO Profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
-VALUES (1, 'Kevin Collins', 30, 'Male', 'Bio text for John', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term'),
-       (2, 'Olan Holy', 28, 'Female', 'Bio text for Jane', 'profile_pic.jpg', 'Female', 1, 'Undergrad', 'Psychology', 'Traveling, Photography', 'Unsure');
+VALUES (1, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term'),
+       (2, 'Olan Healy', 28, 'Male', 'Im a legend', 'profile_pic.jpg', 'Female', 1, 'Undergrad', 'Psychology', 'Traveling, Photography', 'Unsure');
 
 -- Dummy data for Banned table
 INSERT INTO Banned (user_id, banned_by, reason, duration)
