@@ -5,12 +5,11 @@ header {
   padding-left: 10px;
   padding-top: 10px;
   padding-right: 10px;
-  border-bottom: #000000ca;
 }
 
 .line {
   width: 0.5px;
-  height: 85px;
+  height: 80px;
   background-color: #d3d3d3;
 }
 
