@@ -1,6 +1,6 @@
 -- Used to Create Database
 
-CREATE TABLE Account (
+CREATE TABLE account (
     user_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) UNIQUE,
     password_hash VARCHAR(255),
@@ -10,7 +10,7 @@ CREATE TABLE Account (
     banned boolean DEFAULT 0
     );
 
-CREATE TABLE Profile (
+CREATE TABLE profile (
     user_id INT(11) PRIMARY KEY,
     name VARCHAR(26),
     age TINYINT UNSIGNED,
@@ -26,7 +26,7 @@ CREATE TABLE Profile (
     FOREIGN KEY (user_id) REFERENCES Account(user_id)
 );
 
-CREATE TABLE Banned(
+CREATE TABLE banned(
     user_id INT(11) PRIMARY KEY,
     banned_by INT(11),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +36,7 @@ CREATE TABLE Banned(
     FOREIGN KEY (banned_by) REFERENCES Account(user_id)
 );
 
-CREATE TABLE Adore(
+CREATE TABLE adore(
     adore_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(11),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -45,7 +45,7 @@ CREATE TABLE Adore(
     FOREIGN KEY (user_id) REFERENCES Account(user_id)
 );
 
-CREATE TABLE `Ignore` (
+CREATE TABLE `ignore` (
     ignore_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(11),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE `Ignore` (
     FOREIGN KEY (user_id) REFERENCES Account(user_id)
 );
 
-CREATE TABLE Matches (
+CREATE TABLE matches (
     match_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     initiator_id INT(11),
     target_id INT(11),
@@ -64,7 +64,7 @@ CREATE TABLE Matches (
     FOREIGN KEY (target_id) REFERENCES Account(user_id)
 );
 
-CREATE TABLE Messages(
+CREATE TABLE messages(
     message_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     match_id INT(11),
     receiver_id INT(11),
@@ -79,32 +79,32 @@ CREATE TABLE Messages(
 
 
 -- Dummy data for Account table
-INSERT INTO Account (email, password_hash, first_name, last_name, user_role, banned)
+INSERT INTO account (email, password_hash, first_name, last_name, user_role, banned)
 VALUES ('21344256@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Collins', 'standard', 0),
        ('21344257@studentmail.ul.ie', 'hashed_password', 'Olan', 'Healy', 'admin', 1);
 
 -- Dummy data for Profile table
-INSERT INTO Profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
+INSERT INTO profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
 VALUES (1, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term'),
        (2, 'Olan Healy', 28, 'Male', 'Im a legend', 'profile_pic.jpg', 'Female', 1, 'Undergrad', 'Psychology', 'Traveling, Photography', 'Unsure');
 
 -- Dummy data for Banned table
-INSERT INTO Banned (user_id, banned_by, reason, duration)
+INSERT INTO banned (user_id, banned_by, reason, duration)
 VALUES (2, 1, 'Inappropriate behavior', '24:00:00');
 
 -- Dummy data for Adore table
-INSERT INTO Adore (user_id, adored_user_id)
+INSERT INTO adore (user_id, adored_user_id)
 VALUES (1, 2), (2, 1);
 
 -- Dummy data for Ignore table
-INSERT INTO `Ignore` (user_id, ignored_user_id)
+INSERT INTO `ignore` (user_id, ignored_user_id)
 VALUES (1, 2), (2, 1);
 
 -- Dummy data for Matches table
-INSERT INTO Matches (initiator_id, target_id, `status`, response_date)
+INSERT INTO matches (initiator_id, target_id, `status`, response_date)
 VALUES (1, 2, 'Adore', NOW()), (2, 1, 'Ignore', NOW());
 
 -- Dummy data for Messages table
-INSERT INTO Messages (match_id, receiver_id, sender_id, message_content, read_status)
+INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
 VALUES (1, 2, 1, 'Hello Olan, how are you?', 'delivered'),
        (1, 1, 2, 'Hi Kevin, Im doing well, thanks!', 'read');
