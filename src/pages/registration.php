@@ -69,22 +69,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Make sure all conditions met
         if ($_POST['email'] !== "" and isset($_POST['agreed']) and $_POST['password'] == $_POST['password-repeat'] and strlen($_POST['password']) > 5) {
-            // Insert the newly succesful registered account into the database
+            // Insert the newly succesful registered account into the database account table
             $sql_insert = "INSERT INTO Account (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)";
             $insert_new_account = $conn->prepare($sql_insert);
             $insert_new_account->bind_param('ssss', $email, $hashed_password, $first_name, $last_name);
             $insert_new_account->execute();
 
             if ($insert_new_account->affected_rows > 0) {
+                // Get the user id of this registered user
+                $user_id = $insert_new_account->insert_id;
+
+                // Insert it into profile tabe, also inserting the full name of user
+                $sql_insert_profile = "INSERT INTO profile (user_id, name ) VALUES (?, ?)";
+                $insert_new_profile = $conn->prepare($sql_insert_profile);
+                $full_name = $first_name . " " . $last_name;
+                $insert_new_profile->bind_param('is', $user_id, $full_name);
+                $insert_new_profile->execute();
+
+                if ($insert_new_profile->affected_rows <= 0) {
+                    echo "Error inserting into the Profile table";
+                }
+
+                $insert_new_profile->close();
+
                 session_start();
                 $_SESSION['email'] = $email;
-                $_SESSION['id'] = $insert_new_account->insert_id; 
-                header("Location: home.php");
+                $_SESSION['id'] = $user_id;
+                header("Location: edit_profile.php");
             } else {
-                echo "<script>alert('Error occurred during registration')</script>";
+                echo "<script>alert('Error occurred during registration');</script>";
             }
 
-            // Close insert of new account as http request has been posted to db
+            // Close insert of new account as the HTTP request has been posted to db
             $insert_new_account->close();
         }
 
