@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content=""IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel=""stylesheet" href="assets/css/style.css"/>
-</head>
-<body>
-    <!-- login form -->
-    <form action="login.php" method="post">
-        <h2>LOGIN</h2>
-        <?php if (isset($_GET['error'])) { ?>
-            <p class="error"><?php echo $_GET['error']; ?></p>
-        <?php } ?>
-        <label>Email</label>
-        <input type="text" name="email" placeholder="Email"><br>
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Password"><br>
+<?php
+// index.php
 
-        <button type="submit">Login</button>
-
-
-         <!-- Link to Registration page via button -->
-        <p>Don't have an account? <a href="registration.php">Register here</a></p>
-    </form>
-</body>
-</html>
+// Redirect to login.php
+header("Location: login.php");
+exit; // Ensure that no further code is executed after the redirection
+?>
