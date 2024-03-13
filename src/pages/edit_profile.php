@@ -6,6 +6,19 @@ include "db_connection.php";
 // Start the session
 session_start();
 
+
+// Fetch user details from the database
+$user_id = $_SESSION['id'];
+$sql = "SELECT age, gender FROM profile WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($age, $gender);
+$stmt->fetch();
+
+$stmt->close();
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input
