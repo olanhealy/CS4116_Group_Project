@@ -26,19 +26,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
 
+            if ($row['banned'] == '1') {
+                // User is banned, redirect with error message
+                header("Location: login.html?error=User banned. Please contact support.");
+                exit();
+
             // Verify password and check banned status
-            if (password_verify($pass, $row['password_hash']) && $row['banned'] == '0') {
+            } else if (password_verify($pass, $row['password_hash']) ) {
                 // User authenticated, set session variables
                 $_SESSION['email'] = $row['email'];
                 $_SESSION['id'] = $row['user_id'];
 
+                if ($row['user_role'] == 'admin') {
+                    showAdminControls();
+                    exit();
+                }
                 // Redirect to home page
                 header("Location: home.php");
                 exit();
-            } else if ($row['banned'] == '1') {
-                // User is banned, redirect with error message
-                header("Location: login.html?error=User banned. Please contact support.");
-                exit();
+
             } else {
                 // Incorrect username or password, redirect with error message
                 header("Location: login.html?error=Incorrect username or password");
@@ -59,4 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: login.html");
     exit();
 }
-?>
+
+function showAdminControls() {
+    header("Location: admin/admin.html");
+}
