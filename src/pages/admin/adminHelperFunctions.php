@@ -2,20 +2,27 @@
 
 //TODO: Standardise how SQL statements are written
 
+//show all the accounts in a list
 function showAccounts()
 {
     include ("../db_connection.php");
-    $query = "SELECT * FROM account";
-    $result = $conn->query($query);
 
+    //get all account information
+    $query = "SELECT * FROM account";
+
+    //check the result is not empty
+    $result = $conn->query($query);
     if ($result->num_rows > 0) {
         // Output data of each row with a form to ban/unban
         while ($row = $result->fetch_assoc()) {
-            global $target_id;
-            $target_id = $row['user_id'];
-            include "userListAdmin.html"; // Include HTML file for each row
+            //getting each user_id from the query
+            $targetId = $row['user_id'];
+
+            //include the user list html for each row
+            include "userListAdmin.html";
         }
     } else {
+        //error
         echo "0 results found";
     }
 }
@@ -25,204 +32,261 @@ function updateUserDetails()
 
 }
 
-function getUserRole($user_id)
+//function to get user role enum(admin, standard)
+//returns user role
+function getUserRole($userId)
 {
     include ("../db_connection.php");
 
-    $sqlGetUserRole = "SELECT user_role FROM account WHERE user_id = ?";
-    $getUserRole = $conn->prepare($sqlGetUserRole);
-    $getUserRole->bind_param("i", $user_id);
-    $getUserRole->execute();
-    $getUserRole->store_result();
+    //query to return role of the user_id
+    $query = "SELECT user_role FROM account WHERE user_id = ?";
 
-    if ($getUserRole->num_rows > 0) {
-        $getUserRole->bind_result($userRole);
-        $getUserRole->fetch();
+    //process the statement and store it
+    $getUserRoleStmt = $conn->prepare($query);
+    $getUserRoleStmt->bind_param("i", $userId);
+    $getUserRoleStmt->execute();
+    $getUserRoleStmt->store_result();
+
+    //set userRole to the value of getUserRoleStmt
+    $userRole = null;
+    if ($getUserRoleStmt->num_rows > 0) {
+        $getUserRoleStmt->bind_result($userRole);
+        $getUserRoleStmt->fetch();
     }
 
-    $getUserRole->close();
+    //close the statement
+    $getUserRoleStmt->close();
+
+    //returns user role
     return $userRole;
 }
 
-function deleteUser($user_id)
+//function to delete a user
+function deleteUser($targetId)
 {
     include ("../db_connection.php");
 
-    $target_id = $user_id;
+    //an array of tables that have user_d as a foreign key
     $tables = ['adore', 'banned', '`ignore`', '`profile`'];
 
+    //iterate through tables
     foreach ($tables as $table) {
 
-        $query = "SELECT * FROM $table WHERE user_id = $target_id";
-        $result = $conn->query($query);
-
-        if ($result === false) {
-            die ("Error in SQL query for table $table: " . $conn->error . "<br>");
+        //gets all where user_id matches the passed in target_id
+        $query = "SELECT * FROM $table WHERE user_id = $targetId";
+        if ($table == 'adore') {
+            $query = "SELECT * FROM $table WHERE user_id = $targetId OR adored_user_id = $targetId";
+        } elseif ($table == '`ignore`') {
+            $query = "SELECT * FROM $table WHERE user_id = $targetId OR ignored_user_id = $targetId";
         }
 
+        $result = $conn->query($query);
+        //checks the result is recieved
+        if ($result !== false) {
+            //checks the result isn't empty
+            if ($result->num_rows > 0) {
+
+                //delete all the value from $table where user_id is used
+                $query = "DELETE FROM $table WHERE user_id = ?";
+                if ($table == 'adore') {
+                    $query = "DELETE FROM $table WHERE user_id = ? OR adored_user_id = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("ii", $targetId, $targetId);
+                } elseif ($table == '`ignore`') {
+                    $query = "DELETE FROM $table WHERE user_id = ? OR ignored_user_id = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("ii", $targetId, $targetId);
+                }else{
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("i", $targetId);
+                }
+
+                $stmt->execute();
+
+                //checks the result isn't empty
+                if ($stmt->affected_rows !== 0) {
+
+                    echo "User deleted successfully from $table" . "<br>";
+                } 
+            } else {
+                //error
+                echo "User $targetId has no data relating to them in table $table" . "<br>";
+            }
+        } else {
+            //error
+            die("Error in SQL query for table $table: " . $conn->error . "<br>");
+        }
+    }
+
+    deleteMessages($targetId);
+    deleteMatches($targetId);
+
+    //select from account table where user_id
+    $query = "SELECT * FROM account WHERE user_id = $targetId";
+
+    $result = $conn->query($query);
+    if ($result !== false) {
         if ($result->num_rows > 0) {
-            $query = "DELETE FROM $table WHERE user_id = ?";
+
+            //delete user from accounts
+            $query = "DELETE FROM account WHERE user_id = ?";
             $stmt = $conn->prepare($query);
 
-            if ($stmt === false) {
-                die ("Error in SQL query: " . $conn->error . "<br>");
-            }
+            //excute statement
+            $stmt->bind_param("i", $targetId);
+            $stmt->execute();
 
-            $stmt->bind_param("i", $target_id);
+            //checks if row is removed
+            if ($stmt->affected_rows !== 0) {
+                echo "User deleted successfully from account" . "<br>";
+            } 
+
+        }else {
+            //error
+            echo "User $targetId has no data relating to them in table account" . "<br>";
+        }
+    } else {
+        //error
+        die("Error in SQL query for table account: " . $conn->error . "<br>");
+    }
+
+}
+
+function deleteMessages($targetId)
+{
+
+    include ("../db_connection.php");
+
+    //select from messages where sender_id or receiver_id is user_id
+    $query = "SELECT * FROM messages WHERE sender_id = $targetId OR receiver_id = $targetId";
+
+    //check the result is not empty
+    $result = $conn->query($query);
+    if ($result !== false) {
+
+        if ($result->num_rows > 0) {
+            //delete from messages where sender_id or receiver_id is user_id
+            $query = "DELETE FROM messages WHERE sender_id = ? OR receiver_id = ?";
+            $stmt = $conn->prepare($query);
+
+            //checks if statement is empty
+
+            $stmt->bind_param("ii", $targetId, $targetId);
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
-                echo "User deleted successfully from $table" . "<br>";
+                echo "User deleted successfully from messages" . "<br>";
             }
+
+
         } else {
-            echo "$target_id has no data relating to them in table $table" . "<br>";
-        }
-    }
-
-    deleteMessages($target_id);
-    deleteMatches($target_id);
-
-    $query = "SELECT * FROM account WHERE user_id = $target_id";
-
-    $result = $conn->query($query);
-    if ($result === false) {
-        die ("Error in SQL query for table account: " . $conn->error . "<br>");
-    }
-
-    if ($result->num_rows > 0) {
-        $query = "DELETE FROM account WHERE user_id = ?";
-        $stmt = $conn->prepare($query);
-
-        if ($stmt === false) {
-            die ("Error in SQL query: " . $conn->error . "<br>");
-        }
-
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            echo "User deleted successfully from account" . "<br>";
+            echo "User $targetId has no data relating to them in table messages" . "<br>";
         }
     } else {
-        echo "$user_id has no data relating to them in table account" . "<br>";
+        die("Error in SQL query for table messages: " . $conn->error . "<br>");
     }
-
 }
 
-function deleteMessages($user_id)
+function deleteMatches($targetId)
 {
 
     include ("../db_connection.php");
 
-    $query = "SELECT * FROM messages WHERE sender_id = $user_id OR receiver_id = $user_id";
+    //select from matches where initiator_id or target_id is user_id
+    $query = "SELECT * FROM matches WHERE initiator_id = $targetId OR target_id = $targetId";
 
+    //check the result is not empty
     $result = $conn->query($query);
-    if ($result === false) {
-        die ("Error in SQL query for table messages: " . $conn->error . "<br>");
-    }
+    if ($result == false) {
+        //checks the result isn't empty
+        if ($result->num_rows > 0) {
 
-    if ($result->num_rows > 0) {
-        $query = "DELETE FROM messages WHERE sender_id = ? OR receiver_id = ?";
-        $stmt = $conn->prepare($query);
+            //delete from matches where initiator_id or target_id is user_id
+            $query = "DELETE FROM matches WHERE initiator_id = ? OR target_id = ?";
+            $stmt = $conn->prepare($query);
 
-        if ($stmt === false) {
-            die ("Error in SQL query: " . $conn->error . "<br>");
-        }
 
-        $stmt->bind_param("ii", $user_id, $user_id);
-        $stmt->execute();
+            $stmt->bind_param("ii", $targetId, $targetId);
+            $stmt->execute();
 
-        if ($stmt->affected_rows > 0) {
-            echo "User deleted successfully from messages" . "<br>";
+            //checks if row is removed
+            if ($stmt->affected_rows !== 0) {
+                echo "User deleted successfully from matches" . "<br>";
+            } 
+
+        }else {
+            echo "User $targetId has no data relating to them in table matches" . "<br>";
         }
     } else {
-        echo "$user_id has no data relating to them in table messages" . "<br>";
-    }
-}
-
-function deleteMatches($user_id){
-
-    include ("../db_connection.php");
-
-    $query = "SELECT * FROM matches WHERE initiator_id = $user_id OR target_id = $user_id";
-
-    $result = $conn->query($query);
-    if ($result === false) {
-        die ("Error in SQL query for table matches: " . $conn->error . "<br>");
-    }
-
-    if ($result->num_rows > 0) {
-        $query = "DELETE FROM matches WHERE initiator_id = ? OR target_id = ?";
-        $stmt = $conn->prepare($query);
-
-        if ($stmt === false) {
-            die ("Error in SQL query: " . $conn->error . "<br>");
-        }
-
-        $stmt->bind_param("ii", $user_id, $user_id);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            echo "User deleted successfully from matches" . "<br>";
-        }
-    } else {
-        echo "$user_id has no data relating to them in table matches" . "<br>";
+        die("Error in SQL query for table matches: " . $conn->error . "<br>");
     }
 }
 
 // Function to check if a account is banned
-function isAccountBanned($user_id)
+// Returns 1 if banned, 0 if not
+function isAccountBanned($userId)
 {
     include ("../db_connection.php");
+
+    //set banned to false
     $banned = false;
 
     //sql query for banned id
-    $sql = "SELECT banned FROM account WHERE user_id='$user_id' ";
-    $result = mysqli_query($conn, $sql);
+    $query = "SELECT banned FROM account WHERE user_id= ? ";
 
-    //Checks success retrieval of data
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            //creates an array from result
-            $row = mysqli_fetch_array($result);
-            //gets value of banned
-            return $row["banned"];
-        } else {
-            //error logging
-            error_log(mysqli_error($conn));
-            return 0;
-        }
+    //prepare the statement
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->store_result();
+
+    //set userRole to the value of getUserRoleStmt
+    $result = null;
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($result);
+        $stmt->fetch();
+
+        //gets value of banned
+        return $result;
+    }else {
+        //error logging
+        echo "Error get data from banned table";
+        return 0;
     }
 }
 
-//Sets a user ban status in account and banned table
-function setBanned($user_id, $new_banned_status)
+//Sets a user ban status in account and if unbanned deletes the ban info from the banned table
+function setBanned($userId, $newBannedStatus)
 {
     include ("../db_connection.php");
 
-    //set account[banned] as value
-    $sql = "UPDATE account SET banned = $new_banned_status WHERE user_id = $user_id";
-    mysqli_query($conn, $sql);
+    //set banned status in account table
+    $query = "UPDATE account SET banned = ? WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $newBannedStatus, $userId);
+    $stmt->execute();
 
     //if unbanned delete ban info from table
-    if ($new_banned_status == 0) {
-        $sql = "DELETE FROM banned WHERE user_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "i", $user_id);
-        mysqli_stmt_execute($stmt);
+    if ($newBannedStatus == 0) {
+        $query = "DELETE FROM banned WHERE user_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
     }
 }
 
-//set Admin as admin
-function setUserRole($user_id, $role)
+//set user role 
+function setUserRole($userId, $role)
 {
     include ("../db_connection.php");
 
+    //query to update user role
     $query = "UPDATE account SET user_role = ? WHERE user_id = ?";
     $set_query = $conn->prepare($query);
-    $set_query->bind_param("si", $role, $user_id);
+    $set_query->bind_param("si", $role, $userId);
     $set_query->execute();
 
+    //check if the user role has been set
     if ($set_query->affected_rows > 0) {
         echo "User set to Admin successfully";
     } else {

@@ -6,8 +6,8 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset ($_SESSION['target_id'])) {
-        $target_id = $_SESSION['target_id'];
+    if (isset ($_SESSION['targetId'])) {
+        $target_id = $_SESSION['targetId'];
 
         //if ban, sets ban. If unban sets unban
         if ($_POST['action'] == 'unban') {

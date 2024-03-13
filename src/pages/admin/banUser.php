@@ -17,8 +17,8 @@ if (isset ($_SESSION['id'])) {
         $reason = $_POST['reason'];
         $dateOfUnban = $_POST['dateOfUnban'];
 
-        if (isset($_SESSION['target_id'])) {
-            $target_id = $_SESSION['target_id'];
+        if (isset($_SESSION['targetId'])) {
+            $targetId = $_SESSION['targetId'];
         } else {
             echo "Target ID is not set.";
             exit();
@@ -27,12 +27,12 @@ if (isset ($_SESSION['id'])) {
         //create ban
         $sql_insert = "INSERT INTO banned (user_id, banned_by, reason, dateOfUnban) VALUES (?, ?, ?, ?)";
         $insert_new_banned = $conn->prepare($sql_insert);
-        $insert_new_banned->bind_param('ssss', $target_id, $user_id, $reason, $dateOfUnban);
+        $insert_new_banned->bind_param('ssss', $targetId, $user_id, $reason, $dateOfUnban);
         $insert_new_banned->execute();
 
         //call setBanned from adminHelperFunctions.php
-        setBanned("$target_id", 1);
-        echo "$target_id banned successfully"; 
+        setBanned("$targetId", 1);
+        echo "$targetId banned successfully"; 
         // Redirect to userListAdmin.php
         header("Location: usersListAdmin.php");
         exit();

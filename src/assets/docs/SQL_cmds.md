@@ -84,7 +84,7 @@ VALUES (11111111, '11111111@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Col
 
 -- Dummy data for Profile table
 INSERT INTO profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
-VALUES (3, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term');
+VALUES (11111111, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term');
 
 -- Dummy data for Adore table
 INSERT INTO adore (user_id, adored_user_id)
@@ -100,8 +100,8 @@ VALUES (11111111, 2, 'Adore', NOW());
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (2, 11111111, 2, 'Hello, how are you?', 'delivered');
+VALUES (11, 11111111, 2, 'Hello, how are you?', 'delivered');
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (2, 11111111, 2, 'Good', 'delivered');
+VALUES (11, 11111111, 2, 'Good', 'delivered');
