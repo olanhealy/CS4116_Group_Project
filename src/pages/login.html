@@ -21,42 +21,52 @@
 
 </head>
 <body>
-    <header>
-        
+
+    <nav class="navbar navbar-fixed-top">
         <div class="images">
             <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
             <div class="line"></div>
             <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
-        
-        <div class="buttons">
-            <button class="button">Log In</button>
-            <button class="button">Sign Up</button> 
+
+        <div class="btn-group buttons" role="group">
+            <button type="button" class="btn button">Log In</button>
+            <button type="button" class="btn button">Sign Up</button>
         </div>
         
-    </header>
-    <hr>
+    </nav>
 
-    <div class="main">
-        <div class="logo-symbol">
-            <img class="symbol" src="../assets/images/ulSinglesSymbolTransparent.png" alt="ulSingles_symbol">
+
+    <div class="main-container fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="login">
+             <!-- login form  -->
+            <form action="login.php" method="post">
+                <img class="mt-4 mb-4 image-fluid" src="../assets/images/ulSinglesSymbolTransparent.png" height="72" alt="ulSingles_symbol">
+                <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+                <!-- <label>Email</label><br> -->
+                <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
+                <!-- <label>Password</label><br> -->
+                <input type="password" name="password" placeholder="Password" class="form-control"><br>
+                <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+
+
+                <!-- Link to Registration page via button -->
+                <p>Don't have an account? <a href="registration.php">Register here</a></p>
+            </form> 
+            </div>
+
         </div>
     </div>
+        
+    </div>
 
-    <!-- login form -->
-    <form action="login.php" method="post">
-        <h2>LOGIN</h2>
-        <label>Email</label>
-        <input type="text" name="email" placeholder="Email"><br>
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Password"><br>
-
-        <button type="submit">Login</button>
-
-
-        <!-- Link to Registration page via button -->
-        <p>Don't have an account? <a href="registration.php">Register here</a></p>
-    </form>
-
+    <footer class="footer">
+        <div class="text-center p-2" style="background-color: #e6d1be;">
+          © 2024 Copyright UL Singles. All Rights Reserved
+        </div>
+      </footer>
+            
 </body>
 </html>
