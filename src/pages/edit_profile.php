@@ -9,6 +9,23 @@ session_start();
 // Fetch user details from the database
 $user_id = $_SESSION['id'];
 
+// A check to see if the users Age and gender already exist in db. If they do, then the if statements in the html can recognise these variables and not display
+// Age and gender again so they cannot be edited
+$sql = "SELECT age, gender FROM profile WHERE user_id = ?";
+$hider = $conn->prepare($sql);
+$hider->bind_param("i", $user_id);
+$hider->execute();
+$hider->store_result();
+
+// Check if the user has a profile
+if ($hider->num_rows > 0) {
+    $hider->bind_result($age, $gender);
+    $hider->fetch();
+}
+
+// Variables for html been set can close
+$hider->close();
+
 // Process #13 to set the user's bio in the profile table of the db
 function setBio($user_id, $bio) {
     global $conn;

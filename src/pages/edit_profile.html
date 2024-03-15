@@ -12,22 +12,23 @@
     <h1>Edit Profile</h1>
 
     <form action="edit_profile.php" method="post" enctype="multipart/form-data">
-       <!-- Age field -->
-    <?php if (empty($age)): ?>
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" required>
-    <?php endif; ?>
+        <!--  Age -->
+        <!-- Check if age is not set in db, if it is we can hide it-->
+        <?php if (!isset($age)): ?>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <?php endif; ?>
 
-       <!-- Gender -->
-    <?php if (empty($gender)): ?>
-    <label for="gender">Gender:</label>
-    <select id="gender" name="gender" required>
-       <option value="Male">Male</option>
-       <option value="Female">Female</option>
-       <option value="Other">Other</option>
-    </select>
-    <?php endif; ?>
-
+        <!-- Gender-->
+        <!-- Check if gender is not set in db if it is we can hide it-->
+         <?php if (!isset($gender)): ?>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <?php endif; ?>
 
         <!-- Hobbies (May need to update this)-->
         <label for="hobbies">Hobbies:</label>

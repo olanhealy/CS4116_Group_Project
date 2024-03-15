@@ -3,6 +3,8 @@
 // Include database connection
 include "db_connection.php";
 
+//Initalise array of erros which can then be displayed from the html
+$errors = [];
 // Process #4 checks if the Account already exists in the account table of db
 function isAccountFound($email, $password) {
     global $conn;
@@ -78,35 +80,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email format";
-        exit;
+        $errors[] = "Invalid email format";
     }
 
     // Check if email is a UL student email using the verifyStudentEmail function. Uses #Process 9, verifyStudentMail by checking if output
     // is false it will end
     if (!verifyStudentEmail($email)) {
-        echo "Email must end with '@studentmail.ul.ie' (Are you sure you are a UL Student?)";
-        exit;
+        $errors[] = "Email must end with '@studentmail.ul.ie' (Are you sure you are a UL Student?)";
     }
 
     // Check if password is between 8 and 20 characters long
     if (strlen($password) < 8 || strlen($password) > 20) {
-        echo "Password must be between 8 and 20 characters long";
-        exit;
+        $errors[] = "Password must be between 8 and 20 characters long";
     }
 
     // Check for at least one capital letter and at least one special character with the inputted password
     if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
-        echo "Password must contain at least one capital letter and one special character";
-        exit;
+        $errors[] ="Password must contain at least one capital letter and one special character";
     }
 
     // Check if the inputted and repeated passwords both match
     if ($_POST['password'] !== $_POST['password-repeat']) {
-        echo "The password and repeated password do not match";
-        exit;
+        $errors[] = "The password and repeated password do not match";
     }
-
+    
+    //If erros are empty. then procede with Inserting new account into account table of db and setting the  attributes
+    if (empty($errors)) {
     // Call setUserId function
     $user_id = setUserId($email);
     isAccountFound($email, $password);
@@ -144,11 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['id'] = $user_id;
         header("Location: edit_profile.php");
     } else {
-        echo "Error occurred during registration";
+        $errors[] = "Error occurred during registration";
     }
 
     // Close insert of new account as the HTTP request has been posted to db
     $insert_new_account->close();
+    }
 }
 
 // Include the HTML content from registration.html
