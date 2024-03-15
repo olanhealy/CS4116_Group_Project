@@ -33,10 +33,11 @@
   padding: 13px 29px;
   text-align: center;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
+  border-radius: 0%;
 }
   
 .button:hover {
