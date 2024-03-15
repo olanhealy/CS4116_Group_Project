@@ -9,23 +9,6 @@ session_start();
 // Fetch user details from the database
 $user_id = $_SESSION['id'];
 
-// A check to see if the users Age and gender already exist in db. If they do, then the if statements in the html can recognise these variables and not display
-// Age and gender again so they cannot be edited
-$sql = "SELECT age, gender FROM profile WHERE user_id = ?";
-$hider = $conn->prepare($sql);
-$hider->bind_param("i", $user_id);
-$hider->execute();
-$hider->store_result();
-
-// Check if the user has a profile
-if ($hider->num_rows > 0) {
-    $hider->bind_result($age, $gender);
-    $hider->fetch();
-}
-
-// Variables for html been set can close
-$hider->close();
-
 // Process #13 to set the user's bio in the profile table of the db
 function setBio($user_id, $bio) {
     global $conn;
@@ -40,6 +23,27 @@ function setBio($user_id, $bio) {
     } else {
         echo "Error setting bio";
     }
+}
+
+// Process #14 to get the user's bio if they already exist in the profiile table of db
+function getBio($user_id) {
+    global $conn; 
+    $bio = "";
+
+    $sql_get_bio = "SELECT bio FROM profile WHERE user_id = ?";
+    $get_bio = $conn->prepare($sql_get_bio);
+    $get_bio->bind_param("i", $user_id);
+    $get_bio->execute();
+    $get_bio->store_result();
+
+    if ($get_bio->num_rows > 0) {
+        $get_bio->bind_result($bio);
+        $get_bio->fetch();
+    }
+
+    $get_bio->close();
+    return $bio;
+
 }
 
 // Process #17 to set the user's gender in the profile table of the db
@@ -60,6 +64,27 @@ function setGender($user_id, $gender) {
     $set_gender->close();
 }
 
+// Process #38 to get the user's gender if they already exist in the profiile table of db
+function getGender($user_id) {
+    global $conn;
+    $gender = "";
+
+    $sql_get_gender = "SELECT gender FROM profile WHERE user_id = ?";
+    $get_gender = $conn->prepare($sql_get_gender);
+    $get_gender->bind_param("i", $user_id);
+    $get_gender->execute();
+    $get_gender->store_result();
+
+    if ($get_gender->num_rows > 0) {
+        $get_gender->bind_result($gender);
+        $get_gender->fetch();
+    }
+
+    $get_gender->close();
+    return $gender;
+
+}
+
 // Process #19 to set the user's age in the profile table of the db
 function setAge($age, $user_id) {
     global $conn;
@@ -76,6 +101,27 @@ function setAge($age, $user_id) {
     }
 
     $set_age->close();
+}
+
+// Process #20 to get the user's age if they already exist in the profiile table of db
+function getAge($user_id) {
+    global $conn;
+    $age = "";
+
+    $sql_get_age = "SELECT age FROM profile WHERE user_id = ?";
+    $get_age = $conn->prepare($sql_get_age);
+    $get_age->bind_param("i", $user_id);
+    $get_age->execute();
+    $get_age->store_result();
+
+    if ( $get_age->num_rows > 0) {
+        $get_age->bind_result($age);
+        $get_age->fetch();
+    }
+
+    $get_age->close();
+    return $age;
+
 }
 
 // Process #21 to set the user's college year in the profile table of the db
@@ -96,6 +142,26 @@ function setCollegeYear($user_id, $college_year) {
     $set_college_year->close();
 }
 
+// Process #22 to get the user's college year if they already exist in the profile table of the database
+function getCollegeYear($user_id) {
+    global $conn;
+    $college_year = "";
+
+    $sql_get_college_year = "SELECT college_year FROM profile WHERE user_id = ?";
+    $get_college_year = $conn->prepare($sql_get_college_year);
+    $get_college_year->bind_param("i", $user_id);
+    $get_college_year->execute();
+    $get_college_year->store_result();
+
+    if ($get_college_year->num_rows > 0) {
+        $get_college_year->bind_result($college_year);
+        $get_college_year->fetch();
+    }
+
+    $get_college_year->close();
+    return $college_year;
+}
+
 // Process #23 to set the user's pursuing status in the profile table of the db
 function setPursuing($user_id, $pursuing) {
     global $conn;
@@ -106,12 +172,32 @@ function setPursuing($user_id, $pursuing) {
     $set_pursuing->execute();
 
     if ($set_pursuing->affected_rows > 0) {
-        echo "College Year set successfully";
+        echo "Pursuing set successfully";
     } else {
-        echo "Error setting College Year";
+        echo "Error setting Pursuing";
     }
 
     $set_pursuing->close();
+}
+
+// Process #22 to get the user's pursuing status if they already exist in the profile table of the database
+function getPursuing($user_id) {
+    global $conn;
+    $pursuing = "";
+
+    $sql_get_pursuing = "SELECT pursuing FROM profile WHERE user_id = ?";
+    $get_pursuing = $conn->prepare($sql_get_pursuing);
+    $get_pursuing->bind_param("i", $user_id);
+    $get_pursuing->execute();
+    $get_pursuing->store_result();
+
+    if ($get_pursuing->num_rows > 0) {
+        $get_pursuing->bind_result($pursuing);
+        $get_pursuing->fetch();
+    }
+
+    $get_pursuing->close();
+    return $pursuing;
 }
 
 // Process #25 to set the user's profile picture in the profile table of the db
@@ -142,13 +228,33 @@ function setProfilePic($user_id, $profile_pic_filename) {
     }
 }
 
+// Process #26 to get the user's profile picture from the profile table of the db
+function getProfilePicture($user_id) {
+    global $conn;
+    $profile_pic_filename = "";
+
+    $sql_get_profile_pic = "SELECT profile_pic FROM profile WHERE user_id = ?";
+    $get_profile_pic = $conn->prepare($sql_get_profile_pic);
+    $get_profile_pic->bind_param("i", $user_id);
+    $get_profile_pic->execute();
+    $get_profile_pic->store_result();
+
+    if ($get_profile_pic->num_rows > 0) {
+        $get_profile_pic->bind_result($profile_pic_filename);
+        $get_profile_pic->fetch();
+    }
+
+    $get_profile_pic->close();
+    return $profile_pic_filename;
+}
+
 // Process #29 to set the user's course of study in the profile table of the db
 function setCourse($user_id, $course) {
     global $conn;
 
     $sql_set_course = "UPDATE profile SET course = ? WHERE user_id = ?";
     $set_course = $conn->prepare($sql_set_course);
-    $set_course->bind_param("si", $course, $user_id); // Corrected parameter binding
+    $set_course->bind_param("si", $course, $user_id); 
     $set_course->execute();
 
     if ($set_course->affected_rows > 0) {
@@ -156,6 +262,26 @@ function setCourse($user_id, $course) {
     } else {
         echo "Error setting course";
     }
+}
+
+// Process #30 to  get the user's course of study from the profile table of the db
+function getCourse($user_id) {
+    global $conn;
+    $course= "";
+
+    $sql_get_course = "SELECT course  FROM profile WHERE user_id = ?";
+    $get_course  = $conn->prepare($sql_get_course );
+    $get_course ->bind_param("i", $user_id);
+    $get_course ->execute();
+    $get_course ->store_result();
+
+    if ($get_course ->num_rows > 0) {
+        $get_course ->bind_result($course );
+        $get_course ->fetch();
+    }
+
+    $get_course ->close();
+    return $course;
 }
 
 // Process #31 to set the user's hobbies in the profile table of the db
@@ -174,6 +300,26 @@ function setHobbies($user_id, $hobbies) {
     }
 }
 
+// Process #32 to get the user's hobbies if they already exist in the profiile table of db (incomplete for html side)
+function getHobbies($user_id) {
+    global $conn;
+    $hobbies = "";
+
+    $sql_get_hobbies = "SELECT hobbies FROM profile WHERE user_id = ?";
+    $get_hobbies = $conn->prepare($sql_get_hobbies);
+    $get_hobbies->bind_param("i", $user_id);
+    $get_hobbies->execute();
+    $get_hobbies->store_result();
+
+    if ($get_hobbies->num_rows > 0) {
+        $get_hobbies->bind_result($hobbies);
+        $get_hobbies->fetch();
+    }
+
+    $get_hobbies->close();
+    return $hobbies;
+}
+
 // Process #33 to set the user's looking for status in the profile table of the db
 function setLookingFor($user_id, $looking_for) {
     global $conn;
@@ -189,6 +335,37 @@ function setLookingFor($user_id, $looking_for) {
         echo "Error setting looking for";
     }
 }
+
+// Process #34 to get the user's looking for status if they already exist in the profiile table of db
+function getLookingFor($user_id) {
+    global $conn;
+    $looking_for = "";
+    
+    $sql_get_looking_for = "SELECT looking_for FROM profile WHERE user_id = ?";
+    $get_looking_for = $conn->prepare($sql_get_looking_for);
+    $get_looking_for->bind_param("i", $user_id);
+    $get_looking_for->execute();
+    $get_looking_for->store_result();
+
+    if ($get_looking_for->num_rows > 0) {
+        $get_looking_for->bind_result($looking_for);
+        $get_looking_for->fetch();
+    }
+    
+    $get_looking_for->close();
+    return $looking_for;
+}
+
+//Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
+$bio = getBio($user_id);
+$hobbies = getHobbies($user_id);
+$gender = getGender($user_id);
+$age = getAge($user_id);
+$college_year = getCollegeYear($user_id);
+$pursuing = getPursuing($user_id);
+$profile_pic_filename = getProfilePicture($user_id);
+$course = getCourse($user_id);
+$looking_for = getLookingFor($user_id);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
