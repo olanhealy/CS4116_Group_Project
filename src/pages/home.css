@@ -87,7 +87,8 @@ body {
   padding: 12px 28px;
   font-size: 30px;
   border-color: bisque;
-  margin-left: 30px;
+  margin-left: 50px;
+  margin-top: 20px;
 }
 
 .btn:hover{
@@ -96,16 +97,29 @@ body {
   color: white; 
 }
 
-.symbol{
-  margin-left: 1000px;
+.picture{
   height: 500px;
   border: 8px solid bisque;
+  left: 00px;
+  top: 20px
 }
 
 .slogan{
   text-align: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 40px;
   color: black;
-  margin-left: 200px;
+  text-decoration: none;
+  
 }
+
+.box {
+  border: 5px solid #abc99d;
+  width: 2450px;
+  height: 955px;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+}
+
