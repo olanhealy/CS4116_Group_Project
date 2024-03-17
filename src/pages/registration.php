@@ -1,10 +1,11 @@
 <?php
 
-// Include database connection
+
 include "db_connection.php";
 
 //Initalise array of erros which can then be displayed from the html
 $errors = [];
+
 // Process #4 checks if the Account already exists in the account table of db
 function isAccountFound($email, $password) {
     global $conn;
@@ -106,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     //If erros are empty. then procede with Inserting new account into account table of db and setting the  attributes
     if (empty($errors)) {
+
     // Call setUserId function
     $user_id = setUserId($email);
     isAccountFound($email, $password);
@@ -118,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Check if the insertion was successful
     if ($insert_account_statement->affected_rows > 0) {
+       
         // Get the user id of this registered user
         $user_id = $insert_account_statement->insert_id;
 

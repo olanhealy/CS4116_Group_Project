@@ -12,7 +12,8 @@
     <h1>Edit Profile</h1>
 
         <form action="edit_profile.php" method="post" enctype="multipart/form-data">
-       <!-- Age -->
+       
+        <!-- Age -->
         <label for="age">Age:</label>
         <input type="number" id="age" name="age" <?php if(isset($age)) echo "value='$age'"; ?> <?php if(isset($age)) echo "readonly"; ?> required>
 
@@ -24,7 +25,7 @@
             <option value="Other" <?php if(isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
         </select>
 
-        <!-- Hobbies (May need to update this)-->
+        <!-- Hobbies (May need to update this as text for it is meh)-->
         <label for="hobbies">Hobbies:</label>
         <input type="text" id="hobbies" name="hobbies" required value="<?php echo htmlspecialchars($hobbies); ?>">
 
