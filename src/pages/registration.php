@@ -52,7 +52,7 @@ function setPassword($password, $user_id) {
 function setName($first_name, $last_name, $user_id) {
     global $conn;
 
-    $sql_set_name = "UPDATE Account SET first_name = ?, last_name = ? WHERE user_id = ?";
+    $sql_set_name = "UPDATE account SET first_name = ?, last_name = ? WHERE user_id = ?";
 
     $set_name = $conn->prepare($sql_set_name);
     $set_name->bind_param("sss", $first_name, $last_name, $user_id);
