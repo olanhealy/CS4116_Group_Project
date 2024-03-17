@@ -12,8 +12,8 @@ body {
 }
   
 .line {
-  width: 0.5px;
-  height: 80px;
+  width: 1px;
+  height: 75px;
   background-color: #d3d3d3;
 }
   
@@ -40,6 +40,7 @@ body {
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
+
 }
 
 .button:hover {
@@ -58,7 +59,7 @@ body {
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
-  margin-left: 300px;
+  margin-left: 850px;
 }
     
 .button1:hover {
@@ -72,6 +73,7 @@ body {
   padding: 13px 30px;
   cursor: pointer;
   border: 0;
+  margin-right: 100px;
 }
 
 #navbar {
@@ -79,16 +81,16 @@ body {
   background-color: black;
 }
 
-
 .btn{
   background-color: bisque;
   color: white; 
   text-align: center;
-  padding: 12px 28px;
-  font-size: 30px;
+  padding: 15px 60px;
+  font-size: 25px;
+  font-weight: bold;
   border-color: bisque;
-  margin-left: 50px;
-  margin-top: 20px;
+  margin-left: 30px;
+  margin-top: 5px;
 }
 
 .btn:hover{
@@ -98,28 +100,36 @@ body {
 }
 
 .picture{
-  height: 500px;
   border: 8px solid bisque;
-  left: 00px;
-  top: 20px
+  height: 320px;
+  width: 500px;
+  margin-left: 800px;
+  margin-top: 25px;
 }
 
 .slogan{
   text-align: center;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 35px;
   color: black;
   text-decoration: none;
-  
 }
 
 .box {
-  border: 5px solid #abc99d;
-  width: 2450px;
-  height: 955px;
-  margin-left: 50px;
-  margin-top: 50px;
-  margin-right: 50px;
+  border: 12px solid #abc99d;
+  width: 1380px;
+  height: 400px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-right: 30px;
   margin-bottom: 50px;
 }
 
+.title {
+  text-align: start;
+  color: black;
+  font-weight: bold;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
