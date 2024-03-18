@@ -53,3 +53,8 @@
     background-color: #e6d1be;
     text-align: center;
   }
+
+  .registration {
+    border-color: #000;
+    width:fit-content;
+  }

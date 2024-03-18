@@ -36,7 +36,61 @@
         
     </nav>
 
-    <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
+
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card registration">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+
+                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-2 order-lg-1">
+      
+                      <img src="../assets/images/ulSinglesTrasparent.png"
+                        class="img-fluid" alt="UL Singles Logo">
+      
+                    </div>
+
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2">
+      
+                      <h1 class="h3 mb-3 font-weight-normal text-center mb-4 mx-1 mt-4">Create an account</h1>
+      
+                      <form class="mx-1 mx-md-4" action="registration.php" method="post">
+      
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <input type="text" class="form-control" placeholder="Name" required autofocus/>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <input type="email" name="email" class="form-control" placeholder="Email" required autofocus/>
+                        </div>
+                        
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <input type="password" name="password" class="form-control" placeholder="Password" required autofocus/>
+                        </div>
+                        
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <input type="password" name="password-repeat" class="form-control" placeholder="Confirm Password" required autofocus/>
+                        </div>
+                        
+                        <div class="form-check d-flex justify-content-center mb-5">
+                          <input class="form-check-input me-2" type="checkbox" name="agreed" />
+                          <label class="form-check-label" for="agreed">I agree to the terms and conditions</label>
+                        </div>
+      
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <button type="button" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+      
+                      </form>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    <!-- <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
 
     <form action="registration.php" method="post">
         <label for="email">Email:</label>
@@ -60,7 +114,7 @@
         <input type="hidden" name="submitted" value="1">
 
         <button type="submit">Register</button>
-    </form>
+    </form> -->
 
     <footer class="footer">
         <div class="text-center p-2" style="background-color: #e6d1be;">
