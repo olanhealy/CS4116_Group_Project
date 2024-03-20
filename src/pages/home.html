@@ -10,32 +10,95 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="home.css">
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
-    <h1>Home Page</h1>
-    <nav>
-        <ul>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="matches.php">Matches</a></li>
-            <li><a href="explore.php">Explore</a></li>
-            <li><a href="messages.php">Messages</a></li>
-            <li><a href="edit_profile.php">Edit Profile</a></li> <!-
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+
+    <!-- Start of Header -->
+    <header class="position-absolute start-0 top-0 end-0" style="background-color: white;">
+
+        <!-- Images -->
+        <div class="images justify-content-between align-items-center">
+            <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
+            <div class="line"></div>
+            <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+        </div>
+        
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="button" onclick="location.href='logout.php'"><a>Log Out</a></button>
+            <button class="button1" onclick="location.href='explore.php'"><a>Explore</a></button> 
+        </div>
+
+        <!-- Profile Icon -->
+        <div>
+            <button class="navbar-toggler ms-end" fill="currentColor" style="color: #abc99d; background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>
+            </button>
+        </div>
+        
+    </header>
+    <hr>
+    <!-- End of Header -->
+    
+    <!-- Profile Icon Dropdown -->
+    <nav class="collapse navbar-collapse dropdown-nav" id="navbar">
+        <div class="container-xxl">
+            <div class="collapse navbar-collapse justify-content-end align-centre" id="main-nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#editprofile">Edit Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <main>
-        <section>
-            <h2>Homepage Content</h2>
-            <!-- Placeholder image -->
-            <img src="../assets/images/ulSinglesTrasparent.png" alt="Logo Image">
-        </section>
-    </main>
+    <!-- Dropdown Menu -->
+    <div class="dropdown mt-3">
+        <button class="btn btn-secondary dropdown-toggle" style="background-color: bisque;" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+            Home
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="menu-dropdown">
+            <li><a class="dropdown-item" href="explore.php">Explore</a></li>
+            <li><a class="dropdown-item" href="matches.php">Matches</a></li>
+            <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+            <li><a class="dropdown-item" href="edit_profile.php">Edit Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <main>
+            <div style = "position:fixed; left:150px; top:260px;">
+                <section class="title">
+                    <a>UL Singles</a>
+                </section>
+                <section class="information">
+                    <a>Information on Website</a>
+                </section>
+             </div> 
+            <img class="picture" src="../assets/images/homepage_image.jpeg" alt="homepage_image">
+        </main>
+    </div>
+
+    <section class="slogan">
+        <a>Explore. Adore. Ignore.</a>
+    </section>
+        
+
+    <footer class="py-4 mt-5" style="background-color: bisque;">
+        <div class="container text-bisque text-center">
+           <p class="mb-1"></p>
+        </div>
+    </footer>
 
 </body>
 </html>
