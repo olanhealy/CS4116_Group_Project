@@ -40,7 +40,6 @@ body {
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
-
 }
 
 .button:hover {
@@ -126,10 +125,19 @@ body {
 }
 
 .title {
-  text-align: start;
+  text-align: center;
   color: black;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 40px;
   margin-top: 20px;
+  margin-left: 100px;
+}
+
+.information {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: 35px;
+  margin-top: 70px;
   margin-left: 100px;
 }
