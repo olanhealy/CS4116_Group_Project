@@ -1,3 +1,11 @@
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+ } 
+ 
+
 .navbar {
   display: flex;
   align-items: center;
@@ -45,13 +53,6 @@
   color: white;
 }
 
-.main-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 
 .login {
   position: fixed;
@@ -60,9 +61,13 @@
   transform: translate(-50%, -50%);
   padding: 20px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.footer {
+footer {
   position: fixed;
   left: 0;
   bottom: 0;
@@ -74,5 +79,9 @@
 .custom-btn {
   width: 262px;
   font-size: 18px;
+}
+
+img {
+  max-height: 72px;
 }
 
