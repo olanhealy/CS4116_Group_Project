@@ -1,10 +1,19 @@
-header {
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+ } 
+ 
+
+.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 10px;
   padding-top: 10px;
   padding-right: 10px;
+  border-bottom: 0.5px solid #d3d3d3;
 }
 
 .line {
@@ -28,18 +37,51 @@ header {
 .button {
   background-color: white; 
   color: #abc99d; 
-  border: 3px solid #abc99d;
+  border: solid #abc99d;
   padding: 13px 29px;
   text-align: center;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
+  border-radius: 0%;
 }
   
 .button:hover {
   background-color: #abc99d;
   color: white;
+}
+
+
+.login {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #e6d1be;
+  text-align: center;
+}
+
+.custom-btn {
+  width: 262px;
+  font-size: 18px;
+}
+
+img {
+  max-height: 72px;
 }
 
