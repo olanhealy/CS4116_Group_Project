@@ -58,3 +58,24 @@
     border-color: #000;
     width:fit-content;
   }
+
+  .custom-btn {
+    width: 262px;
+    font-size: 18px;
+  }
+
+  .register-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .register-right {
+    
+  }
+
+  img {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
