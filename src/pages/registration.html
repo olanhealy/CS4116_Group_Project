@@ -22,6 +22,19 @@
 
 <body>
 
+    <h2>Registration Form</h2>
+
+    <?php
+    // In edit_profile.php, any errors that may be encountered while registering are stored
+    // In an array. If there are erros, display them as a list here
+    if (!empty($errors)) {
+        echo "<ul>";
+        foreach ($errors as $error) {
+            echo "<li>$error</li>";
+        }
+        echo "</ul>";
+    }
+    ?>
     <nav class="navbar navbar-fixed-top">
         <div class="images">
             <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
@@ -93,21 +106,27 @@
     <!-- <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
 
     <form action="registration.php" method="post">
+        <!-- Email  -->
         <label for="email">Email:</label>
         <input type="email" name="email" required>
 
+        <!-- Password  -->
         <label for="password">Password:</label>
         <input type="password" name="password" required>
 
+        <!-- Repeated Password  -->
         <label for="password-repeat">Confirm Password:</label>
         <input type="password" name="password-repeat" required>
 
+        <!-- First Name  -->
         <label for="first_name">First Name:</label>
         <input type="text" name="first_name" required>
 
+        <!-- Last Name  -->
         <label for="last_name">Last Name:</label>
         <input type="text" name="last_name" required>
 
+        <!-- Terms and Conditions checkbox  -->
         <input type="checkbox" name="agreed" required>
         <label for="agreed">I agree to the terms and conditions</label>
 
