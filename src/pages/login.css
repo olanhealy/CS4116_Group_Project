@@ -1,10 +1,10 @@
-*{
+* {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
- } 
- 
+}
+
 
 .navbar {
   display: flex;
@@ -28,15 +28,15 @@
   height: 80px;
 }
 
-.images{
+.images {
   display: flex;
   align-items: left;
   max-width: 500px;
 }
 
 .button {
-  background-color: white; 
-  color: #abc99d; 
+  background-color: white;
+  color: #abc99d;
   border: solid #abc99d;
   padding: 13px 29px;
   text-align: center;
@@ -47,7 +47,7 @@
   float: right;
   border-radius: 0%;
 }
-  
+
 .button:hover {
   background-color: #abc99d;
   color: white;
@@ -90,4 +90,3 @@ footer {
   padding: 10px;
   margin-top: auto;
 }
-
