@@ -52,18 +52,13 @@
     color: white;
   }
 
-  .footer {
+  footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #e6d1be;
     text-align: center;
-  }
-
-  .registration {
-    border-color: #000;
-    width:fit-content;
   }
 
   .custom-btn {
