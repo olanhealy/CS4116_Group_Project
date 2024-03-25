@@ -53,21 +53,28 @@
   color: #abc99d;
 }
 
-.icon{
+
+#iconbutton {
   background-color: white; 
   color: #abc99d; 
-  padding: 13px 20px;
+  padding: 10px 20px;
   cursor: pointer;
   align-items: right;
   outline: none;
   box-shadow: none;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
-#iconbutton {
-  outline: none;
-  box-shadow: none;
-  border: none;
+hr {
+  margin: 0.2em auto;
+}
+
+.dropdown-menu {
+  width: 13%;
 }
 
 
@@ -80,6 +87,7 @@
   font-weight: bold;
   border-color: bisque;
   margin-left: 120px;
+  margin-top: 10px;
 }
 
 .btn:hover{
@@ -96,20 +104,8 @@
   text-decoration: none;
 }
 
-/*
-.container {
-  border: 12px solid #abc99d;
-  width: 1380px;
-  height: 400px;
-  margin-left: 30px;
-  margin-top: 30px;
-  margin-right: 30px;
-  margin-bottom: 50px;
-  position: relative;
-}
-*/
 
-.title {
+#title {
   text-align: center;
   color: black;
   font-weight: bolder;
@@ -118,14 +114,30 @@
   margin-bottom: 10px;
 }
 
-.information {
+#title2 {
+  text-align: center;
+  color: black;
+  font-weight: bolder;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#information {
   text-align: center;
   color: black;
   font-weight: bold;
   font-size: 30px;
 }
 
-.informationbox {
+#information2 {
+  text-align: start;
+  color: black;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#informationbox {
   position: absolute;
 }
 
@@ -143,12 +155,6 @@
   position: relative;
 }
 
-/*
-#picturecontainer {
-  position:absolute;
-}
-
-*/
 
 footer {
   background-color: #e6d1be;
