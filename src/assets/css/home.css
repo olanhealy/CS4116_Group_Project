@@ -4,6 +4,10 @@ body {
   flex-direction: column;
 }
 
+#navbar {
+  border-bottom: 1px solid #d3d3d3;
+}
+
 .line {
   width: 1px;
   height: 75px;
