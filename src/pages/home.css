@@ -1,16 +1,4 @@
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-right: 10px;
-}
 
-body {
-  padding-top: 80px;
-}
-  
 .line {
   width: 1px;
   height: 75px;
@@ -29,7 +17,7 @@ body {
   max-width: 500px;
 }
   
-.button {
+#explorebutton {
   background-color: white; 
   color: #abc99d; 
   border: 3px solid #abc99d;
@@ -42,12 +30,12 @@ body {
   float: right;
 }
 
-.button:hover {
+#explorebutton:hover {
   background-color: #abc99d;
   color: white;
 }
 
-.button1{
+#logoutbutton{
   background-color: #abc99d;
   color: white; 
   border: 3px solid #abc99d;
@@ -58,10 +46,9 @@ body {
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
-  margin-left: 850px;
 }
     
-.button1:hover {
+#logoutbutton:hover {
   background-color: white;
   color: #abc99d;
 }
@@ -69,41 +56,36 @@ body {
 .icon{
   background-color: white; 
   color: #abc99d; 
-  padding: 13px 30px;
+  padding: 13px 20px;
   cursor: pointer;
-  border: 0;
-  margin-right: 100px;
+  align-items: right;
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
-#navbar {
-  position: fixed;
-  background-color: black;
+#iconbutton {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
+
 
 .btn{
   background-color: bisque;
   color: white; 
   text-align: center;
   padding: 15px 60px;
-  font-size: 25px;
+  font-size: 32px;
   font-weight: bold;
   border-color: bisque;
-  margin-left: 30px;
-  margin-top: 5px;
+  margin-left: 120px;
 }
 
 .btn:hover{
   background-color: bisque;
   border-color: black;
   color: white; 
-}
-
-.picture{
-  border: 8px solid bisque;
-  height: 320px;
-  width: 500px;
-  margin-left: 800px;
-  margin-top: 25px;
 }
 
 .slogan{
@@ -114,7 +96,8 @@ body {
   text-decoration: none;
 }
 
-.box {
+/*
+.container {
   border: 12px solid #abc99d;
   width: 1380px;
   height: 400px;
@@ -122,7 +105,9 @@ body {
   margin-top: 30px;
   margin-right: 30px;
   margin-bottom: 50px;
+  position: relative;
 }
+*/
 
 .title {
   text-align: center;
@@ -130,14 +115,48 @@ body {
   font-weight: bolder;
   font-size: 40px;
   margin-top: 20px;
-  margin-left: 100px;
+  margin-bottom: 10px;
 }
 
 .information {
   text-align: center;
   color: black;
   font-weight: bold;
-  font-size: 35px;
-  margin-top: 70px;
-  margin-left: 100px;
+  font-size: 30px;
+}
+
+.informationbox {
+  position: absolute;
+}
+
+
+#picture {
+  border: 10px solid bisque;
+  border-color: bisque !important;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#outline {
+  border: 10px solid #abc99d;
+  border-color: #abc99d !important;
+  position: relative;
+}
+
+/*
+#picturecontainer {
+  position:absolute;
+}
+
+*/
+
+footer {
+  background-color: #e6d1be;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
+}
+
+.border {
+  border: 2px solid #000;
 }
