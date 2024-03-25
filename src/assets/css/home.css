@@ -1,3 +1,8 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 .line {
   width: 1px;
@@ -162,4 +167,3 @@ footer {
   padding: 10px;
   margin-top: auto;
 }
-
