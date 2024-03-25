@@ -80,7 +80,12 @@ body {
 
 .dropdown-item-profile {
   text-decoration: none;
-  color: black;
+  color: white;
+  font-size: 20px;
+}
+
+#profiledropdown{
+  background-color: #abc99d;
 }
 
 hr {
@@ -103,6 +108,15 @@ hr {
   background-color: #e6d1be;
   border-color: black;
   color: white; 
+}
+
+#homedropdown {
+  background-color: #e6d1be;
+}
+
+.dropdown-item{
+  color: white;
+  font-size: 20px;
 }
 
 .slogan{
