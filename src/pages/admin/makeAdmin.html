@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Show User</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        
+        <form action="makeAdmin.php" method='POST'>
+            <input type="hidden" name="action" value="makeAdmin">
+            <input type="hidden" name="target_id" value="<?php echo $target_id; ?>">
+            <input type="submit" value="Make Admin">
+        </form>
+        
+    </body>
