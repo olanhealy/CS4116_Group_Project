@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <form method='post'>
-    Id: <?php echo $row["user_id"]; ?> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
-    <input type='hidden' name='user_id' value='<?php echo $row["user_id"]; ?>'>
+    <form action="showUserAdmin.php" method='GET'>
+    <a href="showUserAdmin.php?target_id=<?php echo $target_id?>">User: <?php echo $target_id; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
+    
 </form>
 </html>

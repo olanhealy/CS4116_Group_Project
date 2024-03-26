@@ -1,50 +1,45 @@
 <?php
-    //get session info
-    session_start();
 
-    include "../db_connection.php";
-    include_once "adminHelperFunctions.php";
+//get session info
+session_start();
 
+include "../db_connection.php";
+include_once "adminHelperFunctions.php";
 
-    // Check if the user is logged in
-    if(isset($_SESSION['id'])) {
-        // Retrieve the user ID
-        $user_id = $_SESSION['id'];
-        
-    } else {
-        // Redirect the user to the login page or display an error message
-        echo "User is not logged in.";
-    }
-
+// Check if the user is logged in
+if (isset ($_SESSION['id'])) {
+    // Retrieve the user ID
+    $user_id = $_SESSION['id'];
     //Checks for post request
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if(isset($_POST['email'])){
 
-            //set variables
-            $email = $_POST['email'];
-            $reason = $_POST['reason'];
-            $duration = $_POST['duration'];
+        //set variables
+        $reason = $_POST['reason'];
+        $dateOfUnban = $_POST['dateOfUnban'];
 
-            //get account details from the email (user_id)
-            $sql = "SELECT * FROM account WHERE email='$email'";
-            $result = mysqli_query($conn, $sql);
-
-            //get to-be-banned id
-            if ($result && mysqli_num_rows($result) == 1) {
-                $row = mysqli_fetch_assoc($result);
-                $target_id = $row["user_id"];
-            }
-
-            //create ban
-            $sql_insert = "INSERT INTO banned (user_id, banned_by, reason, duration) VALUES (?, ?, ?, ?)";
-            $insert_new_banned = $conn->prepare($sql_insert);
-            $insert_new_banned->bind_param('ssss', $target_id, $user_id, $reason, $duration);
-            $insert_new_banned->execute();
-
-            //call setBanned from adminHelperFunctions.php
-            setBanned("$target_id", 1);
+        if (isset($_SESSION['target_id'])) {
+            $target_id = $_SESSION['target_id'];
+        } else {
+            echo "Target ID is not set.";
+            exit();
         }
-    }
 
-    //html
-    include "banUser.html";
+        //create ban
+        $sql_insert = "INSERT INTO banned (user_id, banned_by, reason, dateOfUnban) VALUES (?, ?, ?, ?)";
+        $insert_new_banned = $conn->prepare($sql_insert);
+        $insert_new_banned->bind_param('ssss', $target_id, $user_id, $reason, $dateOfUnban);
+        $insert_new_banned->execute();
+
+        //call setBanned from adminHelperFunctions.php
+        setBanned("$target_id", 1);
+        echo "$target_id banned successfully"; 
+        // Redirect to userListAdmin.php
+        header("Location: usersListAdmin.php");
+        exit();
+    } else {
+        echo "No request made";
+    }
+} else {
+    // Redirect the user to the login page or display an error message
+    echo "User is not logged in.";
+}
