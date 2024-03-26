@@ -1,7 +1,7 @@
 -- Used to Create Database
 
 CREATE TABLE account (
-    user_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    user_id INT(11) PRIMARY KEY,
     email VARCHAR(255) UNIQUE,
     password_hash VARCHAR(255),
     first_name VARCHAR(26),
@@ -79,32 +79,29 @@ CREATE TABLE messages(
 
 
 -- Dummy data for Account table
-INSERT INTO account (email, password_hash, first_name, last_name, user_role, banned)
-VALUES ('21344256@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Collins', 'standard', 0),
-       ('21344257@studentmail.ul.ie', 'hashed_password', 'Olan', 'Healy', 'admin', 1);
+INSERT INTO account (user_id, email, password_hash, first_name, last_name, user_role, banned)
+VALUES (11111111, '11111111@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Collins', 'standard', 0);
 
 -- Dummy data for Profile table
 INSERT INTO profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
-VALUES (1, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term'),
-       (2, 'Olan Healy', 28, 'Male', 'Im a legend', 'profile_pic.jpg', 'Female', 1, 'Undergrad', 'Psychology', 'Traveling, Photography', 'Unsure');
-
--- Dummy data for Banned table
-INSERT INTO banned (user_id, banned_by, reason, duration)
-VALUES (2, 1, 'Inappropriate behavior', '24:00:00');
+VALUES (3, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term');
 
 -- Dummy data for Adore table
 INSERT INTO adore (user_id, adored_user_id)
-VALUES (1, 2), (2, 1);
+VALUES (11111111, 3);
 
 -- Dummy data for Ignore table
 INSERT INTO `ignore` (user_id, ignored_user_id)
-VALUES (1, 2), (2, 1);
+VALUES (11111111, 4);
 
 -- Dummy data for Matches table
 INSERT INTO matches (initiator_id, target_id, `status`, response_date)
-VALUES (1, 2, 'Adore', NOW()), (2, 1, 'Ignore', NOW());
+VALUES (11111111, 2, 'Adore', NOW());
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (1, 2, 1, 'Hello Olan, how are you?', 'delivered'),
-       (1, 1, 2, 'Hi Kevin, Im doing well, thanks!', 'read');
+VALUES (2, 11111111, 2, 'Hello, how are you?', 'delivered');
+
+-- Dummy data for Messages table
+INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
+VALUES (2, 11111111, 2, 'Good', 'delivered');
