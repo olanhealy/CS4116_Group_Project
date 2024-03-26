@@ -5,14 +5,12 @@
 </head>
 <body>
     <form action="banUser.php" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-
+        
         <label for="reason">Reason:</label>
         <textarea id="reason" name="reason" rows="4" cols="50" required></textarea><br><br>
 
-        <label for="duration">Duration (HH:MM:SS):</label>
-        <input type="time" id="duration" name="duration" required><br><br>
+        <label for="dateOfUnban">Date of Un-Ban:</label>
+        <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
 
         <input type="submit" value="Ban User">
     </form>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete User</title>
+</head>
+<body>
+    <form action="deleteUser.php" method="post">
+        <input type="hidden" name="action" value="deleteUser">
+        <input type="hidden" name="target_id" value="<?php echo $target_id; ?>">
+        <input type="submit" value="Delete User">
+    </form>
+</html>
