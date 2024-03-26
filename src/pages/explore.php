@@ -22,6 +22,8 @@ $user_logged_in_looking_for = getLookingFor($user_logged_in_id);
 function calcMatchWeight($target_user_id) {
     global $user_logged_in_id, $user_logged_in_age, $user_logged_in_hobbies, $user_logged_in_college_year, $user_logged_in_course, $user_logged_in_looking_for;
     
+
+    // we will get the target users relevant details here as only now do we need them as the userid of target user has passed the "gender check"
     $target_user_id_hobbies = getHobbies($target_user_id);
     $target_user_id_age = getAge($target_user_id);
     $target_user_id_college_year = getCollegeYear($target_user_id);
@@ -48,7 +50,7 @@ function calcMatchWeight($target_user_id) {
             case 'age':
                 $age_difference = abs($user_logged_in_age - $target_user_id_age);
                 
-                // Score set based of these 3 constraints
+                // different age difference constraints to give a score
                 if ($age_difference <= 3) {
                     $score = 100;
                 } elseif ($age_difference <= 6) {
@@ -64,40 +66,40 @@ function calcMatchWeight($target_user_id) {
                 $matching_hobbies = array_intersect($user_hobbies, $target_user_hobbies);
                 
                 // If hobbies match, for the amount that 2 multply it by 50 score
-                $score = count($matching_hobbies) * 50; // Each matching hobby contributes 10 to the score
+                $score = count($matching_hobbies) * 50; // each matching hobby contributes 10 to the score
                 break;
             //case for college year    
             case 'college_year':
                 if ($user_logged_in_college_year === $target_user_id_college_year) {
-                    $score = 100; // Same college year
+                    $score = 100; // same college year
                 } else {
-                    $score = 0; // Different college year
+                    $score = 0; // different college year
                 }
                 break;
             //case for course    
             case 'course':
                 
                 if ($user_logged_in_course === $target_user_id_course) {
-                    $score = 100; // Same course
+                    $score = 100; // same course
                 } else {
-                    $score = 0; // Different course
+                    $score = 0; // different course
                 }
                 break;
             //case for looking_for
             case 'looking_for':
                 if ($user_logged_in_looking_for === $target_user_id_looking_for) {
-                    $score = 100; // Same looking for status
+                    $score = 100; // same looking for status
                 } else {
-                    $score = 0; // Different looking for status
+                    $score = 0; // different looking for status
                 }
                 break;
             default:
-                // Default score if no criteria match
+                // set score to 0 if no criteria matches
                 $score = 0;
                 break;
         }
         
-        // Add the weighted score to the total score
+        // add this score to toal score
         $weight_score += $weight * $score;
     }
     return $weight_score;
@@ -141,34 +143,34 @@ function getUsersForExplore($user_logged_in_id) {
         
       
 
-        // Calculate match weight for the user if it passes the gender check 
+        // calculate match weight for the user if it passes the gender check 
         $weight_score = calcMatchWeight($target_user_id);
         
 
-        // Store the user ID and match weight in the array
+        // store user id of a user that makes it thus for and their subsuqenet match score
         $users_to_explore[] = array(
             'user_id' => $target_user_id,
             'weight_score' => $weight_score
         );
     }
 
-    // Sort users based on their weight score (descending order)
+    // sort users from match score in descending order
     usort($users_to_explore, function ($a, $b) {
         return $b['weight_score'] - $a['weight_score'];
     });
 
-    // Now $users_to_explore contains the user IDs sorted by their match weight
+    // Nreturn users to explore which give an array of the user id matched with their "match score"
     return $users_to_explore;
         
     }
 
 
-// Get users to explore
+// call users to explore method
 $users_to_explore = getUsersForExplore($user_logged_in_id);
 
-// Check if there are users to explore
+// check if users are there to explore
 if (!empty($users_to_explore)) {
-    // Display the first user with the highest match score
+    // show the first user with the highest match score, then shift downwards from there
     $next_user = array_shift($users_to_explore);
     $next_user_id = $next_user['user_id'];
     $next_user_score = $next_user['weight_score'];
