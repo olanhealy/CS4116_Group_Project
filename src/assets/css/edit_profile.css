@@ -141,7 +141,12 @@ body {
     color: white;
     font-size: 18px;
   }
-  
+
+  #outline {
+    border-color: #4d4d4d !important;
+    position: relative;
+    width: 1300px;
+  }
 
   footer {
     background-color: #e6d1be;
