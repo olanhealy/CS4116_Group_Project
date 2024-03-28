@@ -6,8 +6,13 @@ require "helper.php";
 //start session securly 
 session_start();
 
-// Fetch user id of user currently accessing the explore page
+// fetch user id of user currently accessing the explore page
 $user_logged_in_id = $_SESSION['id'];
+
+// check if a different user is accessing the page and reset session data if so
+if (isset($_SESSION['user_id']) && $_SESSION['user_id'] != $user_logged_in_id) {
+    unset($_SESSION['users_to_explore']); // Reset the explore list for a new user
+}
 
 //Use the getters from helper.php only of the details we require from profile table of db for the user logged in
 $user_logged_in_hobbies = getHobbies($user_logged_in_id);
@@ -21,7 +26,6 @@ $user_logged_in_looking_for = getLookingFor($user_logged_in_id);
 //Fucntion for how we are going to differ the weights to display matches. We are going to have a few factors
 function calcMatchWeight($target_user_id) {
     global $user_logged_in_id, $user_logged_in_age, $user_logged_in_hobbies, $user_logged_in_college_year, $user_logged_in_course, $user_logged_in_looking_for;
-    
 
     // we will get the target users relevant details here as only now do we need them as the userid of target user has passed the "gender check"
     $target_user_id_hobbies = getHobbies($target_user_id);
@@ -106,6 +110,8 @@ function calcMatchWeight($target_user_id) {
 }
 
 function getUsersForExplore($user_logged_in_id) {
+    if (!isset($_SESSION['users_to_explore'])) { // if no users to explore are set in session, we will then use this method to get them
+        // this helps as if a user leaves the page, its state will be remember and will nott have to recalculate the users to explore
     global $conn, $user_logged_in_gender, $user_logged_in_pursuing;
     
     //initalise array to explore users that will eventually pass the criteria made for user logged in 
@@ -129,9 +135,6 @@ function getUsersForExplore($user_logged_in_id) {
     
         $target_user_id_gender = getGender($target_user_id);
         $target_user_id_pursuing = getPursuing($target_user_id);
-      
-
-        
 
         if ($target_user_id_gender !== $user_logged_in_pursuing || $target_user_id_pursuing !== $user_logged_in_gender) {
             continue; //so if the target (female) does not equal the user logged in pursuing (female) it would pass, and if the targer user pursuing (male) does not equal the gender of
@@ -139,13 +142,9 @@ function getUsersForExplore($user_logged_in_id) {
                       //too essentially just cut this user id and move onto the next one
                     
         }
-        
-        
-      
 
         // calculate match weight for the user if it passes the gender check 
-        $weight_score = calcMatchWeight($target_user_id);
-        
+        $weight_score = calcMatchWeight($target_user_id);   
 
         // store user id of a user that makes it thus for and their subsuqenet match score
         $users_to_explore[] = array(
@@ -159,26 +158,41 @@ function getUsersForExplore($user_logged_in_id) {
         return $b['weight_score'] - $a['weight_score'];
     });
 
-    // Nreturn users to explore which give an array of the user id matched with their "match score"
-    return $users_to_explore;
-        
+    
+        $_SESSION['users_to_explore'] = $users_to_explore;
     }
+    
+
+    // return users to explore which give an array of the user id matched with their "match score"
+    // now have it set as session so can actually update
+    return $_SESSION['users_to_explore'];
+}
+
+if (isset($_GET['action'])) {
+    // if an adore or ignore button is clicked, move to next user in list. action is set in html to the adore and ignore buttons
+    array_shift($_SESSION['users_to_explore']);
+}
 
 
 // call users to explore method
 $users_to_explore = getUsersForExplore($user_logged_in_id);
 
-// check if users are there to explore
-if (!empty($users_to_explore)) {
-    // show the first user with the highest match score, then shift downwards from there
-    $next_user = array_shift($users_to_explore);
+
+$next_user = array_shift($users_to_explore); // This now fetches the next user
+
+// so if we initailse these to null before setting userid and weight score, we then avoid null pointer error with aaccessing null within array
+$next_user_id = null;
+$next_user_score = null;
+
+// check if $next_user is not null before attempting to set the user id and weight score for current user displayed
+if ($next_user) {
     $next_user_id = $next_user['user_id'];
     $next_user_score = $next_user['weight_score'];
-
-    // Include the HTML file
-    include "explore.html";
+    $displayUser = true;
 } else {
-    // No more users to explore
-    echo "<p>No more users available</p>";
+    $displayUser = false; //if no users left to explore, we then show no more users and avoid the nill error
 }
+    
+//include the HTML file
+include "explore.html";
 ?>

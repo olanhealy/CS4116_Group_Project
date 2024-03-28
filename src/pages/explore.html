@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0jpFpFTy8dYFcO+GrIjEcxkCxaxWOg3+MXg+uvfOvqKGEe+6uU8e4oXs2TsfE9v" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">User ID: <?php echo $next_user_id; ?></h5>
-                        <p class="card-text">Match Score: <?php echo $next_user_score; ?></p>
-                        <a href="#" class="btn btn-danger">Ignore</a>
-                        <a href="#" class="btn btn-success">Adore</a>
+                <!-- if display user is true, then show user id etc-->
+                <?php if ($displayUser): ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">User ID: <?php echo htmlspecialchars($next_user_id); ?></h5>
+                            <p class="card-text">Match Score: <?php echo htmlspecialchars($next_user_score); ?></p>
+                            <a href="?action=adore" class="btn btn-success">Adore</a> <!-- if adore is clicked, then action=adore which we use with GET in php -->
+                            <a href="?action=ignore" class="btn btn-danger">Ignore</a> <!-- if ignore is clicked, then action=ignore which we use with GET in php -->
+                        </div>
                     </div>
-                </div>
+                    <!-- display user is then false so helps avoid us get null error with array-->
+                <?php else: ?>
+                    <p>No more users available.</p>
+                <?php endif; ?>
             </div>
         </div>
     </div>
-    
-</body>
-</html>
