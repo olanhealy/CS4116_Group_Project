@@ -58,7 +58,7 @@ CREATE TABLE matches (
     match_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     initiator_id INT(11),
     target_id INT(11),
-    `status` ENUM('Adore', 'Ignore', 'Pending') NOT NULL,
+    `status` ENUM('Matched', 'Pending') NOT NULL,
     response_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (initiator_id) REFERENCES Account(user_id),
     FOREIGN KEY (target_id) REFERENCES Account(user_id)
@@ -96,7 +96,7 @@ VALUES (11111111, 4);
 
 -- Dummy data for Matches table
 INSERT INTO matches (initiator_id, target_id, `status`, response_date)
-VALUES (11111111, 2, 'Adore', NOW());
+VALUES (66666666, 2, 'Matched', NOW());
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
