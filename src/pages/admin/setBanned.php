@@ -4,16 +4,19 @@ include_once "adminHelperFunctions.php";
 
 session_start();
 
+//if the request is a post request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset ($_SESSION['targetId'])) {
-        $target_id = $_SESSION['targetId'];
+
+        //assigns the targetId to the value of the session
+        $targetId = $_SESSION['targetId'];
 
         //if ban, sets ban. If unban sets unban
         if ($_POST['action'] == 'unban') {
-            setBanned($target_id, 0);
+            setBanned($targetId, 0);
         } elseif ($_POST["action"] == "ban") {
-            setBanned($target_id, 1);
+            setBanned($targetId, 1);
         }
 
         // Redirect to userListAdmin.php

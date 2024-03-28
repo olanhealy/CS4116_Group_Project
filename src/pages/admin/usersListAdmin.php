@@ -3,4 +3,6 @@
     include "adminHelperFunctions.php";
     include "setBanned.php";
 
+    session_start();
+
     showAccounts();

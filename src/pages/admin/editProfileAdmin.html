@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Profile</title>
+    </head>
+
+    <body>
+        <h1>User <?php echo $_SESSION['targetId']; ?> Profile</h1>
+
+        <p><strong>Bio:</strong>
+            <?php echo  $_SESSION['existingCourse']; ?>
+        </p>
+        <p><strong>Hobbies:</strong>
+            <?php echo $_SESSION['existingHobbies']; ?>
+        </p>
+        <p><strong>Course:</strong>
+            <?php echo $_SESSION['existingCourse']; ?>
+        </p>
+
+        <hr>
+
+        <!-- Form for editing profile information -->
+        <form method="POST" action="editProfileAdmin.php" enctype="multipart/form-data">
+            <label for="bio">Bio:</label><br>
+            <textarea id="bio" name="bio"><?php echo $_SESSION['existingBio']; ?></textarea><br>
+
+            <label for="profile_pic">Profile Picture:</label><br>
+            <input type="file" id="profile_pic" name="profile_pic"><br>
+
+            <label for="hobbies">Hobbies:</label><br>
+            <input type="text" id="hobbies" name="hobbies" value="<?php echo $_SESSION['existingHobbies'] ; ?>"><br>
+
+            <label for="course">Course:</label><br>
+            <input type="text" id="course" name="course" value="<?php echo $_SESSION['existingCourse']; ?>"><br>
+
+            <input type="submit" value="Change Profile Info">
+
+            <hr>
+        </form>
+    </body>
+
+    </html>

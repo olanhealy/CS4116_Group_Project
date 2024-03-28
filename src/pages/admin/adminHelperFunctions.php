@@ -1,7 +1,5 @@
 <?php
 
-//TODO: Standardise how SQL statements are written
-
 //show all the accounts in a list
 function showAccounts()
 {
@@ -150,6 +148,10 @@ function deleteUser($targetId)
         die("Error in SQL query for table account: " . $conn->error . "<br>");
     }
 
+    // Redirect to userListAdmin.php
+    header("Location: usersListAdmin.php");
+    exit();
+
 }
 
 function deleteMessages($targetId)
@@ -197,7 +199,7 @@ function deleteMatches($targetId)
 
     //check the result is not empty
     $result = $conn->query($query);
-    if ($result == false) {
+    if ($result !== false) {
         //checks the result isn't empty
         if ($result->num_rows > 0) {
 
@@ -210,7 +212,7 @@ function deleteMatches($targetId)
             $stmt->execute();
 
             //checks if row is removed
-            if ($stmt->affected_rows !== 0) {
+            if ($stmt->affected_rows > 0) {
                 echo "User deleted successfully from matches" . "<br>";
             } 
 

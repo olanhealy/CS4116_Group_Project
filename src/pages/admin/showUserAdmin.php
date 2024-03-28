@@ -3,12 +3,12 @@
     include_once "adminHelperFunctions.php";
     
     session_start();
-
+    
     //targetID set from GET sent from userListAdmin.html
     $targetId =  $_GET['targetId'];
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
-
+    //var_dump($_SESSION);
     //if the account is banned show editProfile, unban, deleteUser
     if(isAccountBanned($targetId)){
         include "editProfileAdmin.php";
