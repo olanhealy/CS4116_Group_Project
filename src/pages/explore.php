@@ -3,17 +3,19 @@
 require "db_connection.php";
 require "helper.php";
 
-//start session securly 
+// Start session securely
 session_start();
 
-// fetch user id of user currently accessing the explore page
+// Fetch user id of user currently accessing the explore page
 $user_logged_in_id = $_SESSION['id'];
 
-// check if a different user is accessing the page and reset session data if so
-if (isset($_SESSION['user_id']) && $_SESSION['user_id'] != $user_logged_in_id) {
-    unset($_SESSION['users_to_explore']); // Reset the explore list for a new user
+// initialide user's exploration state if not already set or if a different user is logged in
+if (!isset($_SESSION['explore_state'][$user_logged_in_id])) {
+    $_SESSION['explore_state'][$user_logged_in_id] = [
+        'users_to_explore' => [],
+        'current_position' => 0, // tracks the current position in the explore list
+    ];
 }
-
 //Use the getters from helper.php only of the details we require from profile table of db for the user logged in
 $user_logged_in_hobbies = getHobbies($user_logged_in_id);
 $user_logged_in_gender = getGender($user_logged_in_id);
@@ -41,7 +43,7 @@ function calcMatchWeight($target_user_id) {
         'hobbies' => 1.4, //40% increase
         'college_year' => 1.15, //15% increase
         'course' => 1.15, //15% increase
-        'looking_for' => .20 //20% increase
+        'looking_for' => 1.20 //20% increase
 
     );
 
@@ -110,7 +112,7 @@ function calcMatchWeight($target_user_id) {
 }
 
 function getUsersForExplore($user_logged_in_id) {
-    if (!isset($_SESSION['users_to_explore'])) { // if no users to explore are set in session, we will then use this method to get them
+    if (empty($_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'])) { // if no users to explore are set in session, we will then use this method to get them
         // this helps as if a user leaves the page, its state will be remember and will nott have to recalculate the users to explore
     global $conn, $user_logged_in_gender, $user_logged_in_pursuing;
     
@@ -139,8 +141,7 @@ function getUsersForExplore($user_logged_in_id) {
         if ($target_user_id_gender !== $user_logged_in_pursuing || $target_user_id_pursuing !== $user_logged_in_gender) {
             continue; //so if the target (female) does not equal the user logged in pursuing (female) it would pass, and if the targer user pursuing (male) does not equal the gender of
                       //the user logged in (male). In this case they both equal so statement wouldnt proceed and function would move on. If this condition is true, we use continue
-                      //too essentially just cut this user id and move onto the next one
-                    
+                      //too essentially just cut this user id and move onto the next one         
         }
 
         // calculate match weight for the user if it passes the gender check 
@@ -159,38 +160,62 @@ function getUsersForExplore($user_logged_in_id) {
     });
 
     
-        $_SESSION['users_to_explore'] = $users_to_explore;
+    $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'] = $users_to_explore;
     }
     
-
     // return users to explore which give an array of the user id matched with their "match score"
     // now have it set as session so can actually update
-    return $_SESSION['users_to_explore'];
+    return $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'] ;
 }
 
+// GET request for the action which is assigned to adore and ignore.
 if (isset($_GET['action'])) {
-    // if an adore or ignore button is clicked, move to next user in list. action is set in html to the adore and ignore buttons
-    array_shift($_SESSION['users_to_explore']);
+    // get the current position from the session
+    $current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
+    
+    // gets the current based on the current position beofore incrementing for the next user so we can then use it to add to db for an adore or ignore action
+    $current_user = $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'][$current_position] ?? null;
+
+    if ($current_user !== null) {
+        if ($_GET['action'] === 'adore') {
+            $adore_sql = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
+            if ($adore = $conn->prepare($adore_sql)) {
+                $adore->bind_param("ii", $user_logged_in_id, $current_user['user_id']);
+                $adore->execute();
+                $adore->close();
+            }
+        } else if ($_GET['action'] === 'ignore') { // Correctly moved to a separate condition
+            $ignore_sql = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
+            if ($ignore = $conn->prepare($ignore_sql)) {
+                $ignore->bind_param("ii", $user_logged_in_id, $current_user['user_id']);
+                $ignore->execute();
+                $ignore->close();
+            }
+        }
+    }
+    // increment the current position after handling any action
+    $_SESSION['explore_state'][$user_logged_in_id]['current_position']++;
 }
 
 
-// call users to explore method
+// Call the users to explore method
 $users_to_explore = getUsersForExplore($user_logged_in_id);
 
+// Attempt to get the next user based on current position in users_to_explore 
+$current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
+$next_user = $users_to_explore[$current_position] ?? null;
 
-$next_user = array_shift($users_to_explore); // This now fetches the next user
-
-// so if we initailse these to null before setting userid and weight score, we then avoid null pointer error with aaccessing null within array
+//initialise variables to null first so then if no users to explore it will display no users to explore
 $next_user_id = null;
 $next_user_score = null;
+$displayUser = false;
 
-// check if $next_user is not null before attempting to set the user id and weight score for current user displayed
 if ($next_user) {
     $next_user_id = $next_user['user_id'];
     $next_user_score = $next_user['weight_score'];
     $displayUser = true;
 } else {
-    $displayUser = false; //if no users left to explore, we then show no more users and avoid the nill error
+    $displayUser = false; // if no users left to explore, reset to false
 }
     
 //include the HTML file
