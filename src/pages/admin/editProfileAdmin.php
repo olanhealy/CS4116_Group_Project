@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Include the helper.php file
 include '../helper.php';
 include '../db_connection.php';
@@ -43,6 +45,7 @@ if (isset($_SESSION['targetId'])) {
             setCourse($targetId, $course);
         }
     }
+
 
 } else {
     echo "Target ID is not set.";

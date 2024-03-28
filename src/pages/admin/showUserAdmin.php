@@ -5,7 +5,19 @@
     session_start();
     
     //targetID set from GET sent from userListAdmin.html
-    $targetId =  $_GET['targetId'];
+    if (isset($_GET['targetId'])){
+        $targetId =  $_GET['targetId'];
+    }else{
+        //if targetId is not set, check if it is set in SESSION
+        if (isset($_SESSION['targetId'])){
+            $targetId = $_SESSION['targetId'];
+        }else{
+            //if targetId is not set in GET or SESSION, show error message
+            echo "Target ID is not set.";
+            exit();
+    }
+    
+    };
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
     //var_dump($_SESSION);
