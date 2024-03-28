@@ -6,8 +6,12 @@ require "helper.php";
 // Start session securely
 session_start();
 
-// Fetch user id of user currently accessing the explore page
+// get user id of user currently accessing the explore page
 $user_logged_in_id = $_SESSION['id'];
+
+// delete ignores older than 3 minutes keeping as 3 for testing purposes (kinda works kind of doesnt idk something to do with timezones or some bs)
+//$cleanup_sql = "DELETE FROM `ignore` WHERE `date` < NOW() - INTERVAL 3 MINUTE";
+//$conn->query($cleanup_sql);
 
 // initialide user's exploration state if not already set or if a different user is logged in
 if (!isset($_SESSION['explore_state'][$user_logged_in_id])) {
@@ -111,23 +115,48 @@ function calcMatchWeight($target_user_id) {
     return $weight_score;
 }
 
-function getUsersForExplore($user_logged_in_id) {
-    if (empty($_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'])) { // if no users to explore are set in session, we will then use this method to get them
-        // this helps as if a user leaves the page, its state will be remember and will nott have to recalculate the users to explore
+function getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users) {
+    /*
+    if no users to explore are set in session, we will then use this method to get them
+    this helps as if a user leaves the page, its state will be remember and will nott have to recalculate the users to explore. Also checks to explore state
+    which is postion in array
+    */
+    if (empty($_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'])) { 
     global $conn, $user_logged_in_gender, $user_logged_in_pursuing;
     
     //initalise array to explore users that will eventually pass the criteria made for user logged in 
     $users_to_explore = array();
 
     // for getting all users, is a process so placeholder for now
-    $sql_all_users = "SELECT user_id FROM profile WHERE user_id != ?"; 
+    $sql_users_to_explore = "SELECT user_id FROM profile WHERE user_id != ?"; 
 
-    $get_all_users = $conn->prepare($sql_all_users);
-    $get_all_users->bind_param("i", $user_logged_in_id);
-    $get_all_users->execute();
-    $result_all_users = $get_all_users->get_result();
+    // check if the the user adores other user, if they do exclude them from being displayed
+    if (!empty($adored_users)) {
+        $placeholder = implode(",", array_fill(0, count($adored_users), "?"));
+        $sql_users_to_explore .= " AND user_id NOT IN ($placeholder)";
+    }
 
-    while ($users_row = $result_all_users->fetch_assoc()) {
+    // check if the user ignores other users, if they do exclude them from being displayed
+    if (!empty($ignored_users)) {
+        $placeholders = implode(",", array_fill(0, count($ignored_users), "?"));
+        $sql_users_to_explore .= " AND user_id NOT IN ($placeholders)";
+    }
+
+    /*
+    prepares our users_to_explore but excluding the adored and ignored users.
+    str_repeat built in function and gets the total some of adored and ignored users and then adds 1 to account for the user logged in
+    array_merge built in fucntion to merge the user logged in id with the adored and ignored users
+    basically makes sure no users skip through 
+    */
+    $get_all_users_to_explore = $conn->prepare($sql_users_to_explore);
+    $types = str_repeat("i", count($adored_users) + count($ignored_users) + 1);
+    $values = array_merge([$user_logged_in_id], $adored_users, $ignored_users);
+    $get_all_users_to_explore->bind_param($types, ...$values);
+    $get_all_users_to_explore->execute();
+    $result_all_users_to_explore = $get_all_users_to_explore->get_result();
+
+
+    while ($users_row = $result_all_users_to_explore->fetch_assoc()) {
         $target_user_id = $users_row['user_id']; 
 
         /*
@@ -139,9 +168,12 @@ function getUsersForExplore($user_logged_in_id) {
         $target_user_id_pursuing = getPursuing($target_user_id);
 
         if ($target_user_id_gender !== $user_logged_in_pursuing || $target_user_id_pursuing !== $user_logged_in_gender) {
-            continue; //so if the target (female) does not equal the user logged in pursuing (female) it would pass, and if the targer user pursuing (male) does not equal the gender of
-                      //the user logged in (male). In this case they both equal so statement wouldnt proceed and function would move on. If this condition is true, we use continue
-                      //too essentially just cut this user id and move onto the next one         
+            continue;
+            /*
+            so if the target (female) does not equal the user logged in pursuing (female) it would pass, and if the targer user pursuing (male) does not equal the gender of
+            the user logged in (male). In this case they both equal so statement wouldnt proceed and function would move on. If this condition is true, we use continue
+            too essentially just cut this user id and move onto the next one    
+            */     
         }
 
         // calculate match weight for the user if it passes the gender check 
@@ -163,8 +195,10 @@ function getUsersForExplore($user_logged_in_id) {
     $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'] = $users_to_explore;
     }
     
-    // return users to explore which give an array of the user id matched with their "match score"
-    // now have it set as session so can actually update
+    /*
+    return users to explore which give an array of the user id matched with their "match score"
+    now have it set as session so can actually update
+    */
     return $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'] ;
 }
 
@@ -173,33 +207,81 @@ if (isset($_GET['action'])) {
     // get the current position from the session
     $current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
     
-    // gets the current based on the current position beofore incrementing for the next user so we can then use it to add to db for an adore or ignore action
+    // Get the current based on the current position before incrementing for the next user so we can then use it to add to db for an adore or ignore action
     $current_user = $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'][$current_position] ?? null;
 
     if ($current_user !== null) {
         if ($_GET['action'] === 'adore') {
-            $adore_sql = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
-            if ($adore = $conn->prepare($adore_sql)) {
-                $adore->bind_param("ii", $user_logged_in_id, $current_user['user_id']);
-                $adore->execute();
-                $adore->close();
-            }
-        } else if ($_GET['action'] === 'ignore') { // Correctly moved to a separate condition
-            $ignore_sql = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
-            if ($ignore = $conn->prepare($ignore_sql)) {
-                $ignore->bind_param("ii", $user_logged_in_id, $current_user['user_id']);
-                $ignore->execute();
-                $ignore->close();
-            }
+            adoreUser($user_logged_in_id, $current_user['user_id']);
+        } elseif ($_GET['action'] === 'ignore') { 
+            ignoreUser($user_logged_in_id, $current_user['user_id']);
         }
     }
-    // increment the current position after handling any action
+     
+    // Increment the current position after handling any action (adore or ignore)
     $_SESSION['explore_state'][$user_logged_in_id]['current_position']++;
+}
+ //process #43, functon to handle adore action 
+ function adoreUser($user_logged_in_id, $current_user_id) {
+     global $conn;
+     $adore_sql = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
+     if ($adore = $conn->prepare($adore_sql)) {
+         $adore->bind_param("ii", $user_logged_in_id, $current_user_id);
+         $adore->execute();
+         $adore->close();
+     }
+ }
+
+ //fucntion to handle ignore action
+ function ignoreUser($user_logged_in_id, $current_user_id) {
+    global $conn;
+    $ignore_sql = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
+    if ($ignore = $conn->prepare($ignore_sql)) {
+        $ignore->bind_param("ii", $user_logged_in_id, $current_user_id);
+        $ignore->execute();
+        $ignore->close();
+    }
 }
 
 
+// Process #45, fucntion to get all adores of the user currently logged in
+function getAllAdores($user_logged_in_id) {
+    global $conn;
+    $adored_users = [];
+    $sql = "SELECT adored_user_id FROM adore WHERE user_id = ?";
+    $adores = $conn->prepare($sql);
+    $adores->bind_param("i", $user_logged_in_id);
+    $adores->execute();
+    $adores_result = $adores->get_result();
+    while ($row = $adores_result->fetch_assoc()) {
+        $adored_users[] = $row["adored_user_id"];
+    }
+    return $adored_users;
+}
+
+// function to get all ignores of user currently logged in
+function getAllIgnores($user_logged_in_id) {
+    global $conn;
+    $ignored_users = [];
+    $sql = "SELECT ignored_user_id FROM `ignore` WHERE user_id = ?";
+    $ignores = $conn->prepare($sql);
+    $ignores->bind_param("i", $user_logged_in_id);
+    $ignores->execute();
+    $ignores_result = $ignores->get_result();
+    while ($row = $ignores_result->fetch_assoc()) {
+        $ignored_users[] = $row["ignored_user_id"];
+    }
+    return $ignored_users;
+}
+
+// call these functions to get users adores and ignores currently so we dont redisplay users. important to call before usersToExplore
+$adored_users = getAllAdores($user_logged_in_id);
+$ignored_users = getAllIgnores($user_logged_in_id);
+
+
 // Call the users to explore method
-$users_to_explore = getUsersForExplore($user_logged_in_id);
+$users_to_explore = getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users);
+
 
 // Attempt to get the next user based on current position in users_to_explore 
 $current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
