@@ -179,9 +179,29 @@ function getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users) {
         // calculate match weight for the user if it passes the gender check 
         $weight_score = calcMatchWeight($target_user_id);   
 
-        // store user id of a user that makes it thus for and their subsuqenet match score
+        //get target user details to display
+        $target_user_id_profile_pic_filename = getProfilePicture($target_user_id);
+        $target_user_id_name = getName($target_user_id); 
+        $target_user_id_age = getAge($target_user_id);
+        $target_user_id_college_year = getCollegeYear($target_user_id);
+        $target_user_id_course = getCourse($target_user_id);
+        $target_user_id_looking_for = getLookingFor($target_user_id);
+        $target_user_id_bio = getBio($target_user_id);
+        $target_user_id_hobbies = getHobbies($target_user_id);
+
+        // store user id of a user that makes it thus for and their subsuqenet match score, now display details from mockup
         $users_to_explore[] = array(
             'user_id' => $target_user_id,
+            'profile_pic_filename' => $target_user_id_profile_pic_filename,
+            'name' => $target_user_id_name,
+            'age' => $target_user_id_age,
+            'gender' => $target_user_id_gender,
+            'college_year' => $target_user_id_college_year,
+            'course' => $target_user_id_course,
+            'pursuing' => $target_user_id_pursuing,
+            'looking_for' => $target_user_id_looking_for,
+            'bio' => $target_user_id_bio,
+            'hobbies' => $target_user_id_hobbies,
             'weight_score' => $weight_score
         );
     }
@@ -290,11 +310,33 @@ $next_user = $users_to_explore[$current_position] ?? null;
 //initialise variables to null first so then if no users to explore it will display no users to explore
 $next_user_id = null;
 $next_user_score = null;
+$next_user_profile_pic_filename = null;
+$next_user_name = null;
+$next_user_age = null;
+$next_user_gender = null;
+$next_user_college_year = null;
+$next_user_course = null;
+$next_user_pursuing = null;
+$next_user_looking_for = null;
+$next_user_bio = null;
+$next_user_hobbies = null;
+
+//set display user to false
 $displayUser = false;
 
 if ($next_user) {
     $next_user_id = $next_user['user_id'];
     $next_user_score = $next_user['weight_score'];
+    $next_user_profile_pic_filename = $next_user['profile_pic_filename'];
+    $next_user_name = $next_user['name'];
+    $next_user_age = $next_user['age'];
+    $next_user_gender = $next_user['gender'];
+    $next_user_college_year = $next_user['college_year'];
+    $next_user_course = $next_user['course'];
+    $next_user_pursuing = $next_user['pursuing'];
+    $next_user_looking_for = $next_user['looking_for'];
+    $next_user_bio = $next_user['bio'];
+    $next_user_hobbies = $next_user['hobbies'];
     $displayUser = true;
 } else {
     $displayUser = false; // if no users left to explore, reset to false

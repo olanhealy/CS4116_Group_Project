@@ -195,28 +195,31 @@ function setProfilePic($user_id, $profile_pic_filename) {
     global $conn;
 
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == UPLOAD_ERR_OK) {
-        $upload_dir = "uploads/";
+        // so made dir in htdocs called uplaods, now we find the upload directory by getting the sessions root folder ans then going to uplaods
+        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
         $profile_pic_filename = $upload_dir . basename($_FILES['profile_pic']['name']);
 
         if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profile_pic_filename)) {
-            // If file is uploaded successfully, set profile pic in database
-            setProfilePic($user_id, $profile_pic_filename);
+            // if file is uploaded successfully, proceed to update the profile pic in database
+            $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
+            $set_profile_pic = $conn->prepare($sql_set_profile_pic);
+            // here we save just the filename, not the full path
+            $set_profile_pic->bind_param("si", $profile_pic_filename, $user_id);
+            $set_profile_pic->execute();
+
+            if ($set_profile_pic->affected_rows > 0) {
+                echo "Profile picture set successfully";
+            } else {
+                echo "Error setting profile picture";
+            }
         } else {
             echo "Error uploading profile picture";
         }
     }
-
-    $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
-    $set_profile_pic = $conn->prepare($sql_set_profile_pic);
-    $set_profile_pic->bind_param("si", $profile_pic_filename, $user_id);
-    $set_profile_pic->execute();
-
-    if ($set_profile_pic->affected_rows > 0) {
-        echo "Profile picture set successfully";
-    } else {
-        echo "Error setting profile picture";
-    }
 }
+    
+
+  
 
 // Process #26 to get the user's profile picture from the profile table of the db
 function getProfilePicture($user_id) {
@@ -344,5 +347,25 @@ function getLookingFor($user_id) {
     
     $get_looking_for->close();
     return $looking_for;
+}
+
+// function to get name used in explore.php
+function getName($user_id) {
+    global $conn;
+    $name = "";
+
+    $sql_get_name = "SELECT name FROM profile WHERE user_id = ?";
+    $get_name = $conn->prepare($sql_get_name);
+    $get_name->bind_param("i", $user_id);
+    $get_name->execute();
+    $get_name->store_result();
+
+    if ($get_name->num_rows > 0) {
+        $get_name->bind_result($name);
+        $get_name->fetch();
+    }
+
+    $get_name->close();
+    return $name;
 }
 ?>

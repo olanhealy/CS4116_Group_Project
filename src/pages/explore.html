@@ -10,20 +10,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 mt-5">
-                <!-- if display user is true, then show user id etc-->
                 <?php if ($displayUser): ?>
                     <div class="card">
+                        <img src="/uploads/<?php echo htmlspecialchars($next_user_profile_pic_filename); ?>" class="card-img-top" alt="Profile Picture">
                         <div class="card-body">
-                            <h5 class="card-title">User ID: <?php echo htmlspecialchars($next_user_id); ?></h5>
-                            <p class="card-text">Match Score: <?php echo htmlspecialchars($next_user_score); ?></p>
-                            <a href="?action=adore" class="btn btn-success">Adore</a> <!-- if adore is clicked, then action=adore which we use with GET in php -->
-                            <a href="?action=ignore" class="btn btn-danger">Ignore</a> <!-- if ignore is clicked, then action=ignore which we use with GET in php -->
+                            <h5 class="card-title"><?php echo htmlspecialchars($next_user_name); ?></h5>
+                            <p class="card-text">Age: <?php echo htmlspecialchars($next_user_age); ?></p>
+                            <p class="card-text">Gender: <?php echo htmlspecialchars($next_user_gender); ?></p>
+                            <p class="card-text">College Year: <?php echo htmlspecialchars($next_user_college_year); ?></p>
+                            <p class="card-text">Course: <?php echo htmlspecialchars($next_user_course); ?></p>
+                            <p class="card-text">Pursuing: <?php echo htmlspecialchars($next_user_pursuing); ?></p>
+                            <p class="card-text">Looking For: <?php echo htmlspecialchars($next_user_looking_for); ?></p>
+                            <p class="card-text">Bio: <?php echo htmlspecialchars($next_user_bio); ?></p>
+                            <p class="card-text">Hobbies: <?php echo htmlspecialchars($next_user_hobbies); ?></p>
+                            <a href="?action=adore" class="btn btn-success">Adore</a>
+                            <a href="?action=ignore" class="btn btn-danger">Ignore</a>
                         </div>
                     </div>
-                    <!-- display user is then false so helps avoid us get null error with array-->
                 <?php else: ?>
                     <p>No more users available.</p>
-                    <!-- Have this in for testing to make it easier on me-->
                     <div class="btn-group ms-auto" role="group">
                         <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
                     </div>
@@ -31,3 +36,5 @@
             </div>
         </div>
     </div>
+</body>
+</html>
