@@ -194,32 +194,53 @@ function getPursuing($user_id) {
 function setProfilePic($user_id, $profile_pic_filename) {
     global $conn;
 
-    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == UPLOAD_ERR_OK) {
-        // so made dir in htdocs called uplaods, now we find the upload directory by getting the sessions root folder ans then going to uplaods
-        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
-        $profile_pic_filename = $upload_dir . basename($_FILES['profile_pic']['name']);
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
+        // gets the file extension (i.e png etc ) and converts to lowercase for consistency in comparision
+        $file_extension = strtolower(pathinfo($_FILES['profile_pic']['name'], PATHINFO_EXTENSION));
+        //the only allowed type of files to be upload
+        $allowed_extensions = array('png', 'jpeg', 'jpg');
 
-        if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profile_pic_filename)) {
-            // if file is uploaded successfully, proceed to update the profile pic in database
-            $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
-            $set_profile_pic = $conn->prepare($sql_set_profile_pic);
-            // here we save just the filename, not the full path
-            $set_profile_pic->bind_param("si", $profile_pic_filename, $user_id);
-            $set_profile_pic->execute();
+        //checks if the file extension is in the allowed extensions
+        if (in_array($file_extension, $allowed_extensions)) {
+           
+            /*
+            overwrite the uplaoded file name to be the users id, followed by "_profile_pic" and the file extension so we can ensure no 2 users
+            have the same profile pic name
+            */
 
-            if ($set_profile_pic->affected_rows > 0) {
-                echo "Profile picture set successfully";
+            $new_filename = $user_id . "_profile_pic." . $file_extension;
+            // path for saving is in uploads folder, we get the servers document root and then look for uploads
+            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+            $upload_file = $upload_dir . $new_filename;
+
+            // Attempt to move the uploaded file
+            if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $upload_file)) {
+                // update the profile table in db 
+                $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
+                $set_profile_pic = $conn->prepare($sql_set_profile_pic);
+                $relative_path = "uploads/" . $new_filename;
+                $set_profile_pic->bind_param("si", $relative_path, $user_id);
+                $set_profile_pic->execute();
+                if ($set_profile_pic->affected_rows > 0) {
+                    // Return the new path for immediate use
+                    return $relative_path;
+                } else {
+                    echo "Error setting profile picture.";
+                    return false;
+                }
             } else {
-                echo "Error setting profile picture";
+                echo "Error uploading file.";
+                return false;
             }
         } else {
-            echo "Error uploading profile picture";
+            echo "Invalid file type. Only PNG, JPEG, and JPG are allowed.";
+            return false;
         }
     }
-}
-    
 
-  
+    // return excisting photo if no new photo is uploade || invalid file type uploaded (no way to display this error without javascript)
+    return $profile_pic_filename;
+}
 
 // Process #26 to get the user's profile picture from the profile table of the db
 function getProfilePicture($user_id) {

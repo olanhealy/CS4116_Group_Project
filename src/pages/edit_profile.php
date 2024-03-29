@@ -24,10 +24,13 @@ $pursuing = getPursuing($user_id);
 $profile_pic_filename = getProfilePicture($user_id);
 $course = getCourse($user_id);
 $looking_for = getLookingFor($user_id);
+$name = getName($user_id);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and sanitize input
+
+
+    // Validate inputs
     $bio = htmlspecialchars($_POST['bio']);
     $gender = htmlspecialchars($_POST['gender']);
     $age = intval($_POST['age']);
@@ -36,10 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $course = htmlspecialchars($_POST['course']);
     $hobbies = htmlspecialchars($_POST['hobbies']);
     $looking_for = htmlspecialchars($_POST['looking_for']);
+    $profile_pic_filename = htmlspecialchars($_FILES['profile_pic']['name']);
 
     // Update the user currently logged in profile table in the database
     $user_id = $_SESSION['id']; //we use this from being logged in
 
+    
     // Call setter methods to make the updates in db
     setBio($user_id, $bio);
     setGender($user_id, $gender);
@@ -70,7 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Edit Profile</h1>
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="edit_profile.php" method="post" enctype="multipart/form-data">
+
+       <!-- Name -->
+        <label for="name">Name:</label>
+        <span id="name"><?php echo htmlspecialchars($name); ?></span>
         <!-- Age -->
         <label for="age">Age:</label>
         <input type="number" id="age" name="age" <?php if(isset($age)) echo "value='$age'"; ?> <?php if(isset($age)) echo "readonly"; ?> required>
@@ -93,8 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Profile Picture-->
         <label for="profile_pic">Profile Picture:</label>
-        <input type="file" id="profile_pic" name="profile_pic" required>
+        <input type="file" id="profile_pic" name="profile_pic">
+        <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
 
+        
         <!--  pursuing -->
         <label for="pursuing">Pursuing:</label>
         <select id="pursuing" name="pursuing" required>
