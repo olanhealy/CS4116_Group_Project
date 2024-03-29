@@ -100,8 +100,8 @@ VALUES (66666666, 2, 'Matched', NOW());
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (11, 11111111, 2, 'Hello, how are you?', 'delivered');
+VALUES (14, 11111111, 2, 'Hello, how are you?', 'delivered');
 
 -- Dummy data for Messages table
 INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (11, 11111111, 2, 'Good', 'delivered');
+VALUES (14, 11111111, 2, 'Good', 'delivered');
