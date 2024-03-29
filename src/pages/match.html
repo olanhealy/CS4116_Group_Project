@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <form action="messages.php" method='GET'>
+        <a href="messages.php?targetId=<?php echo $targetId?>"><?php echo $name; ?></a> 
+        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" class="card-img-top" alt="Profile Picture">
+    </form>
+    <form action="matches.php" method='POST'>
+        <input type="hidden" name="action" value="removeMatch">
+        <input type="hidden" name="userId" value="<?php echo $userId; ?>">
+        <input type="hidden" name="targetId" value="<?php echo $targetId; ?>">
+        <button type="submit">Remove Match</button>
+    </form>
+</html>
