@@ -15,6 +15,9 @@ if (isset($_SESSION['targetId'])) {
     $_SESSION['existingBio'] = getBio($targetId);
     $_SESSION['existingHobbies'] = getHobbies($targetId);
     $_SESSION['existingCourse'] = getCourse($targetId);
+    // added in to get the existing profile picture
+    $_SESSION['existingProfilePic'] = getProfilePicture($targetId);
+
 
     include "editProfileAdmin.html";
     // Check if form is submitted

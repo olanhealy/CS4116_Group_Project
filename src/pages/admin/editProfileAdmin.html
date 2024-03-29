@@ -29,6 +29,7 @@
 
             <label for="profile_pic">Profile Picture:</label><br>
             <input type="file" id="profile_pic" name="profile_pic"><br>
+            <img src="/<?php echo $_SESSION['existingProfilePic']; ?>" alt="Profile Picture" style="width: 100px; height: 100px;">
 
             <label for="hobbies">Hobbies:</label><br>
             <input type="text" id="hobbies" name="hobbies" value="<?php echo $_SESSION['existingHobbies'] ; ?>"><br>
