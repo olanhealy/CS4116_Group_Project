@@ -36,7 +36,7 @@ function isItAMatch($initiatorId, $targetId)
     return false;
 }
 
-function removeMatches($userId, $targetId)
+function removeMatch($userId, $targetId)
 {
 
     global $conn;
@@ -93,4 +93,10 @@ session_start();
 
 $userId = $_SESSION['id'];
 getAllMatches($userId);
+
+if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
+    removeMatch($_POST['userId'], $_POST['targetId']);
+    header("Location: matches.php");
+}
+
 ?>
