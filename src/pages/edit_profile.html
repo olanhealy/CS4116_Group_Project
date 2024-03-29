@@ -82,9 +82,9 @@
 
         <div class="container-fluid border border-2" id="outline">
             <div class="row">
-                <form class="container" action="edit_profile.php" method="post" enctype="multipart/form-data">
+                <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
                     <div class="row">
-                    <div class="col-6 order-2">
+                    <div class="col-7 order-2">
 
                         <!-- Age -->
                         <label for="age">Age:</label>
@@ -151,12 +151,12 @@
                     </div>
 
 
-                    <div class="col-6 order-1">
+                    <div class="col-4 order-1 imgBox">
                         <!-- Profile Picture-->
-                        <label for="profile_pic">Profile Picture:</label>
+                        <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                         <input type="file" id="profile_pic" name="profile_pic" required>
                         <!-- Button to just update changes made in db -->
-                        <button type="submit">Save Changes</button>
+                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
                     </div>
                 </div>
                 </form>

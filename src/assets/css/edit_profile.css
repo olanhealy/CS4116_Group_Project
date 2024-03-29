@@ -104,7 +104,7 @@ body {
     background-color: #abc99d;
   }
 
-  .btn{
+  #menu-dropdown{
     background-color: #e6d1be;
     color: white; 
     text-align: center;
@@ -117,7 +117,7 @@ body {
     margin-top: 10px;
   }
   
-  .btn:hover{
+  #menu-dropdown:hover{
     background-color: #e6d1be;
     border-color: black;
     color: white; 
@@ -147,6 +147,47 @@ body {
     position: relative;
     width: 1300px;
   }
+
+  .saveChangesBtn {
+    width: 262px;
+    font-size: 18px;
+    background-color: #abc99d;
+    border-color: #abc99d;
+  }
+
+  .saveChangesBtn:hover {
+    background-color: #97b189;
+    border-color: #97b189;
+  }
+
+  .imgBox {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: end;
+    align-items: center;
+  }
+
+  .fileUploadBtn {
+    display: inline-block;
+    width: 262px;
+    font-size: 18px;
+    padding: 8px 8px;
+    background-color: #e6d1be;
+    color: #fff;
+    border: none;
+    border-radius: 5.5px;
+    cursor: pointer;
+}
+
+
+.fileUploadBtn:hover {
+    background-color: #dabb9e;
+}
+
+#profile_pic {
+  display: none;
+}
 
   footer {
     background-color: #e6d1be;
