@@ -1,11 +1,11 @@
 <?php
 
-function itsAMatch($initiatorId, $targetId)
+function addMatch($initiatorId, $targetId)
 {
 
     global $conn;
 
-    $query = "INSERT INTO matches (initiator_id, target_id, status) VALUES (?, ?, 'Matched')";
+    $query = "INSERT INTO matches (initiator_id, target_id) VALUES (?, ?)";
     $stmt = $conn->prepare($query);
     if ($stmt !== false) {
         $stmt->bind_param("ii", $initiatorId, $targetId);
@@ -15,20 +15,25 @@ function itsAMatch($initiatorId, $targetId)
     }
 }
 
-function startAMatch($initiatorId, $targetId)
+function isItAMatch($initiatorId, $targetId)
 {
-
     global $conn;
 
-    $query = "INSERT INTO matches (initiator_id, target_id, status) VALUES (?, ?, 'Pending')";
-    $stmt = $conn->prepare($query);
+    $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
 
-    if ($stmt !== false) {
-        $stmt->bind_param("ii", $initiatorId, $targetId);
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("ii", $targetId , $initiatorId);
         $stmt->execute();
-    } else {
-        die("Error in SQL query: " . $conn->error . "<br>");
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            // The current user has previously adored the logged in user
+            return true;
+        }
     }
+    // The current user has not previously adored the logged in user
+    return false;
 }
 
 function removeMatches($userId, $targetId)
@@ -50,44 +55,42 @@ function removeMatches($userId, $targetId)
 function getAllMatches($userId)
 {
     global $conn;
-
     //get all account information
-    $query = "SELECT * FROM matches WHERE initiator_id = $userId OR target_id = $userId";
-    $result = $conn->query($query);
-    $recipientId = 0;
-    $_SESSION['recipient_id'] = 00000000;
+    $query = "SELECT 
+        CASE 
+            WHEN initiator_id = $userId THEN target_id 
+            ELSE initiator_id 
+        END AS other_user_id 
+    FROM matches 
+    WHERE initiator_id = $userId OR target_id = $userId 
+    ORDER BY response_date DESC";
+    ;
 
+    //check the result is not empty
+    $result = $conn->query($query);
     if ($result->num_rows > 0) {
         // Output data of each row with a form to ban/unban
         while ($row = $result->fetch_assoc()) {
 
-            if($row['initiator_id'] == $_SESSION['id']){
+            $targetId = $row['other_user_id'];
+            
+            $name = getName($targetId);
+            $profilePicture = getProfilePicture($targetId);
 
-                //user is initiator
-                $recipientId = $row['target_id'];
-                $_SESSION['recipient_id'] = $recipientId;
-
-            }elseif(($row['target_id'] == $_SESSION['id'])){
-
-                //user is target
-                $recipientId = $row['initiator_id'];
-                $_SESSION['recipient_id'] = $recipientId;
-            }
-            //getting each user_id from the query
-            $matchId = $row['match_id'];
             //include the user list html for each row
             include "match.html";
         }
     } else {
         //error
-        echo "You've No matches";
+        echo "0 results found";
     }
 }
 
 include "db_connection.php";
+require 'helper.php';
 
 session_start();
 
-$user = "66666666";
-getAllMatches($user);
+$userId = $_SESSION['id'];
+getAllMatches($userId);
 ?>
