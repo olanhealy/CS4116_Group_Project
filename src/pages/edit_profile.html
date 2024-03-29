@@ -80,74 +80,114 @@
 
     <br>
 
-        <div class="container-fluid border border-2" id="outline">
-            <div class="row">
-                <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
-                    <div class="row">
+    <div class="container-fluid border border-2" id="outline">
+        <div class="row">
+            <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
+                <div class="row">
                     <div class="col-7 order-2">
 
-                        <!-- Age -->
-                        <label for="age">Age:</label>
-                        <input type="number" id="age" name="age" <?php if(isset($age)) echo "value='$age'" ; ?>
-                        <?php if(isset($age)) echo "readonly"; ?> required>
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- Age -->
+                                <label for="age">Age:</label>
+                                <input type="number" id="age" name="age" <?php if(isset($age)) echo "value='$age'" ; ?>
+                                <?php if(isset($age)) echo "readonly"; ?> required>
+                            </div>
 
-                        <!-- Gender -->
-                        <label for="gender">Gender:</label>
-                        <select id="gender" name="gender" <?php if(isset($gender)) echo "disabled" ; ?> required>
-                            <option value="Male" <?php if(isset($gender) && $gender=="Male" ) echo "selected" ; ?>>Male
-                            </option>
-                            <option value="Female" <?php if(isset($gender) && $gender=="Female" ) echo "selected" ; ?>
-                                >Female</option>
-                            <option value="Other" <?php if(isset($gender) && $gender=="Other" ) echo "selected" ; ?>
-                                >Other
-                            </option>
-                        </select>
+                            <div class="col-6">
+                                <!-- Gender -->
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" <?php if(isset($gender)) echo "disabled" ; ?>
+                                    required>
+                                    <option value="Male" <?php if(isset($gender) && $gender=="Male" ) echo "selected" ;
+                                        ?>>Male
+                                    </option>
+                                    <option value="Female" <?php if(isset($gender) && $gender=="Female" )
+                                        echo "selected" ; ?>
+                                        >Female</option>
+                                    <option value="Other" <?php if(isset($gender) && $gender=="Other" ) echo "selected"
+                                        ; ?>
+                                        >Other
+                                    </option>
+                                </select>
+                            </div>
 
-                        <!-- Hobbies (May need to update this as text for it is meh)-->
-                        <label for="hobbies">Hobbies:</label>
-                        <input type="text" id="hobbies" name="hobbies" required
-                            value="<?php echo htmlspecialchars($hobbies); ?>">
+                        </div>
 
-                        <!-- Bio -->
-                        <label for="bio">Bio:</label>
-                        <textarea id="bio" name="bio" required><?php echo htmlspecialchars($bio); ?></textarea>
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- College Year -->
+                                <label for="college_year">College Year:</label>
+                                <select id="college_year" name="college_year" required>
+                                    <option value="Undergrad" <?php if ($college_year=="Undergrad" ) echo "selected" ;
+                                        ?>
+                                        >Undergrad
+                                    </option>
+                                    <option value="Masters" <?php if ($college_year=="Masters" ) echo "selected" ; ?>
+                                        >Masters
+                                    </option>
+                                    <option value="PhD" <?php if ($college_year=="PhD" ) echo "selected" ; ?>>PhD
+                                    </option>
+                                </select>
+                            </div>
 
-                        <!--  pursuing -->
-                        <label for="pursuing">Pursuing:</label>
-                        <select id="pursuing" name="pursuing" required>
-                            <option value="Male" <?php if ($pursuing=="Male" ) echo "selected" ; ?>>Male</option>
-                            <option value="Female" <?php if ($pursuing=="Female" ) echo "selected" ; ?>>Female</option>
-                            <option value="Other" <?php if ($pursuing=="Other" ) echo "selected" ; ?>>Other</option>
-                        </select>
+                            <div class="col-6">
+                                <!-- Course-->
+                                <label for="course">Course:</label>
+                                <input type="text" id="course" name="course" required
+                                    value="<?php echo htmlspecialchars($course); ?>">
 
-                        <!-- College Year -->
-                        <label for="college_year">College Year:</label>
-                        <select id="college_year" name="college_year" required>
-                            <option value="Undergrad" <?php if ($college_year=="Undergrad" ) echo "selected" ; ?>
-                                >Undergrad
-                            </option>
-                            <option value="Masters" <?php if ($college_year=="Masters" ) echo "selected" ; ?>>Masters
-                            </option>
-                            <option value="PhD" <?php if ($college_year=="PhD" ) echo "selected" ; ?>>PhD</option>
-                        </select>
+                            </div>
+                        </div>
 
-                        <!-- COurse-->
-                        <label for="course">Course:</label>
-                        <input type="text" id="course" name="course" required
-                            value="<?php echo htmlspecialchars($course); ?>">
+                        <div class="row">
+                            <div class="col-6">
 
-                        <!-- Looking for-->
-                        <label for="looking_for">Looking For:</label>
-                        <select id="looking_for" name="looking_for" required>
-                            <option value="Short-term" <?php if ($looking_for=="Short-term" ) echo "selected" ; ?>
-                                >Short-Term</option>
-                            <option value="Long-term" <?php if ($looking_for=="Long-term" ) echo "selected" ; ?>
-                                >Long-Term
-                            </option>
-                            <option value="Unsure" <?php if ($looking_for=="Unsure" ) echo "selected" ; ?>>Unsure
-                            </option>
-                        </select>
+                                <!--  pursuing -->
+                                <label for="pursuing">Pursuing:</label>
+                                <select id="pursuing" name="pursuing" required>
+                                    <option value="Male" <?php if ($pursuing=="Male" ) echo "selected" ; ?>>Male
+                                    </option>
+                                    <option value="Female" <?php if ($pursuing=="Female" ) echo "selected" ; ?>>Female
+                                    </option>
+                                    <option value="Other" <?php if ($pursuing=="Other" ) echo "selected" ; ?>>Other
+                                    </option>
+                                </select>
+                            </div>
 
+                            <div class="col-6">
+                                <!-- Looking for-->
+                                <label for="looking_for">Looking For:</label>
+                                <select id="looking_for" name="looking_for" required>
+                                    <option value="Short-term" <?php if ($looking_for=="Short-term" ) echo "selected" ;
+                                        ?>
+                                        >Short-Term</option>
+                                    <option value="Long-term" <?php if ($looking_for=="Long-term" ) echo "selected" ; ?>
+                                        >Long-Term
+                                    </option>
+                                    <option value="Unsure" <?php if ($looking_for=="Unsure" ) echo "selected" ; ?>
+                                        >Unsure
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Bio -->
+                                <label for="bio">Bio:</label>
+                                <textarea id="bio" name="bio" required><?php echo htmlspecialchars($bio); ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Hobbies (May need to update this as text for it is meh)-->
+                                <label for="hobbies">Hobbies:</label>
+                                <input type="text" id="hobbies" name="hobbies" required
+                                    value="<?php echo htmlspecialchars($hobbies); ?>">
+                            </div>
+                        </div>
                     </div>
 
 
@@ -159,10 +199,10 @@
                         <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
                     </div>
                 </div>
-                </form>
+            </form>
 
-            </div>
         </div>
+    </div>
 
 
 
