@@ -87,11 +87,19 @@ function getAllMatches($userId)
 }
 
 include "db_connection.php";
-require 'helper.php';
+require_once 'helper.php';
 
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $userId = $_SESSION['id'];
+
+?>
+
+<a href="home.php">Home</a>
+<br>
+<?php
 getAllMatches($userId);
 
 if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {

@@ -2,7 +2,9 @@
 
     include_once "adminHelperFunctions.php";
     
-    session_start();
+    if(session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     
     //targetID set from GET sent from userListAdmin.html
     if (isset($_GET['targetId'])){
@@ -18,6 +20,16 @@
     }
     
     };
+
+    ?>
+
+    
+    <a href="usersListAdmin.php">Back to User List</a>
+    <!--link to logout.php-->
+    <a href="../logout.php">Logout</a>
+
+    <?php
+
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
     //var_dump($_SESSION);

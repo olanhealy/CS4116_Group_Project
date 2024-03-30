@@ -4,7 +4,7 @@ if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 // Include the helper.php file
-include '../helper.php';
+include_once '../helper.php';
 include '../db_connection.php';
 
 //var_dump($_SESSION);

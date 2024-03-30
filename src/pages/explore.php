@@ -1,11 +1,13 @@
 <?php
 //require db connection and the helper file as we will need to use the getters for displaying certain information about users
 require "db_connection.php";
-require "helper.php";
+require_once "helper.php";
 require "matches.php";
 
 // Start session securely
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // get user id of user currently accessing the explore page
 $user_logged_in_id = $_SESSION['id'];

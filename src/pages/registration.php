@@ -144,7 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $insert_new_profile->close();
 
-            session_start();
+            if(session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION['email'] = $email;
             $_SESSION['id'] = $user_id;
 
