@@ -7,7 +7,9 @@ include "db_connection.php";
 require "helper.php";
 
 // Start the session
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Fetch user details from the database
 $user_id = $_SESSION['id'];
@@ -73,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- @frontend made v basic html page for edit profile. styling and making it look nice should be done here -->
 </head>
 <body>
+    <a href="home.php">Home</a>
     <h1>Edit Profile</h1>
 
         <form action="edit_profile.php" method="post" enctype="multipart/form-data">

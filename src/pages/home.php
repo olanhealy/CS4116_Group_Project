@@ -1,6 +1,8 @@
 <?php
 //homepage
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if(isset($_SESSION['id']) && isset($_SESSION['email'])){
     include_once("home.html");

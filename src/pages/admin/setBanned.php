@@ -2,7 +2,9 @@
 
 include_once "adminHelperFunctions.php";
 
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 //if the request is a post request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
