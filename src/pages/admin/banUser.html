@@ -1,5 +1,4 @@
 
-
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,7 +22,6 @@
     <nav class="navbar navbar-fixed-top" id="navbar">
         
         <!-- Images -->
-
         <div class="images">
           <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
           <div class="line"></div>
@@ -57,23 +55,88 @@
     <hr>
     <!-- End of Navbar -->
 
-
+    <!-- Main Container -->
     <div class="container-fluid">
-        <div class="container-l border border-3" id="outline">
+        <!-- Container for Desktop View -->
+        <div class="container-l border border-3 d-none d-xl-block" id="outline">
+            <div class="row">   
 
-            <form action="banUser.php" method="post">
-        
-                <label for="reason">Reason:</label>
-                <textarea id="reason" name="reason" rows="4" cols="50" required></textarea><br><br>
+                <!-- User Profile Section -->
+                <div class="col-5" id="leftcontainer"> 
+                        <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainer">
+                            <img id="profilepicture" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                        </div>
 
-                <label for="dateOfUnban">Date of Un-Ban:</label>
-                <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
+                    <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
+                        <div id="username">
+                            <p>Name</p>
+                        </div>
 
-                <input type="submit" value="Ban User">
-            </form>
+                        <div id="userage">
+                            <p>Age</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ban User Section -->
+                <div class="col-7"> 
+
+                    <!-- Heading -->
+                    <div class="col-9 mx-auto d-flex" id="topcontainer">
+                        <div class="mx-auto d-flex align-items-center" id="textbox">
+                            <p>Ban User</p>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="col-9 mx-auto d-flex align-items-center">
+
+                        <div class="col-9 mx-auto">
+                            <form action="banUser.php" method="post">
+                                
+                                <!-- Text Box for Ban Reason -->
+                                <label for="reason">Reason:</label>
+                                <textarea id="reason" name="reason" rows="4" cols="50" required></textarea><br><br>
+                                
+                                <!-- Buttons for Ban Duration -->
+                                <div class="row">
+                                    <label for="reason">Duration:</label>
+
+    
+                                    <div class="col-6" id="temporarydiv">
+                                        <!-- have this button to open calendar dropdown -->
+                                        <input type="button" value="Temporary">
+                                        <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
+                                    </div>
+
+                                    <!-- have this button to set unban date as year 9999 for perm-ban -->
+                                    <div class="col-6" id="permanentdiv">
+                                        <input type="button" value="Permanent">
+                                    </div>
+                                    
+                                </div>
+
+                                <!-- Ban User Button -->
+                                <div id="banuserdiv">
+                                    <input type="submit" value="Ban User">
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
         </div>
+
+        
+        <!-- Container for Mobile View -->
+           
     </div>
 
+    <!-- Footer -->
     <footer class="p-2">
         © 2024 Copyright UL Singles. All Rights Reserved
     </footer>
