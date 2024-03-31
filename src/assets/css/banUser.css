@@ -176,7 +176,7 @@ hr {
     color: black;
     font-size: 25px;
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 6px;
     width: 100%;
 }
 
@@ -258,6 +258,95 @@ input[type=button] {
 
 
 
+#outlineM {
+    border-color: black !important;
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#mobileprofilecontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: inline;
+}
+
+#picturecontainerM {
+    margin-top: 40px;
+    border: 2px solid black;
+    border-color: black !important;
+    width: 65%;
+}
+
+#userinfoboxM {
+    border: 2px solid black;
+    border-color: black !important;
+    margin-bottom: 30px;
+    width: 65%;
+}
+
+#topcontainerM {
+    margin-bottom: 10px;
+}
+
+#hr1{
+ color: black;
+ margin: 0.2em auto;
+ width: 96%;
+}
+
+#textboxM {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    font-size: 35px;
+    margin-top: 20px;
+}
+
+#banuserdivM{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#tabletprofilecontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: inline;
+}
+
+#picturecontainerT {
+    margin-top: 40px;
+    border: 2px solid black;
+    border-color: black !important;
+    width: 55%;
+}
+
+#userinfoboxT {
+    border: 2px solid black;
+    border-color: black !important;
+    margin-bottom: 30px;
+    width: 55%;
+}
+
+#profilepictureT {
+    border: 2px solid black;
+    border-color: black !important;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 360px;
+}
 
 
 footer {

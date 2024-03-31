@@ -109,8 +109,8 @@
                                         <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
                                     </div>
 
-                                    <!-- have this button to set unban date as year 9999 for perm-ban -->
                                     <div class="col-6" id="permanentdiv">
+                                        <!-- have this button to set unban date as year 9999 for perm-ban -->
                                         <input type="button" value="Permanent">
                                     </div>
                                     
@@ -132,8 +132,102 @@
         </div>
 
         
-        <!-- Container for Mobile View -->
-           
+        <!-- Container for Mobile / Tablet View -->
+        <div class="container-l border border-3 d-lg-block d-xl-none" id="outlineM">
+            <div class="row">  
+
+                <!-- User Profile Section: Mobile -->
+                <div class="col-12 d-md-none" id="mobileprofilecontainer"> 
+                    <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerM">
+                        <img id="profilepictureT" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                    </div>
+
+                    <div class="mx-auto d-flex align-items-center" id="userinfoboxM">
+                        <div id="username">
+                            <p>Name</p>
+                        </div>
+
+                        <div id="userage">
+                            <p>Age</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Profile Section: Tablet -->
+                 <div class="col-12 d-none d-sm-none d-md-block d-lg-block d-xl-none" id="tabletprofilecontainer"> 
+                    <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerT">
+                        <img id="profilepictureT" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                    </div>
+
+                    <div class="mx-auto d-flex align-items-center" id="userinfoboxT">
+                        <div id="username">
+                            <p>Name</p>
+                        </div>
+
+                        <div id="userage">
+                            <p>Age</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr id="hr1">
+
+                <!-- Ban User Section -->               
+                <div class="col-12" > 
+
+                    <!-- Heading -->
+                    <div class="col-12 mx-auto d-flex" id="topcontainerM">
+                        <div class="mx-auto d-flex align-items-center" id="textboxM">
+                            <p>Ban User</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Form -->
+                    <div class="col-9 mx-auto d-flex align-items-center">
+
+                        <div class="col-12 mx-auto">
+                            <form action="banUser.php" method="post">
+                                
+                                <!-- Text Box for Ban Reason -->
+                                <label for="reason">Reason:</label>
+                                <textarea id="reason" name="reason" rows="4" cols="50" required></textarea><br><br>
+                                
+                                <!-- Buttons for Ban Duration -->
+                                <div class="row">
+                                    <label for="reason">Duration:</label>
+
+    
+                                    <div class="col-6" id="temporarydiv">
+                                        <!-- have this button to open calendar dropdown -->
+                                        <input type="button" value="Temporary">
+                                        <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
+                                    </div>
+
+                                    <div class="col-6" id="permanentdiv">
+                                        <!-- have this button to set unban date as year 9999 for perm-ban -->
+                                        <input type="button" value="Permanent">
+                                    </div>
+                                    
+                                </div>
+
+                                <!-- Ban User Button -->
+                                <div id="banuserdivM">
+                                    <input type="submit" value="Ban User">
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>  
+                    
+                    
+
+                </div>   
+            </div>
+        </div>
+        
+
     </div>
 
     <!-- Footer -->
