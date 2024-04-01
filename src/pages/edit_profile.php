@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-4">
                                 <!-- Gender -->
-                                <select id="gender" name="gender" <?php if (isset($gender)) echo "disabled"; ?> required>
+                                <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender)) echo "disabled"; ?> required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if (isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if (isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-6">
                                 <!-- College Year -->
-                                <select id="college_year" name="college_year" required>
+                                <select id="college_year" name="college_year" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
                                     <option value="Masters" <?php if ($college_year == "Masters") echo "selected"; ?>>Masters</option>
@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-6">
                                 <!--  pursuing -->
-                                <select id="pursuing" name="pursuing" required>
+                                <select id="pursuing" name="pursuing" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
@@ -233,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-6">
                                 <!-- Looking for-->
-                                <select id="looking_for" name="looking_for" required>
+                                <select id="looking_for" name="looking_for" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
                                     <option value="Long-term" <?php if ($looking_for == "Long-term") echo "selected"; ?>>Long-Term</option>
@@ -275,10 +275,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="col-4 order-1 imgBox">
                         <!-- Profile Picture-->
+                        <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
                         <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                         <input type="file" id="profile_pic" name="profile_pic">
-                        <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
-
 
                         <!-- Button to just update changes made in db -->
                         <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
