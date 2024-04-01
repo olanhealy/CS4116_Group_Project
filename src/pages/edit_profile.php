@@ -146,30 +146,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-4">
                                 <!-- Name -->
                                 <label for="name">Name:</label>
-                                <span id="name"><?php echo htmlspecialchars($name); ?></span>
                             </div>
                             <div class="col-4">
                                 <!-- Age -->
                                 <label for="age">Age:</label>
+                               </div>
+
+                            <div class="col-4">
+                                <!-- Gender -->
+                                <label for="gender">Gender:</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <!-- Name -->
+                                <span id="name"><?php echo htmlspecialchars($name); ?></span>
+                            </div>
+                            <div class="col-4">
+                                <!-- Age -->
                                 <input type="number" id="age" name="age" <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-4">
                                 <!-- Gender -->
-                                <label for="gender">Gender:</label>
                                 <select id="gender" name="gender" <?php if (isset($gender)) echo "disabled"; ?> required>
                                     <option value="Male" <?php if (isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if (isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
                                     <option value="Other" <?php if (isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
                                 </select>
                             </div>
-
                         </div>
 
                         <div class="row">
                             <div class="col-6">
                                 <!-- College Year -->
                                 <label for="college_year">College Year:</label>
+                            </div>
+
+                            <div class="col-6">
+                                <!-- Course-->
+                                <label for="course">Course:</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- College Year -->
                                 <select id="college_year" name="college_year" required>
                                     <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
                                     <option value="Masters" <?php if ($college_year == "Masters") echo "selected"; ?>>Masters</option>
@@ -179,17 +202,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-6">
                                 <!-- Course-->
-                                <label for="course">Course:</label>
                                 <input type="text" id="course" name="course" required value="<?php echo htmlspecialchars($course); ?>">
-
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6">
-
                                 <!--  pursuing -->
                                 <label for="pursuing">Pursuing:</label>
+                            </div>
+
+                            <div class="col-6">
+                                <!-- Looking for-->
+                                <label for="looking_for">Looking For:</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <!--  pursuing -->
                                 <select id="pursuing" name="pursuing" required>
                                     <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
@@ -199,7 +230,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-6">
                                 <!-- Looking for-->
-                                <label for="looking_for">Looking For:</label>
                                 <select id="looking_for" name="looking_for" required>
                                     <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
                                     <option value="Long-term" <?php if ($looking_for == "Long-term") echo "selected"; ?>>Long-Term</option>
@@ -212,6 +242,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-12">
                                 <!-- Bio -->
                                 <label for="bio">Bio:</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Bio -->
                                 <textarea id="bio" name="bio" required><?php echo htmlspecialchars($bio); ?></textarea>
                             </div>
                         </div>
@@ -220,6 +256,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
                                 <label for="hobbies">Hobbies:</label>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Hobbies (May need to update this as text for it is meh)-->
                                 <input type="text" id="hobbies" name="hobbies" required value="<?php echo htmlspecialchars($hobbies); ?>">
                             </div>
                         </div>
