@@ -200,7 +200,7 @@ body {
 /* Style the dropdown container */
 .optionDropdown {
   width: 200px;
-  padding: 8px; 
+  padding: 8px;
   border: 1px solid #e6d1be;
   border-radius: 4px;
   background-color: #e6d1be;
@@ -211,15 +211,15 @@ body {
 
 
 .optionDropdown option {
-  font-size: 16px; 
-  background-color: #e6d1be; 
-  color: #fff; 
+  font-size: 16px;
+  background-color: #e6d1be;
+  color: #fff;
   cursor: pointer;
 }
 
 
 .optionDropdown option:checked {
-  background-color: #e6d1be; 
+  background-color: #e6d1be;
 }
 
 .optionDropdown option:hover {
@@ -229,13 +229,32 @@ body {
 
 
 .optionDropdown:after {
-  content: '\25BC'; 
+  content: '\25BC';
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
 }
 
+.textInput {
+  width: 200px;
+  padding: 8px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  box-sizing: border-box;
+  border:none;
+}
+
+.textInput[readonly] {
+  background-color: #f0f0f0;
+}
+
+.textInput:focus {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
 
 footer {
   background-color: #e6d1be;

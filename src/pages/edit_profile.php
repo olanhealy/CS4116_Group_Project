@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="col-4">
                                 <!-- Age -->
-                                <input type="number" id="age" name="age" <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
+                                <input type="number" id="age" name="age"  class="textInput" placeholder="Type here..." <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-4">
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-6">
                                 <!-- Course-->
-                                <input type="text" id="course" name="course" required value="<?php echo htmlspecialchars($course); ?>">
+                                <input type="text" id="course" name="course" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($course); ?>">
                             </div>
                         </div>
 
@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-12">
                                 <!-- Bio -->
-                                <textarea id="bio" name="bio" required><?php echo htmlspecialchars($bio); ?></textarea>
+                                <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required><?php echo htmlspecialchars($bio); ?></textarea>
                             </div>
                         </div>
 
@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <input type="text" id="hobbies" name="hobbies" required value="<?php echo htmlspecialchars($hobbies); ?>">
+                                <input type="text" id="hobbies" name="hobbies" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($hobbies); ?>">
                             </div>
                         </div>
                     </div>
