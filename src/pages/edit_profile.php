@@ -140,21 +140,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row">
             <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-7 order-2">
+                    <div class="col-7 order-2 info-box">
 
                         <div class="row">
                             <div class="col-4">
                                 <!-- Name -->
-                                <label for="name">Name:</label>
+                                <label for="name" class="inputLabelText">Name</label>
                             </div>
                             <div class="col-4">
                                 <!-- Age -->
-                                <label for="age">Age:</label>
+                                <label for="age" class="inputLabelText">Age</label>
                                </div>
 
                             <div class="col-4">
                                 <!-- Gender -->
-                                <label for="gender">Gender:</label>
+                                <label for="gender" class="inputLabelText">Gender</label>
                             </div>
                         </div>
 
@@ -171,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-4">
                                 <!-- Gender -->
                                 <select id="gender" name="gender" <?php if (isset($gender)) echo "disabled"; ?> required>
+                                    <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if (isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if (isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
                                     <option value="Other" <?php if (isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
@@ -181,12 +182,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-6">
                                 <!-- College Year -->
-                                <label for="college_year">College Year:</label>
+                                <label for="college_year" class="inputLabelText">College Year</label>
                             </div>
 
                             <div class="col-6">
                                 <!-- Course-->
-                                <label for="course">Course:</label>
+                                <label for="course" class="inputLabelText">Course</label>
                             </div>
                         </div>
 
@@ -194,6 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-6">
                                 <!-- College Year -->
                                 <select id="college_year" name="college_year" required>
+                                    <option value="" disabled selected>Choose..</option>
                                     <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
                                     <option value="Masters" <?php if ($college_year == "Masters") echo "selected"; ?>>Masters</option>
                                     <option value="PhD" <?php if ($college_year == "PhD") echo "selected"; ?>>PhD</option>
@@ -209,12 +211,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-6">
                                 <!--  pursuing -->
-                                <label for="pursuing">Pursuing:</label>
+                                <label for="pursuing" class="inputLabelText">Pursuing</label>
                             </div>
 
                             <div class="col-6">
                                 <!-- Looking for-->
-                                <label for="looking_for">Looking For:</label>
+                                <label for="looking_for" class="inputLabelText">Looking For</label>
                             </div>
                         </div>
 
@@ -222,6 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-6">
                                 <!--  pursuing -->
                                 <select id="pursuing" name="pursuing" required>
+                                    <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
                                     <option value="Other" <?php if ($pursuing == "Other") echo "selected"; ?>>Other</option>
@@ -231,6 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-6">
                                 <!-- Looking for-->
                                 <select id="looking_for" name="looking_for" required>
+                                    <option value="" disabled selected>Choose..</option>
                                     <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
                                     <option value="Long-term" <?php if ($looking_for == "Long-term") echo "selected"; ?>>Long-Term</option>
                                     <option value="Unsure" <?php if ($looking_for == "Unsure") echo "selected"; ?>>Unsure</option>
@@ -241,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-12">
                                 <!-- Bio -->
-                                <label for="bio">Bio:</label>
+                                <label for="bio" class="inputLabelText">Bio</label>
                             </div>
                         </div>
 
@@ -255,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row">
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <label for="hobbies">Hobbies:</label>
+                                <label for="hobbies" class="inputLabelText">Hobbies</label>
                             </div>
                         </div>
 
