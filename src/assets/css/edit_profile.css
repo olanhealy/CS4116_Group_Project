@@ -145,11 +145,11 @@ body {
 #outline {
   border-color: #4d4d4d !important;
   position: relative;
-  width: 1300px;
+  width: 1250px;
 }
 
 .saveChangesBtn {
-  width: 262px;
+  width: 285px;
   font-size: 18px;
   background-color: #abc99d;
   border-color: #abc99d;
@@ -170,7 +170,7 @@ body {
 
 .fileUploadBtn {
   display: inline-block;
-  width: 262px;
+  width: 285px;
   font-size: 18px;
   padding: 8px 8px;
   background-color: #e6d1be;
@@ -193,11 +193,6 @@ body {
   font-weight: bold;
 }
 
-.info-box {
-  padding: 10px;
-}
-
-/* Style the dropdown container */
 .optionDropdown {
   width: 200px;
   padding: 8px;
@@ -237,7 +232,7 @@ body {
 }
 
 .textInput {
-  width: 200px;
+  width: 100%;
   padding: 8px;
   border: none;
   background-color: #fff;
@@ -254,6 +249,15 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
+}
+
+.info-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.inputField {
+  padding: 5px;
 }
 
 footer {

@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row">
                     <div class="col-7 order-2 info-box">
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-4">
                                 <!-- Name -->
                                 <label for="name" class="inputLabelText">Name</label>
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-4">
                                 <!-- Name -->
                                 <span id="name"><?php echo htmlspecialchars($name); ?></span>
@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-6">
                                 <!-- College Year -->
                                 <label for="college_year" class="inputLabelText">College Year</label>
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-6">
                                 <!-- College Year -->
                                 <select id="college_year" name="college_year" class="optionDropdown" required>
@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-6">
                                 <!--  pursuing -->
                                 <label for="pursuing" class="inputLabelText">Pursuing</label>
@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-6">
                                 <!--  pursuing -->
                                 <select id="pursuing" name="pursuing" class="optionDropdown" required>
@@ -242,21 +242,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-12">
                                 <!-- Bio -->
                                 <label for="bio" class="inputLabelText">Bio</label>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-12">
                                 <!-- Bio -->
                                 <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required><?php echo htmlspecialchars($bio); ?></textarea>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
                                 <label for="hobbies" class="inputLabelText">Hobbies</label>
@@ -264,7 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         
-                        <div class="row">
+                        <div class="row inputField">
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
                                 <input type="text" id="hobbies" name="hobbies" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($hobbies); ?>">
@@ -273,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
 
-                    <div class="col-4 order-1 imgBox">
+                    <div class="col-5 order-1 imgBox">
                         <!-- Profile Picture-->
                         <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
                         <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
