@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-6">
                                 <!-- Course-->
-                                <label for="course" class="inputLabelText">Course</label>
+                                <label for="course" class="inputLabelText">Course of Study</label>
                             </div>
                         </div>
 
