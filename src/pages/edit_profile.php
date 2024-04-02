@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-4">
                                 <!-- Age -->
                                 <label for="age" class="inputLabelText">Age</label>
-                               </div>
+                            </div>
 
                             <div class="col-4">
                                 <!-- Gender -->
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="col-4">
                                 <!-- Age -->
-                                <input type="number" id="age" name="age"  class="textInput" placeholder="Type here..." <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
+                                <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-4">
@@ -263,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        
+
                         <div class="row inputField">
                             <div class="col-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
@@ -274,13 +274,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                     <div class="col-5 order-1 imgBox">
-                        <!-- Profile Picture-->
-                        <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
-                        <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                        <input type="file" id="profile_pic" name="profile_pic">
+                        <div class="imgContainer">
+                            <!-- Profile Picture-->
+                            <img class="profilePicture" src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture" style="max-width:200px;">
+                        </div>
 
-                        <!-- Button to just update changes made in db -->
-                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
+                        <div class="imgBoxButtons">
+                            <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
+                            <input type="file" id="profile_pic" name="profile_pic">
+
+                            <!-- Button to just update changes made in db -->
+                            <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
+                        </div>
                     </div>
                 </div>
             </form>
