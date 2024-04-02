@@ -1,9 +1,9 @@
-/* * {
+* {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-  } */
+  }
 
 body {
   display: flex;
@@ -160,24 +160,17 @@ body {
   border-color: #97b189;
 }
 
-.imgBox {
-  display: flex;
-  flex-direction: column;
-}
-
-.imgBoxButtons {
+.imgContainer {
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: flex-end;
   align-items: center;
-
 }
 
-.imgContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.profilePicture {
+  padding-bottom: 20px;
+  max-width: 300px;
 }
 
 .fileUploadBtn {
@@ -269,10 +262,6 @@ body {
 }
 
 .inputField {
-  padding: 5px;
-}
-
-.profilePicture {
   padding: 5px;
 }
 

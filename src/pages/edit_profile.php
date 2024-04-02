@@ -273,19 +273,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
 
-                    <div class="col-5 order-1 imgBox">
-                        <div class="imgContainer">
+                    <div class="col-5 order-1 imgContainer">
                             <!-- Profile Picture-->
-                            <img class="profilePicture" src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture" style="max-width:200px;">
-                        </div>
+                            <img class="profilePicture" src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture">
 
-                        <div class="imgBoxButtons">
                             <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                             <input type="file" id="profile_pic" name="profile_pic">
 
                             <!-- Button to just update changes made in db -->
                             <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
-                        </div>
                     </div>
                 </div>
             </form>
