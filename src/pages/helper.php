@@ -194,28 +194,52 @@ function getPursuing($user_id) {
 function setProfilePic($user_id, $profile_pic_filename) {
     global $conn;
 
-    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == UPLOAD_ERR_OK) {
-        $upload_dir = "uploads/";
-        $profile_pic_filename = $upload_dir . basename($_FILES['profile_pic']['name']);
+    if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
+        // gets the file extension (i.e png etc ) and converts to lowercase for consistency in comparision
+        $file_extension = strtolower(pathinfo($_FILES['profile_pic']['name'], PATHINFO_EXTENSION));
+        //the only allowed type of files to be upload
+        $allowed_extensions = array('png', 'jpeg', 'jpg');
 
-        if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profile_pic_filename)) {
-            // If file is uploaded successfully, set profile pic in database
-            setProfilePic($user_id, $profile_pic_filename);
+        //checks if the file extension is in the allowed extensions
+        if (in_array($file_extension, $allowed_extensions)) {
+           
+            /*
+            overwrite the uplaoded file name to be the users id, followed by "_profile_pic" and the file extension so we can ensure no 2 users
+            have the same profile pic name
+            */
+
+            $new_filename = $user_id . "_profile_pic." . $file_extension;
+            // path for saving is in uploads folder, we get the servers document root and then look for uploads
+            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+            $upload_file = $upload_dir . $new_filename;
+
+            // Attempt to move the uploaded file
+            if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $upload_file)) {
+                // update the profile table in db 
+                $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
+                $set_profile_pic = $conn->prepare($sql_set_profile_pic);
+                $relative_path = "uploads/" . $new_filename;
+                $set_profile_pic->bind_param("si", $relative_path, $user_id);
+                $set_profile_pic->execute();
+                if ($set_profile_pic->affected_rows > 0) {
+                    // Return the new path for immediate use
+                    return $relative_path;
+                } else {
+                    echo "Error setting profile picture.";
+                    return false;
+                }
+            } else {
+                echo "Error uploading file.";
+                return false;
+            }
         } else {
-            echo "Error uploading profile picture";
+            echo "Invalid file type. Only PNG, JPEG, and JPG are allowed.";
+            return false;
         }
     }
 
-    $sql_set_profile_pic = "UPDATE profile SET profile_pic = ? WHERE user_id = ?";
-    $set_profile_pic = $conn->prepare($sql_set_profile_pic);
-    $set_profile_pic->bind_param("si", $profile_pic_filename, $user_id);
-    $set_profile_pic->execute();
-
-    if ($set_profile_pic->affected_rows > 0) {
-        echo "Profile picture set successfully";
-    } else {
-        echo "Error setting profile picture";
-    }
+    // return excisting photo if no new photo is uploade || invalid file type uploaded (no way to display this error without javascript)
+    return $profile_pic_filename;
 }
 
 // Process #26 to get the user's profile picture from the profile table of the db
@@ -344,5 +368,25 @@ function getLookingFor($user_id) {
     
     $get_looking_for->close();
     return $looking_for;
+}
+
+// function to get name used in explore.php
+function getName($user_id) {
+    global $conn;
+    $name = "";
+
+    $sql_get_name = "SELECT name FROM profile WHERE user_id = ?";
+    $get_name = $conn->prepare($sql_get_name);
+    $get_name->bind_param("i", $user_id);
+    $get_name->execute();
+    $get_name->store_result();
+
+    if ($get_name->num_rows > 0) {
+        $get_name->bind_result($name);
+        $get_name->fetch();
+    }
+
+    $get_name->close();
+    return $name;
 }
 ?>

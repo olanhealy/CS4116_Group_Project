@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <form action="showUserAdmin.php" method='GET'>
-    <a href="showUserAdmin.php?target_id=<?php echo $target_id?>">User: <?php echo $target_id; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
-    
+    <!--userId - Name - Email - Banned-->
+    <a href="showUserAdmin.php?targetId=<?php echo $targetId?>">User: <?php echo $targetId; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
 </form>
 </html>

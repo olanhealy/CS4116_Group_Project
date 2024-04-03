@@ -1,5 +1,11 @@
 <?php
-
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include "adminHelperFunctions.php";
-$target_id = $_POST['target_id'];
-setUserRole($target_id, "admin");
+
+//assigns the targetId to the value of the post request
+$targetId = $_POST['makeAdminTargetId'];
+setUserRole($targetId, "admin");
+
+header("Location: usersListAdmin.php");
