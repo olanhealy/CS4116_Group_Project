@@ -138,7 +138,7 @@ hr {
     margin-top: 50px;
     border: 2px solid black;
     border-color: black !important;
-    width: 50%;
+    width: 300px;
 }
 
 #profilepicture {
@@ -157,7 +157,7 @@ hr {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 50px;
-    width: 50%;
+    width: 300px;
 }
 
 #username {
@@ -289,14 +289,14 @@ input[type=button] {
     margin-top: 40px;
     border: 2px solid black;
     border-color: black !important;
-    width: 65%;
+    width: 350px;
 }
 
 #userinfoboxM {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 30px;
-    width: 65%;
+    width: 350px;
 }
 
 #topcontainerM {
@@ -343,14 +343,14 @@ input[type=button] {
     margin-top: 40px;
     border: 2px solid black;
     border-color: black !important;
-    width: 55%;
+    width: 450px;
 }
 
 #userinfoboxT {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 30px;
-    width: 55%;
+    width: 450px;
 }
 
 #profilepictureT {
