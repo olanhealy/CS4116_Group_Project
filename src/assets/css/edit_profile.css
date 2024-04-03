@@ -146,6 +146,7 @@ body {
   border-color: #4d4d4d !important;
   position: relative;
   width: 80vw;
+  margin: 0 auto;
 }
 
 .saveChangesBtn {
@@ -199,16 +200,15 @@ body {
 }
 
 .optionDropdown {
-  width: 200px;
-  padding: 8px;
+  padding: 8px 20px;
   border: 1px solid #e6d1be;
   border-radius: 4px;
   background-color: #e6d1be;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
+  width: 100%;
 }
-
 
 .optionDropdown option {
   font-size: 16px;

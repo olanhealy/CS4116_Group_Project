@@ -160,33 +160,21 @@ enum CourseOfStudy : string
                     <div class="col-lg-7 order-lg-2 col-md-12 info-box">
 
                         <div class="row inputField">
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-12">
                                 <!-- Name -->
-                                <label for="name" class="inputLabelText">Name</label>
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <!-- Age -->
-                                <label for="age" class="inputLabelText">Age</label>
-                            </div>
-
-                            <div class="col-md-4 col-sm-4">
-                                <!-- Gender -->
-                                <label for="gender" class="inputLabelText">Gender</label>
-                            </div>
-                        </div>
-
-                        <div class="row inputField">
-                            <div class="col-md-4 col-sm-4">
-                                <!-- Name -->
+                                <label for="name" class="inputLabelText">Name</label> <br>
                                 <span id="name"><?php echo htmlspecialchars($name); ?></span>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                        
+                            <div class="col-md-4 col-sm-12">
                                 <!-- Age -->
+                                <label for="age" class="inputLabelText">Age</label><br>
                                 <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
                             </div>
 
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-12">
                                 <!-- Gender -->
+                                <label for="gender" class="inputLabelText">Gender</label><br>
                                 <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender)) echo "disabled"; ?> required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if (isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
@@ -197,20 +185,9 @@ enum CourseOfStudy : string
                         </div>
 
                         <div class="row inputField">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <!-- College Year -->
-                                <label for="college_year" class="inputLabelText">College Year</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6">
-                                <!-- Course-->
-                                <label for="course" class="inputLabelText">Course of Study</label>
-                            </div>
-                        </div>
-
-                        <div class="row inputField">
-                            <div class="col-md-6 col-sm-6">
-                                <!-- College Year -->
+                                <label for="college_year" class="inputLabelText">College Year</label><br>
                                 <select id="college_year" name="college_year" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
@@ -219,7 +196,7 @@ enum CourseOfStudy : string
                                 </select>
                             </div>
 
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <!-- Course-->
                                 <!-- <select class="form-control" id="course_of_study" name="course_of_study">
                                     <?php
@@ -229,26 +206,16 @@ enum CourseOfStudy : string
                                     }
                                     ?>
                                 </select> -->
+                                <label for="course" class="inputLabelText">Course of Study</label><br>
                                 <input type="text" id="course"
                                  name="course" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($course); ?>">
                             </div>
                         </div>
 
                         <div class="row inputField">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-12">
                                 <!--  pursuing -->
-                                <label for="pursuing" class="inputLabelText">Pursuing</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6">
-                                <!-- Looking for-->
-                                <label for="looking_for" class="inputLabelText">Looking For</label>
-                            </div>
-                        </div>
-
-                        <div class="row inputField">
-                            <div class="col-md-6 col-sm-6">
-                                <!--  pursuing -->
+                                <label for="pursuing" class="inputLabelText">Pursuing</label><br>
                                 <select id="pursuing" name="pursuing" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
@@ -257,8 +224,9 @@ enum CourseOfStudy : string
                                 </select>
                             </div>
 
-                            <div class="col-md-6 col-sm-4">
+                            <div class="col-md-6 col-sm-12">
                                 <!-- Looking for-->
+                                <label for="looking_for" class="inputLabelText">Looking For</label><br>
                                 <select id="looking_for" name="looking_for" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
                                     <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
@@ -271,28 +239,15 @@ enum CourseOfStudy : string
                         <div class="row inputField">
                             <div class="col-md-12 col-sm-12">
                                 <!-- Bio -->
-                                <label for="bio" class="inputLabelText">Bio</label>
-                            </div>
-                        </div>
-
-                        <div class="row inputField">
-                            <div class="col-md-12 col-sm-12">
-                                <!-- Bio -->
+                                <label for="bio" class="inputLabelText">Bio</label><br>
                                 <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required><?php echo htmlspecialchars($bio); ?></textarea>
                             </div>
                         </div>
 
                         <div class="row inputField">
-                            <div class="col-md-12 col-sm-4">
+                            <div class="col-md-12 col-sm-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <label for="hobbies" class="inputLabelText">Hobbies</label>
-                            </div>
-                        </div>
-
-
-                        <div class="row inputField">
-                            <div class="col-md-12 col-sm-4">
-                                <!-- Hobbies (May need to update this as text for it is meh)-->
+                                <label for="hobbies" class="inputLabelText">Hobbies</label><br>
                                 <input type="text" id="hobbies" name="hobbies" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($hobbies); ?>">
                             </div>
                         </div>
