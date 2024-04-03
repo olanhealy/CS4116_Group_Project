@@ -43,8 +43,9 @@
                 </svg>
             </button>
             <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
-                <li><a class="dropdown-item-profile" href="edit_profile.php">Edit Profile</a></li>
-                <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+                <li><a class="dropdown-item-profile" href="edit_profile.php" id="editprofiledropdown">Edit Profile</a></li>
+                <li><hr class="dropdown-divider d-md-none"></li>
+                <li><a class="dropdown-item-profile d-md-none" href="logout.php" id="logoutdropdown">Log Out</a></li>
             </ul>
         </div>
         
@@ -53,20 +54,42 @@
     <!-- End of Navbar -->
 
     <!-- Dropdown Menu Button -->
-    <div class="container-fluid">
-            <button class="btn btn-primary dropdown-toggle" style="background-color: #e6d1be;" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+    <div class="container-fluid" id="dropdowndiv">
+
+            <button class="btn btn-primary dropdown-toggle d-lg-block d-xl-none" style="background-color: #e6d1be;" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
                 Home
             </button>
 
             <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
                 <li><a class="dropdown-item" href="explore.php">Explore</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="matches.php">Matches</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="messages.php">Messages</a></li>
             </ul>
+
+    </div>
+
+    <!-- Dropdown Menu Button XL -->
+    <div class="container-fluid" id="dropdowndivxl">
+
+        <button class="btn btn-primary dropdown-toggle d-none d-xl-block" style="background-color: #e6d1be;" type="button" id="menu-dropdownxl" data-bs-toggle="dropdown">
+            Home
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
+            <li><a class="dropdown-item" href="explore.php">Explore</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="matches.php">Matches</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+        </ul>
+
     </div>
 
     <br>
 
+    <!-- Main Container -->
     <div class="container-fluid">
         <div class="container-fluid border border-5" id="outline">
             <div class="row">
@@ -119,6 +142,7 @@
 
     <br>
 
+    <!-- Slogan -->
     <section class="slogan">
         <div class="container-fluid text-center d-none d-md-block">
             <div class="col-sm">
@@ -130,6 +154,7 @@
 
     <br>
 
+    <!-- Footer -->
     <footer class="p-2">
         © 2024 Copyright UL Singles. All Rights Reserved
     </footer>
