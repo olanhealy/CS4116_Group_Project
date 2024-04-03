@@ -136,8 +136,8 @@ enum CourseOfStudy : string
     <!-- Dropdown Menu Button -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary dropdown-toggle" style="background-color: #e6d1be;" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+            <div class="col-12 dropdownBtn">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
                     Edit Profile
                 </button>
 

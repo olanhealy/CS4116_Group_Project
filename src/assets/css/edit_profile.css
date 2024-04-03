@@ -113,8 +113,15 @@ body {
   font-weight: bold;
   border-color: #e6d1be;
   justify-content: left;
-  /* margin-left: 120px; */
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .dropdownBtn {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }
 
 #menu-dropdown:hover {
