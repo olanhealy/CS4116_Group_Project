@@ -34,7 +34,7 @@
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
         </div>
 
-        <!-- Profile Icon -->
+        <!-- Profile Icon Dropdown -->
         <div class="dropdown">
             <button class="btn btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -100,12 +100,10 @@
                                 
                                 <!-- Buttons for Ban Duration -->
                                 <div class="row">
-                                    <label for="reason">Duration:</label>
+                                    <label for="reason">Date of Unban:</label>
 
     
                                     <div class="col-6" id="temporarydiv">
-                                        <!-- have this button to open calendar dropdown -->
-                                        <input type="button" value="Temporary">
                                         <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
                                     </div>
 
@@ -170,7 +168,9 @@
                     </div>
                 </div>
 
-                <hr id="hr1">
+                <!-- Divider -->
+                <hr class="d-md-none" id="hr1">
+                <hr class="d-none d-md-block" id="hr2">
 
                 <!-- Ban User Section -->               
                 <div class="col-12" > 
@@ -195,17 +195,13 @@
                                 
                                 <!-- Buttons for Ban Duration -->
                                 <div class="row">
-                                    <label for="reason">Duration:</label>
+                                    <label for="reason">Date of Unban:</label>
 
-    
                                     <div class="col-6" id="temporarydiv">
-                                        <!-- have this button to open calendar dropdown -->
-                                        <input type="button" value="Temporary">
                                         <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
                                     </div>
 
                                     <div class="col-6" id="permanentdiv">
-                                        <!-- have this button to set unban date as year 9999 for perm-ban -->
                                         <input type="button" value="Permanent">
                                     </div>
                                     
@@ -220,13 +216,10 @@
                         </div>
 
                     </div>  
-                    
-                    
-
+                     
                 </div>   
             </div>
         </div>
-        
 
     </div>
 
