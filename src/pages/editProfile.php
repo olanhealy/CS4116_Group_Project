@@ -1,10 +1,7 @@
 <?php
 
-// Include database connection
 include "db_connection.php";
-
-//Requiring the "helper.php" cllass which contains getters and setters
-require "helper.php";
+require "helperFunctions.php";
 
 // Start the session
 if(session_status() === PHP_SESSION_NONE) {
@@ -12,21 +9,21 @@ if(session_status() === PHP_SESSION_NONE) {
 }
 
 // Fetch user details from the database
-$user_id = $_SESSION['id'];
+$userId = $_SESSION['user_id'];
 
 
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
-//Moved all the getter methods into "helper.php" for reuseability  
-$bio = getBio($user_id);
-$hobbies = getHobbies($user_id);
-$gender = getGender($user_id);
-$age = getAge($user_id);
-$college_year = getCollegeYear($user_id);
-$pursuing = getPursuing($user_id);
-$profile_pic_filename = getProfilePicture($user_id);
-$course = getCourse($user_id);
-$looking_for = getLookingFor($user_id);
-$name = getName($user_id);
+//Moved all the getter methods into "helperFunctions.php" for reuseability  
+$bio = getBio($userId);
+$hobbies = getHobbies($userId);
+$gender = getGender($userId);
+$age = getAge($userId);
+$collegeYear = getCollegeYear($userId);
+$pursuing = getPursuing($userId);
+$profilePicFilename = getProfilePicture($userId);
+$course = getCourse($userId);
+$lookingFor = getLookingFor($userId);
+$name = getName($userId);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,32 +33,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bio = htmlspecialchars($_POST['bio']);
     $gender = htmlspecialchars($_POST['gender']);
     $age = intval($_POST['age']);
-    $college_year = htmlspecialchars($_POST['college_year']);
+    $collegeYear = htmlspecialchars($_POST['college_year']);
     $pursuing = htmlspecialchars($_POST['pursuing']);
     $course = htmlspecialchars($_POST['course']);
     $hobbies = htmlspecialchars($_POST['hobbies']);
-    $looking_for = htmlspecialchars($_POST['looking_for']);
-    $profile_pic_filename = htmlspecialchars($_FILES['profile_pic']['name']);
+    $lookingFor = htmlspecialchars($_POST['looking_for']);
+    $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
 
     // Update the user currently logged in profile table in the database
-    $user_id = $_SESSION['id']; //we use this from being logged in
+    $userId = $_SESSION['user_id']; //we use this from being logged in
 
-    
     // Call setter methods to make the updates in db
-    setBio($user_id, $bio);
-    setGender($user_id, $gender);
-    setAge($age, $user_id);
-    setCollegeYear($user_id, $college_year);
-    setPursuing($user_id, $pursuing);
-    setProfilePic($user_id, $profile_pic_filename);
-    setCourse($user_id, $course);
-    setHobbies($user_id, $hobbies);
-    setLookingFor($user_id, $looking_for);
+    setBio($userId, $bio);
+    setGender($userId, $gender);
+    setAge($age, $userId);
+    setCollegeYear($userId, $collegeYear);
+    setPursuing($userId, $pursuing);
+    setProfilePic($userId, $profilePicFilename);
+    setCourse($userId, $course);
+    setHobbies($userId, $hobbies);
+    setLookingFor($userId, $lookingFor);
 
     header("Location: home.php");
 }
 
-
+//TODO: frontend: Edit profile formatted here
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <h1>Edit Profile</h1>
 
-        <form action="edit_profile.php" method="post" enctype="multipart/form-data">
+        <form action="editProfile.php" method="post" enctype="multipart/form-data">
 
        <!-- Name -->
         <label for="name">Name:</label>
@@ -110,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Profile Picture-->
         <label for="profile_pic">Profile Picture:</label>
         <input type="file" id="profile_pic" name="profile_pic">
-        <img src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
+        <img src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/path/to/default/image.png'; ?>" alt="Profile Picture" style="max-width:200px;">
 
         
         <!--  pursuing -->
@@ -124,9 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- College Year -->
         <label for="college_year">College Year:</label>
         <select id="college_year" name="college_year" required>
-            <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
-            <option value="Masters" <?php if ($college_year == "Masters") echo "selected"; ?>>Masters</option>
-            <option value="PhD" <?php if ($college_year == "PhD") echo "selected"; ?>>PhD</option>
+            <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
+            <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
+            <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
         </select>
 
         <!-- COurse-->
@@ -136,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Looking for-->
         <label for="looking_for">Looking For:</label>
         <select id="looking_for" name="looking_for" required>
-            <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
-            <option value="Long-term"<?php if ($looking_for == "Long-term") echo "selected"; ?>>Long-Term</option>
-            <option value="Unsure" <?php if ($looking_for == "Unsure") echo "selected"; ?>>Unsure</option>
+            <option value="Short-term" <?php if ($lookingFor == "Short-term") echo "selected"; ?>>Short-Term</option>
+            <option value="Long-term"<?php if ($lookingFor == "Long-term") echo "selected"; ?>>Long-Term</option>
+            <option value="Unsure" <?php if ($lookingFor == "Unsure") echo "selected"; ?>>Unsure</option>
         </select>
 
         <!-- Button to just update changes made in db -->

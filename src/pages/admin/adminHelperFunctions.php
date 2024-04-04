@@ -94,7 +94,7 @@ function deleteUser($targetId)
                     $query = "DELETE FROM $table WHERE user_id = ? OR ignored_user_id = ?";
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("ii", $targetId, $targetId);
-                }else{
+                } else {
                     $stmt = $conn->prepare($query);
                     $stmt->bind_param("i", $targetId);
                 }
@@ -105,7 +105,7 @@ function deleteUser($targetId)
                 if ($stmt->affected_rows !== 0) {
 
                     echo "User deleted successfully from $table" . "<br>";
-                } 
+                }
             } else {
                 //error
                 echo "User $targetId has no data relating to them in table $table" . "<br>";
@@ -137,9 +137,9 @@ function deleteUser($targetId)
             //checks if row is removed
             if ($stmt->affected_rows !== 0) {
                 echo "User deleted successfully from account" . "<br>";
-            } 
+            }
 
-        }else {
+        } else {
             //error
             echo "User $targetId has no data relating to them in table account" . "<br>";
         }
@@ -214,9 +214,9 @@ function deleteMatches($targetId)
             //checks if row is removed
             if ($stmt->affected_rows > 0) {
                 echo "User deleted successfully from matches" . "<br>";
-            } 
+            }
 
-        }else {
+        } else {
             echo "User $targetId has no data relating to them in table matches" . "<br>";
         }
     } else {
@@ -250,7 +250,7 @@ function isAccountBanned($userId)
 
         //gets value of banned
         return $result;
-    }else {
+    } else {
         //error logging
         echo "Error get data from banned table";
         return 0;
@@ -284,12 +284,12 @@ function setUserRole($userId, $role)
 
     //query to update user role
     $query = "UPDATE account SET user_role = ? WHERE user_id = ?";
-    $set_query = $conn->prepare($query);
-    $set_query->bind_param("si", $role, $userId);
-    $set_query->execute();
+    $setQuery = $conn->prepare($query);
+    $setQuery->bind_param("si", $role, $userId);
+    $setQuery->execute();
 
     //check if the user role has been set
-    if ($set_query->affected_rows > 0) {
+    if ($setQuery->affected_rows > 0) {
         echo "User set to Admin successfully";
     } else {
         echo "Error setting Admin";

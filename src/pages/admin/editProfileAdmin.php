@@ -3,8 +3,8 @@
 if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// Include the helper.php file
-include_once '../helper.php';
+// Include the helperFunctions.php file
+include_once '../helperFunctions.php';
 include '../db_connection.php';
 
 //var_dump($_SESSION);
@@ -41,19 +41,16 @@ if (isset($_SESSION['targetId'])) {
             setBio($targetId, $bio);
         }
 
-        // Example: Updating user's profile picture
         if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] == UPLOAD_ERR_OK) {
             $profilePicFilename = $_FILES['profile_pic']['name'];
             setProfilePic($targetId, $profilePicFilename);
         }
 
-        // Example: Updating user's hobbies
         if (isset($_POST['hobbies'])) {
             $hobbies = $_POST['hobbies'];
             setHobbies($targetId, $hobbies);
         }
 
-        // Example: Updating user's course
         if (isset($_POST['course'])) {
             $course = $_POST['course'];
             setCourse($targetId, $course);

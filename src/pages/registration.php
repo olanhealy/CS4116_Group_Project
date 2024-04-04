@@ -16,8 +16,7 @@ function isAccountFound($email, $password)
 }
 
 // Process #8 verifyStudentEmail verifies by making sure the email ends with '@studentmail.ul.ie'
-function verifyStudentEmail($email)
-{
+function verifyStudentEmail($email){
     return substr($email, -18) === "@studentmail.ul.ie";
 }
 
@@ -45,18 +44,17 @@ function setPassword($password, $user_id)
 }
 
 // Process #15 to set the user_id based on the users student number which is inputted with the ul student email
-function setUserId($email)
-{
-    $user_id_string = explode("@", $email)[0]; // Extract the portion before @
-    $user_id = (int) $user_id_string; // Convert to integer
-    return $user_id;
+function setUserId($email){
+    $userIdString = explode("@", $email)[0]; // Extract the portion before @
+    $userId = (int) $userIdString; // Convert to integer
+    return $userId;
 }
 
 include "db_connection.php";
-include "helper.php";
+include "helperFunctions.php";
 
-
-//Initalise array of erros which can then be displayed from the html
+//TODO: Frontend: Change errors to be displayed in a more user friendly way
+//Initalise array of errors which can then be displayed from the html
 $errors = [];
 
 // Check if the form is submitted
@@ -64,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate inputs
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
-    $first_name = htmlspecialchars($_POST['first_name']);
-    $last_name = htmlspecialchars($_POST['last_name']);
+    $firstName = htmlspecialchars($_POST['first_name']);
+    $lastName = htmlspecialchars($_POST['last_name']);
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -97,16 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
 
         // Call setUserId function
-        $user_id = setUserId($email);
+        $userId = setUserId($email);
 
         // Insert the newly successful registered email and the set userID into account table of database
-        $sql_insert_account = "INSERT INTO account (user_id, email) VALUES (?,?)";
-        $insert_account_statement = $conn->prepare($sql_insert_account);
-        $insert_account_statement->bind_param('is', $user_id, $email);
-        $insert_account_statement->execute();
+        $query = "INSERT INTO account (user_id, email) VALUES (?,?)";
+        $insertAccountStatement = $conn->prepare($query);
+        $insertAccountStatement->bind_param('is', $userId, $email);
+        $insertAccountStatement->execute();
 
         // Check if the insertion was successful
-        if ($insert_account_statement->affected_rows > 0) {
+        if ($insertAccountStatement->affected_rows > 0) {
 
             // Get the user id of this registered user
 
@@ -114,23 +112,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setPassword($password, $user_id);
             setName($first_name, $last_name, $user_id);
 
+            // Start the session and set the email and id of the user
             if(session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
             $_SESSION['email'] = $email;
-            $_SESSION['id'] = $user_id;
+            $_SESSION['user_id'] = $userId;
 
-            header("Location: edit_profile.php");
+            // Redirect to the edit profile page
+            header("Location: editProfile.php");
         } else {
             $errors[] = "Error occurred during registration";
         }
 
         // Close insert of new account as the HTTP request has been posted to db
-        $insert_account_statement->close();
+        $insertAccountStatement->close();
     }
 }
 
 // Include the HTML content from registration.html
 include "registration.html";
-
-?>
