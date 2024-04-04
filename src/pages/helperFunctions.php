@@ -1,7 +1,118 @@
 <?php
 // Process #13 to set the user's bio in the profile table of the db
-function setBio($user_id, $bio)
+
+// Process #4 checks if the Account already exists in the account table of db
+function isAccountFound($email, $password)
 {
+    global $conn;
+    $count = 0;
+    $sql_is_account_found = "SELECT COUNT(*) FROM account WHERE email = ? AND password_hash = ?";
+    $account = $conn->prepare($sql_is_account_found);
+    $account->bind_param('ss', $email, $password);
+    $account->execute();
+    $account->bind_result($count);
+    $account->fetch();
+    $account->close();
+
+    return $count > 0;
+}
+
+function setPassword($password, $user_id)
+{
+    global $conn;
+
+    // Hash the password for security 
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update the password in the Accounts table
+    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
+    $set_password = $conn->prepare($sql_set_password);
+    $set_password->bind_param('si', $hashed_password, $user_id);
+    $set_password->execute();
+
+    if ($set_password->affected_rows > 0) {
+        echo "Password set successfully";
+    } else {
+        echo "Error setting password";
+    }
+
+    $set_password->close();
+}
+
+function setFirstName($user_id, $first_name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET first_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $first_name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "First name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+function setLastName($user_id, $last_Name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET last_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $last_Name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "Last name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+// Process #11 to set the First name and Last name in the account table in db
+function setName($first_name, $last_name, $user_id)
+{
+    global $conn;
+
+    setFirstName($user_id, $first_name);
+    setLastName($user_id, $last_name);
+
+    if (getName($user_id) == "") {
+        // Insert the user id  into profile table, also inserting the full name of user
+        $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
+        $insert_new_profile = $conn->prepare($sql_insert_profile);
+        $full_name = $first_name . " " . $last_name;
+        $insert_new_profile->bind_param('is', $user_id, $full_name);
+        $insert_new_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($insert_new_profile->affected_rows <= 0) {
+        //     echo "Error inserting into the Profile table";
+        // }
+
+        $insert_new_profile->close();
+    }else{
+        $full_name = $first_name . " " . $last_name;
+        $sql_update_profile = "UPDATE `profile` SET `name` = ? WHERE user_id = ?";
+        $update_profile = $conn->prepare($sql_update_profile);
+        $update_profile->bind_param("si", $full_name, $user_id);
+        $update_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($update_profile->affected_rows > 0) {
+        //     echo "Name set successfully";
+        // } else {
+        //     echo "Error setting Name";
+        // }
+    
+    }
+}
+
+function setBio($user_id, $bio) {
     global $conn;
 
     $sql_set_bio = "UPDATE profile SET bio = ? WHERE user_id = ?";
@@ -17,9 +128,8 @@ function setBio($user_id, $bio)
 }
 
 // Process #14 to get the user's bio if they already exist in the profiile table of db
-function getBio($user_id)
-{
-    global $conn;
+function getBio($user_id) {
+    global $conn; 
     $bio = "";
 
     $sql_get_bio = "SELECT bio FROM profile WHERE user_id = ?";
@@ -39,8 +149,7 @@ function getBio($user_id)
 }
 
 // Process #17 to set the user's gender in the profile table of the db
-function setGender($user_id, $gender)
-{
+function setGender($user_id, $gender) {
     global $conn;
 
     $sql_set_gender = "UPDATE profile SET gender = ? WHERE user_id = ?";
@@ -58,8 +167,7 @@ function setGender($user_id, $gender)
 }
 
 // Process #38 to get the user's gender if they already exist in the profiile table of db
-function getGender($user_id)
-{
+function getGender($user_id) {
     global $conn;
     $gender = "";
 
@@ -80,8 +188,7 @@ function getGender($user_id)
 }
 
 // Process #19 to set the user's age in the profile table of the db
-function setAge($age, $user_id)
-{
+function setAge($age, $user_id) {
     global $conn;
 
     $sql_set_age = "UPDATE profile SET age = ? WHERE user_id = ?";
@@ -99,8 +206,7 @@ function setAge($age, $user_id)
 }
 
 // Process #20 to get the user's age if they already exist in the profiile table of db
-function getAge($user_id)
-{
+function getAge($user_id) {
     global $conn;
     $age = "";
 
@@ -110,7 +216,7 @@ function getAge($user_id)
     $get_age->execute();
     $get_age->store_result();
 
-    if ($get_age->num_rows > 0) {
+    if ( $get_age->num_rows > 0) {
         $get_age->bind_result($age);
         $get_age->fetch();
     }
@@ -121,8 +227,7 @@ function getAge($user_id)
 }
 
 // Process #21 to set the user's college year in the profile table of the db
-function setCollegeYear($user_id, $college_year)
-{
+function setCollegeYear($user_id, $college_year) {
     global $conn;
 
     $sql_set_college_year = "UPDATE profile SET college_year = ? WHERE user_id = ?";
@@ -140,8 +245,7 @@ function setCollegeYear($user_id, $college_year)
 }
 
 // Process #22 to get the user's college year if they already exist in the profile table of the database
-function getCollegeYear($user_id)
-{
+function getCollegeYear($user_id) {
     global $conn;
     $college_year = "";
 
@@ -161,8 +265,7 @@ function getCollegeYear($user_id)
 }
 
 // Process #23 to set the user's pursuing status in the profile table of the db
-function setPursuing($user_id, $pursuing)
-{
+function setPursuing($user_id, $pursuing) {
     global $conn;
 
     $sql_set_pursuing = "UPDATE profile SET pursuing = ? WHERE user_id = ?";
@@ -180,8 +283,7 @@ function setPursuing($user_id, $pursuing)
 }
 
 // Process #22 to get the user's pursuing status if they already exist in the profile table of the database
-function getPursuing($user_id)
-{
+function getPursuing($user_id) {
     global $conn;
     $pursuing = "";
 
@@ -201,8 +303,7 @@ function getPursuing($user_id)
 }
 
 // Process #25 to set the user's profile picture in the profile table of the db
-function setProfilePic($user_id, $profile_pic_filename)
-{
+function setProfilePic($user_id, $profile_pic_filename) {
     global $conn;
 
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
@@ -213,7 +314,7 @@ function setProfilePic($user_id, $profile_pic_filename)
 
         //checks if the file extension is in the allowed extensions
         if (in_array($file_extension, $allowed_extensions)) {
-
+           
             /*
             overwrite the uplaoded file name to be the users id, followed by "_profile_pic" and the file extension so we can ensure no 2 users
             have the same profile pic name
@@ -254,8 +355,7 @@ function setProfilePic($user_id, $profile_pic_filename)
 }
 
 // Process #26 to get the user's profile picture from the profile table of the db
-function getProfilePicture($user_id)
-{
+function getProfilePicture($user_id) {
     global $conn;
     $profile_pic_filename = "";
 
@@ -275,13 +375,12 @@ function getProfilePicture($user_id)
 }
 
 // Process #29 to set the user's course of study in the profile table of the db
-function setCourse($user_id, $course)
-{
+function setCourse($user_id, $course) {
     global $conn;
 
     $sql_set_course = "UPDATE profile SET course = ? WHERE user_id = ?";
     $set_course = $conn->prepare($sql_set_course);
-    $set_course->bind_param("si", $course, $user_id);
+    $set_course->bind_param("si", $course, $user_id); 
     $set_course->execute();
 
     if ($set_course->affected_rows > 0) {
@@ -292,29 +391,27 @@ function setCourse($user_id, $course)
 }
 
 // Process #30 to  get the user's course of study from the profile table of the db
-function getCourse($user_id)
-{
+function getCourse($user_id) {
     global $conn;
-    $course = "";
+    $course= "";
 
     $sql_get_course = "SELECT course  FROM profile WHERE user_id = ?";
-    $get_course = $conn->prepare($sql_get_course);
-    $get_course->bind_param("i", $user_id);
-    $get_course->execute();
-    $get_course->store_result();
+    $get_course  = $conn->prepare($sql_get_course );
+    $get_course ->bind_param("i", $user_id);
+    $get_course ->execute();
+    $get_course ->store_result();
 
-    if ($get_course->num_rows > 0) {
-        $get_course->bind_result($course);
-        $get_course->fetch();
+    if ($get_course ->num_rows > 0) {
+        $get_course ->bind_result($course );
+        $get_course ->fetch();
     }
 
-    $get_course->close();
+    $get_course ->close();
     return $course;
 }
 
 // Process #31 to set the user's hobbies in the profile table of the db
-function setHobbies($user_id, $hobbies)
-{
+function setHobbies($user_id, $hobbies) {
     global $conn;
 
     $sql_set_hobbies = "UPDATE profile SET hobbies = ? WHERE user_id = ?";
@@ -330,8 +427,7 @@ function setHobbies($user_id, $hobbies)
 }
 
 // Process #32 to get the user's hobbies if they already exist in the profiile table of db (incomplete for html side)
-function getHobbies($user_id)
-{
+function getHobbies($user_id) {
     global $conn;
     $hobbies = "";
 
@@ -351,8 +447,7 @@ function getHobbies($user_id)
 }
 
 // Process #33 to set the user's looking for status in the profile table of the db
-function setLookingFor($user_id, $looking_for)
-{
+function setLookingFor($user_id, $looking_for) {
     global $conn;
 
     $sql_set_looking_for = "UPDATE profile SET looking_for = ? WHERE user_id = ?";
@@ -368,11 +463,10 @@ function setLookingFor($user_id, $looking_for)
 }
 
 // Process #34 to get the user's looking for status if they already exist in the profiile table of db
-function getLookingFor($user_id)
-{
+function getLookingFor($user_id) {
     global $conn;
     $looking_for = "";
-
+    
     $sql_get_looking_for = "SELECT looking_for FROM profile WHERE user_id = ?";
     $get_looking_for = $conn->prepare($sql_get_looking_for);
     $get_looking_for->bind_param("i", $user_id);
@@ -383,60 +477,13 @@ function getLookingFor($user_id)
         $get_looking_for->bind_result($looking_for);
         $get_looking_for->fetch();
     }
-
+    
     $get_looking_for->close();
     return $looking_for;
 }
 
-// Process #11 to set the First name and Last name in the account table in db
-function setName($first_name, $last_name, $user_id)
-{
-    global $conn;
-
-    $sql_set_name = "UPDATE account SET first_name = ?, last_name = ? WHERE user_id = ?";
-
-    $set_name = $conn->prepare($sql_set_name);
-    $set_name->bind_param("ssi", $first_name, $last_name, $user_id);
-    $set_name->execute();
-
-    if ($set_name->affected_rows > 0) {
-        echo "First and Last Name set successfully";
-    } else {
-        echo "Error setting First and Last Name";
-    }
-
-    if (getName($user_id) == "") {
-        // Insert the user id  into profile table, also inserting the full name of user
-        $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
-        $insert_new_profile = $conn->prepare($sql_insert_profile);
-        $full_name = $first_name . " " . $last_name;
-        $insert_new_profile->bind_param('is', $user_id, $full_name);
-        $insert_new_profile->execute();
-
-        if ($insert_new_profile->affected_rows <= 0) {
-            echo "Error inserting into the Profile table";
-        }
-
-        $insert_new_profile->close();
-    }else{
-        $full_name = $first_name . " " . $last_name;
-        $sql_update_profile = "UPDATE `profile` SET `name` = ? WHERE user_id = ?";
-        $update_profile = $conn->prepare($sql_update_profile);
-        $update_profile->bind_param("si", $full_name, $user_id);
-        $update_profile->execute();
-
-        if ($update_profile->affected_rows > 0) {
-            echo "Name set successfully";
-        } else {
-            echo "Error setting Name";
-        }
-    
-    }
-}
-
 // function to get name used in explore.php
-function getName($user_id)
-{
+function getName($user_id) {
     global $conn;
     $name = "";
 
@@ -477,7 +524,7 @@ function isItAMatch($initiatorId, $targetId)
     $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
 
     if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("ii", $targetId, $initiatorId);
+        $stmt->bind_param("ii", $targetId , $initiatorId);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -528,7 +575,7 @@ function getAllMatches($userId)
         while ($row = $result->fetch_assoc()) {
 
             $targetId = $row['other_user_id'];
-
+            
             $name = getName($targetId);
             $profilePicture = getProfilePicture($targetId);
 

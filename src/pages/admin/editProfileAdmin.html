@@ -13,7 +13,7 @@
         <hr>
 
         <!-- Form for editing profile information -->
-        <form method="POST" action="editProfileAdmin.php" enctype="multipart/form-data">
+        <form method="POST" action="editProfileAdmin.php" enctype="multipart/form-data" >
 
             <label for="first_name">First Name:</label><br>
             <textarea id="first_name" name="first_name"><?php echo explode(' ', $_SESSION['existingName'])[0]; ?></textarea><br>

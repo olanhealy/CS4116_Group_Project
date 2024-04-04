@@ -1,10 +1,11 @@
+<!-- HomePage link -->
 <a href="home.php">Home</a>
 <br>
 
 <?php
-//require db connection and the helper file as we will need to use the getters for displaying certain information about users
+
 require "db_connection.php";
-require_once "helper.php";
+require_once "helperFunctions.php";
 
 // Start session securely
 if(session_status() === PHP_SESSION_NONE) {
@@ -12,39 +13,39 @@ if(session_status() === PHP_SESSION_NONE) {
 }
 
 // get user id of user currently accessing the explore page
-$user_logged_in_id = $_SESSION['id'];
+$userLoggedInId = $_SESSION['user_id'];
 
 // delete ignores older than 3 minutes keeping as 3 for testing purposes (kinda works kind of doesnt idk something to do with timezones or some bs)
 //$cleanup_sql = "DELETE FROM `ignore` WHERE `date` < NOW() - INTERVAL 3 MINUTE";
 //$conn->query($cleanup_sql);
 
 // initialide user's exploration state if not already set or if a different user is logged in
-if (!isset($_SESSION['explore_state'][$user_logged_in_id])) {
-    $_SESSION['explore_state'][$user_logged_in_id] = [
+if (!isset($_SESSION['explore_state'][$userLoggedInId])) {
+    $_SESSION['explore_state'][$userLoggedInId] = [
         'users_to_explore' => [],
         'current_position' => 0, // tracks the current position in the explore list
     ];
 }
-//Use the getters from helper.php only of the details we require from profile table of db for the user logged in
-$user_logged_in_hobbies = getHobbies($user_logged_in_id);
-$user_logged_in_gender = getGender($user_logged_in_id);
-$user_logged_in_age = getAge($user_logged_in_id);
-$user_logged_in_college_year = getCollegeYear($user_logged_in_id);
-$user_logged_in_pursuing = getPursuing($user_logged_in_id);
-$user_logged_in_course = getCourse($user_logged_in_id);
-$user_logged_in_looking_for = getLookingFor($user_logged_in_id);
+//Use the getters from helperFunctions.php only of the details we require from profile table of db for the user logged in
+$userLoggedInHobbies = getHobbies($userLoggedInId);
+$userLoggedInGender = getGender($userLoggedInId);
+$userLoggedInAge = getAge($userLoggedInId);
+$userLoggedInCollegeYear = getCollegeYear($userLoggedInId);
+$userLoggedInPursuing = getPursuing($userLoggedInId);
+$userLoggedInCourse = getCourse($userLoggedInId);
+$userLoggedInLookingFor = getLookingFor($userLoggedInId);
 
 //Fucntion for how we are going to differ the weights to display matches. We are going to have a few factors
-function calcMatchWeight($target_user_id)
+function calcMatchWeight($targetUserId)
 {
-    global $user_logged_in_id, $user_logged_in_age, $user_logged_in_hobbies, $user_logged_in_college_year, $user_logged_in_course, $user_logged_in_looking_for;
+    global $userLoggedInId, $userLoggedInAge, $userLoggedInHobbies, $userLoggedInCollegeYear, $userLoggedInCourse, $userLoggedInLookingFor;
 
     // we will get the target users relevant details here as only now do we need them as the userid of target user has passed the "gender check"
-    $target_user_id_hobbies = getHobbies($target_user_id);
-    $target_user_id_age = getAge($target_user_id);
-    $target_user_id_college_year = getCollegeYear($target_user_id);
-    $target_user_id_course = getCourse($target_user_id);
-    $target_user_id_looking_for = getLookingFor($target_user_id);
+    $targetUserIdHobbies = getHobbies($targetUserId);
+    $targetUserIdAge = getAge($targetUserId);
+    $targetUserIdCollegeYear = getCollegeYear($targetUserId);
+    $targetUserIdCourse = getCourse($targetUserId);
+    $targetUserIdLookingFor = getLookingFor($targetUserId);
 
 
     //weight array were key represents the % in decimal form of how much influence it will have on which user is displayed to current user
@@ -58,18 +59,18 @@ function calcMatchWeight($target_user_id)
     );
 
     //variable to store the score meter. This will help determine which user is a 'best fit' for current user based of certain criteria 
-    $weight_score = 0;
+    $weightScore = 0;
 
     foreach ($weight as $key => $weight) {
         switch ($key) {
             //case for age
             case 'age':
-                $age_difference = abs($user_logged_in_age - $target_user_id_age);
+                $ageDifference = abs($userLoggedInAge - $targetUserIdAge);
 
                 // different age difference constraints to give a score
-                if ($age_difference <= 3) {
+                if ($ageDifference <= 3) {
                     $score = 100;
-                } elseif ($age_difference <= 6) {
+                } elseif ($ageDifference <= 6) {
                     $score = 50;
                 } else {
                     $score = 0;
@@ -77,16 +78,16 @@ function calcMatchWeight($target_user_id)
                 break;
             //case for hobbies    
             case 'hobbies':
-                $user_hobbies = explode(',', $user_logged_in_hobbies);
-                $target_user_hobbies = explode(',', $target_user_id_hobbies);
-                $matching_hobbies = array_intersect($user_hobbies, $target_user_hobbies);
+                $userHobbies = explode(',', $userLoggedInHobbies);
+                $targetUserHobbies = explode(',', $targetUserIdHobbies);
+                $matchingHobbies = array_intersect($userHobbies, $targetUserHobbies);
 
                 // If hobbies match, for the amount that 2 multply it by 50 score
-                $score = count($matching_hobbies) * 50; // each matching hobby contributes 10 to the score
+                $score = count($matchingHobbies) * 50; // each matching hobby contributes 10 to the score
                 break;
             //case for college year    
             case 'college_year':
-                if ($user_logged_in_college_year === $target_user_id_college_year) {
+                if ($userLoggedInCollegeYear === $targetUserIdCollegeYear) {
                     $score = 100; // same college year
                 } else {
                     $score = 0; // different college year
@@ -95,7 +96,7 @@ function calcMatchWeight($target_user_id)
             //case for course    
             case 'course':
 
-                if ($user_logged_in_course === $target_user_id_course) {
+                if ($userLoggedInCourse === $targetUserIdCourse) {
                     $score = 100; // same course
                 } else {
                     $score = 0; // different course
@@ -103,7 +104,7 @@ function calcMatchWeight($target_user_id)
                 break;
             //case for looking_for
             case 'looking_for':
-                if ($user_logged_in_looking_for === $target_user_id_looking_for) {
+                if ($userLoggedInLookingFor === $targetUserIdLookingFor) {
                     $score = 100; // same looking for status
                 } else {
                     $score = 0; // different looking for status
@@ -116,37 +117,37 @@ function calcMatchWeight($target_user_id)
         }
 
         // add this score to toal score
-        $weight_score += $weight * $score;
+        $weightScore += $weight * $score;
     }
-    return $weight_score;
+    return $weightScore;
 }
 
-function getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users)
+function getUsersForExplore($userLoggedInId, $adoredUsers, $ignoredUsers)
 {
     /*
     if no users to explore are set in session, we will then use this method to get them
     this helps as if a user leaves the page, its state will be remember and will nott have to recalculate the users to explore. Also checks to explore state
     which is postion in array
     */
-    if (empty($_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'])) {
-        global $conn, $user_logged_in_gender, $user_logged_in_pursuing;
+    if (empty($_SESSION['explore_state'][$userLoggedInId]['users_to_explore'])) {
+        global $conn, $userLoggedInGender, $userLoggedInPursuing;
 
         //initalise array to explore users that will eventually pass the criteria made for user logged in 
-        $users_to_explore = array();
+        $usersToExplore = array();
 
         // for getting all users, is a process so placeholder for now
-        $sql_users_to_explore = "SELECT user_id FROM profile WHERE user_id != ?";
+        $sqlUsersToExplore = "SELECT user_id FROM profile WHERE user_id != ?";
 
         // check if the the user adores other user, if they do exclude them from being displayed
-        if (!empty($adored_users)) {
-            $placeholder = implode(",", array_fill(0, count($adored_users), "?"));
-            $sql_users_to_explore .= " AND user_id NOT IN ($placeholder)";
+        if (!empty($adoredUsers)) {
+            $placeholder = implode(",", array_fill(0, count($adoredUsers), "?"));
+            $sqlUsersToExplore .= " AND user_id NOT IN ($placeholder)";
         }
 
         // check if the user ignores other users, if they do exclude them from being displayed
-        if (!empty($ignored_users)) {
-            $placeholders = implode(",", array_fill(0, count($ignored_users), "?"));
-            $sql_users_to_explore .= " AND user_id NOT IN ($placeholders)";
+        if (!empty($ignoredUsers)) {
+            $placeholders = implode(",", array_fill(0, count($ignoredUsers), "?"));
+            $sqlUsersToExplore .= " AND user_id NOT IN ($placeholders)";
         }
 
         /*
@@ -155,26 +156,26 @@ function getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users)
         array_merge built in fucntion to merge the user logged in id with the adored and ignored users
         basically makes sure no users skip through 
         */
-        $get_all_users_to_explore = $conn->prepare($sql_users_to_explore);
-        $types = str_repeat("i", count($adored_users) + count($ignored_users) + 1);
-        $values = array_merge([$user_logged_in_id], $adored_users, $ignored_users);
-        $get_all_users_to_explore->bind_param($types, ...$values);
-        $get_all_users_to_explore->execute();
-        $result_all_users_to_explore = $get_all_users_to_explore->get_result();
+        $getAllUsersToExplore = $conn->prepare($sqlUsersToExplore);
+        $types = str_repeat("i", count($adoredUsers) + count($ignoredUsers) + 1);
+        $values = array_merge([$userLoggedInId], $adoredUsers, $ignoredUsers);
+        $getAllUsersToExplore->bind_param($types, ...$values);
+        $getAllUsersToExplore->execute();
+        $resultAllUsersToExplore = $getAllUsersToExplore->get_result();
 
 
-        while ($users_row = $result_all_users_to_explore->fetch_assoc()) {
-            $target_user_id = $users_row['user_id'];
+        while ($users_row = $resultAllUsersToExplore->fetch_assoc()) {
+            $targetUserId = $users_row['user_id'];
 
             /*
             The first check needed is to make sure the user logged in is can only 'explore' the gender they are pursuing and that the displayed users are only
             exploring the gender of the user logged in. i.e if the user logged in is a male, who is pursuing a female, the displayed user must a female who is pursuing a male
             */
 
-            $target_user_id_gender = getGender($target_user_id);
-            $target_user_id_pursuing = getPursuing($target_user_id);
+            $targetUserIdGender = getGender($targetUserId);
+            $targetUserIdPursuing = getPursuing($targetUserId);
 
-            if ($target_user_id_gender !== $user_logged_in_pursuing || $target_user_id_pursuing !== $user_logged_in_gender) {
+            if ($targetUserIdGender !== $userLoggedInPursuing || $targetUserIdPursuing !== $userLoggedInGender) {
                 continue;
                 /*
                 so if the target (female) does not equal the user logged in pursuing (female) it would pass, and if the targer user pursuing (male) does not equal the gender of
@@ -184,93 +185,93 @@ function getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users)
             }
 
             // calculate match weight for the user if it passes the gender check 
-            $weight_score = calcMatchWeight($target_user_id);
+            $weightScore = calcMatchWeight($targetUserId);
 
             //get target user details to display
-            $target_user_id_profile_pic_filename = getProfilePicture($target_user_id);
-            $target_user_id_name = getName($target_user_id);
-            $target_user_id_age = getAge($target_user_id);
-            $target_user_id_college_year = getCollegeYear($target_user_id);
-            $target_user_id_course = getCourse($target_user_id);
-            $target_user_id_looking_for = getLookingFor($target_user_id);
-            $target_user_id_bio = getBio($target_user_id);
-            $target_user_id_hobbies = getHobbies($target_user_id);
+            $targetUserIdProfilePicFilename = getProfilePicture($targetUserId);
+            $targetUserIdName = getName($targetUserId);
+            $targetUserIdAge = getAge($targetUserId);
+            $targetUserIdCollegeYear = getCollegeYear($targetUserId);
+            $targetUserIdCourse = getCourse($targetUserId);
+            $targetUserIdLookingFor = getLookingFor($targetUserId);
+            $targetUserIdBio = getBio($targetUserId);
+            $targetUserIdHobbies = getHobbies($targetUserId);
 
             // store user id of a user that makes it thus for and their subsuqenet match score, now display details from mockup
-            $users_to_explore[] = array(
-                'user_id' => $target_user_id,
-                'profile_pic_filename' => $target_user_id_profile_pic_filename,
-                'name' => $target_user_id_name,
-                'age' => $target_user_id_age,
-                'gender' => $target_user_id_gender,
-                'college_year' => $target_user_id_college_year,
-                'course' => $target_user_id_course,
-                'pursuing' => $target_user_id_pursuing,
-                'looking_for' => $target_user_id_looking_for,
-                'bio' => $target_user_id_bio,
-                'hobbies' => $target_user_id_hobbies,
-                'weight_score' => $weight_score
+            $usersToExplore[] = array(
+                'user_id' => $targetUserId,
+                'profile_pic_filename' => $targetUserIdProfilePicFilename,
+                'name' => $targetUserIdName,
+                'age' => $targetUserIdAge,
+                'gender' => $targetUserIdGender,
+                'college_year' => $targetUserIdCollegeYear,
+                'course' => $targetUserIdCourse,
+                'pursuing' => $targetUserIdPursuing,
+                'looking_for' => $targetUserIdLookingFor,
+                'bio' => $targetUserIdBio,
+                'hobbies' => $targetUserIdHobbies,
+                'weight_score' => $weightScore
             );
         }
 
         // sort users from match score in descending order
-        usort($users_to_explore, function ($a, $b) {
+        usort($usersToExplore, function ($a, $b) {
             return $b['weight_score'] - $a['weight_score'];
         });
 
 
-        $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'] = $users_to_explore;
+        $_SESSION['explore_state'][$userLoggedInId]['users_to_explore'] = $usersToExplore;
     }
 
     /*
     return users to explore which give an array of the user id matched with their "match score"
     now have it set as session so can actually update
     */
-    return $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'];
+    return $_SESSION['explore_state'][$userLoggedInId]['users_to_explore'];
 }
 
 // GET request for the action which is assigned to adore and ignore.
 if (isset($_GET['action'])) {
     // get the current position from the session
-    $current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
+    $currentPosition = $_SESSION['explore_state'][$userLoggedInId]['current_position'];
 
     // Get the current based on the current position before incrementing for the next user so we can then use it to add to db for an adore or ignore action
-    $current_user = $_SESSION['explore_state'][$user_logged_in_id]['users_to_explore'][$current_position] ?? null;
+    $currentUser = $_SESSION['explore_state'][$userLoggedInId]['users_to_explore'][$currentPosition] ?? null;
 
-    if ($current_user !== null) {
+    if ($currentUser !== null) {
         if ($_GET['action'] === 'adore') {
-            adoreUser($user_logged_in_id, $current_user['user_id']);
-            if (isItAMatch($user_logged_in_id, $current_user['user_id'])) {
+            adoreUser($userLoggedInId, $currentUser['user_id']);
+            if (isItAMatch($userLoggedInId, $currentUser['user_id'])) {
                 // if it is a match, add to matches table
-                addMatch($current_user['user_id'], $user_logged_in_id);
+                addMatch($currentUser['user_id'], $userLoggedInId);
             }
         } elseif ($_GET['action'] === 'ignore') {
-            ignoreUser($user_logged_in_id, $current_user['user_id']);
+            ignoreUser($userLoggedInId, $currentUser['user_id']);
         }
     }
 
     // Increment the current position after handling any action (adore or ignore)
-    $_SESSION['explore_state'][$user_logged_in_id]['current_position']++;
+    $_SESSION['explore_state'][$userLoggedInId]['current_position']++;
 }
 //process #43, functon to handle adore action 
-function adoreUser($user_logged_in_id, $current_user_id)
+function adoreUser($userLoggedInId, $currentUserId)
 {
     global $conn;
-    $adore_sql = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
-    if ($adore = $conn->prepare($adore_sql)) {
-        $adore->bind_param("ii", $user_logged_in_id, $current_user_id);
+    $sqlAdore = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
+    if ($adore = $conn->prepare($sqlAdore)) {
+        $adore->bind_param("ii", $userLoggedInId, $currentUserId);
         $adore->execute();
         $adore->close();
     }
 }
 
 //fucntion to handle ignore action
-function ignoreUser($user_logged_in_id, $current_user_id)
+function ignoreUser($userLoggedInId, $currentUserId)
 {
     global $conn;
-    $ignore_sql = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
-    if ($ignore = $conn->prepare($ignore_sql)) {
-        $ignore->bind_param("ii", $user_logged_in_id, $current_user_id);
+    $sqlIgnore = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
+    if ($ignore = $conn->prepare($sqlIgnore)) {
+        $ignore->bind_param("ii", $userLoggedInId, $currentUserId);
         $ignore->execute();
         $ignore->close();
     }
@@ -278,80 +279,78 @@ function ignoreUser($user_logged_in_id, $current_user_id)
 
 
 // Process #45, fucntion to get all adores of the user currently logged in
-function getAllAdores($user_logged_in_id)
+function getAllAdores($userLoggedInId)
 {
     global $conn;
-    $adored_users = [];
+    $adoredUsers = [];
     $sql = "SELECT adored_user_id FROM adore WHERE user_id = ?";
     $adores = $conn->prepare($sql);
-    $adores->bind_param("i", $user_logged_in_id);
+    $adores->bind_param("i", $userLoggedInId);
     $adores->execute();
-    $adores_result = $adores->get_result();
-    while ($row = $adores_result->fetch_assoc()) {
-        $adored_users[] = $row["adored_user_id"];
+    $adoresResult = $adores->get_result();
+    while ($row = $adoresResult->fetch_assoc()) {
+        $adoredUsers[] = $row["adored_user_id"];
     }
-    return $adored_users;
+    return $adoredUsers;
 }
 
 // function to get all ignores of user currently logged in
-function getAllIgnores($user_logged_in_id)
+function getAllIgnores($userLoggedInId)
 {
     global $conn;
-    $ignored_users = [];
+    $ignoredUsers = [];
     $sql = "SELECT ignored_user_id FROM `ignore` WHERE user_id = ?";
     $ignores = $conn->prepare($sql);
-    $ignores->bind_param("i", $user_logged_in_id);
+    $ignores->bind_param("i", $userLoggedInId);
     $ignores->execute();
-    $ignores_result = $ignores->get_result();
-    while ($row = $ignores_result->fetch_assoc()) {
-        $ignored_users[] = $row["ignored_user_id"];
+    $ignoresResult = $ignores->get_result();
+    while ($row = $ignoresResult->fetch_assoc()) {
+        $ignoredUsers[] = $row["ignored_user_id"];
     }
-    return $ignored_users;
+    return $ignoredUsers;
 }
 
 // call these functions to get users adores and ignores currently so we dont redisplay users. important to call before usersToExplore
-$adored_users = getAllAdores($user_logged_in_id);
-$ignored_users = getAllIgnores($user_logged_in_id);
-
+$adoredUsers = getAllAdores($userLoggedInId);
+$ignoredUsers = getAllIgnores($userLoggedInId);
 
 // Call the users to explore method
-$users_to_explore = getUsersForExplore($user_logged_in_id, $adored_users, $ignored_users);
-
+$usersToExplore = getUsersForExplore($userLoggedInId, $adoredUsers, $ignoredUsers);
 
 // Attempt to get the next user based on current position in users_to_explore 
-$current_position = $_SESSION['explore_state'][$user_logged_in_id]['current_position'];
-$next_user = $users_to_explore[$current_position] ?? null;
+$currentPosition = $_SESSION['explore_state'][$userLoggedInId]['current_position'];
+$nextUser = $usersToExplore[$currentPosition] ?? null;
 
 //initialise variables to null first so then if no users to explore it will display no users to explore
-$next_user_id = null;
-$next_user_score = null;
-$next_user_profile_pic_filename = null;
-$next_user_name = null;
-$next_user_age = null;
-$next_user_gender = null;
-$next_user_college_year = null;
-$next_user_course = null;
-$next_user_pursuing = null;
-$next_user_looking_for = null;
-$next_user_bio = null;
-$next_user_hobbies = null;
+$nextUserId = null;
+$nextUserScore = null;
+$nextUserProfilePicFilename = null;
+$nextUserName = null;
+$nextUserAge = null;
+$nextUserGender = null;
+$nextUserCollegeYear = null;
+$nextUserCourse = null;
+$nextUserPursuing = null;
+$nextUserLookingFor = null;
+$nextUserBio = null;
+$nextUserHobbies = null;
 
 //set display user to false
 $displayUser = false;
 
-if ($next_user) {
-    $next_user_id = $next_user['user_id'];
-    $next_user_score = $next_user['weight_score'];
-    $next_user_profile_pic_filename = $next_user['profile_pic_filename'];
-    $next_user_name = $next_user['name'];
-    $next_user_age = $next_user['age'];
-    $next_user_gender = $next_user['gender'];
-    $next_user_college_year = $next_user['college_year'];
-    $next_user_course = $next_user['course'];
-    $next_user_pursuing = $next_user['pursuing'];
-    $next_user_looking_for = $next_user['looking_for'];
-    $next_user_bio = $next_user['bio'];
-    $next_user_hobbies = $next_user['hobbies'];
+if ($nextUser) {
+    $nextUserId = $nextUser['user_id'];
+    $nextUserScore = $nextUser['weight_score'];
+    $nextUserProfilePicFilename = $nextUser['profile_pic_filename'];
+    $nextUserName = $nextUser['name'];
+    $nextUserAge = $nextUser['age'];
+    $nextUserGender = $nextUser['gender'];
+    $nextUserCollegeYear = $nextUser['college_year'];
+    $nextUserCourse = $nextUser['course'];
+    $nextUserPursuing = $nextUser['pursuing'];
+    $nextUserLookingFor = $nextUser['looking_for'];
+    $nextUserBio = $nextUser['bio'];
+    $nextUserHobbies = $nextUser['hobbies'];
     $displayUser = true;
 } else {
     $displayUser = false; // if no users left to explore, reset to false
