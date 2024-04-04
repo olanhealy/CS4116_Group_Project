@@ -60,17 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<!-- 
-<?php
-enum CourseOfStudy : string
-{
-    case COMPUTER_SCIENCE = 'Computer Science';
-    case ENGINEERING = 'Engineering';
-    case BUSINESS = 'Business';
-    case ARTS = 'Arts';
-}
-
-?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -99,6 +88,9 @@ enum CourseOfStudy : string
 </head>
 
 <body>
+
+<!-- CourseOfStudy Enum -->
+<?php include '../assets/enums/CourseOfStudy.php';?>
 
     <!-- Start of Navbar -->
     <nav class="navbar navbar-fixed-top" id="navbar">
@@ -153,6 +145,7 @@ enum CourseOfStudy : string
 
     <br>
 
+    <!-- Form -->
     <div class="container-fluid border border-2 col-md-12" id="outline">
         <div class="row">
             <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
@@ -165,7 +158,7 @@ enum CourseOfStudy : string
                                 <label for="name" class="inputLabelText">Name</label> <br>
                                 <span id="name"><?php echo htmlspecialchars($name); ?></span>
                             </div>
-                        
+
                             <div class="col-md-4 col-sm-12">
                                 <!-- Age -->
                                 <label for="age" class="inputLabelText">Age</label><br>
@@ -198,17 +191,11 @@ enum CourseOfStudy : string
 
                             <div class="col-md-6 col-sm-12">
                                 <!-- Course-->
-                                <!-- <select class="form-control" id="course_of_study" name="course_of_study">
-                                    <?php
-                                    $courses = array_column(CourseOfStudy::cases(), 'value');
-                                    foreach ($courses as $value) {
-                                        echo "<option value=\"$value\">$value</option>";
-                                    }
-                                    ?>
-                                </select> -->
                                 <label for="course" class="inputLabelText">Course of Study</label><br>
-                                <input type="text" id="course"
-                                 name="course" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($course); ?>">
+                                <select class="form-control textInput" id="course" name="course" required>
+                                <option value="" selected disabled>Select Course</option>
+                                    <?php echo $options; ?>
+                                </select>
                             </div>
                         </div>
 
@@ -271,24 +258,22 @@ enum CourseOfStudy : string
     </div>
 
 
-
     <br>
 
-
-
+    <!-- Footer -->
     <footer class="p-2">
         © 2024 Copyright UL Singles. All Rights Reserved
     </footer>
 
-
-    <!-- <script>
+    <!-- JavaScript code for course options -->
+    <script>
         $(document).ready(function() {
-            $('#course_of_study').select2({
-                placeholder: "Select course",
+            $('#course').select2({
+                placeholder: "Select Course",
                 allowClear: true
             });
         });
-    </script> -->
+    </script>
 
 </body>
 
