@@ -85,12 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="../assets/css/edit_profile.css">
+
 </head>
 
 <body>
 
-<!-- CourseOfStudy Enum -->
-<?php include '../assets/enums/CourseOfStudy.php';?>
+    <!-- CourseOfStudy Enum -->
+    <?php include '../assets/enums/CourseOfStudy.php'; ?>
 
     <!-- Start of Navbar -->
     <nav class="navbar navbar-fixed-top" id="navbar">
@@ -192,8 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-6 col-sm-12">
                                 <!-- Course-->
                                 <label for="course" class="inputLabelText">Course of Study</label><br>
-                                <select class="form-control textInput" id="course" name="course" required>
-                                <option value="" selected disabled>Select Course</option>
+                                <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
+                                    <option value="" selected disabled>Select Course</option>
                                     <?php echo $options; ?>
                                 </select>
                             </div>
@@ -267,11 +269,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- JavaScript code for course options -->
     <script>
-        $(document).ready(function() {
-            $('#course').select2({
-                placeholder: "Select Course",
-                allowClear: true
-            });
+        $('#course').select2({
+            placeholder: "Choose..",
+            allowClear: true
         });
     </script>
 
