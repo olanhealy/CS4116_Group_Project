@@ -8,4 +8,4 @@ unset($_SESSION['users_to_explore']);
 session_unset();
 session_destroy();
 
-header("Location: index.php");
+header("Location: ../../index.php");
