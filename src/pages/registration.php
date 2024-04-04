@@ -1,5 +1,4 @@
 <?php
-
 // Process #4 checks if the Account already exists in the account table of db
 function isAccountFound($email, $password)
 {
@@ -45,24 +44,6 @@ function setPassword($password, $user_id)
     $set_password->close();
 }
 
-// Process #11 to set the First name and Last name in the account table in db
-function setName($first_name, $last_name, $user_id)
-{
-    global $conn;
-
-    $sql_set_name = "UPDATE account SET first_name = ?, last_name = ? WHERE user_id = ?";
-
-    $set_name = $conn->prepare($sql_set_name);
-    $set_name->bind_param("ssi", $first_name, $last_name, $user_id);
-    $set_name->execute();
-
-    if ($set_name->affected_rows > 0) {
-        echo "First and Last Name set successfully";
-    } else {
-        echo "Error setting First and Last Name";
-    }
-}
-
 // Process #15 to set the user_id based on the users student number which is inputted with the ul student email
 function setUserId($email)
 {
@@ -72,6 +53,8 @@ function setUserId($email)
 }
 
 include "db_connection.php";
+include "helper.php";
+
 
 //Initalise array of erros which can then be displayed from the html
 $errors = [];
@@ -130,19 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Using the setter methods from above
             setPassword($password, $user_id);
             setName($first_name, $last_name, $user_id);
-
-            // Insert the user id  into profile table, also inserting the full name of user
-            $sql_insert_profile = "INSERT INTO profile (user_id, `name` ) VALUES (?, ?)";
-            $insert_new_profile = $conn->prepare($sql_insert_profile);
-            $full_name = $first_name . " " . $last_name;
-            $insert_new_profile->bind_param('is', $user_id, $full_name);
-            $insert_new_profile->execute();
-
-            if ($insert_new_profile->affected_rows <= 0) {
-                echo "Error inserting into the Profile table";
-            }
-
-            $insert_new_profile->close();
 
             if(session_status() === PHP_SESSION_NONE) {
                 session_start();

@@ -104,12 +104,13 @@
 
     
                                     <div class="col-6" id="temporarydiv">
-                                        <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
+                                        <input type="date" id="dateOfUnban" name="dateOfUnban"><br><br>
                                     </div>
 
                                     <div class="col-6" id="permanentdiv">
                                         <!-- have this button to set unban date as year 9999 for perm-ban -->
-                                        <input type="button" value="Permanent">
+                                        <input type="hidden" name="permaBan" value="1">
+                                        <input type="submit" id="permaBan" value="PermaBan">
                                     </div>
                                     
                                 </div>
@@ -232,5 +233,10 @@
         <input type="submit" value="Ban User">
     </form>
     <hr>
+    <script>
+        document.getElementById('permaBan').addEventListener('click', function() {
+            document.getElementById('dateOfUnban').required = false;
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
     <form action="showUserAdmin.php" method='GET'>
     <!--userId - Name - Email - Banned-->
     <a href="showUserAdmin.php?targetId=<?php echo $targetId?>">User: <?php echo $targetId; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
