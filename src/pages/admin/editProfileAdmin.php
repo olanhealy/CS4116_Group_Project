@@ -12,6 +12,7 @@ if (isset($_SESSION['targetId'])) {
     $targetId = $_SESSION['targetId'];
 
     // Fetch existing profile information
+    $_SESSION['existingName'] = getName($targetId);
     $_SESSION['existingBio'] = getBio($targetId);
     $_SESSION['existingHobbies'] = getHobbies($targetId);
     $_SESSION['existingCourse'] = getCourse($targetId);
@@ -23,6 +24,16 @@ if (isset($_SESSION['targetId'])) {
     // Check if form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Process form data
+
+        if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
+            if(explode(' ', $_SESSION['existingName'])[0] !== $_POST['first_name']){
+                $firstName = $_POST['first_name'];
+                $lastName = $_POST['last_name'];
+                setName($firstName, $lastName, $targetId);
+            }else{
+                exit();
+            }
+        }
 
         // Example: Updating user's bio
         if (isset($_POST['bio'])) {

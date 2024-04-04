@@ -25,8 +25,6 @@
 
     
     <a href="usersListAdmin.php">Back to User List</a>
-    <!--link to logout.php-->
-    <a href="../logout.php">Logout</a>
 
     <?php
 
@@ -44,7 +42,7 @@
         if(getUserRole($targetId) == "standard"){
             include "editProfileAdmin.php";
             include "makeAdmin.html";
-            include "banUser.html";
+            echo '<a href="banUser.html">Ban User</a>';
         }
         //if the user is banned just show delete button
         include "deleteUser.html";

@@ -18,6 +18,11 @@ if (isset ($_SESSION['id'])) {
         //set variables
         $reason = $_POST['reason'];
         $dateOfUnban = $_POST['dateOfUnban'];
+        $permaBan = $_POST['permaBan'];
+
+        if ($permaBan == "1") {
+            $dateOfUnban = "0000-00-00";
+        }
 
         if (isset($_SESSION['targetId'])) {
             $targetId = $_SESSION['targetId'];
