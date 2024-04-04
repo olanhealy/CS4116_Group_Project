@@ -1,8 +1,10 @@
+<a href="home.php">Home</a>
+<br>
+
 <?php
 //require db connection and the helper file as we will need to use the getters for displaying certain information about users
 require "db_connection.php";
 require_once "helper.php";
-require "matches.php";
 
 // Start session securely
 if(session_status() === PHP_SESSION_NONE) {

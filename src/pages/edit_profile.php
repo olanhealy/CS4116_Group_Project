@@ -75,7 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- @frontend made v basic html page for edit profile. styling and making it look nice should be done here -->
 </head>
 <body>
-    <a href="home.php">Home</a>
+
+    <?php if(isset($age)){ ?>
+        <a href="home.php">Home</a>
+    <?php } ?>
+    
     <h1>Edit Profile</h1>
 
         <form action="edit_profile.php" method="post" enctype="multipart/form-data">
