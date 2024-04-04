@@ -39,21 +39,76 @@ function setPassword($password, $user_id)
     $set_password->close();
 }
 
+function setFirstName($user_id, $first_name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET first_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $first_name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "First name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+function setLastName($user_id, $last_Name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET last_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $last_Name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "Last name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
 // Process #11 to set the First name and Last name in the account table in db
 function setName($first_name, $last_name, $user_id)
 {
     global $conn;
 
-    $sql_set_name = "UPDATE account SET first_name = ?, last_name = ? WHERE user_id = ?";
+    setFirstName($user_id, $first_name);
+    setLastName($user_id, $last_name);
 
-    $set_name = $conn->prepare($sql_set_name);
-    $set_name->bind_param("ssi", $first_name, $last_name, $user_id);
-    $set_name->execute();
+    if (getName($user_id) == "") {
+        // Insert the user id  into profile table, also inserting the full name of user
+        $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
+        $insert_new_profile = $conn->prepare($sql_insert_profile);
+        $full_name = $first_name . " " . $last_name;
+        $insert_new_profile->bind_param('is', $user_id, $full_name);
+        $insert_new_profile->execute();
 
-    if ($set_name->affected_rows > 0) {
-        echo "First and Last Name set successfully";
-    } else {
-        echo "Error setting First and Last Name";
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($insert_new_profile->affected_rows <= 0) {
+        //     echo "Error inserting into the Profile table";
+        // }
+
+        $insert_new_profile->close();
+    }else{
+        $full_name = $first_name . " " . $last_name;
+        $sql_update_profile = "UPDATE `profile` SET `name` = ? WHERE user_id = ?";
+        $update_profile = $conn->prepare($sql_update_profile);
+        $update_profile->bind_param("si", $full_name, $user_id);
+        $update_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($update_profile->affected_rows > 0) {
+        //     echo "Name set successfully";
+        // } else {
+        //     echo "Error setting Name";
+        // }
+    
     }
 }
 
