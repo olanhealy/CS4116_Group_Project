@@ -1,47 +1,10 @@
 <?php
-// Process #4 checks if the Account already exists in the account table of db
-function isAccountFound($email, $password)
-{
-    global $conn;
-    $count = 0;
-    $sql_is_account_found = "SELECT COUNT(*) FROM account WHERE email = ? AND password_hash = ?";
-    $account = $conn->prepare($sql_is_account_found);
-    $account->bind_param('ss', $email, $password);
-    $account->execute();
-    $account->bind_result($count);
-    $account->fetch();
-    $account->close();
-
-    return $count > 0;
-}
 
 // Process #8 verifyStudentEmail verifies by making sure the email ends with '@studentmail.ul.ie'
 function verifyStudentEmail($email){
     return substr($email, -18) === "@studentmail.ul.ie";
 }
 
-// Process #9 to set the Users password in the account in db
-function setPassword($password, $user_id)
-{
-    global $conn;
-
-    // Hash the password for security 
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-    // Update the password in the Accounts table
-    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
-    $set_password = $conn->prepare($sql_set_password);
-    $set_password->bind_param('si', $hashed_password, $user_id);
-    $set_password->execute();
-
-    if ($set_password->affected_rows > 0) {
-        echo "Password set successfully";
-    } else {
-        echo "Error setting password";
-    }
-
-    $set_password->close();
-}
 
 // Process #15 to set the user_id based on the users student number which is inputted with the ul student email
 function setUserId($email){
@@ -106,18 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if the insertion was successful
         if ($insertAccountStatement->affected_rows > 0) {
 
-            // Get the user id of this registered user
-
-            // Using the setter methods from above
-            setPassword($password, $user_id);
-            setName($first_name, $last_name, $user_id);
-
             // Start the session and set the email and id of the user
             if(session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
+
             $_SESSION['email'] = $email;
             $_SESSION['user_id'] = $userId;
+
+            // Using the setter methods from above
+            setPassword($password, $userId);
+            setName($firstName, $lastName, $userId);
+
 
             // Redirect to the edit profile page
             header("Location: editProfile.php");

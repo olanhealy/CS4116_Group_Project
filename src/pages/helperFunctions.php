@@ -81,7 +81,7 @@ function setName($first_name, $last_name, $user_id)
     setFirstName($user_id, $first_name);
     setLastName($user_id, $last_name);
 
-    if (getName($user_id) == "") {
+    if (getName($user_id) === "") {
         // Insert the user id  into profile table, also inserting the full name of user
         $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
         $insert_new_profile = $conn->prepare($sql_insert_profile);
