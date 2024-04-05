@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lookingFor = htmlspecialchars($_POST['looking_for']);
     $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
 
+    var_dump($_SESSION);
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
