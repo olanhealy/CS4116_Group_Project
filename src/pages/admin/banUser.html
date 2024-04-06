@@ -62,9 +62,9 @@
             <div class="row">   
 
                 <!-- User Profile Section -->
-                <div class="col-5" id="leftcontainer"> 
+                <div class="col-6" id="leftcontainer"> 
                         <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainer">
-                            <img id="profilepicture" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                            <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepicture" class="card-img-top" alt="Profile Picture">
                         </div>
 
                     <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
@@ -79,19 +79,19 @@
                 </div>
 
                 <!-- Ban User Section -->
-                <div class="col-7"> 
+                <div class="col-6"> 
 
                     <!-- Heading -->
-                    <div class="col-9 mx-auto d-flex" id="topcontainer">
+                    <div class="col-11 mx-auto d-flex" id="topcontainer">
                         <div class="mx-auto d-flex align-items-center" id="textbox">
                             <p>Ban User</p>
                         </div>
                     </div>
 
                     <!-- Form -->
-                    <div class="col-9 mx-auto d-flex align-items-center">
+                    <div class="col-11 mx-auto d-flex align-items-center" id="bottomcontainer">
 
-                        <div class="col-9 mx-auto">
+                        <div class="col-11 mx-auto">
                             <form action="banUser.php" method="post">
                                 
                                 <!-- Text Box for Ban Reason -->
@@ -102,22 +102,20 @@
                                 <div class="row">
                                     <label for="reason">Date of Unban:</label>
 
-    
                                     <div class="col-6" id="temporarydiv">
                                         <input type="date" id="dateOfUnban" name="dateOfUnban"><br><br>
                                     </div>
 
                                     <div class="col-6" id="permanentdiv">
-                                        <!-- have this button to set unban date as year 9999 for perm-ban -->
                                         <input type="hidden" name="permaBan" value="1">
-                                        <input type="submit" id="permaBan" value="PermaBan">
+                                        <input type="submit" id="permaBan" value="Permanent">
                                     </div>
                                     
                                 </div>
 
                                 <!-- Ban User Button -->
                                 <div id="banuserdiv">
-                                    <input type="submit" value="Ban User">
+                                    <input type="submit" id="banUser" value="Ban User">
                                 </div>
 
                             </form>
@@ -138,7 +136,7 @@
                 <!-- User Profile Section: Mobile -->
                 <div class="col-12 d-md-none" id="mobileprofilecontainer"> 
                     <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerM">
-                        <img id="profilepictureT" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepictureM" class="card-img-top" alt="Profile Picture">
                     </div>
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxM">
@@ -155,7 +153,7 @@
                 <!-- User Profile Section: Tablet -->
                  <div class="col-12 d-none d-sm-none d-md-block d-lg-block d-xl-none" id="tabletprofilecontainer"> 
                     <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerT">
-                        <img id="profilepictureT" class="img-fluid border border-2" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepictureT" class="card-img-top" alt="Profile Picture">
                     </div>
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxT">
@@ -199,18 +197,19 @@
                                     <label for="reason">Date of Unban:</label>
 
                                     <div class="col-6" id="temporarydiv">
-                                        <input type="date" id="dateOfUnban" name="dateOfUnban" required><br><br>
+                                        <input type="date" id="dateOfUnbanM" name="dateOfUnban"><br><br>
                                     </div>
 
                                     <div class="col-6" id="permanentdiv">
-                                        <input type="button" value="Permanent">
+                                        <input type="hidden" name="permaBan" value="1">
+                                        <input type="submit" id="permaBan" value="Permanent">
                                     </div>
                                     
                                 </div>
 
                                 <!-- Ban User Button -->
                                 <div id="banuserdivM">
-                                    <input type="submit" value="Ban User">
+                                    <input type="submit" id="banUser" value="Ban User">
                                 </div>
 
                             </form>
@@ -224,19 +223,29 @@
 
     </div>
 
+    
     <!-- Footer -->
     <footer class="p-2">
         © 2024 Copyright UL Singles. All Rights Reserved
     </footer>
 
 
-        <input type="submit" value="Ban User">
-    </form>
-    <hr>
+    <!-- Permanently Bans User -->
     <script>
         document.getElementById('permaBan').addEventListener('click', function() {
             document.getElementById('dateOfUnban').required = false;
         });
     </script>
+
+    <!-- Doesn't allow the unban date to be before today's date -->
+    <script>
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        // Set the minimum date for the input field
+        document.getElementById("dateOfUnban").setAttribute("min", today);
+        document.getElementById("dateOfUnbanM").setAttribute("min", today);
+    </script>
+
 </body>
 </html>
