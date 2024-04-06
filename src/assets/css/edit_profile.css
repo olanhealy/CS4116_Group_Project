@@ -157,7 +157,7 @@ body {
 }
 
 .saveChangesBtn {
-  width: 285px;
+  width: 65%;
   font-size: 18px;
   background-color: #abc99d;
   border-color: #abc99d;
@@ -179,12 +179,12 @@ body {
 .profilePicture {
   padding-bottom: 20px;
   padding-top: 20px;
-  max-width: 300px;
+  max-width: 65%;
 }
 
 .fileUploadBtn {
   display: inline-block;
-  width: 285px;
+  width: 65%;
   font-size: 18px;
   padding: 8px 8px;
   background-color: #e6d1be;
