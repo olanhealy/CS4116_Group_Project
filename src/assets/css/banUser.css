@@ -1,7 +1,15 @@
 body {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container-fluid {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
 }
   
 #navbar {
@@ -122,9 +130,6 @@ hr {
 #outline {
     border-color: black !important;
     position: relative;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 250px;
 }
 
 #leftcontainer{
@@ -149,9 +154,10 @@ hr {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 250px;
     height: 320px;
 }
+
 
 #userinfobox {
     border: 2px solid black;
@@ -219,7 +225,25 @@ textarea {
     align-items: center;
 }
 
-input[type=submit] {
+
+
+#permaBan{
+    background-color: #abc99d;
+    font-size: 20px;
+    color: white;
+    border: none;
+    text-align: center;
+    align-items: center;
+    margin-top: 5px;
+    width: 100%;
+    height: 65%;
+}
+
+#permaBan:hover{
+    background-color:#bbdaac;
+}
+
+#banUser{
     background-color:dimgrey;
     font-size: 30px;
     color: white;
@@ -232,9 +256,10 @@ input[type=submit] {
     margin-top: 20px;
 }
 
-input[type=submit]:hover {
+#banUser:hover{
     background-color: gray
 }
+
 
 #permanentdiv{
     text-align: center;
@@ -265,22 +290,6 @@ input[type=date]:hover {
     cursor: pointer;
 }
 
-input[type=button] {
-    background-color: #abc99d;
-    font-size: 22px;
-    color: white;
-    border: none;
-    text-align: center;
-    align-items: center;
-    margin-top: 5px;
-    width: 100%;
-    height: 65%;
-}
-
-input[type=button]:hover {
-    background-color:#bbdaac;
-}
-
 
 #outlineM {
     border-color: black !important;
@@ -302,14 +311,26 @@ input[type=button]:hover {
     margin-top: 40px;
     border: 2px solid black;
     border-color: black !important;
-    width: 350px;
+    width: 275px;
+}
+
+#profilepictureM {
+    border: 2px solid black;
+    border-color: black !important;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 215px;
+    height: 360px;
 }
 
 #userinfoboxM {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 30px;
-    width: 350px;
+    width: 275px;
 }
 
 #topcontainerM {
@@ -374,7 +395,7 @@ input[type=button]:hover {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 375px;
     height: 360px;
 }
 
