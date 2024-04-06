@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>search_form</title>
+</head>
+<body>
+    <form action="searchPage.php" method="POST" id="search">
+        <label for="min_age">Minimum Age: <span id="min_age_value">18</span></label>
+        <input type="range" id="min_age" name="min_age" min="18" max="100" value="18" oninput="update_min_age_value(this.value)">
+        <button type="button" onclick="reset_min_age()">Reset</button>
+        <br>
+        <label for="max_age">Maximum Age: <span id="max_age_value">100</span></label>
+        <input type="range" id="max_age" name="max_age" min="18" max="100" value="100" oninput="update_max_age_value(this.value)">
+        <button type="button" onclick="reset_max_age()">Reset</button>
+        <br>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="any">Any</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <br>
+        <label for="looking_for">Looking For:</label>
+        <select id="looking_for" name="looking_for">
+            <option value="any">Any</option>
+            <option value="short_term">short_term</option>
+            <option value="long_term">long_term</option>
+        </select>
+        <br>
+        <label for="college_year">College Year:</label>
+        <select id="college_year" name="college_year">
+            <option value="any">Any</option>
+            <option value="undergrad">undergrad</option>
+            <option value="masters">masters</option>
+            <option value="phd">phd</option>
+        </select>
+        <br>
+        <input type="submit" value="Search">
+    </form>
+
+    <script>
+        function update_min_age_value(value) {
+            document.getElementById("min_age_value").textContent = value;
+        }
+
+        function update_max_age_value(value) {
+            document.getElementById("max_age_value").textContent = value;
+        }
+
+        function reset_min_age() {
+            document.getElementById("min_age").value = 18;
+            update_min_age_value(18);
+        }
+
+        function reset_max_age() {
+            document.getElementById("max_age").value = 100;
+            update_max_age_value(100);
+        }
+    </script>
+</body>
+</html>

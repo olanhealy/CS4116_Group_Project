@@ -588,5 +588,20 @@ function getAllMatches($userId)
     }
 }
 
+function showProfileCard($user_id){
+    $name = getName($user_id);
+    $profilePicture = getProfilePicture($user_id);
+    $bio = getBio($user_id);
+    $gender = getGender($user_id);
+    $age = getAge($user_id);
+    $collegeYear = getCollegeYear($user_id);
+    $pursuing = getPursuing($user_id);
+    $course = getCourse($user_id);
+    $hobbies = getHobbies($user_id);
+    $lookingFor = getLookingFor($user_id);
+
+    include "profileCard.html";
+}
+
 
 ?>
