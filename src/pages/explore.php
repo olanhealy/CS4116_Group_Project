@@ -1,7 +1,3 @@
-<!-- HomePage link -->
-<a href="home.php">Home</a>
-<br>
-
 <?php
 
 require "db_connection.php";
