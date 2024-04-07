@@ -4,7 +4,7 @@ include "db_connection.php";
 require "helperFunctions.php";
 
 // Start the session
-if(session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,10 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-<?php if(isset($age)){ ?>
-        <a href="home.php">Home</a>
-    <?php } ?>
-
     <!-- CourseOfStudy Enum -->
     <?php include '../assets/enums/CourseOfStudy.php'; ?>
 
@@ -106,44 +103,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
-            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='explore.php'">Explore</button>
+            <?php if (isset($age)) { ?>
+                <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='explore.php'">Explore</button>
+            <?php } ?>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon -->
-        <div class="dropdown">
-            <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                </svg>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
-                <li><a class="dropdown-item-profile" href="edit_profile.php">Edit Profile</a></li>
-                <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
-            </ul>
-        </div>
+        <?php if (isset($age)) { ?>
+            <div class="dropdown">
+                <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+                    <li><a class="dropdown-item-profile" href="edit_profile.php">Edit Profile</a></li>
+                    <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+                </ul>
+            </div>
+        <?php } ?>
 
     </nav>
     <!-- End of Navbar -->
 
-    <!-- Dropdown Menu Button -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 dropdownBtn">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
-                    Edit Profile
-                </button>
+    <!-- Dropdown Menu Button as long as they have already provided their defails -->
+    <?php if (isset($age)) { ?>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 dropdownBtn">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+                        Edit Profile
+                    </button>
 
-                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
-                    <li><a class="dropdown-item" href="home.php">Home</a></li>
-                    <li><a class="dropdown-item" href="explore.php">Explore</a></li>
-                    <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                </ul>
+                    <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
+                        <li><a class="dropdown-item" href="home.php">Home</a></li>
+                        <li><a class="dropdown-item" href="explore.php">Explore</a></li>
+                        <li><a class="dropdown-item" href="matches.php">Matches</a></li>
+                        <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
+
 
     <br>
 
@@ -276,4 +280,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 
 </body>
+
 </html>
