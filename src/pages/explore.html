@@ -80,51 +80,112 @@
 
     <br>
 
-    <div class="container">
+    <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
         <div class="row">
-            <div class="col-md-6 offset-md-3 mt-5">
-                <?php if ($displayUser): ?>
-                <div class="card">
-                    <img src="/uploads/<?php echo htmlspecialchars($next_user_profile_pic_filename); ?>"
-                        class="card-img-top" alt="Profile Picture">
-                    <div class="card-body">
-                        <h5 class="card-title">
+            <?php if ($displayUser): ?>
+            <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
+                <img src="/uploads/<?php echo htmlspecialchars($next_user_profile_pic_filename); ?>"
+                    class="profilePicture" alt="Profile Picture">
+
+                <a href="?action=adore" class="btn btn-success">Adore</a>
+                <a href="?action=ignore" class="btn btn-danger">Ignore</a>
+            </div>
+
+            <div class="col-lg-7 order-lg-2 col-md-12 info-box">
+                <div class="row inputField">
+                    <div class="col-md-4 col-sm-12 col-lg-4">
+                        <!-- Name -->
+                        <label for="name" class="inputLabelText">Name</label> <br>
+                        <span id="name">
                             <?php echo htmlspecialchars($nextUserName); ?>
-                        </h5>
-                        <p class="card-text">Age:
+                        </span>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12 col-lg-4">
+                        <!-- Age -->
+                        <label for="age" class="inputLabelText">Age</label><br>
+                        <span id="age">
                             <?php echo htmlspecialchars($nextUserAge); ?>
-                        </p>
-                        <p class="card-text">Gender:
+                        </span>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12 col-lg-4">
+                        <!-- Gender -->
+                        <label for="gender" class="inputLabelText">Gender</label><br>
+                        <span id="gender">
                             <?php echo htmlspecialchars($nextUserGender); ?>
-                        </p>
-                        <p class="card-text">College Year:
-                            <?php echo htmlspecialchars($nextUserCollegeYear); ?>
-                        </p>
-                        <p class="card-text">Course:
-                            <?php echo htmlspecialchars($nextUserCourse); ?>
-                        </p>
-                        <p class="card-text">Pursuing:
-                            <?php echo htmlspecialchars($nextUserPursuing); ?>
-                        </p>
-                        <p class="card-text">Looking For:
-                            <?php echo htmlspecialchars($nextUserLookingFor); ?>
-                        </p>
-                        <p class="card-text">Bio:
-                            <?php echo htmlspecialchars($nextUserBio); ?>
-                        </p>
-                        <p class="card-text">Hobbies:
-                            <?php echo htmlspecialchars($nextUserHobbies); ?>
-                        </p>
-                        <a href="?action=adore" class="btn btn-success">Adore</a>
-                        <a href="?action=ignore" class="btn btn-danger">Ignore</a>
+                        </span>
+
                     </div>
                 </div>
-                <?php else: ?>
-                <p>No more users available.</p>
 
-                <?php endif; ?>
+                <div class="row inputField">
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <!-- College Year -->
+                        <label for="college_year" class="inputLabelText">College Year</label><br>
+                        <span id="college_year">
+                            <?php echo htmlspecialchars($nextUserCollegeYear); ?>
+                        </span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <!-- Course-->
+                        <label for="course" class="inputLabelText">Course of Study</label><br>
+                        <span id="course">
+                            <?php echo htmlspecialchars($nextUserCourse); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row inputField">
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <!--  pursuing -->
+                        <label for="pursuing" class="inputLabelText">Pursuing</label><br>
+                        <span id="pursuing">
+                            <?php echo htmlspecialchars($nextUserPursuing); ?>
+                        </span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <!-- Looking for-->
+                        <label for="looking_for" class="inputLabelText">Looking For</label><br>
+                        <span id="looking_for">
+                            <?php echo htmlspecialchars($nextUserLookingFor); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row inputField">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <!-- Bio -->
+                        <label for="bio" class="inputLabelText">Bio</label><br>
+                        <span id="bio">
+                            <?php echo htmlspecialchars($nextUserBio); ?>
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="row inputField">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <!-- Hobbies (May need to update this as text for it is meh)-->
+                        <label for="hobbies" class="inputLabelText">Hobbies</label><br>
+                        <span id="hobbies">
+                            <?php echo htmlspecialchars($nextUserHobbies); ?>
+                        </span>
+                    </div>
+                </div>
             </div>
+
+
+
         </div>
+        <?php else: ?>
+        <p>No more users available.</p>
+
+        <?php endif; ?>
+    </div>
+    </div>
     </div>
 
     <br>
