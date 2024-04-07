@@ -2,7 +2,9 @@
 
     include_once "adminHelperFunctions.php";
     
-    session_start();
+    if(session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     
     //targetID set from GET sent from userListAdmin.html
     if (isset($_GET['targetId'])){
@@ -18,6 +20,15 @@
     }
     
     };
+
+    ?>
+
+    <!--TODO: frontend: links need to be formatted-->
+    
+    <a href="usersListAdmin.php">Back to User List</a>
+
+    <?php
+
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
     //var_dump($_SESSION);
@@ -32,7 +43,7 @@
         if(getUserRole($targetId) == "standard"){
             include "editProfileAdmin.php";
             include "makeAdmin.html";
-            include "banUser.html";
+            echo '<a href="banUser.html">Ban User</a>';
         }
         //if the user is banned just show delete button
         include "deleteUser.html";

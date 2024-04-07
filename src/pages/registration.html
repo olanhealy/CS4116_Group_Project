@@ -27,18 +27,6 @@
 <body>
 
 
-    <?php
-    // In edit_profile.php, any errors that may be encountered while registering are stored
-    // In an array. If there are erros, display them as a list here
-    if (!empty($errors)) {
-        echo "<ul>";
-        foreach ($errors as $error) {
-            echo "<li>$error</li>";
-        }
-        echo "</ul>";
-    }
-    ?>
-
     <nav class="navbar navbar-fixed-top">
         <div class="images">
             <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
@@ -63,9 +51,19 @@
 
                 <h1 class="h3 mb-3 font-weight-normal text-center mb-4 mx-1 mt-4">Create an account</h1>
 
-
-
-
+                        <!-- In editProfile.php, any errors that may be encountered while registering are stored
+                        In an array. If there are erros, display them in a div here-->
+                    <?php
+                    if (!empty($errors)) {
+                        echo "<ul>";
+                        foreach ($errors as $error) {
+                            echo '<div class="alert alert-danger" role="alert">';
+                            echo htmlspecialchars($error);
+                            echo '</div>';
+                            }
+                        echo "</ul>";
+                        }
+                    ?>
 
 
                 <form class="mx-1 mx-md-4" action="registration.php" method="post">

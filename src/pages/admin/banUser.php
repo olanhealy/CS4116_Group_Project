@@ -1,21 +1,28 @@
 <?php
 
 //get session info
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 include "../db_connection.php";
 include_once "adminHelperFunctions.php";
 
 // Check if the user is logged in
-if (isset ($_SESSION['id'])) {
+if (isset ($_SESSION['user_id'])) {
     // Retrieve the user ID
-    $user_id = $_SESSION['id'];
+    $userId = $_SESSION['user_id'];
     //Checks for post request
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //set variables
         $reason = $_POST['reason'];
         $dateOfUnban = $_POST['dateOfUnban'];
+        $permaBan = $_POST['permaBan'];
+
+        if ($permaBan == "1") {
+            $dateOfUnban = "0000-00-00";
+        }
 
         if (isset($_SESSION['targetId'])) {
             $targetId = $_SESSION['targetId'];
@@ -25,10 +32,10 @@ if (isset ($_SESSION['id'])) {
         }
 
         //create ban
-        $sql_insert = "INSERT INTO banned (user_id, banned_by, reason, dateOfUnban) VALUES (?, ?, ?, ?)";
-        $insert_new_banned = $conn->prepare($sql_insert);
-        $insert_new_banned->bind_param('ssss', $targetId, $user_id, $reason, $dateOfUnban);
-        $insert_new_banned->execute();
+        $sqlInsert = "INSERT INTO banned (user_id, banned_by, reason, dateOfUnban) VALUES (?, ?, ?, ?)";
+        $insertNewBanned = $conn->prepare($sqlInsert);
+        $insertNewBanned->bind_param('ssss', $targetId, $userId, $reason, $dateOfUnban);
+        $insertNewBanned->execute();
 
         //call setBanned from adminHelperFunctions.php
         setBanned("$targetId", 1);

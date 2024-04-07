@@ -1,30 +1,29 @@
 <?php
 
-// Include database connection
 include "db_connection.php";
-
-//Requiring the "helper.php" cllass which contains getters and setters
-require "helper.php";
+require "helperFunctions.php";
 
 // Start the session
-session_start();
+if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Fetch user details from the database
-$user_id = $_SESSION['id'];
+$userId = $_SESSION['user_id'];
 
 
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
-//Moved all the getter methods into "helper.php" for reuseability  
-$bio = getBio($user_id);
-$hobbies = getHobbies($user_id);
-$gender = getGender($user_id);
-$age = getAge($user_id);
-$college_year = getCollegeYear($user_id);
-$pursuing = getPursuing($user_id);
-$profile_pic_filename = getProfilePicture($user_id);
-$course = getCourse($user_id);
-$looking_for = getLookingFor($user_id);
-$name = getName($user_id);
+//Moved all the getter methods into "helperFunctions.php" for reuseability  
+$bio = getBio($userId);
+$hobbies = getHobbies($userId);
+$gender = getGender($userId);
+$age = getAge($userId);
+$collegeYear = getCollegeYear($userId);
+$pursuing = getPursuing($userId);
+$profilePicFilename = getProfilePicture($userId);
+$course = getCourse($userId);
+$lookingFor = getLookingFor($userId);
+$name = getName($userId);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,27 +33,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bio = htmlspecialchars($_POST['bio']);
     $gender = htmlspecialchars($_POST['gender']);
     $age = intval($_POST['age']);
-    $college_year = htmlspecialchars($_POST['college_year']);
+    $collegeYear = htmlspecialchars($_POST['college_year']);
     $pursuing = htmlspecialchars($_POST['pursuing']);
     $course = htmlspecialchars($_POST['course']);
     $hobbies = htmlspecialchars($_POST['hobbies']);
-    $looking_for = htmlspecialchars($_POST['looking_for']);
-    $profile_pic_filename = htmlspecialchars($_FILES['profile_pic']['name']);
+    $lookingFor = htmlspecialchars($_POST['looking_for']);
+    $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
 
+    var_dump($_SESSION);
     // Update the user currently logged in profile table in the database
-    $user_id = $_SESSION['id']; //we use this from being logged in
-
+    $userId = $_SESSION['user_id']; //we use this from being logged in
 
     // Call setter methods to make the updates in db
-    setBio($user_id, $bio);
-    setGender($user_id, $gender);
-    setAge($age, $user_id);
-    setCollegeYear($user_id, $college_year);
-    setPursuing($user_id, $pursuing);
-    setProfilePic($user_id, $profile_pic_filename);
-    setCourse($user_id, $course);
-    setHobbies($user_id, $hobbies);
-    setLookingFor($user_id, $looking_for);
+    setBio($userId, $bio);
+    setGender($userId, $gender);
+    setAge($age, $userId);
+    setCollegeYear($userId, $collegeYear);
+    setPursuing($userId, $pursuing);
+    setProfilePic($userId, $profilePicFilename);
+    setCourse($userId, $course);
+    setHobbies($userId, $hobbies);
+    setLookingFor($userId, $lookingFor);
 
     header("Location: home.php");
 }
@@ -63,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,6 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+
+<?php if(isset($age)){ ?>
+        <a href="home.php">Home</a>
+    <?php } ?>
 
     <!-- CourseOfStudy Enum -->
     <?php include '../assets/enums/CourseOfStudy.php'; ?>
@@ -148,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Form -->
     <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
         <div class="row">
-            <form class="container-fluid" action="edit_profile.php" method="post" enctype="multipart/form-data">
+            <form class="container-fluid" action="editProfile.php" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-7 order-lg-2 col-md-12 info-box">
 
@@ -216,9 +218,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="looking_for" class="inputLabelText">Looking For</label><br>
                                 <select id="looking_for" name="looking_for" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Short-term" <?php if ($looking_for == "Short-term") echo "selected"; ?>>Short-Term</option>
-                                    <option value="Long-term" <?php if ($looking_for == "Long-term") echo "selected"; ?>>Long-Term</option>
-                                    <option value="Unsure" <?php if ($looking_for == "Unsure") echo "selected"; ?>>Unsure</option>
+                                    <option value="Short-term" <?php if ($lookingFor == "Short-term") echo "selected"; ?>>Short-Term</option>
+                                    <option value="Long-term" <?php if ($lookingFor == "Long-term") echo "selected"; ?>>Long-Term</option>
+                                    <option value="Unsure" <?php if ($lookingFor == "Unsure") echo "selected"; ?>>Unsure</option>
                                 </select>
                             </div>
                         </div>
@@ -243,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
                         <!-- Profile Picture-->
-                        <img class="profilePicture" src="<?php echo $profile_pic_filename ? '/' . htmlspecialchars($profile_pic_filename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture">
+                        <img class="profilePicture" src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture">
 
                         <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                         <input type="file" id="profile_pic" name="profile_pic">
@@ -274,5 +276,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 
 </body>
-
 </html>

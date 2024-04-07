@@ -1,5 +1,117 @@
 <?php
 // Process #13 to set the user's bio in the profile table of the db
+
+// Process #4 checks if the Account already exists in the account table of db
+function isAccountFound($email, $password)
+{
+    global $conn;
+    $count = 0;
+    $sql_is_account_found = "SELECT COUNT(*) FROM account WHERE email = ? AND password_hash = ?";
+    $account = $conn->prepare($sql_is_account_found);
+    $account->bind_param('ss', $email, $password);
+    $account->execute();
+    $account->bind_result($count);
+    $account->fetch();
+    $account->close();
+
+    return $count > 0;
+}
+
+function setPassword($password, $user_id)
+{
+    global $conn;
+
+    // Hash the password for security 
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update the password in the Accounts table
+    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
+    $set_password = $conn->prepare($sql_set_password);
+    $set_password->bind_param('si', $hashed_password, $user_id);
+    $set_password->execute();
+
+    if ($set_password->affected_rows > 0) {
+        echo "Password set successfully";
+    } else {
+        echo "Error setting password";
+    }
+
+    $set_password->close();
+}
+
+function setFirstName($user_id, $first_name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET first_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $first_name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "First name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+function setLastName($user_id, $last_Name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET last_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $last_Name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "Last name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+// Process #11 to set the First name and Last name in the account table in db
+function setName($first_name, $last_name, $user_id)
+{
+    global $conn;
+
+    setFirstName($user_id, $first_name);
+    setLastName($user_id, $last_name);
+
+    if (getName($user_id) === "") {
+        // Insert the user id  into profile table, also inserting the full name of user
+        $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
+        $insert_new_profile = $conn->prepare($sql_insert_profile);
+        $full_name = $first_name . " " . $last_name;
+        $insert_new_profile->bind_param('is', $user_id, $full_name);
+        $insert_new_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($insert_new_profile->affected_rows <= 0) {
+        //     echo "Error inserting into the Profile table";
+        // }
+
+        $insert_new_profile->close();
+    }else{
+        $full_name = $first_name . " " . $last_name;
+        $sql_update_profile = "UPDATE `profile` SET `name` = ? WHERE user_id = ?";
+        $update_profile = $conn->prepare($sql_update_profile);
+        $update_profile->bind_param("si", $full_name, $user_id);
+        $update_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($update_profile->affected_rows > 0) {
+        //     echo "Name set successfully";
+        // } else {
+        //     echo "Error setting Name";
+        // }
+    
+    }
+}
+
 function setBio($user_id, $bio) {
     global $conn;
 
@@ -389,4 +501,92 @@ function getName($user_id) {
     $get_name->close();
     return $name;
 }
+
+function addMatch($initiatorId, $targetId)
+{
+
+    global $conn;
+
+    $query = "INSERT INTO matches (initiator_id, target_id) VALUES (?, ?)";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("ii", $initiatorId, $targetId);
+        $stmt->execute();
+    } else {
+        die("Error in SQL query: " . $conn->error . "<br>");
+    }
+}
+
+function isItAMatch($initiatorId, $targetId)
+{
+    global $conn;
+
+    $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("ii", $targetId , $initiatorId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            // The current user has previously adored the logged in user
+            return true;
+        }
+    }
+    // The current user has not previously adored the logged in user
+    return false;
+}
+
+function removeMatch($userId, $targetId)
+{
+
+    global $conn;
+
+    $query = "DELETE FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+    } else {
+        die("Error in SQL query: " . $conn->error . "<br>");
+    }
+}
+
+function getAllMatches($userId)
+{
+    global $conn;
+    //get all account information
+    $query = "SELECT 
+        CASE 
+            WHEN initiator_id = $userId THEN target_id 
+            ELSE initiator_id 
+        END AS other_user_id 
+    FROM matches 
+    WHERE initiator_id = $userId OR target_id = $userId 
+    ORDER BY response_date DESC";
+    ;
+
+    //check the result is not empty
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        // Output data of each row with a form to ban/unban
+        while ($row = $result->fetch_assoc()) {
+
+            $targetId = $row['other_user_id'];
+            
+            $name = getName($targetId);
+            $profilePicture = getProfilePicture($targetId);
+
+            //include the user list html for each row
+            include "match.html";
+        }
+    } else {
+        //error
+        echo "0 results found";
+    }
+}
+
+
 ?>
