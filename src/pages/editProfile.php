@@ -185,9 +185,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="college_year" class="inputLabelText">College Year</label><br>
                                 <select id="college_year" name="college_year" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Undergrad" <?php if ($college_year == "Undergrad") echo "selected"; ?>>Undergrad</option>
-                                    <option value="Masters" <?php if ($college_year == "Masters") echo "selected"; ?>>Masters</option>
-                                    <option value="PhD" <?php if ($college_year == "PhD") echo "selected"; ?>>PhD</option>
+                                    <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
+                                    <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
+                                    <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
                                 </select>
                             </div>
 
