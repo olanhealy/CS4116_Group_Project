@@ -32,6 +32,19 @@
         <p><strong>Course:</strong> <?php echo $course; ?></p>
         <p><strong>Hobbies:</strong> <?php echo $hobbies; ?></p>
         <p><strong>Looking For:</strong> <?php echo $lookingFor; ?></p>
+
+        <?php 
+            global $showingAdoreButton;
+            if(isset($showingAdoreButton) && $showingAdoreButton === true) { ?>
+        <form action="adoreUser.php" method="POST">
+            <input type="hidden" name="action" value="adore_user">
+            <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
+            <input type="submit" value="Adore">
+
+        </form>
+        <?php 
+            } 
+        ?>
     </div>
 </body>
 </html>
