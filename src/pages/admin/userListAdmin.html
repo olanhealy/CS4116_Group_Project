@@ -66,14 +66,16 @@
                             <th>User</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Banned</th>
+                            <th># Banned</th>
                         </tr>
 
                         <tr>
+                            <form action="showUserAdmin.php" method='GET'>
                             <td><a href="showUserAdmin.php?targetId=<?php echo $targetId ?>"><?php echo $targetId ?></a></td>
                             <td><?php echo $row["first_name"] . " " . $row["last_name"] ?></td>
                             <td><?php echo $row["email"] ?></td>
                             <td><?php echo $row["banned"] ?></td>
+                            </form>
                         </tr>
                     </table>
                 </div>
