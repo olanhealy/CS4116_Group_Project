@@ -1,6 +1,7 @@
 <?php
 
 include_once "adminHelperFunctions.php";
+include_once "../db_connection.php";
 
 if(session_status() === PHP_SESSION_NONE) {
     session_start();

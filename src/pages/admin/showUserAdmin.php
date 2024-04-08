@@ -1,5 +1,6 @@
 <?php
 
+    include_once "../db_connection.php";
     include_once "adminHelperFunctions.php";
     
     if(session_status() === PHP_SESSION_NONE) {

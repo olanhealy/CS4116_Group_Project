@@ -3,8 +3,7 @@
 //show all the accounts in a list
 function showAccounts()
 {
-    include ("../db_connection.php");
-
+    global $conn;
     //get all account information
     $query = "SELECT * FROM account";
 
@@ -16,7 +15,6 @@ function showAccounts()
             //getting each user_id from the query
             $targetId = $row['user_id'];
 
-            //include the user list html for each row
             include "userListAdmin.html";
         }
     } else {
@@ -34,7 +32,7 @@ function updateUserDetails()
 //returns user role
 function getUserRole($userId)
 {
-    include ("../db_connection.php");
+    global $conn;
 
     //query to return role of the user_id
     $query = "SELECT user_role FROM account WHERE user_id = ?";
@@ -62,7 +60,7 @@ function getUserRole($userId)
 //function to delete a user
 function deleteUser($targetId)
 {
-    include ("../db_connection.php");
+    global $conn;
 
     //an array of tables that have user_d as a foreign key
     $tables = ['adore', 'banned', '`ignore`', '`profile`'];
@@ -157,7 +155,7 @@ function deleteUser($targetId)
 function deleteMessages($targetId)
 {
 
-    include ("../db_connection.php");
+    global $conn;
 
     //select from messages where sender_id or receiver_id is user_id
     $query = "SELECT * FROM messages WHERE sender_id = $targetId OR receiver_id = $targetId";
@@ -192,7 +190,7 @@ function deleteMessages($targetId)
 function deleteMatches($targetId)
 {
 
-    include ("../db_connection.php");
+    global $conn;
 
     //select from matches where initiator_id or target_id is user_id
     $query = "SELECT * FROM matches WHERE initiator_id = $targetId OR target_id = $targetId";
@@ -228,7 +226,7 @@ function deleteMatches($targetId)
 // Returns 1 if banned, 0 if not
 function isAccountBanned($userId)
 {
-    include ("../db_connection.php");
+    global $conn;
 
     //set banned to false
     $banned = false;
@@ -260,7 +258,7 @@ function isAccountBanned($userId)
 //Sets a user ban status in account and if unbanned deletes the ban info from the banned table
 function setBanned($userId, $newBannedStatus)
 {
-    include ("../db_connection.php");
+    global $conn;
 
     //set banned status in account table
     $query = "UPDATE account SET banned = ? WHERE user_id = ?";
@@ -280,7 +278,7 @@ function setBanned($userId, $newBannedStatus)
 //set user role 
 function setUserRole($userId, $role)
 {
-    include ("../db_connection.php");
+    global $conn;
 
     //query to update user role
     $query = "UPDATE account SET user_role = ? WHERE user_id = ?";
