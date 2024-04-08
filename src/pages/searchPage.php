@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $targetUserId = $row['user_id'];
 
             // Skip the current user, admins, and users that the current user has adored
-            if ($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin" || isUserAdored($_SESSION['user_id'], $targetUserId)) {
+            if ($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin" ) {
                 continue;
             }
 
             // Check if the current user can adore the target user
             global $showingAdoreButton;
-            if (getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender) {
+            if ((getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender)&& isUserAdored($_SESSION['user_id'], $targetUserId) !== true) {
                 $showingAdoreButton = true;
             }
 
