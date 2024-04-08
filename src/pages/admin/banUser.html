@@ -64,16 +64,22 @@
                 <!-- User Profile Section -->
                 <div class="col-6" id="leftcontainer"> 
                         <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainer">
-                            <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepicture" class="card-img-top" alt="Profile Picture">
+                            <form action="banUser.php" method='GET'>
+                                <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepicture" class="card-img-top" alt="Profile Picture">
+                            </form>    
                         </div>
 
                     <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
                         <div id="username">
-                            <p>Name</p>
+                            <form action="banUser.php" method='GET'>
+                                <a href="banUser.php?userId=<?php echo $userId?>">User:> <?php echo $userId; ?> </a> 
+                            </form>
                         </div>
 
                         <div id="userage">
-                            <p>Age</p>
+                            <form action="banUser.php" method='GET'>
+                                <a href="banUser.php?userAge=<?php echo $userAge?>">Age:> <?php echo $userAge; ?> </a> 
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -141,11 +147,11 @@
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxM">
                         <div id="username">
-                            <p>Name</p>
+                            <a> <?php echo $userName; ?> </a> 
                         </div>
 
                         <div id="userage">
-                            <p>Age</p>
+                            <a> <?php echo $userAge; ?> </a> 
                         </div>
                     </div>
                 </div>
@@ -158,11 +164,11 @@
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxT">
                         <div id="username">
-                            <p>Name</p>
+                            <a> <?php echo $userName; ?> </a> 
                         </div>
 
                         <div id="userage">
-                            <p>Age</p>
+                            <a> <?php echo $userAge; ?> </a> 
                         </div>
                     </div>
                 </div>
