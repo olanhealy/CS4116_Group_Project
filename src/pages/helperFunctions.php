@@ -588,5 +588,65 @@ function getAllMatches($userId)
     }
 }
 
+function showProfileCard($user_id){
 
+    $targetUserId = $user_id;
+    $name = getName($user_id);
+    $profilePicture = getProfilePicture($user_id);
+    $bio = getBio($user_id);
+    $gender = getGender($user_id);
+    $age = getAge($user_id);
+    $collegeYear = getCollegeYear($user_id);
+    $pursuing = getPursuing($user_id);
+    $course = getCourse($user_id);
+    $hobbies = getHobbies($user_id);
+    $lookingFor = getLookingFor($user_id);
+
+    include "profileCard.html";
+}
+
+//process #43, functon to handle adore action 
+function adoreUser($userLoggedInId, $currentUserId)
+{
+    global $conn;
+    $sqlAdore = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
+    if ($adore = $conn->prepare($sqlAdore)) {
+        $adore->bind_param("ii", $userLoggedInId, $currentUserId);
+        $adore->execute();
+        $adore->close();
+    }
+}
+
+//fucntion to handle ignore action
+function ignoreUser($userLoggedInId, $currentUserId)
+{
+    global $conn;
+    $sqlIgnore = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
+    if ($ignore = $conn->prepare($sqlIgnore)) {
+        $ignore->bind_param("ii", $userLoggedInId, $currentUserId);
+        $ignore->execute();
+        $ignore->close();
+    }
+}
+
+function isUserAdored($userId, $targetId){
+
+    global $conn;
+
+    $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("ii", $userId, $targetId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            // The current user has previously adored the logged in user
+            return true;
+        }
+    }
+    // The current user has not previously adored the logged in user
+    return false;
+}
 ?>

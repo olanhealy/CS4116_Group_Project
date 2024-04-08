@@ -249,30 +249,6 @@ if (isset($_GET['action'])) {
     // Increment the current position after handling any action (adore or ignore)
     $_SESSION['explore_state'][$userLoggedInId]['current_position']++;
 }
-//process #43, functon to handle adore action 
-function adoreUser($userLoggedInId, $currentUserId)
-{
-    global $conn;
-    $sqlAdore = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
-    if ($adore = $conn->prepare($sqlAdore)) {
-        $adore->bind_param("ii", $userLoggedInId, $currentUserId);
-        $adore->execute();
-        $adore->close();
-    }
-}
-
-//fucntion to handle ignore action
-function ignoreUser($userLoggedInId, $currentUserId)
-{
-    global $conn;
-    $sqlIgnore = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
-    if ($ignore = $conn->prepare($sqlIgnore)) {
-        $ignore->bind_param("ii", $userLoggedInId, $currentUserId);
-        $ignore->execute();
-        $ignore->close();
-    }
-}
-
 
 // Process #45, fucntion to get all adores of the user currently logged in
 function getAllAdores($userLoggedInId)
