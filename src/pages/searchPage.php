@@ -14,6 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get the search parameters from the form
+    $searchName = $_POST['name'];
     $searchAgeMin = $_POST['min_age'];
     $searchAgeMax = $_POST['max_age'];
     $searchGender = $_POST['gender'];
@@ -28,6 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params = array();
 
     // Append conditions for gender, looking for, and college year if they are provided
+
+    if ($searchName !== "") {
+        $query .= " AND name LIKE ?";
+        $params[] = $searchName . '%';
+    }
+
     if ($searchGender !== "any") {
         $query .= " AND gender = ?";
         $params[] = $searchGender;
@@ -63,8 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-
-        echo '<div class="profile-cards-container">';
         
         while ($row = $result->fetch_assoc()) {
 
@@ -89,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $showingAdoreButton = false;
 
         }
-        echo '</div>';
     } else {
         //error
         echo "0 results found";

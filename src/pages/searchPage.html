@@ -8,6 +8,18 @@
 </head>
 <body>
     <form action="searchPage.php" method="POST" id="search">
+
+        <!-- Add jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <h2>Search</h2>
+        <!-- Modify name input field -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" autocomplete="off">
+        <div id="name-suggestions"></div>
+        <br>
+
+        <h2>Filters</h2>
         <label for="min_age">Minimum Age: <span id="min_age_value">18</span></label>
         <input type="range" id="min_age" name="min_age" min="18" max="100" value="18" oninput="update_min_age_value(this.value)">
         <button type="button" onclick="reset_min_age()">Reset</button>
@@ -60,6 +72,30 @@
             document.getElementById("max_age").value = 100;
             update_max_age_value(100);
         }
+
+        
+            $(document).ready(function(){
+                $('#name').keyup(function(){
+                    var query = $(this).val();
+                    if(query != ''){
+                        $.ajax({
+                            url:"autocomplete.php",
+                            method:"GET",
+                            data:{term:query},
+                            success:function(data){
+                                $('#name-suggestions').fadeIn();
+                                $('#name-suggestions').html(data);
+                            }
+                        });
+                    }
+                });
+    
+                $(document).on('click', 'li', function(){
+                    $('#name').val($(this).text());
+                    $('#name-suggestions').fadeOut();
+                });
+            });
+        
     </script>
 </body>
 </html>

@@ -35,7 +35,7 @@
 
         <?php 
             global $showingAdoreButton;
-            if(isset($showingAdoreButton) && $showingAdoreButton === true) { ?>
+            if(isset($showingAdoreButton) && $showingAdoreButton == true) { ?>
         <form action="adoreUser.php" method="POST">
             <input type="hidden" name="action" value="adore_user">
             <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
