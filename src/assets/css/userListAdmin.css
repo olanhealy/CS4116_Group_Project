@@ -27,7 +27,7 @@ body {
     max-width: 500px;
 }
     
-#explorebutton {
+#adminbutton {
     background-color: white; 
     color: #abc99d; 
     border: 3px solid #abc99d;
@@ -40,7 +40,7 @@ body {
     float: right;
 }
   
-#explorebutton:hover {
+#adminbutton:hover {
     background-color: #abc99d;
     color: white;
 }
