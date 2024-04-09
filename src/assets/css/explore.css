@@ -186,7 +186,7 @@ body {
 .icons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center; 
     padding: 10px;
 }
@@ -194,6 +194,14 @@ body {
     color: #abc99d;
     padding: 10px 20px 10px 20px;
     cursor: pointer;
+}
+
+p {
+    padding: 10px;
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    font-style: italic;
 }
 
 footer {
