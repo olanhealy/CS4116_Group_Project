@@ -10,6 +10,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Get the user ID from the URL
 $targetUserId = $_GET['target_user_id'];
-$showingAdoreButton = $_GET['showingAdoreButton'];
+
+global $showingAdoreButton;
+$showingAdoreButton = false;
+if(isset($_GET['showingAdoreButton'])){
+    $showingAdoreButton = $_GET['showingAdoreButton'];
+}
 
 showProfileCard($targetUserId);

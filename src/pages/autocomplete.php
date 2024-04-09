@@ -29,12 +29,12 @@ if(isset($_GET['term'])){
         $targetUserId = $row['user_id'];
         $userGender = getGender($_SESSION['user_id']);
 
-        if (($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin" || isUserAdored($_SESSION['user_id'], $targetUserId)) ){
+        if (($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin" ) ){
             continue;
         }
 
         $showingAdoreButton = false;
-        if (getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender) {
+        if ((getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender) && !isUserAdored($_SESSION['user_id'], $targetUserId)) {
             $showingAdoreButton = true;
         }
 

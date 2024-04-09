@@ -45,6 +45,17 @@
         <?php 
             } 
         ?>
+
+        <?php
+            if(isUserAdored($_SESSION['user_id'],$targetUserId) && isUserAdored($targetUserId,$_SESSION['user_id'])){        
+        ?>
+                <a href="messages.php?target_user_id=<?php echo $targetUserId; ?>">Message</a>
+
+        <?php
+            }
+        ?>
+
+        
     </div>
 </body>
 </html>
