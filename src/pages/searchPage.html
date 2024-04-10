@@ -1,6 +1,7 @@
 <?php include "helperFunctions.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +14,8 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-        <!-- Add jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Add jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -22,6 +23,7 @@
     <!-- External Stylesheet -->
     <link rel="stylesheet" type="text/css" href="../assets/css/searchPage.css">
 </head>
+
 <body>
 
     <!-- Start of Navbar -->
@@ -83,51 +85,94 @@
 
     <br>
 
-    <form action="searchPage.php" method="POST" id="search">
+    <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
+        <div class="row">
+            <form action="searchPage.php" method="POST" id="search">
+
+                <div class="row">
+                    <div class="col-lg-12 order-lg-1 col-md-12 imgContainer">
 
 
-        <h2>Search</h2>
-        <!-- Modify name input field -->
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" autocomplete="off">
-        <div id="name-suggestions"></div>
-        <br>
+                        <div class="row inputField">
+                            <h3>Search</h3>
+                        </div>
 
-        <h2>Filters</h2>
-        <label for="min_age">Minimum Age: <span id="min_age_value">18</span></label>
-        <input type="range" id="min_age" name="min_age" min="18" max="100" value="18" oninput="update_min_age_value(this.value)">
-        <button type="button" onclick="reset_min_age()">Reset</button>
-        <br>
-        <label for="max_age">Maximum Age: <span id="max_age_value">100</span></label>
-        <input type="range" id="max_age" name="max_age" min="18" max="100" value="100" oninput="update_max_age_value(this.value)">
-        <button type="button" onclick="reset_max_age()">Reset</button>
-        <br>
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender">
-            <option value="any">Any</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select>
-        <br>
-        <label for="looking_for">Looking For:</label>
-        <select id="looking_for" name="looking_for">
-            <option value="any">Any</option>
-            <option value="short_term">short_term</option>
-            <option value="long_term">long_term</option>
-        </select>
-        <br>
-        <label for="college_year">College Year:</label>
-        <select id="college_year" name="college_year">
-            <option value="any">Any</option>
-            <option value="undergrad">undergrad</option>
-            <option value="masters">masters</option>
-            <option value="phd">phd</option>
-        </select>
-        <br>
-        <input type="submit" value="Search">
-    </form>
+                        <div class="row inputField">
+                            <!-- Modify name input field -->
+                            <label for="name" class="inputLabelText">Name:</label><br>
+                            <input type="text" id="name" name="name" autocomplete="off">
+                            <div id="name-suggestions"></div>
+                        </div>
 
+
+                        <div class="row inputField">
+                            <h3>Filters</h3>
+                        </div>
+
+                        <div class="row inputField">
+                            <div class="col-lg-6 col-md-6 col-sm-12"><label for="min_age" class="inputLabelText">Minimum
+                                    Age: <span id="min_age_value">18</span></label><br>
+                                <input type="range" id="min_age" name="min_age" min="18" max="100" value="18"
+                                    oninput="update_min_age_value(this.value)">
+                                <button type="button" onclick="reset_min_age()"
+                                    class="btn btn-outline-primary resetBtn">Reset</button>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="max_age" class="inputLabelText">Maximum Age: <span
+                                        id="max_age_value">100</span></label><br>
+                                <input type="range" id="max_age" name="max_age" min="18" max="100" value="100"
+                                    oninput="update_max_age_value(this.value)">
+                                <button type="button" onclick="reset_max_age()"
+                                    class="btn btn-outline-primary resetBtn">Reset</button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row inputField">
+                            <label for="gender" class="inputLabelText">Gender:</label><br>
+                            <select id="gender" name="gender" class="optionDropdown">
+                                <option value="any">Any</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="row inputField">
+                            <label for="looking_for" class="inputLabelText">Looking For:</label><br>
+                            <select id="looking_for" name="looking_for" class="optionDropdown">
+                                <option value="any">Any</option>
+                                <option value="short_term">short_term</option>
+                                <option value="long_term">long_term</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="row inputField">
+                            <label for="college_year" class="inputLabelText">College Year:</label><br>
+                            <select id="college_year" name="college_year" class="optionDropdown">
+                                <option value="any">Any</option>
+                                <option value="undergrad">undergrad</option>
+                                <option value="masters">masters</option>
+                                <option value="phd">phd</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 order-lg-3 search">
+                        <input type="submit" class="btn btn-secondary mt-2 mb-4 searchBtn" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         function update_min_age_value(value) {
             document.getElementById("min_age_value").textContent = value;
@@ -147,29 +192,29 @@
             update_max_age_value(100);
         }
 
-        
-            $(document).ready(function(){
-                $('#name').keyup(function(){
-                    var query = $(this).val();
-                    if(query != ''){
-                        $.ajax({
-                            url:"autocomplete.php",
-                            method:"GET",
-                            data:{term:query},
-                            success:function(data){
-                                $('#name-suggestions').fadeIn();
-                                $('#name-suggestions').html(data);
-                            }
-                        });
-                    }
-                });
-    
-                $(document).on('click', 'li', function(){
-                    $('#name').val($(this).text());
-                    $('#name-suggestions').fadeOut();
-                });
+
+        $(document).ready(function () {
+            $('#name').keyup(function () {
+                var query = $(this).val();
+                if (query != '') {
+                    $.ajax({
+                        url: "autocomplete.php",
+                        method: "GET",
+                        data: { term: query },
+                        success: function (data) {
+                            $('#name-suggestions').fadeIn();
+                            $('#name-suggestions').html(data);
+                        }
+                    });
+                }
             });
-        
+
+            $(document).on('click', 'li', function () {
+                $('#name').val($(this).text());
+                $('#name-suggestions').fadeOut();
+            });
+        });
+
     </script>
 
     <br>
@@ -179,4 +224,5 @@
         © 2024 Copyright UL Singles. All Rights Reserved
     </footer>
 </body>
+
 </html>

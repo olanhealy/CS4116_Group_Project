@@ -149,6 +149,98 @@ body {
     font-size: 18px;
 }
 
+#outline {
+    border-color: #4d4d4d !important;
+    position: relative;
+    width: 40vw;
+    margin: 0 auto;
+}
+
+h3 {
+    margin-bottom: 3px;
+}
+
+.inputLabelText {
+    font-weight: bold;
+}
+
+.inputField {
+    padding: 5px;
+}
+
+
+.optionDropdown {
+    padding: 8px 20px;
+    border: 1px solid #e6d1be;
+    border-radius: 4px;
+    background-color: #e6d1be;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    width: 100%;
+}
+
+.optionDropdown option {
+    font-size: 16px;
+    background-color: #e6d1be;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.optionDropdown option:checked {
+    background-color: #e6d1be;
+}
+
+.optionDropdown option:hover {
+    background-color: #e6d1be;
+    color: #fff;
+}
+
+
+.optionDropdown:after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.resetBtn {
+    font-size: 10px;
+    color: #abc99d;
+    border-color: #abc99d;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.resetBtn:hover {
+    color: #fff;
+    background-color: #abc99d;
+    border-color: #abc99d;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.searchBtn {
+    width: 50%;
+    font-size: 18px;
+    background-color: #abc99d;
+    border-color: #abc99d;
+}
+
+.searchBtn:hover {
+    background-color: #97b189;
+    border-color: #97b189;
+}
+
 
 footer {
     background-color: #e6d1be;
