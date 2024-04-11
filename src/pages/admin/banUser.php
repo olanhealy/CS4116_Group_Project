@@ -7,11 +7,13 @@ if(session_status() === PHP_SESSION_NONE) {
 
 include "../db_connection.php";
 include_once "adminHelperFunctions.php";
+include "../helperFunctions.php";
 
 // Check if the user is logged in
 if (isset ($_SESSION['user_id'])) {
     // Retrieve the user ID
     $userId = $_SESSION['user_id'];
+    
     //Checks for post request
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

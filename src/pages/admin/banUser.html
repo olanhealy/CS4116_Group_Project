@@ -1,5 +1,5 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +30,7 @@
         
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
-            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='explore.php'">Explore</button>
+            <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
         </div>
 
@@ -42,10 +42,8 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                 </svg>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
-                <li><a class="dropdown-item-profile" href="admin.php" id="admindropdown">Admin Page</a></li>
-                <li><hr class="dropdown-divider d-md-none"></li>
-                <li><a class="dropdown-item-profile d-md-none" href="explore.php" id="exploredropdown">Explore</a></li>
+            <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
+                <li><a class="dropdown-item-profile d-md-none" href="admin.html" id="admindropdown">Admin</a></li>
                 <li><hr class="dropdown-divider d-md-none"></li>
                 <li><a class="dropdown-item-profile d-md-none" href="logout.php" id="logoutdropdown">Log Out</a></li>
             </ul>
@@ -64,22 +62,16 @@
                 <!-- User Profile Section -->
                 <div class="col-6" id="leftcontainer"> 
                         <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainer">
-                            <form action="banUser.php" method='GET'>
-                                <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepicture" class="card-img-top" alt="Profile Picture">
-                            </form>    
+                            <img src="/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>
                         </div>
 
                     <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
                         <div id="username">
-                            <form action="banUser.php" method='GET'>
-                                <a href="banUser.php?userId=<?php echo $userId?>">User:> <?php echo $userId; ?> </a> 
-                            </form>
+                            <a>Name: <?php echo $_SESSION['existingName']; ?> </a> 
                         </div>
 
                         <div id="userage">
-                            <form action="banUser.php" method='GET'>
-                                <a href="banUser.php?userAge=<?php echo $userAge?>">Age:> <?php echo $userAge; ?> </a> 
-                            </form>
+                            <a>Age: <?php echo $_SESSION['existingAge']; ?></a> 
                         </div>
                     </div>
                 </div>
