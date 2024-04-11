@@ -106,14 +106,6 @@ body {
     color: black;
 }
 
-#exploredropdown {
-    font-size: 15px;
-}
-
-#exploredropdown:hover {
-    background-color: white;
-    color: black;
-}
   
 hr {
     margin: 0.2em auto;

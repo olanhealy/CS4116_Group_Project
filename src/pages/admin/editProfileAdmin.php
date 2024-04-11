@@ -12,6 +12,7 @@ if (isset($_SESSION['targetId'])) {
     $targetId = $_SESSION['targetId'];
 
     // Fetch existing profile information
+    //$_SESSION['existingName'] = getName($targetId)
     $_SESSION['existingBio'] = getBio($targetId);
     $_SESSION['existingHobbies'] = getHobbies($targetId);
     $_SESSION['existingCourse'] = getCourse($targetId);

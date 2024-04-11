@@ -1,0 +1,328 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#navbar {
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.line {
+  width: 1px;
+  height: 75px;
+  background-color: #d3d3d3;
+}
+  
+.header-img {
+  max-width: 130px;
+  margin-right: 10px;
+  height: 80px;
+}
+  
+.images{
+  display: flex;
+  align-items: left;
+  max-width: 500px;
+}
+  
+#adminbutton {
+  background-color: white; 
+  color: #abc99d; 
+  border: 3px solid #abc99d;
+  padding: 13px 29px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  float: right;
+}
+
+#adminbutton:hover {
+  background-color: #abc99d;
+  color: white;
+}
+
+#logoutbutton{
+  background-color: #abc99d;
+  color: white; 
+  border: 3px solid #abc99d;
+  padding: 13px 29px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  float: right;
+}
+    
+#logoutbutton:hover {
+  background-color: white;
+  color: #abc99d;
+}
+
+
+#iconbutton {
+  background-color: white; 
+  color: #abc99d; 
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.dropdown-item-profile {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+
+#profiledropdown{
+  background-color: #abc99d;
+  min-width: 10px;
+}
+
+#logoutdropdown {
+  font-size: 15px;
+}
+
+#logoutdropdown:hover {
+  background-color: white;
+  color: black;
+}
+
+#admindropdown {
+  font-size: 15px;
+}
+
+#admindropdown:hover {
+  background-color: white;
+  color: black;
+}
+
+hr {
+  margin: 0.2em auto;
+}
+
+#userID{
+  font-size: 30px; 
+  margin-top: 10px; 
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#outline {
+  border-color: #4d4d4d !important;
+  position: relative;
+  width: 80vw;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+#leftcontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline;
+}
+
+#buttoncontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline;
+}
+
+#changeProfileInfo {
+  font-size: 18px;
+  background-color: #abc99d;
+  border-color: #abc99d;
+}
+
+#changeProfileInfo:hover {
+  background-color: #97b189;
+  border-color: #97b189;
+}
+
+#picturecontainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#profilepicture {
+  max-width: 85%;
+}
+
+.fileUploadBtn {
+  width: 65%;
+  font-size: 18px;
+  background-color: #abc99d;
+  border-color: #abc99d;
+}
+
+
+.fileUploadBtn:hover {
+  background-color: #97b189;
+  border-color: #97b189;
+}
+
+
+.inputLabelText {
+  font-weight: bold;
+}
+
+.optionDropdown {
+  padding: 8px 20px;
+  border: 1px solid #e6d1be;
+  border-radius: 4px;
+  background-color: #e6d1be;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  width: 100%;
+}
+
+.optionDropdown option {
+  font-size: 16px;
+  background-color: #e6d1be;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+.optionDropdown option:checked {
+  background-color: #e6d1be;
+}
+
+.optionDropdown option:hover {
+  background-color: #e6d1be;
+  color: #fff;
+}
+
+.optionDropdown:after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.textInput {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.textInput[readonly] {
+  background-color: #f0f0f0;
+}
+
+.textInput:focus {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.info-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.inputField {
+  padding: 5px;
+}
+
+#first_name{
+  width: 150px;
+  height: 30px;
+}
+
+#last_name{
+  width: 150px;
+  height: 30px;
+}
+
+/* Buttons */
+
+#makeadmin{
+  font-size: 20px;
+  text-align: center;
+  display: inline;
+}
+
+#banUserLink{
+  font-size: 20px;
+  text-align: center;
+  display: inline;
+}
+
+#delete{
+  font-size: 20px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+
+footer {
+  background-color: #e6d1be;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
+}
+
+/* Overriding select2 css */
+.select2-container .select2-selection--single {
+  height: 41px;
+}
+
+.select2-container--default .select2-selection--single {
+  background-color: #e6d1be;
+  border: 1px solid #e6d1be;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #fff;
+  font-weight: bold;
+  padding-left: 8px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: #fff transparent transparent transparent;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #fff transparent;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #e6d1be;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #fff;
+  line-height: 40px;
+  padding-left: 15px;
+  font-weight: bold;
+}

@@ -7,4 +7,4 @@
         session_start();
     }
 
-    showAccounts();
+include "userListAdmin.php";

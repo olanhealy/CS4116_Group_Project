@@ -10,14 +10,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../../assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/userListAdmin.css">
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
-    
+  
     <!-- Start of Navbar -->
     <nav class="navbar navbar-fixed-top" id="navbar">
         
@@ -53,12 +53,34 @@
     <hr>
     <!-- End of Navbar -->
 
-    <!-- Main Container -->
-    <div class="container-fluid">
-        <div class="container-l" style="text-align: center;">
-            <h1 id="header">Admin</h1>
-            <p id="desc">Welcome to the Admin Page</p>
-            <a id="link" href="usersListAdmin.php">Go to Users Page</a>
+    <!-- User Table -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-custom">
+
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th># Banned</th>
+                                </tr>
+                            </thead>
+
+                            <!-- Loads User Data into Table -->
+                            <?php 
+                            require_once "adminHelperFunctions.php";
+                            
+                            showAccounts();
+                            ?>
+
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
 

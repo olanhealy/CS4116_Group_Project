@@ -1,12 +1,10 @@
 
-
-                            <tbody>
-                                <tr>
-                                    <td><a href="showUserAdmin.php?targetId=<?php echo $targetId ?>"><?php echo $targetId ?></a></td>
-                                    <td><?php echo $row["first_name"] . " " . $row["last_name"] ?></td>
-                                    <td><?php echo $row["email"] ?></td>
-                                    <td><?php echo $row["banned"] ?></td>
-                                </tr>
-                            
-                            </tbody>
-                       
+<!-- Loads User Data into Table -->
+<tbody>
+    <tr>
+        <td><a href="showUserAdmin.php?targetId=<?php echo $targetId ?>"><?php echo $targetId ?></a></td>
+        <td><?php echo $row["first_name"] . " " . $row["last_name"] ?></td>
+        <td><?php echo $row["email"] ?></td>
+        <td><?php echo $row["banned"] ?></td>
+    </tr>
+</tbody>

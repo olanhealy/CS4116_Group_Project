@@ -23,11 +23,6 @@
 
     ?>
 
-    
-    <a href="usersListAdmin.php">Back to User List</a>
-    <!--link to logout.php-->
-    <a href="../logout.php">Logout</a>
-
     <?php
 
     //transfer targetId to a SESSION variable
@@ -44,8 +39,19 @@
         if(getUserRole($targetId) == "standard"){
             include "editProfileAdmin.php";
             include "makeAdmin.html";
-            include "banUser.html";
+            echo '<a href="banUser.html" id="banUserLink">Ban User</a>';
+        }else if(getUserRole($targetId) == "admin") {
+            //include page for viewing admin account
+            include "viewAdminAccount.html";
         }
         //if the user is banned just show delete button
         include "deleteUser.html";
+        // always include footer 
+        include "adminFooter.html"; 
     }
+
+    ?>
+
+<html>
+    <link rel="stylesheet" type="text/css" href="../../assets/css/editProfileAdmin.css">
+</html>

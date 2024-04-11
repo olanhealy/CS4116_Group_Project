@@ -11,7 +11,6 @@ function showAccounts()
     //check the result is not empty
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
-        include "firstHalfUserAdmin.html";
         // Output data of each row with a form to ban/unban
         while ($row = $result->fetch_assoc()) {
             //getting each user_id from the query
@@ -20,7 +19,6 @@ function showAccounts()
             //include the user list html for each row
             include "userListAdmin.html";
         }
-        include "secondHalfUserAdmin.html";
     } else {
         //error
         echo "0 results found";
