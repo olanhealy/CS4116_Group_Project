@@ -225,6 +225,11 @@ h3 {
     color: #abc99d;
 }
 
+#name-suggestions {
+    display: flex;
+    flex-direction: column;
+}
+
 .search {
     display: flex;
     align-items: center;
