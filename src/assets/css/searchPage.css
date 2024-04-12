@@ -262,7 +262,7 @@ footer {
     padding: 3px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (max-width: 991px){
     .dropdownBtn {
         justify-content: center;
         align-items: center;
