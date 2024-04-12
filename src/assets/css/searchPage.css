@@ -116,14 +116,6 @@ body {
     margin-top: 10px;
 }
 
-@media (max-width: 768px) {
-    .dropdownBtn {
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-}
-
 #menu-dropdown:hover {
     background-color: #e6d1be;
     border-color: black;
@@ -156,6 +148,10 @@ body {
     margin: 0 auto;
 }
 
+.searchContainer {
+    padding: 10px;
+}
+
 h3 {
     margin-bottom: 3px;
 }
@@ -166,6 +162,13 @@ h3 {
 
 .inputField {
     padding: 5px;
+}
+
+.rangeInputField {
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 
@@ -210,10 +213,6 @@ h3 {
     font-size: 10px;
     color: #abc99d;
     border-color: #abc99d;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
 }
 
 .resetBtn:hover {
@@ -247,4 +246,16 @@ footer {
     text-align: center;
     padding: 10px;
     margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .dropdownBtn {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #outline {
+        width: 80vw;
+    }
 }
