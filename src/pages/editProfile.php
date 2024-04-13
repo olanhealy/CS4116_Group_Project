@@ -60,17 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
-    // Call setter methods to make the updates in db
-    setBio($userId, $bio);
-    setGender($userId, $gender);
-    setAge($age, $userId);
-    setCollegeYear($userId, $collegeYear);
-    setPursuing($userId, $pursuing);
-    setProfilePic($userId, $profilePicFilename);
-    setCourse($userId, $course);
-    setHobbies($userId, $hobbies);
-    setLookingFor($userId, $lookingFor);
-    setPassword($userId, $password);
+    if (empty($errors)) {
+        // Call setter methods to make the updates in db
+        setBio($userId, $bio);
+        setGender($userId, $gender);
+        setAge($age, $userId);
+        setCollegeYear($userId, $collegeYear);
+        setPursuing($userId, $pursuing);
+        setProfilePic($userId, $profilePicFilename);
+        setCourse($userId, $course);
+        setHobbies($userId, $hobbies);
+        setLookingFor($userId, $lookingFor);
+        setPassword($password, $userId);
+    } else {
+        echo "Errors: " . $errors;
+    }
 
     header("Location: editProfile.php");
 }
@@ -196,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
                                     <?php if (isset($age))
                                         echo "value='$age'"; ?> <?php if (isset($age))
-                                        echo "readonly"; ?> required>
+                                               echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-md-4 col-sm-12 col-lg-4">
@@ -285,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     placeholder="New Password" required>
                                 <input type="text" id="password-repeat" name="password-repeat" class="textInput"
                                     placeholder="Repeat Password" required>
-                                    
+
                             </div>
                         </div>
 
