@@ -39,6 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hobbies = htmlspecialchars($_POST['hobbies']);
     $lookingFor = htmlspecialchars($_POST['looking_for']);
     $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
+    $password = htmlspecialchars($_POST['password']);
+
+    // Check if password is between 8 and 20 characters long
+    if (strlen($password) < 8 || strlen($password) > 20) {
+        $errors[] = "Password must be between 8 and 20 characters long";
+    }
+
+    // Check for at least one capital letter and at least one special character with the inputted password
+    if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
+        $errors[] = "Password must contain at least one capital letter and one special character";
+    }
+
+    // Check if the inputted and repeated passwords both match
+    if ($_POST['password'] !== $_POST['password-repeat']) {
+        $errors[] = "The password and repeated password do not match";
+    }
 
     var_dump($_SESSION);
     // Update the user currently logged in profile table in the database
@@ -54,8 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setCourse($userId, $course);
     setHobbies($userId, $hobbies);
     setLookingFor($userId, $lookingFor);
+    setPassword($userId, $password);
 
-    header("Location: home.php");
+    header("Location: editProfile.php");
 }
 
 ?>
@@ -70,8 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Edit Profile</title>
 
     <!-- Bootstrap Stylesheet -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -104,18 +124,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
             <?php if (isset($age)) { ?>
-                <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='explore.php'">Explore</button>
+                <button type="button" id="explorebutton" class="btn button d-none d-md-block"
+                    onclick="location.href='explore.php'">Explore</button>
             <?php } ?>
-            <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
+            <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
+                onclick="location.href='logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon -->
         <?php if (isset($age)) { ?>
             <div class="dropdown">
                 <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
@@ -133,7 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 dropdownBtn">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
+                        data-bs-toggle="dropdown">
                         Edit Profile
                     </button>
 
@@ -168,17 +193,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-4 col-sm-12 col-lg-4">
                                 <!-- Age -->
                                 <label for="age" class="inputLabelText">Age</label><br>
-                                <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." <?php if (isset($age)) echo "value='$age'"; ?> <?php if (isset($age)) echo "readonly"; ?> required>
+                                <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
+                                    <?php if (isset($age))
+                                        echo "value='$age'"; ?> <?php if (isset($age))
+                                        echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-md-4 col-sm-12 col-lg-4">
                                 <!-- Gender -->
                                 <label for="gender" class="inputLabelText">Gender</label><br>
-                                <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender)) echo "disabled"; ?> required>
+                                <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender))
+                                    echo "disabled"; ?> required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Male" <?php if (isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
-                                    <option value="Female" <?php if (isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
-                                    <option value="Other" <?php if (isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
+                                    <option value="Male" <?php if (isset($gender) && $gender == "Male")
+                                        echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if (isset($gender) && $gender == "Female")
+                                        echo "selected"; ?>>Female</option>
+                                    <option value="Other" <?php if (isset($gender) && $gender == "Other")
+                                        echo "selected"; ?>>Other</option>
                                 </select>
                             </div>
                         </div>
@@ -189,9 +221,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="college_year" class="inputLabelText">College Year</label><br>
                                 <select id="college_year" name="college_year" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
-                                    <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
-                                    <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
+                                    <option value="Undergrad" <?php if ($collegeYear == "Undergrad")
+                                        echo "selected"; ?>>
+                                        Undergrad</option>
+                                    <option value="Masters" <?php if ($collegeYear == "Masters")
+                                        echo "selected"; ?>>
+                                        Masters</option>
+                                    <option value="PhD" <?php if ($collegeYear == "PhD")
+                                        echo "selected"; ?>>PhD</option>
                                 </select>
                             </div>
 
@@ -211,9 +248,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="pursuing" class="inputLabelText">Pursuing</label><br>
                                 <select id="pursuing" name="pursuing" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
-                                    <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
-                                    <option value="Other" <?php if ($pursuing == "Other") echo "selected"; ?>>Other</option>
+                                    <option value="Male" <?php if ($pursuing == "Male")
+                                        echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if ($pursuing == "Female")
+                                        echo "selected"; ?>>Female
+                                    </option>
+                                    <option value="Other" <?php if ($pursuing == "Other")
+                                        echo "selected"; ?>>Other
+                                    </option>
                                 </select>
                             </div>
 
@@ -222,18 +264,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="looking_for" class="inputLabelText">Looking For</label><br>
                                 <select id="looking_for" name="looking_for" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Short-term" <?php if ($lookingFor == "Short-term") echo "selected"; ?>>Short-Term</option>
-                                    <option value="Long-term" <?php if ($lookingFor == "Long-term") echo "selected"; ?>>Long-Term</option>
-                                    <option value="Unsure" <?php if ($lookingFor == "Unsure") echo "selected"; ?>>Unsure</option>
+                                    <option value="Short-term" <?php if ($lookingFor == "Short-term")
+                                        echo "selected"; ?>>
+                                        Short-Term</option>
+                                    <option value="Long-term" <?php if ($lookingFor == "Long-term")
+                                        echo "selected"; ?>>
+                                        Long-Term</option>
+                                    <option value="Unsure" <?php if ($lookingFor == "Unsure")
+                                        echo "selected"; ?>>Unsure
+                                    </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="row inputField">
-                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                <!-- Bio -->
-                                <label for="bio" class="inputLabelText">Bio</label><br>
-                                <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required><?php echo htmlspecialchars($bio); ?></textarea>
+                            <div class="col-md-6 col-sm-12 col-lg-6">
+                                <!-- password (May need to update this as text for it is meh)-->
+                                <label for="password" class="inputLabelText">Password</label><br>
+                                <input type="text" id="password" name="password" class="textInput"
+                                    placeholder="New Password" required>
+                                <input type="text" id="password-repeat" name="password-repeat" class="textInput"
+                                    placeholder="Repeat Password" required>
+                                    
                             </div>
                         </div>
 
@@ -241,15 +293,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
                                 <label for="hobbies" class="inputLabelText">Hobbies</label><br>
-                                <input type="text" id="hobbies" name="hobbies" class="textInput" placeholder="Type here..." required value="<?php echo htmlspecialchars($hobbies); ?>">
+                                <input type="text" id="hobbies" name="hobbies" class="textInput"
+                                    placeholder="Type here..." required
+                                    value="<?php echo htmlspecialchars($hobbies); ?>">
                             </div>
                         </div>
-                    </div>
 
+
+                        <div class="row inputField">
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <!-- Bio -->
+                                <label for="bio" class="inputLabelText">Bio</label><br>
+                                <textarea id="bio" name="bio" class="textInput" placeholder="Type here..."
+                                    required><?php echo htmlspecialchars($bio); ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row inputField">
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <!-- Hobbies (May need to update this as text for it is meh)-->
+                                <label for="hobbies" class="inputLabelText">Hobbies</label><br>
+                                <input type="text" id="hobbies" name="hobbies" class="textInput"
+                                    placeholder="Type here..." required
+                                    value="<?php echo htmlspecialchars($hobbies); ?>">
+                            </div>
+                        </div>
+
+                        <?php if (getVerified($userId) == 0) { ?>
+                            <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
+                        <?php } ?>
+                    </div>
 
                     <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
                         <!-- Profile Picture-->
-                        <img class="profilePicture" src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture">
+                        <img class="profilePicture"
+                            src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
+                            alt="Profile Picture">
 
                         <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                         <input type="file" id="profile_pic" name="profile_pic">
@@ -276,6 +355,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $('#course').select2({
             placeholder: "Choose..",
             allowClear: true
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#verifyEmailBtn').click(function () {
+                // AJAX request to update verification status
+                $.ajax({
+                    url: 'verifyEmail.php', // Update with the endpoint to handle email verification
+                    type: 'POST',
+                    data: { emailVerified: true }, // If needed, provide any data required by the PHP script
+                    success: function (response) {
+                        // Handle successful response here
+                        alert('Email verification email sent');
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response here
+                        alert('Error occurred while verifying email: ' + error);
+                    }
+                });
+            });
         });
     </script>
 
