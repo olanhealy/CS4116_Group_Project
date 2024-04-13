@@ -58,7 +58,7 @@
 
     <!-- Main Container -->
     <div class="container-fluid">
-        <div class="container-l border border-3" id="outline">
+        <div class="container-l border border-2" id="outline">
             <div class="row">   
 
                 <!-- User Profile Section -->

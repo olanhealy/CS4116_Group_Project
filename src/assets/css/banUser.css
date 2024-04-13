@@ -121,14 +121,15 @@ hr {
 #userID{
     font-size: 30px; 
     margin-top: 10px; 
-    margin-bottom: 10px;
     text-align: center;
 }
   
 
 #outline {
-    border-color: black !important;
+    border-color: #4d4d4d !important;
     position: relative;
+    width: 70vw;
+    margin: 0 auto;
     margin-bottom: 15px;
 }
 
@@ -146,6 +147,13 @@ hr {
     width: 300px;
 }
 
+@media (max-width: 480px) {
+    #picturecontainer {
+        width: 200px;
+    }
+}
+
+
 #profilepicture {
     border: 2px solid black;
     border-color: black !important;
@@ -157,12 +165,24 @@ hr {
     height: 320px;
 }
 
+@media (max-width: 480px) {
+    #profilepicture {
+        width: 160px;
+    }
+}
+
 
 #userinfobox {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 50px;
     width: 300px;
+}
+
+@media (max-width: 480px) {
+    #userinfobox {
+        width: 200px;
+    }
 }
 
 #username {
@@ -175,6 +195,12 @@ hr {
     width: 100%;
 }
 
+@media (max-width: 480px) {
+    #username {
+        width: 200px;
+    }
+}
+
 #userage {
     text-align: start;
     color: black;
@@ -182,6 +208,12 @@ hr {
     display: inline-block;
     margin-top: 6px;
     width: 100%;
+}
+
+@media (max-width: 480px) {
+    #userage {
+        width: 100px;
+    }
 }
 
 #topcontainer {
@@ -224,8 +256,6 @@ textarea {
     align-items: center;
 }
 
-
-
 #permaBan{
     background-color: #abc99d;
     font-size: 20px;
@@ -240,6 +270,12 @@ textarea {
 
 #permaBan:hover{
     background-color:#bbdaac;
+}
+
+@media (max-width: 480px) {
+    #permaBan {
+        font-size: 13px;
+    }
 }
 
 #banUser{
@@ -288,6 +324,12 @@ input[type=date] {
 input[type=date]:hover {
     background-color:#bbdaac;
     cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    input[type=date] {
+        font-size: 13px;
+    }
 }
 
 
