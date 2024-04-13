@@ -8,6 +8,7 @@ CREATE TABLE account (
     last_name VARCHAR(26),
     user_role ENUM('admin', 'standard') NOT NULL DEFAULT 'standard',
     banned boolean DEFAULT 0
+    number_of_reports INT(11) DEFAULT 0;
     );
 
 CREATE TABLE profile (
@@ -31,7 +32,7 @@ CREATE TABLE banned(
     banned_by INT(11),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reason TEXT,
-    duration TIME,
+    dateOfUnban DATE,
     FOREIGN KEY (user_id) REFERENCES Account(user_id),
     FOREIGN KEY (banned_by) REFERENCES Account(user_id)
 );
@@ -58,7 +59,6 @@ CREATE TABLE matches (
     match_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     initiator_id INT(11),
     target_id INT(11),
-    `status` ENUM('Matched', 'Pending') NOT NULL,
     response_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (initiator_id) REFERENCES Account(user_id),
     FOREIGN KEY (target_id) REFERENCES Account(user_id)
@@ -76,35 +76,3 @@ CREATE TABLE messages(
     FOREIGN KEY (receiver_id) REFERENCES Account(user_id),
     FOREIGN KEY (sender_id) REFERENCES Account(user_id)
 );
-
-
--- Dummy data for Account table
-INSERT INTO account (user_id, email, password_hash, first_name, last_name, user_role, banned)
-VALUES (11111111, '11111111@studentmail.ul.ie', 'hashed_password', 'Kevin', 'Collins', 'standard', 0);
-
--- Dummy data for Profile table
-INSERT INTO profile (user_id, name, age, gender, bio, profile_pic, pursuing, verified, college_year, course, hobbies, looking_for)
-VALUES (11111111, 'Kevin Collins', 30, 'Female', 'Im an idiot', 'profile_pic.jpg', 'Male', 1, 'Masters', 'Computer Science', 'Reading, Hiking', 'Long-term');
-
--- Dummy data for Adore table
-INSERT INTO adore (user_id, adored_user_id)
-VALUES (11111111, 3);
-
--- Dummy data for Ignore table
-INSERT INTO `ignore` (user_id, ignored_user_id)
-VALUES (11111111, 4);
-
--- Dummy data for Matches table
-INSERT INTO matches (initiator_id, target_id, `status`, response_date)
-VALUES (66666666, 2, 'Matched', NOW());
-
--- Dummy data for Messages table
-INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (14, 11111111, 2, 'Hello, how are you?', 'delivered');
-
--- Dummy data for Messages table
-INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status)
-VALUES (14, 11111111, 2, 'Good', 'delivered');
-
-ALTER TABLE account
-ADD COLUMN number_of_reports INT DEFAULT 0;
