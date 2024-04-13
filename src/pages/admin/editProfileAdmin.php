@@ -13,10 +13,18 @@ if (isset($_SESSION['targetId'])) {
 
     // Fetch existing profile information
     $_SESSION['existingName'] = getName($targetId);
+    $_SESSION['existingGender'] = getGender($targetId);
     $_SESSION['existingAge'] = getAge($targetId);
+
+    $_SESSION['existingCollegeYear'] = getCollegeYear($targetId);
+    $_SESSION['existingCourse'] = getCourse($targetId);
+
+    $_SESSION['existingPursuing'] = getPursuing($targetId);
+    $_SESSION['existingLookingFor'] = getLookingFor($targetId);
+
     $_SESSION['existingBio'] = getBio($targetId);
     $_SESSION['existingHobbies'] = getHobbies($targetId);
-    $_SESSION['existingCourse'] = getCourse($targetId);
+
     // added in to get the existing profile picture
     $_SESSION['existingProfilePic'] = getProfilePicture($targetId);
 
@@ -48,6 +56,16 @@ if (isset($_SESSION['targetId'])) {
         if (isset($_POST['age']) && $_POST['age'] !== $_SESSION['existingAge'] ) {
             $age = $_POST['age'];
             setAge($targetId, $age);
+        }
+
+        if (isset($_POST['gender']) && $_POST['gender'] !== $_SESSION['existingGender']) {
+            $gender = $_POST['gender'];
+            setGender($targetId, $gender);
+        }
+
+        if (isset($_POST['college_year']) && $_POST['college_year'] !== $_SESSION['existingCollegeYear'] ) {
+            $college_year = $_POST['college_year'];
+            setCollegeYear($targetId, $college_year);
         }
 
         // Example: Updating user's bio
