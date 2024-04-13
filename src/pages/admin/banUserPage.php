@@ -67,11 +67,11 @@
 
                     <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
                         <div id="username">
-                            <a>Name: <?php echo $_SESSION['existingName']; ?> </a> 
+                            <p> Name:<?php echo $_GET['targetName']; ?> </p> 
                         </div>
 
                         <div id="userage">
-                            <a>Age: <?php echo $_SESSION['existingAge']; ?></a> 
+                            <a>Age: <?php echo $_GET['targetAge']; ?></a> 
                         </div>
                     </div>
                 </div>
@@ -139,11 +139,11 @@
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxM">
                         <div id="username">
-                            <a> <?php echo $userName; ?> </a> 
+                            <p> <?php echo $_GET['targetName']; ?> </p> 
                         </div>
 
                         <div id="userage">
-                            <a> <?php echo $userAge; ?> </a> 
+                            <p> <?php echo $_GET['targetAge']; ?> </p> 
                         </div>
                     </div>
                 </div>
@@ -156,11 +156,11 @@
 
                     <div class="mx-auto d-flex align-items-center" id="userinfoboxT">
                         <div id="username">
-                            <a> <?php echo $userName; ?> </a> 
+                            <p> <?php echo $_GET['targetName']; ?></p> 
                         </div>
 
                         <div id="userage">
-                            <a> <?php echo $userAge; ?> </a> 
+                            <p> <?php echo $_GET['targetAge']; ?> </p> 
                         </div>
                     </div>
                 </div>

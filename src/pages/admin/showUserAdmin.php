@@ -2,6 +2,7 @@
 
     include_once "../db_connection.php";
     include_once "adminHelperFunctions.php";
+    include_once "../helperFunctions.php";
     
     if(session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -44,7 +45,7 @@
         if(getUserRole($targetId) == "standard"){
             include "editProfileAdmin.php";
             include "makeAdmin.html";
-            echo '<a href="banUser.html">Ban User</a>';
+            echo '<a href="banUserPage.php?targetName=' . urlencode(getName($targetId)) . '&targetAge=' . urlencode(getAge($targetId)) . '">Ban User</a>';
         }
         //if the user is banned just show delete button
         include "deleteUser.html";
