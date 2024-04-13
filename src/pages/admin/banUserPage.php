@@ -45,7 +45,7 @@
             <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
                 <li><a class="dropdown-item-profile d-md-none" href="admin.html" id="admindropdown">Admin</a></li>
                 <li><hr class="dropdown-divider d-md-none"></li>
-                <li><a class="dropdown-item-profile d-md-none" href="logout.php" id="logoutdropdown">Log Out</a></li>
+                <li><a class="dropdown-item-profile d-md-none" href="../logout.php" id="logoutdropdown">Log Out</a></li>
             </ul>
         </div>
         
@@ -53,19 +53,21 @@
     <hr>
     <!-- End of Navbar -->
 
+    <!-- Display User's ID -->
+    <h3 id="userID"> User <?php echo $_SESSION['targetId']; ?> Profile </h3>
+
     <!-- Main Container -->
     <div class="container-fluid">
-        <!-- Container for Desktop View -->
-        <div class="container-l border border-3 d-none d-xl-block" id="outline">
+        <div class="container-l border border-3" id="outline">
             <div class="row">   
 
                 <!-- User Profile Section -->
-                <div class="col-6" id="leftcontainer"> 
+                <div class="col-lg-6 order-lg-1 col-md-12 col-sm-12" id="leftcontainer"> 
                         <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainer">
                             <img src="/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>
                         </div>
 
-                    <div class="col-4 mx-auto d-flex align-items-center" id="userinfobox">
+                    <div class="col-lg-4 col-md-12 col-sm-12 mx-auto d-flex align-items-center" id="userinfobox">
                         <div id="username">
                             <p> Name:<?php echo $_GET['targetName']; ?> </p> 
                         </div>
@@ -76,8 +78,10 @@
                     </div>
                 </div>
 
+                <hr class="d-lg-none" id="hr1">
+
                 <!-- Ban User Section -->
-                <div class="col-6"> 
+                <div class="col-lg-6 order-lg-2 col-md-12 col-sm-12""> 
 
                     <!-- Heading -->
                     <div class="col-11 mx-auto d-flex" id="topcontainer">
@@ -125,100 +129,6 @@
 
             </div>
         </div>
-
-        
-        <!-- Container for Mobile / Tablet View -->
-        <div class="container-l border border-3 d-lg-block d-xl-none" id="outlineM">
-            <div class="row">  
-
-                <!-- User Profile Section: Mobile -->
-                <div class="col-12 d-md-none" id="mobileprofilecontainer"> 
-                    <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerM">
-                        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepictureM" class="card-img-top" alt="Profile Picture">
-                    </div>
-
-                    <div class="mx-auto d-flex align-items-center" id="userinfoboxM">
-                        <div id="username">
-                            <p> <?php echo $_GET['targetName']; ?> </p> 
-                        </div>
-
-                        <div id="userage">
-                            <p> <?php echo $_GET['targetAge']; ?> </p> 
-                        </div>
-                    </div>
-                </div>
-
-                <!-- User Profile Section: Tablet -->
-                 <div class="col-12 d-none d-sm-none d-md-block d-lg-block d-xl-none" id="tabletprofilecontainer"> 
-                    <div class="col-4 mx-auto d-flex align-items-center" id="picturecontainerT">
-                        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" id="profilepictureT" class="card-img-top" alt="Profile Picture">
-                    </div>
-
-                    <div class="mx-auto d-flex align-items-center" id="userinfoboxT">
-                        <div id="username">
-                            <p> <?php echo $_GET['targetName']; ?></p> 
-                        </div>
-
-                        <div id="userage">
-                            <p> <?php echo $_GET['targetAge']; ?> </p> 
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Divider -->
-                <hr class="d-md-none" id="hr1">
-                <hr class="d-none d-md-block" id="hr2">
-
-                <!-- Ban User Section -->               
-                <div class="col-12" > 
-
-                    <!-- Heading -->
-                    <div class="col-12 mx-auto d-flex" id="topcontainerM">
-                        <div class="mx-auto d-flex align-items-center" id="textboxM">
-                            <p>Ban User</p>
-                        </div>
-                    </div>
-
-
-                    <!-- Form -->
-                    <div class="col-9 mx-auto d-flex align-items-center">
-
-                        <div class="col-12 mx-auto">
-                            <form action="banUser.php" method="post">
-                                
-                                <!-- Text Box for Ban Reason -->
-                                <label for="reason">Reason:</label>
-                                <textarea id="reason" name="reason" rows="4" cols="50" required></textarea><br><br>
-                                
-                                <!-- Buttons for Ban Duration -->
-                                <div class="row">
-                                    <label for="reason">Date of Unban:</label>
-
-                                    <div class="col-6" id="temporarydiv">
-                                        <input type="date" id="dateOfUnbanM" name="dateOfUnban"><br><br>
-                                    </div>
-
-                                    <div class="col-6" id="permanentdiv">
-                                        <input type="hidden" name="permaBan" value="1">
-                                        <input type="submit" id="permaBan" value="Permanent">
-                                    </div>
-                                    
-                                </div>
-
-                                <!-- Ban User Button -->
-                                <div id="banuserdivM">
-                                    <input type="submit" id="banUser" value="Ban User">
-                                </div>
-
-                            </form>
-                        </div>
-
-                    </div>  
-                     
-                </div>   
-            </div>
-        </div>
-
     </div>
 
     
