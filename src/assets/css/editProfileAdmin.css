@@ -135,9 +135,10 @@ hr {
 
 #leftcontainer{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-end;
   align-items: center;
-  display: inline;
 }
 
 #buttoncontainer {
@@ -147,13 +148,14 @@ hr {
   display: inline;
 }
 
-#changeProfileInfo {
+.saveChangesBtn {
+  width: 65%;
   font-size: 18px;
   background-color: #abc99d;
   border-color: #abc99d;
 }
 
-#changeProfileInfo:hover {
+.saveChangesBtn:hover {
   background-color: #97b189;
   border-color: #97b189;
 }
@@ -164,29 +166,36 @@ hr {
   text-align: center;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 10px;
 }
 
 #profilepicture {
-  max-width: 85%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 65%;
 }
 
 .fileUploadBtn {
+  display: inline-block;
   width: 65%;
   font-size: 18px;
-  background-color: #abc99d;
-  border-color: #abc99d;
+  padding: 8px 8px;
+  background-color: #e6d1be;
+  color: #fff;
+  border: none;
+  border-radius: 5.5px;
+  cursor: pointer;
 }
 
 
 .fileUploadBtn:hover {
-  background-color: #97b189;
-  border-color: #97b189;
+  background-color: #dabb9e;
 }
 
-
-.inputLabelText {
-  font-weight: bold;
+#profile_pic {
+  display: none;
 }
+
 
 .optionDropdown {
   padding: 8px 20px;
@@ -253,14 +262,72 @@ hr {
   padding: 5px;
 }
 
+#inputLabelText {
+  font-weight: bold;
+}
+
+#toprow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+
 #first_name{
-  width: 150px;
+  width: 90%;
   height: 30px;
+  resize: none;
 }
 
 #last_name{
-  width: 150px;
+  width: 90%;
   height: 30px;
+  resize: none;
+}
+
+#age{
+  width: 50%;
+  height: 30px;
+  resize: none;
+}
+
+#gender{
+  width: 90%;
+  height: 30px;
+  resize: none;
+}
+
+#middlerow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+#bottomrow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+#biohobbiesrow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#bio{
+  width: 95%;
+  height: 50px;
+  resize: none;
+}
+
+#hobbies{
+  width: 95%;
+  height: 50px;
+  resize: none;
 }
 
 /* Buttons */
@@ -269,16 +336,17 @@ hr {
   font-size: 20px;
   text-align: center;
   display: inline;
+  margin-bottom: 10px;
 }
 
 #banUserLink{
   font-size: 20px;
   text-align: center;
-  display: inline;
+  margin-bottom: 10px;
 }
 
 #delete{
-  font-size: 20px;
+  font-size: 21px;
   text-align: center;
   justify-content: center;
   align-items: center;

@@ -475,6 +475,3 @@ function getAllMatches($userId)
         echo "0 results found";
     }
 }
-
-
-?>

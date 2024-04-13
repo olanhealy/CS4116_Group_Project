@@ -15,8 +15,16 @@
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js"></script>
+
 </head>
 <body>
+
+    <!-- CourseOfStudy Enum -->
+    <?php include '../../assets/enums/CourseOfStudy.php'; ?>
   
 <!-- Start of Navbar -->
 <nav class="navbar navbar-fixed-top" id="navbar">
@@ -58,58 +66,138 @@
 
 
     <!-- Main Container -->
-    <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline" style="background-color: aliceblue;">
-            <div class="row">  
+    <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
+        <div class="row">
+            <form class="container-fluid" method="POST" action="editProfileAdmin.php" enctype="multipart/form-data">
+                <div class="row">
 
-                <!-- User Profile Picture & Update info button -->
-                <div class="col-4" id="leftcontainer" style="background-color: beige;">
+                    <!-- User's Profile Picture, Change Picture & Save Changes Buttons -->
+                    <div class="col-lg-4 order-lg-1 col-md-12" id="leftcontainer">
 
-                    <div class="col-8 mx-auto d-flex align-items-center" id="picturecontainer" style="background-color: brown;">
-                        <img id="profilepicture" src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>" alt="Profile Picture">
-                    </div>
+                        <!-- Profile Picture -->
+                        <!-- <img id="profilepicture" src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/profilepicholder.png'; ?>" alt="Profile Picture"> -->
+                        <img id="profilepicture" src="../../assets/images/profilepicholder.png" alt="profile_picture">
 
-                    <div class="col-8 mx-auto d-flex align-items-center" id="buttoncontainer">
+                        <!-- Change Picture -->
+                        <label for="profile_pic" class="fileUploadBtn">Change Profile Picture</label>
                         <input type="file" id="profile_pic" name="profile_pic">
+    
+                        <!-- Save Changes -->
+                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
+
                     </div>
 
-                    <!-- Update Info Button -->
-                    <div class="col-8 mx-auto d-flex align-items-center" id="buttoncontainer" style="background-color: dimgray;">
-                        <input type="submit" value="Update Profile Info" id="changeProfileInfo">
-                    </div>
+                    <!-- User's Information -->
+                    <div class="col-lg-8 order-lg-2 col-md-12" id="rightcontainer">
+                        <div class="row" id="toprow">
 
+                            <!-- First Name -->
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label for="first_name" id="inputLabelText">First Name:</label><br>
+                                <textarea id="first_name" name="first_name"><?php echo explode(' ', $_SESSION['existingName'])[0]; ?></textarea><br>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label for="last_name" id="inputLabelText">Last Name:</label><br>
+                                <textarea id="last_name" name="last_name"><?php echo explode(' ', $_SESSION['existingName'])[1]; ?></textarea><br>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label for="gender" id="inputLabelText">Gender:</label><br>
+                                <select id="gender" name="gender" <?php echo explode(' ', $_SESSION['existingAge'])[0]; ?> required>
+                                    <option value="Male" <?php if(isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if(isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
+                                    <option value="Other" <?php if(isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Age -->
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label for="age" id="inputLabelText">Age:</label><br>
+                                <textarea id="age" name="age"><?php echo explode(' ', $_SESSION['existingAge'])[0]; ?></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row" id="middlerow">
+
+                            <!-- College Year -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="college_year" id="inputLabelText">College Year</label><br>
+                                <select id="college_year" name="college_year" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingYear'])[0]; ?> required>
+                                    <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
+                                    <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
+                                    <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
+                                </select>
+                            </div>
+
+                            <!-- Course of Study -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="course" id="inputLabelText">Course of Study</label><br>
+                                <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
+                                    <?php echo $options; ?>
+                                </select>
+                            </div>
+                        
+                        </div>
+
+                        <div class="row" id="bottomrow">
+
+                            <!-- Pursuing -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="pursuing" id="inputLabelText">Pursuing</label><br>
+                                <select id="pursuing" name="pursuing" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingPursuing'])[0]; ?> required>
+                                    <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
+                                    <option value="Other" <?php if ($pursuing == "Other") echo "selected"; ?>>Other</option>
+                                </select>    
+                            </div>
+
+                            <!-- Looking For-->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="looking_for" id="inputLabelText">Looking For</label><br>
+                                <select id="looking_for" name="looking_for" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingLooking_for'])[0]; ?> required>
+                                    <option value="Short-term" <?php if ($lookingFor == "Short-term") echo "selected"; ?>>Short-Term</option>
+                                    <option value="Long-term" <?php if ($lookingFor == "Long-term") echo "selected"; ?>>Long-Term</option>
+                                    <option value="Unsure" <?php if ($lookingFor == "Unsure") echo "selected"; ?>>Unsure</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row" id="biohobbiesrow">
+
+                            <!-- Bio -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="bio" id="inputLabelText">Bio</label><br>
+                                <textarea id="bio" name="bio"><?php echo $_SESSION['existingBio']; ?></textarea><br>
+                            </div>
+
+                            <!-- Hobbies -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="hobbies" id="inputLabelText">Hobbies</label><br>
+                                <textarea id="hobbies" name="hobbies"> <?php echo $_SESSION['existingHobbies'] ; ?> </textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
-
-                <!-- Editable User Info -->
-                <div class="col-8" id="rightcontainer" style="background-color: antiquewhite;">
-
-                    <!-- Form for editing profile information -->
-                    <form method="POST" action="editProfileAdmin.php" enctype="multipart/form-data" >
-                    
-                    <div class="row" style="background-color: burlywood">
-
-                        <label for="first_name">First Name:</label><br>
-                        <textarea id="first_name" name="first_name"><?php echo explode(' ', $_SESSION['existingName'])[0]; ?></textarea>
-
-                        <label for="last_name">Last Name:</label><br>
-                        <textarea id="last_name" name="last_name"><?php echo explode(' ', $_SESSION['existingName'])[1]; ?></textarea><br>
-
-                    </div>
-
-                    <label for="bio">Bio:</label><br>
-                    <textarea id="bio" name="bio"><?php echo $_SESSION['existingBio']; ?></textarea><br>
-
-                    <label for="hobbies">Hobbies:</label><br>
-                    <input type="text" id="hobbies" name="hobbies" value="<?php echo $_SESSION['existingHobbies'] ; ?>"><br>
-
-                    <label for="course">Course:</label><br>
-                    <input type="text" id="course" name="course" value="<?php echo $_SESSION['existingCourse']; ?>"><br>
-
-                     </form>
-
-                </div>
+            </form>
         </div>
     </div>
 
+
+    <!-- JavaScript code for course options -->
+    <script>
+        $('#course').select2({
+            placeholder: "Choose..",
+            allowClear: true
+        });
+    </script>
 
 </body>
 </html>
