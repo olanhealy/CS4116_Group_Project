@@ -502,6 +502,25 @@ function getName($user_id) {
     return $name;
 }
 
+function getMatch($userId, $targetId)
+{
+    global $conn;
+
+    $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addMatch($initiatorId, $targetId)
 {
 
