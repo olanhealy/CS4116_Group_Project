@@ -1,59 +1,206 @@
 <?php include "helperFunctions.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>search_form</title>
+    <title>Search</title>
+
+    <!-- Bootstrap Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Add jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/searchPage.css">
 </head>
+
 <body>
-    <form action="searchPage.php" method="POST" id="search">
 
-        <!-- Add jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Start of Navbar -->
+    <nav class="navbar navbar-fixed-top" id="navbar">
 
-        <h2>Search</h2>
-        <!-- Modify name input field -->
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" autocomplete="off">
-        <div id="name-suggestions"></div>
-        <br>
+        <!-- Images -->
+        <div class="images">
+            <img class="header-img d-none d-md-block" src="../assets/images/ul_logo.png" alt="ul_logo">
+            <div class="line d-none d-md-block"></div>
+            <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+        </div>
 
-        <h2>Filters</h2>
-        <label for="min_age">Minimum Age: <span id="min_age_value">18</span></label>
-        <input type="range" id="min_age" name="min_age" min="18" max="100" value="18" oninput="update_min_age_value(this.value)">
-        <button type="button" onclick="reset_min_age()">Reset</button>
-        <br>
-        <label for="max_age">Maximum Age: <span id="max_age_value">100</span></label>
-        <input type="range" id="max_age" name="max_age" min="18" max="100" value="100" oninput="update_max_age_value(this.value)">
-        <button type="button" onclick="reset_max_age()">Reset</button>
-        <br>
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender">
-            <option value="any">Any</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select>
-        <br>
-        <label for="looking_for">Looking For:</label>
-        <select id="looking_for" name="looking_for">
-            <option value="any">Any</option>
-            <option value="short_term">short_term</option>
-            <option value="long_term">long_term</option>
-        </select>
-        <br>
-        <label for="college_year">College Year:</label>
-        <select id="college_year" name="college_year">
-            <option value="any">Any</option>
-            <option value="undergrad">undergrad</option>
-            <option value="masters">masters</option>
-            <option value="phd">phd</option>
-        </select>
-        <br>
-        <input type="submit" value="Search">
-    </form>
+        <!-- Buttons -->
+        <div class="btn-group ms-auto" role="group">
+            <button type="button" id="explorebutton" class="btn button d-none d-md-block"
+                onclick="location.href='explore.php'">Explore</button>
+            <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
+                onclick="location.href='logout.php'">Log Out</button>
+        </div>
 
+        <!-- Profile Icon -->
+        <div class="dropdown">
+            <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+                <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
+                <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+            </ul>
+        </div>
+
+    </nav>
+    <!-- End of Navbar -->
+
+    <!-- Dropdown Menu Button -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 dropdownBtn">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
+                    data-bs-toggle="dropdown">
+                    Search
+                </button>
+
+                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
+                    <li><a class="dropdown-item" href="home.php">Home</a></li>
+                    <li><a class="dropdown-item" href="explore.php">Explore</a></li>
+                    <li><a class="dropdown-item" href="matches.php">Matches</a></li>
+                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="searchPage.php">Search</a></li>
+                </ul>
+                <svg class="heartFill" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                </svg>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container-fluid border border-2 col-12" id="outline">
+        <div class="row">
+            <form action="searchPage.php" method="POST" id="search">
+
+                <div class="row">
+                    <div class="col-12 order-lg-1 searchContainer">
+
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <h3>Search <svg class="arrowHeart" xmlns="http://www.w3.org/2000/svg" width="30"
+                                        height="30" fill="currentColor" class="bi bi-heart-arrow" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.707 9h4.364c-.536 1.573 2.028 3.806 4.929-.5-2.9-4.306-5.465-2.073-4.929-.5H6.707L4.854 6.146a.5.5 0 1 0-.708.708L5.293 8h-.586L2.854 6.146a.5.5 0 1 0-.708.708L3.293 8h-.586L.854 6.146a.5.5 0 1 0-.708.708L1.793 8.5.146 10.146a.5.5 0 0 0 .708.708L2.707 9h.586l-1.147 1.146a.5.5 0 0 0 .708.708L4.707 9h.586l-1.147 1.146a.5.5 0 0 0 .708.708z" />
+                                    </svg></h3>
+                            </div>
+                        </div>
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <!-- Modify name input field -->
+                                <label for="name" class="inputLabelText">Name:</label><br>
+                                <input class="input" type="text" id="name" name="name" autocomplete="off">
+                                <div id="name-suggestions"></div>
+                            </div>
+                        </div>
+
+                        <br>
+
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <h3>Filters <svg class="arrowHeart" xmlns="http://www.w3.org/2000/svg" width="30"
+                                        height="30" fill="currentColor" class="bi bi-heart-arrow" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.707 9h4.364c-.536 1.573 2.028 3.806 4.929-.5-2.9-4.306-5.465-2.073-4.929-.5H6.707L4.854 6.146a.5.5 0 1 0-.708.708L5.293 8h-.586L2.854 6.146a.5.5 0 1 0-.708.708L3.293 8h-.586L.854 6.146a.5.5 0 1 0-.708.708L1.793 8.5.146 10.146a.5.5 0 0 0 .708.708L2.707 9h.586l-1.147 1.146a.5.5 0 0 0 .708.708L4.707 9h.586l-1.147 1.146a.5.5 0 0 0 .708.708z" />
+                                    </svg></h3>
+
+                            </div>
+                        </div>
+
+                        <div class="row rangeInputField">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="min_age" class="inputLabelText">Minimum
+                                    Age: <span id="min_age_value">18</span></label><br>
+                                <input class="input" type="range" id="min_age" name="min_age" min="18" max="100" value="18"
+                                    oninput="update_min_age_value(this.value)">
+                                <button type="button" onclick="reset_min_age()"
+                                    class="btn btn-outline-primary resetBtn">Reset</button>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="max_age" class="inputLabelText">Maximum Age: <span
+                                        id="max_age_value">100</span></label><br>
+                                <input class="input" type="range" id="max_age" name="max_age" min="18" max="100" value="100"
+                                    oninput="update_max_age_value(this.value)">
+                                <button type="button" onclick="reset_max_age()"
+                                    class="btn btn-outline-primary resetBtn">Reset</button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <label for="gender" class="inputLabelText">Gender:</label><br>
+                                <select id="gender" name="gender" class="optionDropdown">
+                                    <option value="any">Any</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <label for="looking_for" class="inputLabelText">Looking For:</label><br>
+                                <select id="looking_for" name="looking_for" class="optionDropdown">
+                                    <option value="any">Any</option>
+                                    <option value="short_term">Short Term</option>
+                                    <option value="long_term">Long Term</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="row inputField">
+                            <div class="col-12">
+                                <label for="college_year" class="inputLabelText">College Year:</label><br>
+                                <select id="college_year" name="college_year" class="optionDropdown">
+                                    <option value="any">Any</option>
+                                    <option value="undergrad">Undergrad</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">PhD</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row inputField">
+                    <div class="col-12 order-lg-3 search">
+                        <input type="submit" class="btn btn-secondary mt-2 mb-4 searchBtn" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         function update_min_age_value(value) {
             document.getElementById("min_age_value").textContent = value;
@@ -73,29 +220,41 @@
             update_max_age_value(100);
         }
 
-        
-            $(document).ready(function(){
-                $('#name').keyup(function(){
-                    var query = $(this).val();
-                    if(query != ''){
-                        $.ajax({
-                            url:"autocomplete.php",
-                            method:"GET",
-                            data:{term:query},
-                            success:function(data){
-                                $('#name-suggestions').fadeIn();
-                                $('#name-suggestions').html(data);
-                            }
-                        });
-                    }
-                });
-    
-                $(document).on('click', 'li', function(){
-                    $('#name').val($(this).text());
-                    $('#name-suggestions').fadeOut();
-                });
+
+        $(document).ready(function () {
+            $('#name').keyup(function () {
+                var query = $(this).val();
+                if (query != '') {
+                    $.ajax({
+                        url: "autocomplete.php",
+                        method: "GET",
+                        data: { term: query },
+                        success: function (data) {
+                            $('#name-suggestions').fadeIn();
+                            var suggestions = JSON.parse(data);
+                            $('#name-suggestions').empty();
+                            suggestions.forEach(function (suggestion) {
+                                $('#name-suggestions').append('<li>' + suggestion + '</li>');
+                            });
+                        }
+                    });
+                }
             });
-        
+
+            $(document).on('click', 'li', function () {
+                $('#name').val($(this).text());
+                $('#name-suggestions').fadeOut();
+            });
+        });
+
     </script>
+
+    <br>
+
+    <!-- Footer -->
+    <footer class="p-2">
+        © 2024 Copyright UL Singles. All Rights Reserved
+    </footer>
 </body>
+
 </html>
