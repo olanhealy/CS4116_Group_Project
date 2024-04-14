@@ -60,38 +60,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Call setUserId function
         $userId = setUserId($email);
 
-        // Insert the newly successful registered email and the set userID into account table of database
-        $query = "INSERT INTO account (user_id, email) VALUES (?,?)";
-        $insertAccountStatement = $conn->prepare($query);
-        $insertAccountStatement->bind_param('is', $userId, $email);
-        $insertAccountStatement->execute();
+        
+    //check if userId already excists in db
+    $sqlCheckUserIdExists = "SELECT user_id FROM account WHERE user_id = ?";
+    $checkUserId = $conn->prepare($sqlCheckUserIdExists);
+    $checkUserId->bind_param('i', $userId);
+    $checkUserId->execute();
+    $checkUserId->store_result();
 
-        // Check if the insertion was successful
-        if ($insertAccountStatement->affected_rows > 0) {
-
-            // Start the session and set the email and id of the user
-            if(session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
-
-            $_SESSION['email'] = $email;
-            $_SESSION['user_id'] = $userId;
-
-            // Using the setter methods from above
-            setPassword($password, $userId);
-            setName($firstName, $lastName, $userId);
-
-
-            // Redirect to the edit profile page
-            header("Location: editProfile.php");
+    // If the userId already exists, add error message to array of errors
+    if ($checkUserId->num_rows > 0) {
+        $errors[] = "An account with this student ID already exists.";
         } else {
-            $errors[] = "Error occurred during registration";
-        }
+    
+            // Insert the newly successful registered email and the set userID into account table of database
+            $query = "INSERT INTO account (user_id, email) VALUES (?,?)";
+            $insertAccountStatement = $conn->prepare($query);
+            $insertAccountStatement->bind_param('is', $userId, $email);
+            $insertAccountStatement->execute();
+
+            // Check if the insertion was successful
+            if ($insertAccountStatement->affected_rows > 0) {
+
+                // Start the session and set the email and id of the user
+                if(session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                $_SESSION['email'] = $email;
+                $_SESSION['user_id'] = $userId;
+
+                // Using the setter methods from above
+                setPassword($password, $userId);
+                setName($firstName, $lastName, $userId);
+
+
+                // Redirect to the edit profile page
+                header("Location: editProfile.php");
+            } else {
+                $errors[] = "Error occurred during registration";
+            }
 
         // Close insert of new account as the HTTP request has been posted to db
         $insertAccountStatement->close();
+            }
+        // Close checkUserId statement
+        $checkUserId->close();
     }
 }
 
-// Include the HTML content from registration.html
+// Include HTML content from registration.html
 include "registration.html";
