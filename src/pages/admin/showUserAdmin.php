@@ -1,6 +1,8 @@
 <?php
 
     include_once "adminHelperFunctions.php";
+    include_once "../db_connection.php";
+    include_once "../helperFunctions.php";
     
     if(session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -21,9 +23,9 @@
     
     };
 
-    ?>
+?>
 
-    <?php
+<?php
 
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
@@ -40,7 +42,7 @@
             include "editProfileAdmin.php";
             echo '<div class="linkContainer">';
             include "makeAdmin.html";
-            echo '<a href="banUser.html" id="banUserLink">Ban User</a>';
+            echo '<a href="banUserPage.php?targetName=' . urlencode(getName($targetId)) . '&targetAge=' . urlencode(getAge($targetId)) . '&targetId=' . urlencode(($targetId)) .'" class="btn btn-danger" id="banUser">Ban User</a>';
         }else if(getUserRole($targetId) == "admin") {
             //include page for viewing admin account
             include "viewAdminAccount.html";
@@ -52,7 +54,7 @@
         include "adminFooter.html"; 
     }
 
-    ?>
+?>
 
 <html>
     <link rel="stylesheet" type="text/css" href="../../assets/css/editProfileAdmin.css">

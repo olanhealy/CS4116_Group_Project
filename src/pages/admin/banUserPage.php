@@ -53,9 +53,6 @@
     <hr>
     <!-- End of Navbar -->
 
-    <!-- Display User's ID -->
-    <h3 id="userID"> User <?php echo $_SESSION['targetId']; ?> Profile </h3>
-
     <!-- Main Container -->
     <div class="container-fluid">
         <div class="container-l border border-2" id="outline">
@@ -69,11 +66,11 @@
 
                     <div class="col-lg-4 col-md-12 col-sm-12 mx-auto d-flex align-items-center" id="userinfobox">
                         <div id="username">
-                            <p> Name:<?php echo $_GET['targetName']; ?> </p> 
+                            <p> <?php echo $_GET['targetName']; ?> </p> 
                         </div>
 
                         <div id="userage">
-                            <a>Age: <?php echo $_GET['targetAge']; ?></a> 
+                            <a> <?php echo $_GET['targetAge']; ?> </a> 
                         </div>
                     </div>
                 </div>
@@ -86,7 +83,7 @@
                     <!-- Heading -->
                     <div class="col-11 mx-auto d-flex" id="topcontainer">
                         <div class="mx-auto d-flex align-items-center" id="textbox">
-                            <p>Ban User</p>
+                            <p>Ban User <?php echo $_SESSION['targetId']; ?> </p>
                         </div>
                     </div>
 
@@ -118,6 +115,10 @@
                                 <!-- Ban User Button -->
                                 <div id="banuserdiv">
                                     <input type="submit" id="banUser" value="Ban User">
+                                </div>
+
+                                <div id="linkdiv">
+                                    <a id="link" href="showUserAdmin.php">Back to User's Profile</a>
                                 </div>
 
                             </form>

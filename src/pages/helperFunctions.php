@@ -1,5 +1,153 @@
 <?php
 // Process #13 to set the user's bio in the profile table of the db
+
+// Process #4 checks if the Account already exists in the account table of db
+function isAccountFound($email, $password)
+{
+    global $conn;
+    $count = 0;
+    $sql_is_account_found = "SELECT COUNT(*) FROM account WHERE email = ? AND password_hash = ?";
+    $account = $conn->prepare($sql_is_account_found);
+    $account->bind_param('ss', $email, $password);
+    $account->execute();
+    $account->bind_result($count);
+    $account->fetch();
+    $account->close();
+
+    return $count > 0;
+}
+
+function setVerified($user_id, $verified){
+    global $conn;
+
+    $sql_set_verified = "UPDATE `profile` SET verified = ? WHERE user_id = ?";
+    $set_verified = $conn->prepare($sql_set_verified);
+    $set_verified->bind_param("ii", $verified, $user_id);
+    $set_verified->execute();
+
+    if ($set_verified->affected_rows > 0) {
+        echo "Verified set successfully";
+    } else {
+        echo "Error setting Verified";
+    }
+
+    $set_verified->close();
+}
+
+function getVerified($user_id){
+    global $conn;
+    $verified = 0;
+
+    $sql_get_verified = "SELECT verified FROM profile WHERE user_id = ?";
+    $get_verified = $conn->prepare($sql_get_verified);
+    $get_verified->bind_param("i", $user_id);
+    $get_verified->execute();
+    $get_verified->store_result();
+
+    if ($get_verified->num_rows > 0) {
+        $get_verified->bind_result($verified);
+        $get_verified->fetch();
+    }
+
+    $get_verified->close();
+    return $verified;
+}
+
+function setPassword($password, $user_id)
+{
+    global $conn;
+
+    // Hash the password for security 
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update the password in the Accounts table
+    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
+    $set_password = $conn->prepare($sql_set_password);
+    $set_password->bind_param('si', $hashed_password, $user_id);
+    $set_password->execute();
+
+    if ($set_password->affected_rows > 0) {
+        echo "Password set successfully";
+    } else {
+        echo "Error setting password";
+    }
+
+    $set_password->close();
+}
+
+function setFirstName($user_id, $first_name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET first_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $first_name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "First name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+function setLastName($user_id, $last_Name){
+    global $conn;
+
+    $sql_set_name = "UPDATE account SET last_name = ? WHERE user_id = ?";
+
+    $set_name = $conn->prepare($sql_set_name);
+    $set_name->bind_param("si", $last_Name, $user_id);
+    $set_name->execute();
+
+    if ($set_name->affected_rows > 0) {
+        echo "Last name set successfully in account";
+    } else {
+        //TODO: backend: fix messaging for error when jsut editted name
+        //echo "Error setting First and Last Name";
+    }
+}
+
+// Process #11 to set the First name and Last name in the account table in db
+function setName($first_name, $last_name, $user_id)
+{
+    global $conn;
+
+    setFirstName($user_id, $first_name);
+    setLastName($user_id, $last_name);
+
+    if (getName($user_id) === "") {
+        // Insert the user id  into profile table, also inserting the full name of user
+        $sql_insert_profile = "INSERT INTO `profile` (user_id, `name` ) VALUES (?, ?)";
+        $insert_new_profile = $conn->prepare($sql_insert_profile);
+        $full_name = $first_name . " " . $last_name;
+        $insert_new_profile->bind_param('is', $user_id, $full_name);
+        $insert_new_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($insert_new_profile->affected_rows <= 0) {
+        //     echo "Error inserting into the Profile table";
+        // }
+
+        $insert_new_profile->close();
+    }else{
+        $full_name = $first_name . " " . $last_name;
+        $sql_update_profile = "UPDATE `profile` SET `name` = ? WHERE user_id = ?";
+        $update_profile = $conn->prepare($sql_update_profile);
+        $update_profile->bind_param("si", $full_name, $user_id);
+        $update_profile->execute();
+
+        //TODO: backend: fix messaging for error when jsut editted name
+        // if ($update_profile->affected_rows > 0) {
+        //     echo "Name set successfully";
+        // } else {
+        //     echo "Error setting Name";
+        // }
+    
+    }
+}
+
 function setBio($user_id, $bio) {
     global $conn;
 
@@ -390,6 +538,25 @@ function getName($user_id) {
     return $name;
 }
 
+function getMatch($userId, $targetId)
+{
+    global $conn;
+
+    $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addMatch($initiatorId, $targetId)
 {
 
@@ -474,4 +641,66 @@ function getAllMatches($userId)
         //error
         echo "0 results found";
     }
+}
+
+function showProfileCard($user_id){
+
+    $targetUserId = $user_id;
+    $name = getName($user_id);
+    $profilePicture = getProfilePicture($user_id);
+    $bio = getBio($user_id);
+    $gender = getGender($user_id);
+    $age = getAge($user_id);
+    $collegeYear = getCollegeYear($user_id);
+    $pursuing = getPursuing($user_id);
+    $course = getCourse($user_id);
+    $hobbies = getHobbies($user_id);
+    $lookingFor = getLookingFor($user_id);
+
+    include "profileCard.html";
+}
+
+//process #43, functon to handle adore action 
+function adoreUser($userLoggedInId, $currentUserId)
+{
+    global $conn;
+    $sqlAdore = "INSERT INTO adore (user_id, adored_user_id, date) VALUES (?, ?, NOW())";
+    if ($adore = $conn->prepare($sqlAdore)) {
+        $adore->bind_param("ii", $userLoggedInId, $currentUserId);
+        $adore->execute();
+        $adore->close();
+    }
+}
+
+//fucntion to handle ignore action
+function ignoreUser($userLoggedInId, $currentUserId)
+{
+    global $conn;
+    $sqlIgnore = "INSERT INTO `ignore` (user_id, ignored_user_id, date) VALUES (?, ?, NOW())";
+    if ($ignore = $conn->prepare($sqlIgnore)) {
+        $ignore->bind_param("ii", $userLoggedInId, $currentUserId);
+        $ignore->execute();
+        $ignore->close();
+    }
+}
+
+function isUserAdored($userId, $targetId){
+
+    global $conn;
+
+    $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("ii", $userId, $targetId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            // The current user has previously adored the logged in user
+            return true;
+        }
+    }
+    // The current user has not previously adored the logged in user
+    return false;
 }

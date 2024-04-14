@@ -75,8 +75,7 @@
                     <div class="col-lg-4 order-lg-1 col-md-12" id="leftcontainer">
 
                         <!-- Profile Picture -->
-                        <!-- <img id="profilepicture" src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/profilepicholder.png'; ?>" alt="Profile Picture"> -->
-                        <img id="profilepicture" src="../../assets/images/profilepicholder.png" alt="profile_picture">
+                        <img src="/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>
 
                         <!-- Change Picture -->
                         <label for="profile_pic" class="fileUploadBtn">Change Profile Picture</label>
@@ -84,6 +83,10 @@
     
                         <!-- Save Changes -->
                         <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
+
+                        <div id="linkdiv">
+                            <a id="link" href="usersListAdmin.php">Back to Users Page</a>
+                        </div>
 
                     </div>
 
@@ -106,10 +109,10 @@
                             <!-- Gender -->
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label for="gender" id="inputLabelText">Gender:</label><br>
-                                <select id="gender" name="gender" <?php echo explode(' ', $_SESSION['existingAge'])[0]; ?> required>
-                                    <option value="Male" <?php if(isset($gender) && $gender == "Male") echo "selected"; ?>>Male</option>
-                                    <option value="Female" <?php if(isset($gender) && $gender == "Female") echo "selected"; ?>>Female</option>
-                                    <option value="Other" <?php if(isset($gender) && $gender == "Other") echo "selected"; ?>>Other</option>
+                                <select id="gender" name="gender" required>
+                                    <option value="Male" <?php if ($_SESSION['existingGender'] === "Male") echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if ($_SESSION['existingGender'] === "Female") echo "selected"; ?>>Female</option>
+                                    <option value="Other" <?php if ($_SESSION['existingGender'] === "Other") echo "selected"; ?>>Other</option>
                                 </select>
                             </div>
 
@@ -127,10 +130,10 @@
                             <!-- College Year -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="college_year" id="inputLabelText">College Year</label><br>
-                                <select id="college_year" name="college_year" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingYear'])[0]; ?> required>
-                                    <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
-                                    <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
-                                    <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
+                                <select class="optionDropdown" style="width: 100%" id="college_year" name="college_year" required>
+                                    <option value="Undergrad" <?php if ($_SESSION['existingCollegeYear'] === "Undergrad") echo "selected"; ?>>Undergrad</option>
+                                    <option value="Masters" <?php if ($_SESSION['existingCollegeYear'] === "Masters") echo "selected"; ?>>Masters</option>
+                                    <option value="PhD" <?php if ($_SESSION['existingCollegeYear'] === "PhD") echo "selected"; ?>>PhD</option>
                                 </select>
                             </div>
 
@@ -149,20 +152,20 @@
                             <!-- Pursuing -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="pursuing" id="inputLabelText">Pursuing</label><br>
-                                <select id="pursuing" name="pursuing" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingPursuing'])[0]; ?> required>
-                                    <option value="Male" <?php if ($pursuing == "Male") echo "selected"; ?>>Male</option>
-                                    <option value="Female" <?php if ($pursuing == "Female") echo "selected"; ?>>Female</option>
-                                    <option value="Other" <?php if ($pursuing == "Other") echo "selected"; ?>>Other</option>
-                                </select>    
+                                <select class="optionDropdown" style="width: 100%" id="pursuing" name="pursuing" required>
+                                    <option value="Male" <?php if ($_SESSION['existingPursuing'] === "Male") echo "selected"; ?>>Male</option>
+                                    <option value="Female" <?php if ($_SESSION['existingPursuing'] === "Female") echo "selected"; ?>>Female</option>
+                                    <option value="Other" <?php if ($_SESSION['existingPursuing'] === "Other") echo "selected"; ?>>Other</option>
+                                </select>   
                             </div>
 
                             <!-- Looking For-->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="looking_for" id="inputLabelText">Looking For</label><br>
-                                <select id="looking_for" name="looking_for" class="optionDropdown" <?php echo explode(' ', $_SESSION['existingLooking_for'])[0]; ?> required>
-                                    <option value="Short-term" <?php if ($lookingFor == "Short-term") echo "selected"; ?>>Short-Term</option>
-                                    <option value="Long-term" <?php if ($lookingFor == "Long-term") echo "selected"; ?>>Long-Term</option>
-                                    <option value="Unsure" <?php if ($lookingFor == "Unsure") echo "selected"; ?>>Unsure</option>
+                                <select class="optionDropdown" style="width: 100%" id="looking_for" name="looking_for" required>
+                                    <option value="Short-term" <?php if ($_SESSION['existingLookingFor'] === "Short-term") echo "selected"; ?>>Short-Term</option>
+                                    <option value="Long-term" <?php if ($_SESSION['existingLookingFor'] === "Long-term") echo "selected"; ?>>Long-Term</option>
+                                    <option value="Unsure" <?php if ($_SESSION['existingLookingFor'] === "Unsure") echo "selected"; ?>>Unsure</option>
                                 </select>
                             </div>
 

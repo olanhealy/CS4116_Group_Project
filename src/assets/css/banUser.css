@@ -345,6 +345,19 @@ input[type=date]:hover {
     width: 97.5%;
 }
 
+#linkdiv{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#link{
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+}
 
 footer {
     background-color: #e6d1be;
