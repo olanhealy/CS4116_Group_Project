@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <style>
-        /* Add your custom CSS styling here */
+        
         .profile-card {
             border: 1px solid #ccc;
             padding: 20px;
@@ -44,20 +44,20 @@
         </form>
         <?php 
             } 
-        ?>
+        
 
-        <?php
-            if(getMatch($_SESSION['user_id'],$targetUserId) != null){        
-        ?>
-                <a href="messages.php?target_user_id=<?php echo $targetUserId; ?>">Message</a>
-                <form action="report.php" method="POST">
-                    <input type="hidden" name="action" value="report_user">
-                    <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
-                    <input type="submit" value="Report">
-                </form>
-        <?php
-            }
-        ?>
+        $matchId = getMatchId($_SESSION['user_id'], $targetUserId);
+        if ($matchId) {
+            <!-- Can get the match id so able to send a message to this user --> 
+            echo '<a href="messages/messages.php?match_id=' . $matchId . '">Message</a>';
+        } 
+    ?>
+    
+    <form action="report.php" method="POST">
+        <input type="hidden" name="action" value="report_user">
+        <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
+        <input type="submit" value="Report">
+    </form>
 
         
     </div>

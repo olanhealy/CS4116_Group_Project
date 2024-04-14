@@ -704,4 +704,70 @@ function isUserAdored($userId, $targetId){
     // The current user has not previously adored the logged in user
     return false;
 }
+
+function getMessagesByMatchId($matchId) {
+    global $conn;
+    $sqlGetMessagesByMatchId = $conn->prepare("SELECT * FROM messages WHERE match_id = ? ORDER BY date ASC");
+    $sqlGetMessagesByMatchId->bind_param("i", $matchId);
+    $sqlGetMessagesByMatchId->execute();
+    $resultSqlGetMessagesByMatchId = $sqlGetMessagesByMatchId->get_result();
+    $messages = $resultSqlGetMessagesByMatchId->fetch_all(MYSQLI_ASSOC);
+    $sqlGetMessagesByMatchId->close();
+    return $messages;
+}
+
+
+// process #47 to send a message to target user
+function sendMessage($userId, $matchId, $messageContent) {
+    global $conn;
+    // Determine receiver_id based on match_id
+    $receiverId = getReceiverIdByMatchId($matchId, $userId);
+    //return false if no receiver_id is found (no match id or invalid one)
+    if (!$receiverId) {
+        
+        return false;
+    }
+    //Insert message content into the db
+    $sqlSendMessage = $conn->prepare("INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status) VALUES (?, ?, ?, ?, 'delivered')");
+    $sqlSendMessage ->bind_param("iiis", $matchId, $receiverId, $userId, $messageContent);
+    $executeSuccess = $sqlSendMessage ->execute();
+    $sqlSendMessage ->close();
+
+    return $executeSuccess; // Return the success status of the execute (true or false)
+}
+
+// Function to get receiver_id by match_id
+function getReceiverIdByMatchId($matchId, $senderId) {
+    global $conn;
+    //Get the initiator_id and target_id from the matches table
+    $sqlGetReceiverIdByMatchId = $conn->prepare("SELECT initiator_id, target_id FROM matches WHERE match_id = ?");
+    $sqlGetReceiverIdByMatchId->bind_param("i", $matchId);
+    $sqlGetReceiverIdByMatchId->execute();
+    $sqlGetReceiverIdByMatchId->bind_result($initiatorId, $targetId);
+
+    if ($sqlGetReceiverIdByMatchId->fetch()) {
+        // Get the receiver_id based on the match_id
+        $receiverId = ($initiatorId === $senderId) ? $targetId : $initiatorId;
+    } else {
+        $receiverId = null; //if no match excists
+    }
+    $sqlGetReceiverIdByMatchId->close();
+    return $receiverId;
+}
+
+// process #46 to get messages for a user between their specific target
+function getMessages($userId) {
+    global $conn;
+    $conversations = [];
+    // get all matchIds where the user is either the initiator or the target
+    $sqlGetMessages = $conn->prepare("SELECT match_id FROM matches WHERE initiator_id = ? OR target_id = ?");
+    $sqlGetMessages->bind_param("ii", $userId, $userId);
+    $sqlGetMessages->execute();
+    $resultSqlGetMessages = $sqlGetMessages->get_result();
+    while($row = $resultSqlGetMessages->fetch_assoc()) {
+        $conversations[] = $row['match_id'];
+    }
+    $sqlGetMessages->close();
+    return $conversations;
+}
 ?>

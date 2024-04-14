@@ -1,0 +1,22 @@
+.messages-container {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  flex: 0 0 250px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-right: 1px solid #dee2e6;
+  height: 100vh;
+  overflow-y: auto;
+}
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+.message {
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
