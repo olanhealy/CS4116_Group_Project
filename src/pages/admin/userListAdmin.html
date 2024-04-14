@@ -3,6 +3,10 @@
     
     <form action="showUserAdmin.php" method='GET'>
     <!--userId - Name - Email - Banned-->
-    <a href="showUserAdmin.php?targetId=<?php echo $targetId?>">User: <?php echo $targetId; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | Banned: <?php echo $row["banned"];?>
+    <a href="showUserAdmin.php?targetId=<?php echo $targetId?>">User: <?php echo $targetId; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | <?php if($row["banned"] == 1){
+        echo "Banned";
+    }else{
+        echo $row["number_of_reports"] . " reports";
+    };?>
 </form>
 </html>

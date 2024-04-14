@@ -17,6 +17,42 @@ function isAccountFound($email, $password)
     return $count > 0;
 }
 
+function setVerified($user_id, $verified){
+    global $conn;
+
+    $sql_set_verified = "UPDATE `profile` SET verified = ? WHERE user_id = ?";
+    $set_verified = $conn->prepare($sql_set_verified);
+    $set_verified->bind_param("ii", $verified, $user_id);
+    $set_verified->execute();
+
+    if ($set_verified->affected_rows > 0) {
+        echo "Verified set successfully";
+    } else {
+        echo "Error setting Verified";
+    }
+
+    $set_verified->close();
+}
+
+function getVerified($user_id){
+    global $conn;
+    $verified = 0;
+
+    $sql_get_verified = "SELECT verified FROM profile WHERE user_id = ?";
+    $get_verified = $conn->prepare($sql_get_verified);
+    $get_verified->bind_param("i", $user_id);
+    $get_verified->execute();
+    $get_verified->store_result();
+
+    if ($get_verified->num_rows > 0) {
+        $get_verified->bind_result($verified);
+        $get_verified->fetch();
+    }
+
+    $get_verified->close();
+    return $verified;
+}
+
 function setPassword($password, $user_id)
 {
     global $conn;
@@ -502,6 +538,25 @@ function getName($user_id) {
     return $name;
 }
 
+function getMatch($userId, $targetId)
+{
+    global $conn;
+
+    $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addMatch($initiatorId, $targetId)
 {
 
@@ -603,6 +658,14 @@ function showProfileCard($user_id){
     $lookingFor = getLookingFor($user_id);
 
     include "profileCard.html";
+}
+
+function setupHeader(){
+    include "header.php";
+}
+
+function setupFooter(){
+    include "footer.php";
 }
 
 //process #43, functon to handle adore action 
