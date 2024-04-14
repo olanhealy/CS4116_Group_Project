@@ -660,6 +660,14 @@ function showProfileCard($user_id){
     include "profileCard.html";
 }
 
+function setupHeader(){
+    include "header.php";
+}
+
+function setupFooter(){
+    include "footer.php";
+}
+
 //process #43, functon to handle adore action 
 function adoreUser($userLoggedInId, $currentUserId)
 {
