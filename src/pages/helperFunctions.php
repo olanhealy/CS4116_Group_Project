@@ -373,15 +373,15 @@ function setProfilePic($user_id, $profile_pic_filename) {
                     // Return the new path for immediate use
                     return $relative_path;
                 } else {
-                    echo "Error setting profile picture.";
+                    $_SESSION['profile_pic_error'] = "Error setting profile picture.";
                     return false;
                 }
             } else {
-                echo "Error uploading file.";
+                $_SESSION['profile_pic_error'] = "Error uploading file.";
                 return false;
             }
         } else {
-            echo "Invalid file type. Only PNG, JPEG, and JPG are allowed.";
+            $_SESSION['profile_pic_error'] = "Invalid file type. Only PNG, JPEG, and JPG are allowed.";
             return false;
         }
     }

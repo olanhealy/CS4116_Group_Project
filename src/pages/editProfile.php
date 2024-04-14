@@ -445,6 +445,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 
+    <script>
+        //Function to display whatever image is inputted in edit profile automatically
+        document.getElementById('profile_pic').addEventListener('change', function(event) {
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+            // Get the data and render the image
+            document.querySelector('.profilePicture').src = e.target.result;
+        };
+
+        // Read the image file as a data URL.
+        reader.readAsDataURL(event.target.files[0]);
+    }
+});
+</script>
+
 </body>
 
 </html>
