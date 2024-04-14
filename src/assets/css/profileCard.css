@@ -1,0 +1,71 @@
+.profile-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.profile-card {
+    width: 22%;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #dabb9e; /* Add the background color */
+    color: white; /* Change the text color to white */
+    border-radius: 10px; /* Round the edges */
+}
+
+.profile-card h2 {
+    text-align: center; /* Center the text */
+}
+
+.profile-picture {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+}
+
+.adore-button {
+    display: block;
+    width: 80%;
+    padding: 10px;
+    background-color: #abc99d;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.report-button {
+    display: block;
+    width: 80%;
+    padding: 10px;
+    background-color: #cc403b;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.message-link {
+    display: block;
+    width: 80%;
+    padding: 10px;
+    background-color: #abc99d;
+    color: white;
+    border: 2px solid white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px auto;
+    border-radius: 10px;
+}
+
+
+
