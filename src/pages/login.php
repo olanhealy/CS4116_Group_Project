@@ -1,9 +1,10 @@
 <?php
+
+include "db_connection.php";
+
 if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-include "db_connection.php";
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,20 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_num_rows($result) === 1) {
                 $row = mysqli_fetch_assoc($result);
 
+                // Check if user is banned
                 if ($row['banned'] == '1') {
                     $error = "User banned. Please contact support.";
                 } else if (password_verify($pass, $row['password_hash'])) {
                     // User authenticated, set session variables
                     $_SESSION['email'] = $row['email'];
-                    $_SESSION['id'] = $row['user_id'];
+                    $_SESSION['user_id'] = $row['user_id'];
 
+                    // Redirect to admin page if user is admin  
                     if ($row['user_role'] == 'admin') {
                         header("Location: admin/admin.html");
                         exit();
                     }
+
                     // Redirect to home page
                     header("Location: home.php");
                     exit();
+                    
                 } else {
                     $error = "Incorrect username or password";
                 }

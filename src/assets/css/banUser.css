@@ -1,7 +1,15 @@
 body {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container-fluid {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
 }
   
 #navbar {
@@ -26,7 +34,7 @@ body {
     max-width: 500px;
 }
     
-#explorebutton {
+#adminbutton {
     background-color: white; 
     color: #abc99d; 
     border: 3px solid #abc99d;
@@ -39,7 +47,7 @@ body {
     float: right;
 }
   
-#explorebutton:hover {
+#adminbutton:hover {
     background-color: #abc99d;
     color: white;
 }
@@ -106,25 +114,23 @@ body {
     color: black;
 }
 
-#exploredropdown {
-    font-size: 15px;
-}
-
-#exploredropdown:hover {
-    background-color: white;
-    color: black;
-}
-  
 hr {
     margin: 0.2em auto;
 }
 
+#userID{
+    font-size: 30px; 
+    margin-top: 10px; 
+    text-align: center;
+}
+  
+
 #outline {
-    border-color: black !important;
+    border-color: #4d4d4d !important;
     position: relative;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 250px;
+    width: 70vw;
+    margin: 0 auto;
+    margin-bottom: 15px;
 }
 
 #leftcontainer{
@@ -141,23 +147,42 @@ hr {
     width: 300px;
 }
 
+@media (max-width: 480px) {
+    #picturecontainer {
+        width: 200px;
+    }
+}
+
+
 #profilepicture {
     border: 2px solid black;
     border-color: black !important;
     margin-top: 25px;
     margin-bottom: 25px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+    margin-left: 9%;
+    width: 250px;
     height: 320px;
 }
+
+@media (max-width: 480px) {
+    #profilepicture {
+        width: 160px;
+    }
+}
+
 
 #userinfobox {
     border: 2px solid black;
     border-color: black !important;
     margin-bottom: 50px;
     width: 300px;
+}
+
+@media (max-width: 480px) {
+    #userinfobox {
+        width: 200px;
+    }
 }
 
 #username {
@@ -170,6 +195,12 @@ hr {
     width: 100%;
 }
 
+@media (max-width: 480px) {
+    #username {
+        width: 200px;
+    }
+}
+
 #userage {
     text-align: start;
     color: black;
@@ -177,6 +208,12 @@ hr {
     display: inline-block;
     margin-top: 6px;
     width: 100%;
+}
+
+@media (max-width: 480px) {
+    #userage {
+        width: 100px;
+    }
 }
 
 #topcontainer {
@@ -219,7 +256,29 @@ textarea {
     align-items: center;
 }
 
-input[type=submit] {
+#permaBan{
+    background-color: #abc99d;
+    font-size: 20px;
+    color: white;
+    border: none;
+    text-align: center;
+    align-items: center;
+    margin-top: 5px;
+    width: 100%;
+    height: 65%;
+}
+
+#permaBan:hover{
+    background-color:#bbdaac;
+}
+
+@media (max-width: 480px) {
+    #permaBan {
+        font-size: 13px;
+    }
+}
+
+#banUser{
     background-color:dimgrey;
     font-size: 30px;
     color: white;
@@ -230,11 +289,13 @@ input[type=submit] {
     width: 100%;
     height: 50px;
     margin-top: 20px;
+    margin-bottom: 15px;
 }
 
-input[type=submit]:hover {
+#banUser:hover{
     background-color: gray
 }
+
 
 #permanentdiv{
     text-align: center;
@@ -265,56 +326,12 @@ input[type=date]:hover {
     cursor: pointer;
 }
 
-input[type=button] {
-    background-color: #abc99d;
-    font-size: 22px;
-    color: white;
-    border: none;
-    text-align: center;
-    align-items: center;
-    margin-top: 5px;
-    width: 100%;
-    height: 65%;
+@media (max-width: 480px) {
+    input[type=date] {
+        font-size: 13px;
+    }
 }
 
-input[type=button]:hover {
-    background-color:#bbdaac;
-}
-
-
-#outlineM {
-    border-color: black !important;
-    position: relative;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-
-#mobileprofilecontainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: inline;
-}
-
-#picturecontainerM {
-    margin-top: 40px;
-    border: 2px solid black;
-    border-color: black !important;
-    width: 350px;
-}
-
-#userinfoboxM {
-    border: 2px solid black;
-    border-color: black !important;
-    margin-bottom: 30px;
-    width: 350px;
-}
-
-#topcontainerM {
-    margin-bottom: 10px;
-}
 
 #hr1{
  color: black;
@@ -326,56 +343,6 @@ input[type=button]:hover {
     color: black;
     margin: 0.2em auto;
     width: 97.5%;
-}
-
-#textboxM {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: black;
-    font-weight: bold;
-    font-size: 35px;
-    margin-top: 20px;
-}
-
-#banuserdivM{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-#tabletprofilecontainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: inline;
-}
-
-#picturecontainerT {
-    margin-top: 40px;
-    border: 2px solid black;
-    border-color: black !important;
-    width: 450px;
-}
-
-#userinfoboxT {
-    border: 2px solid black;
-    border-color: black !important;
-    margin-bottom: 30px;
-    width: 450px;
-}
-
-#profilepictureT {
-    border: 2px solid black;
-    border-color: black !important;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    height: 360px;
 }
 
 
