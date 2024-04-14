@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <!--Profile Card Setup-->
     <div class="profile-card">
         <img src="<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-picture">
         <h2><?php echo $name; ?></h2>
@@ -20,33 +21,42 @@
         <p><strong>Hobbies:</strong> <?php echo $hobbies; ?></p>
         <p><strong>Looking For:</strong> <?php echo $lookingFor; ?></p>
 
+        <!--check if adore button should be shown on the card-->
         <?php 
             global $showingAdoreButton;
+
+            //if the user is not the same as the target user, show the adore button
             if(isset($showingAdoreButton) && $showingAdoreButton == true) { ?>
+
+        <!--Adore Button-->
         <form action="adoreUser.php" method="POST">
             <input type="hidden" name="action" value="adore_user">
             <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
             <input type="submit" value="Adore" class="adore-button">
-
         </form>
         <?php 
             } 
         ?>
 
+        <!--check if the user is matched to user, if so show report and messages buttons-->
         <?php
             if(getMatch($_SESSION['user_id'],$targetUserId) != null){        
         ?>
-                <a href="messages.php?target_user_id=<?php echo $targetUserId; ?>" class="message-link">Message</a>
-                <form action="report.php" method="POST">
-                    <input type="hidden" name="action" value="report_user">
-                    <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
-                    <input type="submit" value="Report" class="report-button">
-                </form>
+
+        <!--Messages Link-->        
+        <a href="messages.php?target_user_id=<?php echo $targetUserId; ?>" class="message-link">Message</a>
+
+        <!--Report Button-->
+        <form action="report.php" method="POST">
+            <input type="hidden" name="action" value="report_user">
+            <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
+            <input type="submit" value="Report" class="report-button">
+        </form>
+
         <?php
             }
         ?>
 
-        
     </div>
 </body>
 </html>
