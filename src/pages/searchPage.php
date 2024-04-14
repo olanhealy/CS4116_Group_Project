@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     setupHeader();
 
+    echo '<div class="profile-cards-container">';
     if ($result->num_rows > 0) {
         
         while ($row = $result->fetch_assoc()) {
@@ -88,14 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             
+
             // Display the profile card
             showProfileCard($targetUserId);
 
+            
             // Reset the flag
             $showingAdoreButton = false;
 
         }
-
+        echo '</div>';
         setupFooter();
     } else {
         //error

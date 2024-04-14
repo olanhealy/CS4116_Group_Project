@@ -17,4 +17,5 @@ if(isset($_GET['showingAdoreButton'])){
     $showingAdoreButton = $_GET['showingAdoreButton'];
 }
 
+
 showProfileCard($targetUserId);

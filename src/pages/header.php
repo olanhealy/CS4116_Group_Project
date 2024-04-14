@@ -24,7 +24,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- External Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/explore.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/header.css">
 </head>
 
 <body>
@@ -79,7 +79,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
                     <li><a class="dropdown-item" href="explore.php">Explore</a></li>
                     <li><a class="dropdown-item" href="matches.php">Matches</a></li>
                     <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                    <li><a class="dropdown-item" href="searchPage.php">Search</a></li>
+                    <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
                 </ul>
             </div>
         </div>
