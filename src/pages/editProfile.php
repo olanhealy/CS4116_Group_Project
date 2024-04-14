@@ -60,23 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
+
+    // Call setter methods to make the updates in db
+    setBio($userId, $bio);
+    setGender($userId, $gender);
+    setAge($age, $userId);
+    setCollegeYear($userId, $collegeYear);
+    setPursuing($userId, $pursuing);
+    setProfilePic($userId, $profilePicFilename);
+    setCourse($userId, $course);
+    setHobbies($userId, $hobbies);
+    setLookingFor($userId, $lookingFor);
+
     if (empty($errors)) {
-        // Call setter methods to make the updates in db
-        setBio($userId, $bio);
-        setGender($userId, $gender);
-        setAge($age, $userId);
-        setCollegeYear($userId, $collegeYear);
-        setPursuing($userId, $pursuing);
-        setProfilePic($userId, $profilePicFilename);
-        setCourse($userId, $course);
-        setHobbies($userId, $hobbies);
-        setLookingFor($userId, $lookingFor);
         setPassword($password, $userId);
     } else {
         echo "Errors: " . $errors;
     }
 
-    header("Location: editProfile.php");
+    header("Location: home.php");
 }
 
 ?>
@@ -187,6 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row">
                     <div class="col-lg-7 order-lg-2 col-md-12 info-box">
 
+                        <!-- Top Row -- Name, Age, Gender -->
                         <div class="row inputField">
                             <div class="col-md-4 col-sm-12 col-lg-4">
                                 <!-- Name -->
@@ -219,6 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
+                        <!--Second Row -- College Year, Course of Study -->
                         <div class="row inputField">
                             <div class="col-md-6 col-sm-12 col-lg-6">
                                 <!-- College Year -->
@@ -246,6 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
+                        <!--Third Row -- Pursuing, Looking For -->
                         <div class="row inputField">
                             <div class="col-md-6 col-sm-12 col-lg-6">
                                 <!--  pursuing -->
@@ -281,28 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="row inputField">
-                            <div class="col-md-6 col-sm-12 col-lg-6">
-                                <!-- password (May need to update this as text for it is meh)-->
-                                <label for="password" class="inputLabelText">Password</label><br>
-                                <input type="text" id="password" name="password" class="textInput"
-                                    placeholder="New Password" required>
-                                <input type="text" id="password-repeat" name="password-repeat" class="textInput"
-                                    placeholder="Repeat Password" required>
-
-                            </div>
-                        </div>
-
-                        <div class="row inputField">
-                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <label for="hobbies" class="inputLabelText">Hobbies</label><br>
-                                <input type="text" id="hobbies" name="hobbies" class="textInput"
-                                    placeholder="Type here..." required
-                                    value="<?php echo htmlspecialchars($hobbies); ?>">
-                            </div>
-                        </div>
-
+                        <!--Fourth Row -- Bio-->
 
                         <div class="row inputField">
                             <div class="col-md-12 col-sm-12 col-lg-12">
@@ -313,6 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
+                        <!--Fifth Row -- Hobbies-->
                         <div class="row inputField">
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <!-- Hobbies (May need to update this as text for it is meh)-->
@@ -323,28 +308,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <?php if (getVerified($userId) == 0) { ?>
-                            <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
+                        <?php if (isset($age)) { ?>
+                            <div class="row inputField">
+                                <!--Sixth Row -- Password, verify-->
+
+                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                    <!-- Change Password button -->
+                                    <button type="button" id="changePasswordBtn" class="btn btn-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                        Change Password
+                                    </button>
+                                </div>
+
+                                <!-- Modal for changing password -->
+                                <div class="modal fade" id="changePasswordModal" tabindex="-1"
+                                    aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form id="changePasswordForm" action="editProfile.php" method="post">
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="password" class="form-label">New Password</label>
+                                                        <input type="password" class="form-control" id="password"
+                                                            name="password">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="password-repeat" class="form-label">Confirm New
+                                                            Password</label>
+                                                        <input type="password" class="form-control" id="password-repeat"
+                                                            name="password-repeat">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit"
+                                                        class="btn btn-secondary mt-1 mb-1 saveChangesBtn">Save
+                                                        Password</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php if (getVerified($userId) == 0) { ?>
+                                    <div class="col-md-6 col-sm-12 col-lg-6">
+                                        <!-- Button to verify email -->
+                                        <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         <?php } ?>
+
                     </div>
 
-                    <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
-                        <!-- Profile Picture-->
-                        <img class="profilePicture"
-                            src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
-                            alt="Profile Picture">
+                        <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
+                            <!-- Profile Picture-->
+                            <img class="profilePicture"
+                                src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
+                                alt="Profile Picture">
 
-                        <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                        <input type="file" id="profile_pic" name="profile_pic">
+                            <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
+                            <input type="file" id="profile_pic" name="profile_pic">
 
-                        <!-- Button to just update changes made in db -->
-                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
+                            <!-- Button to just update changes made in db -->
+                            <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
+                                Changes</button>
+                        </div>
                     </div>
-                </div>
             </form>
 
         </div>
     </div>
+
+
 
 
     <br>
@@ -379,6 +421,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         alert('Error occurred while verifying email: ' + error);
                     }
                 });
+            });
+        });
+    </script>
+
+    <script>
+        // Function to clear input fields when modal is closed
+        $('#changePasswordModal').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to add or remove the required attribute based on modal state
+            $('#changePasswordModal').on('show.bs.modal', function () {
+                $('#password, #password-repeat').attr('required', true);
+            });
+
+            $('#changePasswordModal').on('hidden.bs.modal', function () {
+                $('#password, #password-repeat').removeAttr('required');
             });
         });
     </script>
