@@ -94,6 +94,7 @@ enum CourseOfStudy: string
 
 }
 
+$course = "";
 $options = '';
 foreach (CourseOfStudy::cases() as $case) {
     $value = $case->value;

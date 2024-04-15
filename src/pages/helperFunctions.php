@@ -85,7 +85,7 @@ function setFirstName($user_id, $first_name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "First name set successfully in account";
+        echo "First name set successfully in account<br>";
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -102,7 +102,7 @@ function setLastName($user_id, $last_Name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "Last name set successfully in account";
+        echo "Last name set successfully in account<br>";
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -233,9 +233,9 @@ function setAge($age, $user_id) {
     $set_age->execute();
 
     if ($set_age->affected_rows > 0) {
-        echo "Age set successfully";
+        echo "Age set successfully <br>";
     } else {
-        echo "Error setting Age";
+        echo "Error setting Age <br>";
     }
 
     $set_age->close();

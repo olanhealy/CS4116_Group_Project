@@ -75,7 +75,7 @@
                     <div class="col-lg-4 order-lg-1 col-md-12" id="leftcontainer">
 
                         <!-- Profile Picture -->
-                        <img src="/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>
+                        <<img src="/uploads/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>>
 
                         <!-- Change Picture -->
                         <label for="profile_pic" class="fileUploadBtn">Change Profile Picture</label>
@@ -138,9 +138,11 @@
                             </div>
 
                             <!-- Course of Study -->
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label for="course" id="inputLabelText">Course of Study</label><br>
+                            <div class="col-md-6 col-sm-12 col-lg-6">
+                                <!-- Course-->
+                                <label for="course" class="inputLabelText">Course of Study</label><br>
                                 <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
+                                    <option value="" selected disabled>Choose..</option>
                                     <?php echo $options; ?>
                                 </select>
                             </div>

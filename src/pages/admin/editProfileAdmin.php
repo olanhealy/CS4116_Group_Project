@@ -68,9 +68,9 @@ if (isset($_SESSION['targetId'])) {
         }
 
         // Age
-        if (isset($_POST['age']) && $_POST['age'] !== $_SESSION['existingAge'] ) {
+        if (isset($_POST['age']) && $_POST['age'] != $_SESSION['existingAge'] ) {
             $age = $_POST['age'];
-            setAge($targetId, $age);
+            setAge($age, $targetId);
         }
 
         // Year
@@ -109,7 +109,7 @@ if (isset($_SESSION['targetId'])) {
             setHobbies($targetId, $hobbies);
         }
 
-        header("Location: showUserAdmin.php");
+        // header("Location: showUserAdmin.php");
     }
 
 
