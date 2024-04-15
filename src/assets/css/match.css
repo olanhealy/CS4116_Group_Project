@@ -107,8 +107,56 @@ body {
   color: black;
 }
 
-hr {
-  margin: 0.2em auto;
+#menu-dropdown {
+    background-color: #e6d1be;
+    color: white;
+    text-align: center;
+    padding: 7px 60px;
+    font-size: 18px;
+    font-weight: bold;
+    border-color: #e6d1be;
+    justify-content: left;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .dropdownBtn {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+#menu-dropdown:hover {
+    background-color: #e6d1be;
+    border-color: black;
+    color: white;
+}
+
+#homedropdown {
+    background-color: #faf0e6;
+    border-color: #dabb9e;
+    border-width: 3px;
+}
+
+.dropdown-item {
+    font-weight: bold;
+    color: #dabb9e;
+    font-size: 18px;
+}
+
+.dropdown-item:hover {
+    background-color: #dabb9e;
+    font-weight: bold;
+    color: white;
+    font-size: 18px;
+}
+
+#outline {
+    border-color: #4d4d4d !important;
+    position: relative;
+    width: 80vw;
+    margin: 0 auto;
 }
 
 footer {
