@@ -48,7 +48,7 @@
 
         $matchId = getMatchId($_SESSION['user_id'], $targetUserId);
         if ($matchId) {
-            <!-- Can get the match id so able to send a message to this user --> 
+        
             echo '<a href="messages/messages.php?match_id=' . $matchId . '">Message</a>';
         } 
     ?>

@@ -39,8 +39,16 @@ if (isset($_GET['match_id'])) {
     }
 ]
     */
-    $messages = getMessagesByMatchId($matchId);
-    echo json_encode($messages);
+
+    $matchName = getNameByMatchId($matchId, $userId);
+    $messages = getMessagesByMatchId($matchId, $userId);
+
+    $response = [
+        'matchName' => $matchName,
+        'messages' => $messages
+    ];
+
+    echo json_encode($response);
 } else {
     echo json_encode(["error" => "No match_id "]);
 }

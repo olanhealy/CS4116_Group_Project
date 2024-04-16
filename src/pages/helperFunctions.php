@@ -538,7 +538,7 @@ function getName($user_id) {
     return $name;
 }
 
-function getMatch($userId, $targetId)
+function getMatchId($userId, $targetId)
 {
     global $conn;
 
@@ -705,14 +705,21 @@ function isUserAdored($userId, $targetId){
     return false;
 }
 
-function getMessagesByMatchId($matchId) {
+function getMessagesByMatchId($matchId, $currentUserId) {
     global $conn;
     $sqlGetMessagesByMatchId = $conn->prepare("SELECT * FROM messages WHERE match_id = ? ORDER BY date ASC");
     $sqlGetMessagesByMatchId->bind_param("i", $matchId);
     $sqlGetMessagesByMatchId->execute();
     $resultSqlGetMessagesByMatchId = $sqlGetMessagesByMatchId->get_result();
-    $messages = $resultSqlGetMessagesByMatchId->fetch_all(MYSQLI_ASSOC);
+
+    $messages = [];
+    while ($row = $resultSqlGetMessagesByMatchId->fetch_assoc()) {
+        $row['from_self'] = ($row['sender_id'] == $currentUserId);
+        $messages[] = $row;
+    }
+
     $sqlGetMessagesByMatchId->close();
+
     return $messages;
 }
 
@@ -770,4 +777,45 @@ function getMessages($userId) {
     $sqlGetMessages->close();
     return $conversations;
 }
+
+function getNameByMatchId($matchId, $userId) {
+    global $conn;
+    $sqlGetNameByMatchId = "SELECT p.name FROM profile p INNER JOIN matches m ON p.user_id = CASE 
+    WHEN m.initiator_id = ? THEN m.target_id 
+    ELSE m.initiator_id END WHERE m.match_id = ?";
+    $getNameByMatchId = $conn->prepare($sqlGetNameByMatchId);
+    if ($getNameByMatchId !== false) {
+        $getNameByMatchId->bind_param("ii", $userId, $matchId);
+        $getNameByMatchId->execute();
+        $resultGetName = $getNameByMatchId->get_result();
+        if ($resultGetName->num_rows > 0) {
+            $rowGetName = $resultGetName->fetch_assoc();
+            $name = $rowGetName['name'];
+        }
+        $getNameByMatchId->close();
+    }
+    return $name;
+}
+
+function getProfilePictureByMatchId($matchId, $userId) {
+    global $conn;
+    $sqlGetProfilePictureByMatchId = "SELECT profile_pic FROM profile WHERE user_id = (SELECT CASE 
+        WHEN initiator_id = ? THEN target_id 
+        ELSE initiator_id 
+    END FROM matches WHERE match_id = ?)";
+    $getProfilePicture = $conn->prepare($sqlGetProfilePictureByMatchId);
+    if ($getProfilePicture!== false) {
+        $getProfilePicture->bind_param("ii", $userId, $matchId);
+        $getProfilePicture->execute();
+        $resultGetProfilePicture = $getProfilePicture->get_result();
+        if ($resultGetProfilePicture->num_rows > 0) {
+            $rowGetProfilePicture = $resultGetProfilePicture->fetch_assoc();
+            $profilePicture = $rowGetProfilePicture['profile_pic'];
+        }
+        $getProfilePicture->close();
+    }
+    return $profilePicture;
+}
+
+
 ?>
