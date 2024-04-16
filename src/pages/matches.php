@@ -9,6 +9,9 @@ if(session_status() === PHP_SESSION_NONE) {
 
 $userId = $_SESSION['user_id'];
 
+//sets up the header and dropdown
+setupHeader();
+
 // Get all matches for the user
 getAllMatches($userId);
 
@@ -17,3 +20,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
     removeMatch($_POST['userId'], $_POST['targetId']);
     header("Location: matches.php");
 }
+
+//set up the footer
+setupFooter();
