@@ -85,7 +85,7 @@ function setFirstName($user_id, $first_name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "First name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> First Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -102,7 +102,7 @@ function setLastName($user_id, $last_Name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "Last name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> Last Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -157,9 +157,9 @@ function setBio($user_id, $bio) {
     $set_bio->execute();
 
     if ($set_bio->affected_rows > 0) {
-        echo "Bio set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Bio set successfully.</a>';
     } else {
-        echo "Error setting bio";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting Bio.</a>';
     }
 }
 
@@ -194,9 +194,9 @@ function setGender($user_id, $gender) {
     $set_gender->execute();
 
     if ($set_gender->affected_rows > 0) {
-        echo "Gender set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Gender set successfully.</a>';
     } else {
-        echo "Error setting Gender";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting Gender.</a>';
     }
 
     $set_gender->close();
@@ -233,9 +233,9 @@ function setAge($age, $user_id) {
     $set_age->execute();
 
     if ($set_age->affected_rows > 0) {
-        echo "Age set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Age set successfully.</a>';
     } else {
-        echo "Error setting Age";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting Age.</a>';
     }
 
     $set_age->close();
@@ -272,9 +272,9 @@ function setCollegeYear($user_id, $college_year) {
     $set_college_year->execute();
 
     if ($set_college_year->affected_rows > 0) {
-        echo "College Year set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> College Year set successfully.</a>';
     } else {
-        echo "Error setting College Year";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting College Year.</a>';
     }
 
     $set_college_year->close();
@@ -310,9 +310,9 @@ function setPursuing($user_id, $pursuing) {
     $set_pursuing->execute();
 
     if ($set_pursuing->affected_rows > 0) {
-        echo "Pursuing set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Pursuing set successfully.</a>';
     } else {
-        echo "Error setting Pursuing";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting Pursuing.</a>';
     }
 
     $set_pursuing->close();
@@ -420,9 +420,9 @@ function setCourse($user_id, $course) {
     $set_course->execute();
 
     if ($set_course->affected_rows > 0) {
-        echo "Course set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Course set successfully. </a>';
     } else {
-        echo "Error setting course";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting course. </a>';
     }
 }
 
@@ -456,9 +456,9 @@ function setHobbies($user_id, $hobbies) {
     $set_hobbies->execute();
 
     if ($set_hobbies->affected_rows > 0) {
-        echo "Hobbies set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Hobbies set successfully.</a>';
     } else {
-        echo "Error setting hobbies";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting Hobbies.</a>';
     }
 }
 
@@ -492,9 +492,9 @@ function setLookingFor($user_id, $looking_for) {
     $set_looking_for->execute();
 
     if ($set_looking_for->affected_rows > 0) {
-        echo "Looking for set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Looking for set successfully.</a>';
     } else {
-        echo "Error setting looking for";
+        echo '<a style="font-size:20px; text-align:center;"> Error setting looking for.</a>';
     }
 }
 

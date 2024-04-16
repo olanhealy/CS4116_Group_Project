@@ -97,7 +97,7 @@ enum CourseOfStudy: string
 $options = '';
 foreach (CourseOfStudy::cases() as $case) {
     $value = $case->value;
-    $selected = ($value === $course) ? "selected" : "";
+    $selected = ($_SESSION['existingCourse'] === $value) ? "selected" : "";
     $options .= "<option value=\"$value\" $selected>" . $value . "</option>";
 }
 ?>
