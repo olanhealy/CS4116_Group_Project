@@ -119,8 +119,11 @@
             var matchName = response.matchName;
             response.messages.forEach(function(message) {
                 var messageClass = message.from_self ? 'my-message' : 'other-message';
-                messagesHtml += '<div class="message ' + messageClass + '">' + 
-                                message.message_content + '</div>';
+                var unsendMessageButton = message.from_self ? 
+                    '<button class="unsend-button" onclick="unsendMessage(' + message.message_id + ')">Unsend</button>' : 
+                    '';
+                messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.message_id + '">' + 
+                                message.message_content + unsendMessageButton + '</div>';
             });
             // Set the HTML of the message-content div
             $('#message-content').html(messagesHtml);
@@ -157,6 +160,30 @@
                 });
             }
         });
+
+        //function for unsending message
+        function unsendMessage(messageId) {
+        //AJAX call to deleteMessage.php to delete the message    
+    $.ajax({
+        url: 'deleteMessage.php',
+        type: 'POST',
+        data: { 'message_id': messageId },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                // Remove the message element from the display
+                $('div[data-message-id="' + messageId + '"]').remove();
+            } else {
+                // Hgive the error
+                alert('Error: ' + response.error);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // display an error message
+            alert('AJAX error: ' + textStatus + ', ' + errorThrown);
+        }
+    });
+}
     </script>
     </body>
     </html>

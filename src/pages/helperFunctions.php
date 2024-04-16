@@ -825,5 +825,26 @@ function getProfilePictureByMatchId($matchId, $userId) {
     return $profilePicture;
 }
 
+//Process #48 user can unsed a message they sent to a specific user and it will be deleted from the Messages table
+function deleteMessage($userId, $messageId) {
+    global $conn;
+    
+    // Check if the message belongs to the user
+    $sqlDeleteMessage = $conn->prepare("SELECT * FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlDeleteMessage ->bind_param("iii", $messageId, $userId, $userId);
+    $sqlDeleteMessage ->execute();
+    $resultDeleteMessage  = $sqlDeleteMessage ->get_result();
+    if ($resultDeleteMessage ->num_rows === 0) {
+        // Message does not belong to user o
+        return false;
+    }
+
+    // Delete the message from tabke
+    $sqlDeleteMessage  = $conn->prepare("DELETE FROM messages WHERE message_id = ?");
+    $sqlDeleteMessage ->bind_param("i", $messageId);
+    $sqlDeleteMessage ->execute();
+    
+    return $sqlDeleteMessage ->affected_rows > 0;
+}
 
 ?>
