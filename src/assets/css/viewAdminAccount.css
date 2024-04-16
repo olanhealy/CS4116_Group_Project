@@ -1,0 +1,20 @@
+
+/* This file styles the viewAdminAccount.html file */
+
+#textContainer {
+    height: 40vh; 
+    position: relative; 
+}
+
+#description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#link{
+    font-size: 20px;
+}

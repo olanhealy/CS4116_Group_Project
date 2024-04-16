@@ -22,12 +22,6 @@
     
     };
 
-    ?>
-
-    <a href="usersListAdmin.php">Back to User List</a>
-
-    <?php
-
     //transfer targetId to a SESSION variable
     $_SESSION['targetId'] = $targetId;
     //var_dump($_SESSION);
@@ -43,7 +37,17 @@
             include "editProfileAdmin.php";
             include "makeAdmin.html";
             echo '<a href="banUser.html">Ban User</a>';
+        }else if(getUserRole($targetId) == 'admin'){
+            //include page for viewing an admin account
+            include "viewAdminAccount.html";
         }
         //if the user is banned just show delete button
         include "deleteUser.html";
+        //always include footer on all pages
+        include "../footer.php";
     }
+    ?>
+
+    <html>
+        <link rel="stylesheet" type="text/css" href="../../assets/css/editProfileAdmin.css">
+    </html>
