@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    <form action="showUserAdmin.php" method='GET'>
-    <!--userId - Name - Email - Banned-->
-    <a href="showUserAdmin.php?targetId=<?php echo $targetId?>">User: <?php echo $targetId; ?></a> | Name: <?php echo $row["first_name"] . " " . $row["last_name"]; ?> | Email: <?php echo $row["email"];?> | <?php if($row["banned"] == 1){
-        echo "Banned";
-    }else{
-        echo $row["number_of_reports"] . " reports";
-    };?>
-</form>
+
+<!-- Loads User Data into Table -->
+<tbody>
+    <tr>
+        <td><a href="showUserAdmin.php?targetId=<?php echo $targetId ?>"> <?php echo $targetId ?> </a></td>
+        <td><?php echo $row["first_name"] . " " . $row["last_name"] ?></td>
+        <td><?php echo $row["email"] ?></td>
+        <td><?php echo $row["number_of_reports"] ?></td>
+        <td><?php echo $row["banned"] ?></td>
+    </tr>
+</tbody>
+
 </html>

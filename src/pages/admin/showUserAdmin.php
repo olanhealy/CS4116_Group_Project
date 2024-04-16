@@ -24,8 +24,6 @@
 
     ?>
 
-    <!--TODO: frontend: links need to be formatted-->
-    
     <a href="usersListAdmin.php">Back to User List</a>
 
     <?php
