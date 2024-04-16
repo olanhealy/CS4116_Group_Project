@@ -336,17 +336,23 @@ hr {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
+  display: inline;
 }
 
 #makeadmin{
-  font-size: 22px;
   padding: 10px 24px;
-  font-weight: bold;
-  text-align: center;
   align-items: center;
   display: inline;
   margin-right: 10px;
   margin-top: 5px;
+}
+
+#makeadminButton{
+    background-color:#abc99d;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
 }
 
 #banUser{
@@ -358,16 +364,24 @@ hr {
   display: inline;
 }
 
+
 #delete{
-  font-size: 22px;
   padding: 10px 24px;
-  font-weight: bold;
-  text-align: center;
   align-items: center;
+  text-align: center;
   display: inline;
   margin-left: 10px;
   margin-top: 5px;
 }
+
+#deleteUserButton{
+    background-color:#abc99d;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
 
 @media (max-width: 520px) {
   #makeadmin {

@@ -1,5 +1,5 @@
 
-<!-- When signed in as an Admin, this file displays the Delete User button when viewing any account  -->
+<!-- This file displays the Delete User button for an Admin viewing any account -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,7 @@
     <form action="deleteUser.php" method="post" id="delete">
         <input type="hidden" name="action" value="deleteUser">
         <input type="hidden" name="deleteTargetId" value="<?php echo $targetId; ?>">
-        <input type="submit" value="Delete User">
+        <input type="submit" value="Delete User" class="btn" id="deleteUserButton">
     </form>
     
 </html>

@@ -35,14 +35,18 @@
         //and the account is not an admin show editProfile, makeAdmin, banUser
         if(getUserRole($targetId) == "standard"){
             include "editProfileAdmin.php";
+            //add buttons to div
+            echo '<div class="linkContainer">';
             include "makeAdmin.html";
-            echo '<a href="banUser.html">Ban User</a>';
+            echo '<a href="banUser.html" id="banUser" class="btn btn-danger">Ban User</a>';
         }else if(getUserRole($targetId) == 'admin'){
             //include page for viewing an admin account
             include "viewAdminAccount.html";
         }
         //if the user is banned just show delete button
         include "deleteUser.html";
+        //close div
+        echo '</div>';
         //always include footer on all pages
         include "../footer.php";
     }
