@@ -1,5 +1,3 @@
-<a href="home.php">Home</a><br>
-<a href="searchPage.html">Search Again?</a><br>
 <?php
 
 include "db_connection.php";
@@ -69,6 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    //sets up the header and dropdown
+    setupHeader();
+
+    // create a container for the profile cards
+    echo '<div class="profile-cards-container">';
+
     if ($result->num_rows > 0) {
         
         while ($row = $result->fetch_assoc()) {
@@ -89,11 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Display the profile card
             showProfileCard($targetUserId);
-
+            
             // Reset the flag
             $showingAdoreButton = false;
-
         }
+
+        //close the container
+        echo '</div>';
+
+        //set up the footer
+        setupFooter();
     } else {
         //error
         echo "0 results found";

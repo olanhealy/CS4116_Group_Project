@@ -22,5 +22,5 @@ if ($_POST['action'] == "adore_user") {
     }
 }
 
-header("Location: searchPage.php");
+header("Location: searchPage.html");
 
