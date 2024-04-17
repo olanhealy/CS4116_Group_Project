@@ -542,6 +542,26 @@ function getMatchId($userId, $targetId)
 {
     global $conn;
 
+    $query = "SELECT match_id FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['match_id'];
+        }
+    }
+    return false;
+}
+
+function getMatch($userId, $targetId)
+{
+    global $conn;
+
     $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
     $stmt = $conn->prepare($query);
     if ($stmt !== false) {

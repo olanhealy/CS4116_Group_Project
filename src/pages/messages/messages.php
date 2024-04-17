@@ -102,10 +102,8 @@
         </div>
 
         
-        <!-- JS for loading messages and sending messages  -->
         <script>
-        var currentMatchId = null;
-    
+        var currentMatchId = null; 
         function loadMessages(matchId) {
     currentMatchId = matchId;
     // AJAX call to get messages for the specific matchId
@@ -130,7 +128,7 @@
             $('#message-title').text(matchName);
             $('#message-form').show();
         }
-    });
+    });    
 }
 
         // event handler for form submission.
