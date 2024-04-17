@@ -27,7 +27,7 @@
 }
 
 .message {
-  padding: 10px;
+  position: relative; 
   margin-bottom: 10px;
   border-radius: 10px;
   max-width: 50%;
