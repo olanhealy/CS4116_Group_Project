@@ -1,10 +1,5 @@
 <?php
 
-//get session info
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 include "../db_connection.php";
 include_once "adminHelperFunctions.php";
 include "../helperFunctions.php";
