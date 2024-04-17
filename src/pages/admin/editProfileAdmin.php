@@ -110,6 +110,7 @@ if (isset($_SESSION['targetId'])) {
         }
 
         // header("Location: showUserAdmin.php");
+        include "../footer.php";
     }
 
 
