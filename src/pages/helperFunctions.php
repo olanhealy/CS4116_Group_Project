@@ -847,4 +847,19 @@ function deleteMessage($userId, $messageId) {
     return $sqlDeleteMessage ->affected_rows > 0;
 }
 
+//Function to get delivery satus (may need)
+function getDeliveryStatus($userId, $messageId) {
+    global $conn;
+    $sqlGetDeliveryStatus = $conn->prepare("SELECT read_status FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlGetDeliveryStatus->bind_param("iii", $messageId, $userId, $userId);
+    $sqlGetDeliveryStatus->execute();
+    $resultGetDeliveryStatus = $sqlGetDeliveryStatus->get_result();
+    if ($resultGetDeliveryStatus->num_rows > 0) {
+        $rowGetDeliveryStatus = $resultGetDeliveryStatus->fetch_assoc();
+        $deliveryStatus = $rowGetDeliveryStatus['read_status'];
+    }
+    $sqlGetDeliveryStatus->close();
+    return $deliveryStatus;
+}
+
 ?>
