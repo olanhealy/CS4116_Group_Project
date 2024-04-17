@@ -12,6 +12,8 @@ $userId = $_SESSION['user_id'];
 //sets up the header and dropdown
 setupHeader();
 
+//include 'outline.html';
+
 // Get all matches for the user
 getAllMatches($userId);
 

@@ -5,8 +5,18 @@ body {
 }
 
 #outline {
-    border-color: #4d4d4d !important;
-    position: relative;
-    width: 80vw;
-    margin: 0 auto;
+  border-color: #4d4d4d !important;
+  position: relative;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+#profilepicture{
+  max-width: 100%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  fill: #abc99d !important;
+  background-color: #abc99d !important;
 }
