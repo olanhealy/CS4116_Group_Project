@@ -542,6 +542,26 @@ function getMatchId($userId, $targetId)
 {
     global $conn;
 
+    $query = "SELECT match_id FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['match_id'];
+        }
+    }
+    return false;
+}
+
+function getMatch($userId, $targetId)
+{
+    global $conn;
+
     $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
     $stmt = $conn->prepare($query);
     if ($stmt !== false) {
@@ -825,5 +845,41 @@ function getProfilePictureByMatchId($matchId, $userId) {
     return $profilePicture;
 }
 
+//Process #48 user can unsed a message they sent to a specific user and it will be deleted from the Messages table
+function deleteMessage($userId, $messageId) {
+    global $conn;
+    
+    // Check if the message belongs to the user
+    $sqlDeleteMessage = $conn->prepare("SELECT * FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlDeleteMessage ->bind_param("iii", $messageId, $userId, $userId);
+    $sqlDeleteMessage ->execute();
+    $resultDeleteMessage  = $sqlDeleteMessage ->get_result();
+    if ($resultDeleteMessage ->num_rows === 0) {
+        // Message does not belong to user o
+        return false;
+    }
+
+    // Delete the message from tabke
+    $sqlDeleteMessage  = $conn->prepare("DELETE FROM messages WHERE message_id = ?");
+    $sqlDeleteMessage ->bind_param("i", $messageId);
+    $sqlDeleteMessage ->execute();
+    
+    return $sqlDeleteMessage ->affected_rows > 0;
+}
+
+//Function to get delivery satus (may need)
+function getDeliveryStatus($userId, $messageId) {
+    global $conn;
+    $sqlGetDeliveryStatus = $conn->prepare("SELECT read_status FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlGetDeliveryStatus->bind_param("iii", $messageId, $userId, $userId);
+    $sqlGetDeliveryStatus->execute();
+    $resultGetDeliveryStatus = $sqlGetDeliveryStatus->get_result();
+    if ($resultGetDeliveryStatus->num_rows > 0) {
+        $rowGetDeliveryStatus = $resultGetDeliveryStatus->fetch_assoc();
+        $deliveryStatus = $rowGetDeliveryStatus['read_status'];
+    }
+    $sqlGetDeliveryStatus->close();
+    return $deliveryStatus;
+}
 
 ?>

@@ -78,7 +78,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
                     <li><a class="dropdown-item" href="home.php">Home</a></li>
                     <li><a class="dropdown-item" href="explore.php">Explore</a></li>
                     <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
                     <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
                 </ul>
             </div>

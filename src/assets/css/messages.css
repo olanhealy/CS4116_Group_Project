@@ -27,7 +27,7 @@
 }
 
 .message {
-  padding: 10px;
+  position: relative; 
   margin-bottom: 10px;
   border-radius: 10px;
   max-width: 50%;
@@ -42,6 +42,18 @@
 .other-message {
   background-color: #8e8db3; 
   margin-left: 10px;
+}
+
+.my-message .unsend-button {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.my-message:hover .unsend-button {
+  display: block;
 }
 
 
