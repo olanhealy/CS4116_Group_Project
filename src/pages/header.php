@@ -24,7 +24,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- External Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/header.css">
 </head>
 
 <body>
@@ -34,9 +34,9 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
 
         <!-- Images -->
         <div class="images">
-            <img class="header-img d-none d-md-block" src="../assets/images/ul_logo.png" alt="ul_logo">
+            <img class="header-img d-none d-md-block" src="/src/assets/images/ul_logo.png" alt="ul_logo">
             <div class="line d-none d-md-block"></div>
-            <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+            <img class="header-img" src="/src/assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
         <!-- Buttons -->
