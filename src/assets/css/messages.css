@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
 .messages-container {
   display: flex;
   flex-direction: row;
@@ -54,6 +61,12 @@
 
 .my-message:hover .unsend-button {
   display: block;
+}
+
+.profile-picture {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  max-width: 30%;
 }
 
 

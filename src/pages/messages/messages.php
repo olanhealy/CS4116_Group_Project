@@ -3,12 +3,14 @@
     include "../db_connection.php";
     include "../helperFunctions.php";
 
-    if(session_status() === PHP_SESSION_NONE) {
+    setupHeader();
+
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 
     // Make sure user is logged in
-    if (!isset($_SESSION['user_id']) ) {
+    if (!isset($_SESSION['user_id'])) {
         // Redirect to login page or error page
         header('Location: login.php');
         exit;
@@ -29,7 +31,6 @@
         $matchId = $_GET['match_id'];
         $matchName = getNameByMatchId($matchId, $userId);
         $messages = getMessagesByMatchId($matchId, $userId);
-        
     }
 
 
@@ -48,45 +49,35 @@
 
     <!DOCTYPE html>
     <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Messages</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <head>
 
         <!-- jQuery api -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
-        <!-- Bootstrap Icon -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
         <link rel="stylesheet" type="text/css" href="../../assets/css/messages.css">
 
-            <!-- Define the userId JavaScript variable -->
-    <script type="text/javascript">
-        var userId = <?php echo json_encode($userId); ?>;
-    </script>
+        <!-- Define the userId JavaScript variable -->
+        <script type="text/javascript">
+            var userId = <?php echo json_encode($userId); ?>;
+        </script>
     </head>
+
     <body>
         <div class="messages-container d-flex">
             <!-- Sidebar for The messages -->
             <div class="sidebar" style="width: 25%;">
-                    <ul id="conversation-list" class="list-unstyled">
-                    <?php foreach ($allConversations as $conversationMatchId): ?>
-                    <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
-                    <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
-                    <img src="/<?php echo htmlspecialchars($profilePic); ?> "class="profile-picture" alt="Profile Picture">
-                    <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
-                    <?php echo htmlspecialchars($matchName); ?>
-                </li>
-             <?php endforeach; ?>
-            </ul>
-         </div>
+                <ul id="conversation-list" class="list-unstyled">
+                    <?php foreach ($allConversations as $conversationMatchId) : ?>
+                        <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
+                        <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
+                        <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
+                        <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
+                            <?php echo htmlspecialchars($matchName); ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
             <!-- area for displaying messages -->
             <div class="content" style="width: 75%;">
                 <h2 id="message-title">Messages Displayed here</h2>
@@ -101,87 +92,95 @@
             </div>
         </div>
 
-        
-        <script>
-        var currentMatchId = null; 
-        function loadMessages(matchId) {
-    currentMatchId = matchId;
-    // AJAX call to get messages for the specific matchId
-    $.ajax({
-        url: 'getMessages.php',
-        type: 'GET',
-        data: { 'match_id': matchId },
-        dataType: 'json',
-        success: function(response) {
-            var messagesHtml = '';
-            var matchName = response.matchName;
-            response.messages.forEach(function(message) {
-                var messageClass = message.from_self ? 'my-message' : 'other-message';
-                var unsendMessageButton = message.from_self ? 
-                    '<button class="unsend-button" onclick="unsendMessage(' + message.message_id + ')">Unsend</button>' : 
-                    '';
-                messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.message_id + '">' + 
-                                message.message_content + unsendMessageButton + '</div>';
-            });
-            // Set the HTML of the message-content div
-            $('#message-content').html(messagesHtml);
-            $('#message-title').text(matchName);
-            $('#message-form').show();
-        }
-    });    
-}
 
-        // event handler for form submission.
-        $('#send-message-form').submit(function(e) {
-            //Prevents the default action of the form submission
-            e.preventDefault();
-            //gets message content from the textArea of the form
-            var messageContent = $('#message_content').val();
-            //if theres message content and a current match id, send the message by calling sendMessage.php
-            if (messageContent && currentMatchId) {
+        <script>
+            var currentMatchId = null;
+
+            function loadMessages(matchId) {
+                currentMatchId = matchId;
+                // AJAX call to get messages for the specific matchId
                 $.ajax({
-                    url: 'sendMessage.php', 
-                    type: 'POST',
+                    url: 'getMessages.php',
+                    type: 'GET',
                     data: {
-                        //message content main data (match id is temp)
-                        'message_content': messageContent,
-                        'match_id': currentMatchId
+                        'match_id': matchId
                     },
+                    dataType: 'json',
                     success: function(response) {
-                        if (response.success) {
-                            loadMessages(currentMatchId); 
-                            $('#message_content').val(''); 
-                        } else {
-                            alert('Error: ' + response.error);
-                        }
+                        var messagesHtml = '';
+                        var matchName = response.matchName;
+                        response.messages.forEach(function(message) {
+                            var messageClass = message.from_self ? 'my-message' : 'other-message';
+                            var unsendMessageButton = message.from_self ?
+                                '<button class="unsend-button" onclick="unsendMessage(' + message.message_id + ')">Unsend</button>' :
+                                '';
+                            messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.message_id + '">' +
+                                message.message_content + unsendMessageButton + '</div>';
+                        });
+                        // Set the HTML of the message-content div
+                        $('#message-content').html(messagesHtml);
+                        $('#message-title').text(matchName);
+                        $('#message-form').show();
                     }
                 });
             }
-        });
 
-        //function for unsending message
-        function unsendMessage(messageId) {
-        //AJAX call to deleteMessage.php to delete the message    
-    $.ajax({
-        url: 'deleteMessage.php',
-        type: 'POST',
-        data: { 'message_id': messageId },
-        dataType: 'json',
-        success: function(response) {
-            if (response.success) {
-                // Remove the message element from the display
-                $('div[data-message-id="' + messageId + '"]').remove();
-            } else {
-                // Hgive the error
-                alert('Error: ' + response.error);
+            // event handler for form submission.
+            $('#send-message-form').submit(function(e) {
+                //Prevents the default action of the form submission
+                e.preventDefault();
+                //gets message content from the textArea of the form
+                var messageContent = $('#message_content').val();
+                //if theres message content and a current match id, send the message by calling sendMessage.php
+                if (messageContent && currentMatchId) {
+                    $.ajax({
+                        url: 'sendMessage.php',
+                        type: 'POST',
+                        data: {
+                            //message content main data (match id is temp)
+                            'message_content': messageContent,
+                            'match_id': currentMatchId
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                loadMessages(currentMatchId);
+                                $('#message_content').val('');
+                            } else {
+                                alert('Error: ' + response.error);
+                            }
+                        }
+                    });
+                }
+            });
+
+            //function for unsending message
+            function unsendMessage(messageId) {
+                //AJAX call to deleteMessage.php to delete the message    
+                $.ajax({
+                    url: 'deleteMessage.php',
+                    type: 'POST',
+                    data: {
+                        'message_id': messageId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // Remove the message element from the display
+                            $('div[data-message-id="' + messageId + '"]').remove();
+                        } else {
+                            // Hgive the error
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // display an error message
+                        alert('AJAX error: ' + textStatus + ', ' + errorThrown);
+                    }
+                });
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // display an error message
-            alert('AJAX error: ' + textStatus + ', ' + errorThrown);
-        }
-    });
-}
-    </script>
+        </script>
+
+        <?php setupFooter(); ?>
     </body>
+
     </html>
