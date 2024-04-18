@@ -80,7 +80,7 @@ $pageNameTitle = "Page";
                     <li><a class="dropdown-item" href="explore.php">Explore</a></li>
                     <li><a class="dropdown-item" href="matches.php">Matches</a></li>
                     <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
-                    <li><a class="dropdown-item" href="searchPage.php">Search</a></li>
+                    <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
                 </ul>
             </div>
         </div>

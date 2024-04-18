@@ -2,7 +2,7 @@
 <html lang="en">
     <form action="profileCard.php" method='GET'>
         <a href='profileCard.php?target_user_id=<?php echo $targetId?>'><?php echo $name; ?></a> 
-        <img src="/uploads/<?php echo htmlspecialchars($profilePicture); ?>" class="card-img-top" alt="Profile Picture">
+        <img src="/<?php echo htmlspecialchars($profilePicture); ?>" class="card-img-top" alt="Profile Picture">
     </form>
     <form action="matches.php" method='POST'>
         <input type="hidden" name="action" value="removeMatch">

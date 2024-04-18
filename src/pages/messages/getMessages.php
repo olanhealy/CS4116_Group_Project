@@ -16,6 +16,13 @@ if (isset($_GET['match_id'])) {
     $matchId = $_GET['match_id'];
     $userId = $_SESSION['user_id'];
 
+    //added in get messages to get the messages that are delivered and change them to read for a user logged in viewing messages they recieve
+    $updateQuery = "UPDATE messages SET read_status='read' WHERE match_id=? 
+                AND receiver_id=? AND read_status='delivered' AND sender_id != ?";
+    $updateStmt = $conn->prepare($updateQuery);
+    $updateStmt->bind_param("iii", $matchId, $userId, $userId);
+    $updateStmt->execute();
+
     // Call the getMessagesByMatchId function from helper and outpt  the result as a JSON response: 
     /* eg:
     [
