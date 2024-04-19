@@ -2,7 +2,8 @@
 $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
-$pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
+$pageNameTitle = "Page";
+//ucfirst(str_replace('Page.php', '', $curPageName));
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +20,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
+    
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -71,7 +72,7 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
             <div class="col-12 dropdownBtn">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
                     data-bs-toggle="dropdown">
-                    <?php echo $pageNameTitle; ?>
+                    Explore
                 </button>
 
                 <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
