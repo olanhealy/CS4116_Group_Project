@@ -632,6 +632,7 @@ function getAllMatches($userId)
             $targetId = $row['other_user_id'];
             
             $name = getName($targetId);
+            $age = getAge($targetId);
             $profilePicture = getProfilePicture($targetId);
 
             //include the user list html for each row
@@ -642,6 +643,44 @@ function getAllMatches($userId)
         echo "0 results found";
     }
 }
+
+// Get's the user's next match
+function getNextMatch($userId)
+{
+    global $conn;
+    
+    // Get next match for user
+    $query = "SELECT 
+                CASE 
+                    WHEN initiator_id = $userId THEN target_id 
+                    ELSE initiator_id 
+                END AS other_user_id 
+              FROM matches 
+              WHERE (initiator_id = $userId OR target_id = $userId)
+                AND response_date IS NOT NULL 
+              ORDER BY response_date DESC 
+              LIMIT 1";
+
+
+    //check the result is not empty
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        // Output data of each row with a form to ban/unban
+        $row = $result->fetch_assoc();
+        $targetId = $row['other_user_id'];
+
+        $name = getName($targetId);
+        $age = getAge($targetId);
+        $profilePicture = getProfilePicture($targetId);
+
+        // Include the match HTML
+        include "match.html";
+    } else {
+        // error
+        echo "No match found.";
+    }
+}
+
 
 function showProfileCard($user_id){
 

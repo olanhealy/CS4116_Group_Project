@@ -15,7 +15,10 @@ setupHeader();
 //include 'outline.html';
 
 // Get all matches for the user
-getAllMatches($userId);
+//getAllMatches($userId);
+
+// Get the user's next match
+getNextMatch($userId);
 
 // If the user wants to remove a match
 if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {

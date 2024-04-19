@@ -1,68 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" type="text/css" href="../assets/css/match.css">
+    
+  <link rel="stylesheet" type="text/css" href="../assets/css/match.css">
 
 <body>
-    <div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel slide">
 
-        <!-- Bottom Indicators -->
-        <div class="carousel-indicators">
-          <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
+    <!-- Bottom Indicators -->
+    <div class="carousel-indicators">
+        <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" style="background-color: #abc99d;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
 
-        <!-- Slide One -->
-        <div class="carousel-inner">
-          <div class="carousel-item active">
+    <!-- Slide One -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-md-4 col-lg-4 col-sm-8 mb-3">
-                        <!-- User 1 information -->
+
+                    <!-- User 1 information -->
+                    <div class="col-md-3 col-lg-3 col-sm-8 mb-3">
                         <div class="card border">
-                            <img src="../assets/images/defaultProfilePic.jpg" id="profilepicture" alt="Profile Picture">
+                            <img src="../assets/images/defaultProfilePic.jpg" class="card-img-top" alt="Profile Picture">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $name; ?></h5>
-                                <h5 class="card-title"><?php echo $age; ?></h5>
-                            </div>
-                        </div>
-                        <form action="matches.php" method='POST' style="text-align: center; margin-bottom: 20px;">
-                            <input type="hidden" name="action" value="removeMatch">
-                            <input type="hidden" name="userId" value="<?php echo $userId; ?>">
-                            <input type="hidden" name="targetId" value="<?php echo $targetId; ?>">
-                            <button type="submit" class="btn btn-danger btn-block mt-3">Remove Match</button>
-                        </form>
+                              <h5 class="card-title">
+                                  <?php echo $name; ?> <span class="age"><?php echo $age; ?></span>
+                              </h5>
+                          </div>
+                            <form action="matches.php" method='POST' style="text-align: center; margin-bottom: 20px;">
+                                <input type="hidden" name="action" value="removeMatch">
+                                <input type="hidden" name="userId" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="targetId" value="<?php echo $targetId; ?>">
+                                <button type="submit" class="btn btn-danger btn-block mt-3">Remove Match</button>
+                            </form>
                         </div>
                     </div>
+
+                    <!-- User 2 Info -->
+                    <div class="col-md-3 col-lg-3 col-sm-8 mb-3">
+                        <div class="card border">
+                            <img src="../assets/images/defaultProfilePic.jpg" class="card-img-top" alt="Profile Picture">
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                  <?php echo $name; ?> <span class="age"><?php echo $age; ?></span>
+                              </h5>
+                          </div>
+                            <form action="matches.php" method='POST' style="text-align: center; margin-bottom: 20px;">
+                                <input type="hidden" name="action" value="removeMatch">
+                                <input type="hidden" name="userId" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="targetId" value="<?php echo $targetId; ?>">
+                                <button type="submit" class="btn btn-danger btn-block mt-3">Remove Match</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- User 3 Info -->
+                    <div class="col-md-3 col-lg-3 col-sm-8 mb-3">
+                        <div class="card border">
+                            <img src="../assets/images/defaultProfilePic.jpg" class="card-img-top" alt="Profile Picture">
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                  <?php echo $name; ?> <span class="age"><?php echo $age; ?></span>
+                              </h5>
+                          </div>
+                            <form action="matches.php" method='POST' style="text-align: center; margin-bottom: 20px;">
+                                <input type="hidden" name="action" value="removeMatch">
+                                <input type="hidden" name="userId" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="targetId" value="<?php echo $targetId; ?>">
+                                <button type="submit" class="btn btn-danger btn-block mt-3">Remove Match</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-          </div>
-          <div class="carousel-item">
-            <!-- User 2 Info -->
-          </div>
-          <div class="carousel-item">
-            <!-- User 3 Info -->
-          </div>
         </div>
+    </div>
 
-        <!-- Previous & Next Buttons-->
-        <button class="carousel-control-prev" id="prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" id="next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+    <!-- Previous & Next Buttons-->
+    <button class="carousel-control-prev" id="prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" id="next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 
-      </div>
+</div>
+
 </body>
-
 </html>
-<!-- Need to make function to display nextMatch instead of allMatches 
-
-    Call nextMatch in each carousel item
-
-
-    
--->

@@ -15,6 +15,15 @@ body {
   max-width: 100%;
 }
 
+.age {
+  font-size: 0.8em;
+  margin-left: 8px;
+}
+
+.carousel-indicators {
+  bottom: -50px;
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   fill: #abc99d !important;
