@@ -71,9 +71,10 @@
                     <?php foreach ($allConversations as $conversationMatchId) : ?>
                         <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
                         <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
-                        <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
+
                         <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
-                            <?php echo htmlspecialchars($matchName); ?>
+                            <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
+                            <span class="match-name" ><?php echo htmlspecialchars($matchName); ?> </span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
