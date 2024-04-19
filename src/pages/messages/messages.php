@@ -80,7 +80,7 @@
             </div>
             <!-- area for displaying messages -->
             <div class="content" style="width: 75%;">
-                <h2 id="message-title">Messages Displayed here</h2>
+                <h2 id="message-title">Message one of your matches!!</h2>
                 <div id="message-content" class="messages">
                 </div>
                 <div id="message-form" style="display: none;">

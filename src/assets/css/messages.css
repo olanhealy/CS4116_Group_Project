@@ -21,12 +21,21 @@ html, body {
   display: none;
 }
 
+h2 {
+  padding-left: 20px;
+  margin-bottom: 3px;
+  color: #636363;
+  font-weight: bold;
+  font-style: italic;
+}
 
 .content {
   width: 75%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  overflow-y: auto;
+  max-height: 67vh; 
+  padding: 10px;
 }
 
 .messages {
@@ -45,14 +54,20 @@ html, body {
 }
 
 .my-message {
-  background-color: #90EE90; 
+  background-color: #abc99d; 
   margin-left: auto;
   margin-right: 10px;
+  max-width: fit-content;
+  padding: 5px;
+  
 }
 
 .other-message {
-  background-color: #8e8db3; 
+  background-color: #dabb9e; 
+  max-width: fit-content;
   margin-left: 10px;
+  padding: 5px;
+
 }
 
 .my-message .unsend-button {
