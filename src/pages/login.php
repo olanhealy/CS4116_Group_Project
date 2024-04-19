@@ -1,6 +1,7 @@
 <?php
 
 include "db_connection.php";
+include "helperFunctions.php";
 
 if(session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -33,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // User authenticated, set session variables
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] = $row['user_id'];
+                    //set notifications 
+                    initialiseNotificationsOnLogin($_SESSION['user_id']);
 
                     // Redirect to admin page if user is admin  
                     if ($row['user_role'] == 'admin') {

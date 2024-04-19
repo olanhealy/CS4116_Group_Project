@@ -95,9 +95,19 @@ body {
 }
 
 .dropdown-item-profile {
-  text-decoration: none;
   color: white;
-  font-size: 18px;
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.dropdown-item-profile:hover {
+  background-color: #8f9b8b;
+}
+
+.dropdown-item-profile:active {
+  background-color: #abc99d;
+  color: white;
 }
 
 #profiledropdown {
