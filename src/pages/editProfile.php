@@ -11,7 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
 // Fetch user details from the database
 $userId = $_SESSION['user_id'];
 
-
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
@@ -29,14 +28,23 @@ $name = getName($userId);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+    if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])){
+        $hobbies = $_POST['hobbies'];
+        $hobbies = implode(' ', $hobbies);
+    }else{
+        $hobbies = getHobbies($userId);;
+    }
+    
+    if(isset($_POST['gender'])){
+        $gender = htmlspecialchars($_POST['gender']);
+    }
+    
     // Validate inputs
     $bio = htmlspecialchars($_POST['bio']);
-    $gender = htmlspecialchars($_POST['gender']);
     $age = intval($_POST['age']);
     $collegeYear = htmlspecialchars($_POST['college_year']);
     $pursuing = htmlspecialchars($_POST['pursuing']);
     $course = htmlspecialchars($_POST['course']);
-    $hobbies = htmlspecialchars($_POST['hobbies']);
     $lookingFor = htmlspecialchars($_POST['looking_for']);
     $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
     $password = htmlspecialchars($_POST['password']);
@@ -56,12 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "The password and repeated password do not match";
     }
 
-    var_dump($_SESSION);
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
 
     // Call setter methods to make the updates in db
+
     setBio($userId, $bio);
     setGender($userId, $gender);
     setAge($age, $userId);
@@ -78,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Errors: " . $errors;
     }
 
-    header("Location: home.php");
+    //header("Location: home.php");
 }
 
 ?>
@@ -106,6 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js"></script>
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
 
     <!-- External Stylesheet -->
     <link rel="stylesheet" type="text/css" href="../assets/css/edit_profile.css">
@@ -203,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
                                     <?php if (isset($age))
                                         echo "value='$age'"; ?> <?php if (isset($age))
-                                               echo "readonly"; ?> required>
+                                        echo "readonly"; ?> required>
                             </div>
 
                             <div class="col-md-4 col-sm-12 col-lg-4">
@@ -300,11 +310,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!--Fifth Row -- Hobbies-->
                         <div class="row inputField">
                             <div class="col-md-12 col-sm-12 col-lg-12">
-                                <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <label for="hobbies" class="inputLabelText">Hobbies</label><br>
-                                <input type="text" id="hobbies" name="hobbies" class="textInput"
-                                    placeholder="Type here..." required
-                                    value="<?php echo htmlspecialchars($hobbies); ?>">
+
+                                <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
+                                    <option value=""></option>
+                                    <option>Golf Games</option>
+                                    <option>Karate</option>
+                                    <option>Swimming</option>
+                                    <option>Chess</option>
+                                </select>
                             </div>
                         </div>
 
@@ -367,20 +380,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     </div>
 
-                        <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
-                            <!-- Profile Picture-->
-                            <img class="profilePicture"
-                                src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
-                                alt="Profile Picture">
+                    <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
+                        <!-- Profile Picture-->
+                        <img class="profilePicture"
+                            src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
+                            alt="Profile Picture">
 
-                            <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                            <input type="file" id="profile_pic" name="profile_pic">
+                        <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
+                        <input type="file" id="profile_pic" name="profile_pic">
 
-                            <!-- Button to just update changes made in db -->
-                            <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
-                                Changes</button>
-                        </div>
+                        <!-- Button to just update changes made in db -->
+                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
+                            Changes</button>
                     </div>
+                </div>
             </form>
 
         </div>
@@ -442,25 +455,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $('#changePasswordModal').on('hidden.bs.modal', function () {
                 $('#password, #password-repeat').removeAttr('required');
             });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+        $(".chosen-select").chosen({
+                no_results_text: "Oops, nothing found!"
+            });
         });
     </script>
 
     <script>
         //Function to display whatever image is inputted in edit profile automatically
-        document.getElementById('profile_pic').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
+        document.getElementById('profile_pic').addEventListener('change', function (event) {
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-            // Get the data and render the image
-            document.querySelector('.profilePicture').src = e.target.result;
-        };
+                reader.onload = function (e) {
+                    // Get the data and render the image
+                    document.querySelector('.profilePicture').src = e.target.result;
+                };
 
-        // Read the image file as a data URL.
-        reader.readAsDataURL(event.target.files[0]);
-    }
-});
-</script>
+                // Read the image file as a data URL.
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+    </script>
 
 </body>
 
