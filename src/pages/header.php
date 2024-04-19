@@ -42,9 +42,9 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $curPageName));
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
             <button type="button" id="explorebutton" class="btn button d-none d-md-block"
-                onclick="location.href='explore.php'">Explore</button>
+                onclick="location.href='/src/pages/explore.php'">Explore</button>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-                onclick="location.href='logout.php'">Log Out</button>
+                onclick="location.href='/src/pages/logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon -->
