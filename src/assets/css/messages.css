@@ -34,6 +34,9 @@ h2 {
   border: none;
   padding: 0;
   color: #abc99d;
+}
+
+.bi-send {
   transform: rotate(45deg);
 }
 
@@ -43,7 +46,8 @@ h2 {
   flex-direction: column;
   overflow-y: auto;
   max-height: 67vh; 
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .messages {
@@ -83,11 +87,20 @@ h2 {
   position: absolute;
   top: 5px;
   right: 5px;
+  color: #dabb9e;
+  background-color: #fff;
+  border-color: #dabb9e;
   cursor: pointer;
 }
 
 .my-message:hover .unsend-button {
   display: block;
+}
+
+.unsend-button:hover {
+  color: #fff;
+  background-color: #dabb9e;
+  border-color: #dabb9e;
 }
 
 .profile-picture {
@@ -115,8 +128,8 @@ h2 {
 }
 
 #send-message-form {
-  display: flex; /* Use flexbox */
-  align-items: center; /* Center items vertically */
+  display: flex; 
+  align-items: center; 
 }
 
 #send-message-form textarea {

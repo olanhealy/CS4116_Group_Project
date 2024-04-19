@@ -116,7 +116,7 @@
                         response.messages.forEach(function(message) {
                             var messageClass = message.from_self ? 'my-message' : 'other-message';
                             var unsendMessageButton = message.from_self ?
-                                '<button class="unsend-button" onclick="unsendMessage(' + message.message_id + ')">Unsend</button>' :
+                                '<button class="btn btn-primary unsend-button" onclick="unsendMessage(' + message.message_id + ')">Unsend</button>' :
                                 '';
                             messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.message_id + '">' +
                                 message.message_content + unsendMessageButton + '</div>';
