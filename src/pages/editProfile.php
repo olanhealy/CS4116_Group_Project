@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Errors: " . $errors;
     }
 
-    //header("Location: home.php");
+    header("Location: home.php");
 }
 
 ?>
