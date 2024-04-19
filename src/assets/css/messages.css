@@ -29,6 +29,14 @@ h2 {
   font-style: italic;
 }
 
+.svg-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #abc99d;
+  transform: rotate(45deg);
+}
+
 .content {
   width: 75%;
   display: flex;
@@ -104,6 +112,11 @@ h2 {
 
 #message-form {
   padding: 10px;
+}
+
+#send-message-form {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center items vertically */
 }
 
 #send-message-form textarea {
