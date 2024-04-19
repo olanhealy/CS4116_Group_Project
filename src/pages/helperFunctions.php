@@ -159,7 +159,7 @@ function setBio($user_id, $bio) {
     if ($set_bio->affected_rows > 0) {
         echo "Bio set successfully";
     } else {
-        echo "Error setting bio";
+        echo "Bio not changed";
     }
 }
 
@@ -196,7 +196,7 @@ function setGender($user_id, $gender) {
     if ($set_gender->affected_rows > 0) {
         echo "Gender set successfully";
     } else {
-        echo "Error setting Gender";
+        echo "Gender not changed";
     }
 
     $set_gender->close();
@@ -235,7 +235,7 @@ function setAge($age, $user_id) {
     if ($set_age->affected_rows > 0) {
         echo "Age set successfully";
     } else {
-        echo "Error setting Age";
+        echo "Age not changed";
     }
 
     $set_age->close();
@@ -274,7 +274,7 @@ function setCollegeYear($user_id, $college_year) {
     if ($set_college_year->affected_rows > 0) {
         echo "College Year set successfully";
     } else {
-        echo "Error setting College Year";
+        echo "College Year not changed";
     }
 
     $set_college_year->close();
@@ -312,7 +312,7 @@ function setPursuing($user_id, $pursuing) {
     if ($set_pursuing->affected_rows > 0) {
         echo "Pursuing set successfully";
     } else {
-        echo "Error setting Pursuing";
+        echo "Pursuing not changed";
     }
 
     $set_pursuing->close();
@@ -422,7 +422,7 @@ function setCourse($user_id, $course) {
     if ($set_course->affected_rows > 0) {
         echo "Course set successfully";
     } else {
-        echo "Error setting course";
+        echo "Course not changr";
     }
 }
 
@@ -458,7 +458,7 @@ function setHobbies($user_id, $hobbies) {
     if ($set_hobbies->affected_rows > 0) {
         echo "Hobbies set successfully";
     } else {
-        echo "Error setting hobbies";
+        echo "Hobbies not changed";
     }
 }
 
@@ -494,7 +494,7 @@ function setLookingFor($user_id, $looking_for) {
     if ($set_looking_for->affected_rows > 0) {
         echo "Looking for set successfully";
     } else {
-        echo "Error setting looking for";
+        echo "Looking for not changed";
     }
 }
 

@@ -7,8 +7,8 @@ CREATE TABLE account (
     first_name VARCHAR(26),
     last_name VARCHAR(26),
     user_role ENUM('admin', 'standard') NOT NULL DEFAULT 'standard',
-    banned boolean DEFAULT 0
-    number_of_reports INT(11) DEFAULT 0;
+    banned boolean DEFAULT 0,
+    number_of_reports INT(11) DEFAULT 0
     );
 
 CREATE TABLE profile (
