@@ -11,8 +11,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if (isset($_POST['hobbies'])){
+        $searchHobbies = $_POST['hobbies'];
+    }else{
+        $searchHobbies = NULL;
+    }
     // Get the search parameters from the form
-    $searchName = $_POST['name'];
+    $searchName = $_POST['full_name'];
     $searchAgeMin = $_POST['min_age'];
     $searchAgeMax = $_POST['max_age'];
     $searchGender = $_POST['gender'];
@@ -25,8 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Bind parameters for the age range
     $params = array();
-
-    // Append conditions for gender, looking for, and college year if they are provided
 
     if ($searchName !== "") {
         $query .= " AND name LIKE ?";
@@ -48,6 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params[] = $searchCollegeYear;
     }
 
+    if ($searchHobbies !== NULL) {
+
+        foreach ($searchHobbies as $hobby) {
+            $query .= " AND hobbies LIKE ?";
+            $params[] = '%' . $hobby . '%';
+        }
+    }
+    
     // The prepared minimum entry for the bind_param function
     $types = 'ii';
 
@@ -64,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //... unpacks the array into individual arguments
     $stmt->bind_param(...$allParams);
+
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -74,26 +86,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo '<div class="profile-cards-container">';
 
     if ($result->num_rows > 0) {
-        
+
         while ($row = $result->fetch_assoc()) {
 
             // Get the user ID of the each profile
             $targetUserId = $row['user_id'];
 
             // Skip the current user, admins, and users that the current user has adored
-            if ($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin" ) {
+            if ($targetUserId == $_SESSION['user_id'] || getUserRole($targetUserId) == "admin") {
                 continue;
             }
 
             // Check if the current user can adore the target user
             global $showingAdoreButton;
-            if ((getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender)&& isUserAdored($_SESSION['user_id'], $targetUserId) !== true) {
+            if ((getPursuing($_SESSION['user_id']) === getGender($targetUserId) && getPursuing($targetUserId) === $userGender) && isUserAdored($_SESSION['user_id'], $targetUserId) !== true) {
                 $showingAdoreButton = true;
             }
 
             // Display the profile card
             showProfileCard($targetUserId);
-            
+
             // Reset the flag
             $showingAdoreButton = false;
         }
