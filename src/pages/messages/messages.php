@@ -71,7 +71,6 @@
                     <?php foreach ($allConversations as $conversationMatchId) : ?>
                         <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
                         <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
-
                         <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
                             <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
                             <span class="match-name" ><?php echo htmlspecialchars($matchName); ?> </span>
