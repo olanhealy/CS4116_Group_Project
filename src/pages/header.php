@@ -2,8 +2,7 @@
 $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
-$pageNameTitle = "Page";
-//ucfirst(str_replace('Page.php', '', $curPageName));
+$pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +71,7 @@ $pageNameTitle = "Page";
             <div class="col-12 dropdownBtn">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
                     data-bs-toggle="dropdown">
-                    Explore
+                    <?php echo $pageNameTitle; ?>
                 </button>
 
                 <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
