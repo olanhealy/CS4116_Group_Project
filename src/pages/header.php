@@ -4,6 +4,7 @@ $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
 $pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
 
+
 if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     $userId = $_SESSION['user_id'];
 } 
@@ -11,7 +12,7 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 $notifications = fetchNotifications($userId);
 $totalNotifications = $notifications['messages'] + $notifications['matches'];
 
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
