@@ -882,4 +882,82 @@ function getDeliveryStatus($userId, $messageId) {
     return $deliveryStatus;
 }
 
+// Function to count new messages and matches
+function fetchNotifications($userId) {
+    global $conn;
+    // Initialise the count of notifications
+    $notifications = [
+        'messages' => 0,
+        'matches' => 0
+    ];
+    
+    $matchesAsInitiator = 0;
+    $matchesAsTarget = 0;
+
+    // Sql statement to get the count of new messages
+    $sqlMessages = "SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND read_status = 'delivered'";
+    $sqlGetMessages = $conn->prepare($sqlMessages);
+    $sqlGetMessages->bind_param("i", $userId);
+    $sqlGetMessages->execute();
+    $sqlGetMessages->bind_result($notifications['messages']);
+    $sqlGetMessages->fetch();
+    $sqlGetMessages->close();
+
+    // Sql statement to get the count of new matches for the target
+    $sqlMatchesAstarget = "SELECT COUNT(*) FROM matches WHERE target_id = ? AND viewed_by_target = FALSE";
+    $sqlGetMatchesAstarget = $conn->prepare($sqlMatchesAstarget);
+    $sqlGetMatchesAstarget->bind_param("i", $userId);
+    $sqlGetMatchesAstarget->execute();
+    $sqlGetMatchesAstarget->bind_result($matchesAsTarget);
+    $sqlGetMatchesAstarget->fetch();
+    $sqlGetMatchesAstarget->close();
+
+    // Sql statement to get the count of new matches for the initiator
+    $sqlMatchesAsInitiator = "SELECT COUNT(*) FROM matches WHERE initiator_id = ? AND viewed_by_initiator = FALSE";
+    $sqlGetMatchesAsInitiator = $conn->prepare($sqlMatchesAsInitiator);
+    $sqlGetMatchesAsInitiator->bind_param("i", $userId);
+    $sqlGetMatchesAsInitiator->execute();
+    $sqlGetMatchesAsInitiator->bind_result($matchesAsInitiator);
+    $sqlGetMatchesAsInitiator->fetch();
+    $sqlGetMatchesAsInitiator->close();
+
+    // Sum up the total matches that have not been viewed by the user
+    $notifications['matches'] = $matchesAsTarget + $matchesAsInitiator;
+
+    return $notifications;
+}
+
+//Function to clear the messages notifications when they are viewed
+function clearMessageNotifications($userId) {
+    global $conn;
+    $sqlClearMessages = "UPDATE messages SET read_status = 'read' WHERE receiver_id = ? AND read_status = 'delivered'";
+    $clearMessages = $conn->prepare($sqlClearMessages);
+    $clearMessages->bind_param("i", $userId);
+    $clearMessages->execute();
+    $clearMessages->close();
+}
+
+//function to clear the matches notifications when they are viewed
+function clearMatchNotifications($userId) {
+    global $conn;
+    $sqlClearMatches = "UPDATE matches SET viewed_by_target = TRUE WHERE target_id = ?";
+    $clearMatches = $conn->prepare($sqlClearMatches);
+    $clearMatches->bind_param("i", $userId);
+    $clearMatches->execute();
+    $clearMatches->close();
+
+    $sqlClearMatchesForInitiator = "UPDATE matches SET viewed_by_initiator = TRUE WHERE initiator_id = ?";
+    $clearMatchesForInitiator = $conn->prepare($sqlClearMatchesForInitiator);
+    $clearMatchesForInitiator->bind_param("i", $userId);
+    $clearMatchesForInitiator->execute();
+    $clearMatchesForInitiator->close();
+
+     // Reset session notification counts
+     $_SESSION['notifications'] = fetchNotifications($userId);
+
+}
+//function to iniitalise the notifications on login for that user
+function initialiseNotificationsOnLogin($userId) {
+    $_SESSION['notifications'] = fetchNotifications($userId);
+}
 ?>

@@ -3,7 +3,16 @@ $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], 
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
 $pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
+
+
+if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
+    $userId = $_SESSION['user_id'];
+} 
+
+$notifications = fetchNotifications($userId);
+$totalNotifications = $notifications['messages'] + $notifications['matches'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,12 +65,26 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
                     <path fill-rule="evenodd"
                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                 </svg>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
-                <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
-                <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
-            </ul>
-        </div>
+            </button><?php if ($totalNotifications > 0): ?>
+            <span class="badge bg-danger"><?php echo $totalNotifications; ?></span>
+        <?php endif; ?>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+
+
+        <!-- Dropdown menu items -->
+        <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
+        <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+
+        
+        <?php if ($notifications['messages'] > 0): ?>
+            <li><a class="dropdown-item-profile" href="messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages</a></li>
+        <?php endif; ?>
+        <?php if ($notifications['matches'] > 0): ?>
+            <li><a class="dropdown-item-profile" href="matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches</a></li>
+        <?php endif; ?>
+    </ul>
+</div>
 
     </nav>
 
@@ -87,4 +110,30 @@ $pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
 
     <br>
     <!-- End of Navbar -->
+    <script>
+    //Js function to clear notifications if they should be cleared
+function clearNotifications(type, userId) {
+    // Create a new instance of XMLHttpRequest which is used to make an HTTP request to the server
+    var xhr = new XMLHttpRequest();
+
+    //Make a POST request to the server where "resetNotifications.php" is the server-side script that will handle the request
+    xhr.open("POST", 'resetNotifications.php', true);
+
+    //  Content type is set to JSON 
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    // function to be called when the readyState property changes
+    xhr.onreadystatechange = function () {
+        // Checks if the request is complete and the response is ready
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Parses the JSON response from the server
+            var response = JSON.parse(xhr.responseText);
+         
+        }
+    };
+
+    // Send the request to the server
+    xhr.send(JSON.stringify({ type: type, user_id: userId }));
+}
+</script>
 </body>
