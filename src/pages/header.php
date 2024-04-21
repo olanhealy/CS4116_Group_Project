@@ -2,7 +2,7 @@
 $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
-$pageNameTitle = "Page";
+$pageNameTitle = ucfirst(str_replace('Page.php', '', $pageName));
 
 if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     $userId = $_SESSION['user_id'];
@@ -10,7 +10,7 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 
 $notifications = fetchNotifications($userId);
 $totalNotifications = $notifications['messages'] + $notifications['matches'];
-//ucfirst(str_replace('Page.php', '', $curPageName));
+
 ?>
 
 <!DOCTYPE html>
@@ -69,9 +69,13 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
         <?php endif; ?>
     </button>
     <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+
+
         <!-- Dropdown menu items -->
         <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
         <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+
+        
         <?php if ($notifications['messages'] > 0): ?>
             <li><a class="dropdown-item-profile" href="messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages</a></li>
         <?php endif; ?>
@@ -89,7 +93,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
             <div class="col-12 dropdownBtn">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
                     data-bs-toggle="dropdown">
-                    Explore
+                    <?php echo $pageNameTitle; ?>
                 </button>
 
                 <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
