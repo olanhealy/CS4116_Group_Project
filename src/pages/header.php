@@ -11,7 +11,7 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 
 $notifications = fetchNotifications($userId);
 $totalNotifications = $notifications['messages'] + $notifications['matches'];
-
+?>
 
 
 <!DOCTYPE html>
