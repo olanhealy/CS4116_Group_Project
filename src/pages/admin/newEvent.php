@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
                 } else {
                     // Upload file
                     if(move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-                        $message = 'The file '. htmlspecialchars( basename( $_FILES['image']['name'])). ' has been uploaded and replaced the existing image.';
+                        $message = 'The file '. htmlspecialchars( basename( $_FILES['image']['name'])). ' has been uploaded and replaced the existing image. This may take a few minutes to update on the system.';
                     } else {
                         $message = 'Sorry, there was an error uploading your file.';
                     }
@@ -51,7 +51,5 @@ if(isset($_POST['submit'])){
         <input type="submit" value="Upload Image" name="submit">
     </form>
     <p><?php echo $message; ?></p>
-    <h2>Current Event</h2>
-    <img src="../../assets/images/event.jpeg" alt="Current Image" style="max-width: 100%; height: auto;">
 </body>
 </html>

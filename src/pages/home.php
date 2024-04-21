@@ -49,12 +49,9 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                 </div>
     
                 <div class="container col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
-                    <img id="deal" class="img-fluid" src="../assets/images/stablesDeal.png" alt="Stables Deal">
+                    <img id="deal" class="img-fluid" src="../assets/images/event.jpeg" alt="Stables Deal">
                 </div>
-    
-                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center; margin-bottom: 10px;">     
-                    <a href="home.php" id="link"> View Events for the Week </a>
-                </div> 
+
             </div>
             
             <div class="col-lg-6 d-lg-flex justify-content-center align-items-center order-lg-2" style="text-align: center">
