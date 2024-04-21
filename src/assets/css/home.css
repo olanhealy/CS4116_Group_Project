@@ -79,36 +79,6 @@ body {
 }
 
 
-#iconbutton {
-  background-color: white;
-  color: #abc99d;
-  padding: 10px 20px;
-  cursor: pointer;
-  outline: none;
-  box-shadow: none;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  margin-right: 5px;
-}
-
-.dropdown-item-profile {
-  color: white;
-  padding: 12px 20px;
-  text-align: left;
-  font-size: 16px;
-}
-
-.dropdown-item-profile:hover {
-  background-color: #8f9b8b;
-}
-
-.dropdown-item-profile:active {
-  background-color: #abc99d;
-  color: white;
-}
 
 #profiledropdown {
   background-color: #abc99d;

@@ -3,6 +3,13 @@ $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], 
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
 $pageNameTitle = "Page";
+
+if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
+    $userId = $_SESSION['user_id'];
+} 
+
+$notifications = fetchNotifications($userId);
+$totalNotifications = $notifications['messages'] + $notifications['matches'];
 //ucfirst(str_replace('Page.php', '', $curPageName));
 ?>
 

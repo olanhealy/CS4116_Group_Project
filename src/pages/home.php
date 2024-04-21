@@ -38,30 +38,10 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
 </head>
 <body>
 <?php 
-    include 'helperFunctions.php';
     setupHeader();
     ?>
 
-    <!-- Dropdown Menu Button -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 dropdownBtn">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown"
-                    data-bs-toggle="dropdown">
-                    Home
-                </button>
-
-                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
-                    <li><a class="dropdown-item" href="home.php">Home</a></li>
-                    <li><a class="dropdown-item" href="explore.php">Explore</a></li>
-                    <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                    <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
-                    <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
+   
     <br>
 
     <!-- Main Container -->
