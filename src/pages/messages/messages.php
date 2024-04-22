@@ -66,7 +66,7 @@
     <body>
         <div class="messages-container d-flex">
             <!-- Sidebar for The messages -->
-            <div class="sidebar" style="width: 25%;">
+            <div class="sidebar">
                 <ul id="conversation-list" class="list-unstyled">
                     <?php foreach ($allConversations as $conversationMatchId) : ?>
                         <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
@@ -79,7 +79,7 @@
                 </ul>
             </div>
             <!-- area for displaying messages -->
-            <div class="content" style="width: 75%;">
+            <div class="content">
                 <h2 id="message-title">Message one of your matches!!</h2>
                 <div id="message-content" class="messages">
                 </div>
