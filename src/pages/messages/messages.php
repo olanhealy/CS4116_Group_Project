@@ -3,8 +3,6 @@
     include "../db_connection.php";
     include "../helperFunctions.php";
 
-    setupHeader();
-
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -43,6 +41,7 @@
         header('Location: messages.php?match_id=' . $matchId);
         exit;
     }
+    setupHeader();
     ?>
 
     <!-- HTML for the messages page -->
