@@ -47,12 +47,12 @@ h2 {
   flex-grow: 1;
   overflow-y: auto;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   padding: 10px;
 }
 
 .message {
-  position: relative; 
+  position: relative;
   margin-bottom: 10px;
   border-radius: 10px;
   max-width: 50%;
@@ -60,7 +60,7 @@ h2 {
 }
 
 .my-message {
-  background-color: #abc99d; 
+  background-color: #abc99d;
   margin-left: auto;
   margin-right: 10px;
   max-width: fit-content;
@@ -68,7 +68,7 @@ h2 {
 }
 
 .other-message {
-  background-color: #dabb9e; 
+  background-color: #dabb9e;
   max-width: fit-content;
   margin-left: 10px;
   padding: 5px;
@@ -84,6 +84,7 @@ h2 {
   border-color: #dabb9e;
   font-weight: bold;
   cursor: pointer;
+  word-break: normal;
 }
 
 .my-message:hover .unsend-button {
@@ -106,13 +107,13 @@ h2 {
 .match-name {
   display: inline-block;
   vertical-align: middle;
-  font-size: 16px; 
+  font-size: 16px;
   font-weight: bold;
   color: #abc99d;
 }
 
 #conversation-list li {
-  border: 2px solid #dabb9e; 
+  border: 2px solid #dabb9e;
   margin-bottom: 10px;
 }
 
@@ -121,8 +122,8 @@ h2 {
 }
 
 #send-message-form {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
 }
 
 #send-message-form textarea {
@@ -133,14 +134,46 @@ h2 {
 #send-message-form button {
   width: 100px;
 }
-/* 
-@media (max-width: 988px) {
-  .sidebar {
-    display: inline-block;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    max-width: 100%;
+
+.chatList-btn {
+  display: none;
+}
+
+
+@media (max-width: 766px) {
+  .chatList-btn {
+    display: block;
+    background-color: #abc99d;
+    color: white;
+    text-align: center;
+    padding: 7px 95px;
+    font-size: 15px;
+    font-weight: bold;
+    border-color: #abc99d;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
   }
-} */
+
+
+  .chatList-btn:hover {
+    background-color: #97b189;
+    border-color: #97b189;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 17%;
+    left: -250px;
+    width: 250px;
+    max-height: 100vh;
+    background-color: #fff;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    border: 2px solid #808080;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+}

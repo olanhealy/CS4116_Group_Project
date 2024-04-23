@@ -66,40 +66,55 @@
     <body>
         <div class="container-fluid messages-container col-md-12 col-lg-12 col-sm-12 ">
             <div class="row flex-grow-1">
-            <!-- Sidebar for The messages -->
-            <div class="sidebar col-lg-3 order-lg-1 col-md-12">
-                <ul id="conversation-list" class="list-unstyled">
-                    <?php foreach ($allConversations as $conversationMatchId) : ?>
-                        <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
-                        <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
-                        <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
-                            <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
-                            <span class="match-name"><?php echo htmlspecialchars($matchName); ?> </span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <!-- area for displaying messages -->
-            <div class="content col-lg-9 order-lg-2 col-md-12">
-                <h2 id="message-title">Message one of your matches!!</h2>
-                <div id="message-content" class="messages">
+                <!-- Sidebar for The messages -->
+                <div class="sidebar col-lg-3 col-md-3 col-sm-12" id="sidebar">
+                    <ul id="conversation-list" class="list-unstyled">
+                        <?php foreach ($allConversations as $conversationMatchId) : ?>
+                            <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
+                            <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
+                            <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
+                                <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
+                                <span class="match-name"><?php echo htmlspecialchars($matchName); ?> </span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
-                <div id="message-form" style="display: none;">
-                    <form id="send-message-form" method="post">
-                        <textarea name="message_content" id="message_content" required></textarea>
-                        <button type="submit" class="svg-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
-                            </svg>
-                        </button>
-                    </form>
+                <!-- area for displaying messages -->
+                <div class="content col-lg-9 col-md-9 col-sm-12" id="contentArea">
+                    <button id="toggleSidebar" class="btn btn-primary chatList-btn" type="button">My Chats</button>
+                    <h2 id="message-title">Message one of your matches!!</h2>
+                    <div id="message-content" class="messages">
+                    </div>
+                    <div id="message-form" style="display: none;">
+                        <form id="send-message-form" method="post">
+                            <textarea name="message_content" id="message_content" required></textarea>
+                            <button type="submit" class="svg-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 
 
         <script>
+            $(document).ready(function() {
+                // Add click event listener to toggle button
+                $('#toggleSidebar').click(function() {
+                    $('#sidebar').toggleClass('show');
+                    $('#contentArea').toggleClass('show');
+                });
+            });
+
+            $('#conversation-list li').click(function() {
+                $('#sidebar').removeClass('show');
+                $('#contentArea').removeClass('show');
+            });
+
+
             var currentMatchId = null;
 
             function loadMessages(matchId) {
