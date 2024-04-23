@@ -60,6 +60,8 @@ CREATE TABLE matches (
     initiator_id INT(11),
     target_id INT(11),
     response_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    viewed_by_target BOOLEAN NOT NULL DEFAULT FALSE,
+    viewed_by_initiator BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (initiator_id) REFERENCES Account(user_id),
     FOREIGN KEY (target_id) REFERENCES Account(user_id)
 );

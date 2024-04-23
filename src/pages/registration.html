@@ -70,7 +70,8 @@
 
                     <div class="form-input mb-4">
                         <!-- Email  -->
-                        <input type="email" class="form-control" placeholder="Email" name="email" required>
+                        <input type="email" class="form-control" placeholder="Email" name="email" required
+                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                     </div>
 
 
@@ -87,12 +88,14 @@
 
                     <div class="form-input mb-4">
                         <!-- First Name  -->
-                        <input type="text" class="form-control" placeholder="First Name" name="first_name" required>
+                        <input type="text" class="form-control" placeholder="First Name" name="first_name" required
+                            value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>">
                     </div>
-
+                
                     <div class="form-input mb-4">
                         <!-- Last Name  -->
-                        <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
+                        <input type="text" class="form-control" placeholder="Last Name" name="last_name" required
+                            value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>">
                     </div>
 
                     <div class="form-check d-flex justify-content-center mb-4">

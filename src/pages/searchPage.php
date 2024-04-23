@@ -17,7 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $searchHobbies = NULL;
     }
     // Get the search parameters from the form
+
+    if (isset($_POST['full_name'])){
     $searchName = $_POST['full_name'];
+    }else{
+        $searchName = "";
+    }
+
     $searchAgeMin = $_POST['min_age'];
     $searchAgeMax = $_POST['max_age'];
     $searchGender = $_POST['gender'];
