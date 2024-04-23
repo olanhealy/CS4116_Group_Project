@@ -609,6 +609,7 @@ function removeMatch($userId, $targetId)
     }
 }
 
+// Gets all of the users matches
 function getAllMatches($userId)
 {
     global $conn;
@@ -644,12 +645,12 @@ function getAllMatches($userId)
     }
 }
 
-// Get's the user's next match
-function getNextMatch($userId)
+// Gets the users next match
+function getNextMatches($userId)
 {
     global $conn;
     
-    // Get next match for user
+    // Get next matches for user
     $query = "SELECT 
                 CASE 
                     WHEN initiator_id = $userId THEN target_id 
@@ -658,27 +659,30 @@ function getNextMatch($userId)
               FROM matches 
               WHERE (initiator_id = $userId OR target_id = $userId)
                 AND response_date IS NOT NULL 
-              ORDER BY response_date DESC 
-              LIMIT 1";
+              ORDER BY response_date DESC";
 
 
-    //check the result is not empty
+    $matches = array();
+
+    // Check the result is not empty
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
-        // Output data of each row with a form to ban/unban
-        $row = $result->fetch_assoc();
-        $targetId = $row['other_user_id'];
+        // Fetch each match and add it to the matches array
+        while ($row = $result->fetch_assoc()) {
+            $targetId = $row['other_user_id'];
+            $name = getName($targetId);
+            $age = getAge($targetId);
+            $matches[] = array('name' => $name, 'age' => $age, 'userId' => $userId, 'targetId' => $targetId);
 
-        $name = getName($targetId);
-        $age = getAge($targetId);
-        $profilePicture = getProfilePicture($targetId);
+        }
 
-        // Include the match HTML
-        include "match.html";
+        return $matches;
+
     } else {
-        // error
-        echo "No match found.";
+        // Error
+        echo '<p> No matches found. <br> Use the Explore page to create new matches!</p>';
     }
+
 }
 
 

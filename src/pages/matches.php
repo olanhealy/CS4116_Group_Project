@@ -1,9 +1,8 @@
 <?php
-
 include "db_connection.php";
 require_once 'helperFunctions.php';
 
-if(session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -12,13 +11,11 @@ $userId = $_SESSION['user_id'];
 //sets up the header and dropdown
 setupHeader();
 
-//include 'outline.html';
+// Get the user's next matches
+$matches = getNextMatches($userId);
 
-// Get all matches for the user
-//getAllMatches($userId);
-
-// Get the user's next match
-getNextMatch($userId);
+// Include match.html file
+include "match.html";
 
 // If the user wants to remove a match
 if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
@@ -28,3 +25,5 @@ if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
 
 //set up the footer
 setupFooter();
+
+?>
