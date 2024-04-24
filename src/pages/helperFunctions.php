@@ -213,12 +213,12 @@ function getGender($user_id) {
 }
 
 // Process #19 to set the user's age in the profile table of the db
-function setAge($age, $user_id) {
+function setAge($userId, $age) {
     global $conn;
 
     $sql_set_age = "UPDATE profile SET age = ? WHERE user_id = ?";
     $set_age = $conn->prepare($sql_set_age);
-    $set_age->bind_param("ii", $age, $user_id);
+    $set_age->bind_param("ii", $age, $userId);
     $set_age->execute();
 
     $set_age->close();
@@ -915,5 +915,37 @@ function clearMatchNotifications($userId) {
 //function to iniitalise the notifications on login for that user
 function initialiseNotificationsOnLogin($userId) {
     $_SESSION['notifications'] = fetchNotifications($userId);
+}
+
+function areUserDetailsSet($userId) {
+    // get user details from db
+    $bio = getBio($userId);
+    $hobbies = getHobbies($userId);
+    $gender = getGender($userId);
+    $age = getAge($userId);
+    $collegeYear = getCollegeYear($userId);
+    $pursuing = getPursuing($userId);
+    $profilePicFilename = getProfilePicture($userId);
+    $course = getCourse($userId);
+    $lookingFor = getLookingFor($userId);
+    $name = getName($userId);
+
+    // If all set, return true otherwise return
+    if (
+        isset($bio) &&
+        isset($hobbies) &&
+        isset($gender) &&
+        isset($age) &&
+        isset($collegeYear) &&
+        isset($pursuing) &&
+        isset($profilePicFilename) &&
+        isset($course) &&
+        isset($lookingFor) &&
+        isset($name)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 ?>
