@@ -37,11 +37,11 @@ if (isset($_SESSION['targetId'])) {
         // Process form data
         
         // Profile Picture
-        if (isset($_FILES['profile_pic']) && $_FILES['profile_pic'] !== $_SESSION['existingProfilePic']) {
+        if (isset($_FILES['profile_pic']['name']) && $_FILES['profile_pic']['name'] !== $_SESSION['existingProfilePic']) {
             $profilePicFilename = $_FILES['profile_pic']['name'];
             setProfilePic($targetId, $profilePicFilename);
         }
-    
+
         if(isset($_POST['gender'])){
             $gender = htmlspecialchars($_POST['gender']);
         }
@@ -114,10 +114,10 @@ if (isset($_SESSION['targetId'])) {
             $hobbies = implode(' ', $hobbies);
             setHobbies($targetId, $hobbies);
         }else{
-            $hobbies = getHobbies($userId);
+            $hobbies = getHobbies($targetId);
         }
 
-        // header("Location: showUserAdmin.php");
+        
         include "../footer.php";
     }
 
