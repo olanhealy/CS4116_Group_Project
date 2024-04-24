@@ -574,6 +574,18 @@ function removeMatch($userId, $targetId)
 
     global $conn;
 
+    $matchId = getMatchId($userId, $targetId);
+
+    $query = "DELETE FROM messages WHERE match_id = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt !== false) {
+        $stmt->bind_param("i", $matchId);
+        $stmt->execute();
+    } else {
+        die("Error in SQL query: " . $conn->error . "<br>");
+    }
+
     $query = "DELETE FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
     $stmt = $conn->prepare($query);
 
