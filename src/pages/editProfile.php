@@ -38,10 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['gender'])){
         $gender = htmlspecialchars($_POST['gender']);
     }
+
+    
+    if(isset($_POST['age']) && !empty($_POST['age'])){
+        $age = intval($_POST['age']);
+        setAge($userId, $age); 
+    } else {
+        $age = getAge($userId); 
+    }
     
     // Validate inputs
     $bio = htmlspecialchars($_POST['bio']);
-    $age = intval($_POST['age']);
     $collegeYear = htmlspecialchars($_POST['college_year']);
     $pursuing = htmlspecialchars($_POST['pursuing']);
     $course = htmlspecialchars($_POST['course']);
@@ -80,15 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // Call setter methods to make the updates in db
-    //only set age if correct, otherwise error
-    if ($age < 18) {
-        $errors[] = "Must be minimum 18 years old to use Ul Singles";
-    } else {
-        setAge($age, $userId);
-    }
+   
 
     
-
+    
     setBio($userId, $bio);
     setGender($userId, $gender);
     setCollegeYear($userId, $collegeYear);
@@ -97,14 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setCourse($userId, $course);
     setHobbies($userId, $hobbies);
     setLookingFor($userId, $lookingFor);
-
-  //  if (empty($errors)) {
-  //      setPassword($password, $userId);
-  //  } else {
-  //      echo "Errors: " . $errors;
-  //  }
-
-
     
 }
 
@@ -188,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- End of Navbar -->
 
     <!-- Dropdown Menu Button as long as they have already provided their defails -->
-    <?php if (isset($age)) { ?>
+    <?php if (areUserDetailsSet($userId)) { ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 dropdownBtn">
@@ -226,34 +220,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span id="name"><?php echo htmlspecialchars($name); ?></span>
                             </div>
 
-                            <div class="col-md-4 col-sm-12 col-lg-4">
-                                <!-- Age -->
-                                <label for="age" class="inputLabelText">Age</label><br>
-                                <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
-                                <?php if (empty($errors)) { ?>
-                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
-                                    <?php if (isset($age)) echo "value='$age'"; ?> required>
-                                    <?php } else { ?>
-                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." required>
-                                <?php } ?>
-                            </div>
+                            <?php if(isset($age)) { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="age" class="inputLabelText">Age</label><br>
+                                    <span id="age"><?php echo htmlspecialchars($age); ?></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="age" class="inputLabelText">Age</label><br>
+                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18" required>
+                                </div>
+                            <?php } ?>
 
-                            <div class="col-md-4 col-sm-12 col-lg-4">
-                                <!-- Gender -->
-                                <label for="gender" class="inputLabelText">Gender</label><br>
-                                <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender))
-                                    echo "disabled"; ?> required>
+                            <?php if(isset($gender)) { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <!-- Gender -->
+                                    <label for="gender" class="inputLabelText">Gender</label><br>
+                                    <span id="gender"><?php echo htmlspecialchars($gender); ?></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="gender" class="inputLabelText">Gender</label><br>
+                                    <select id="gender" name="gender" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Male" <?php if (isset($gender) && $gender == "Male")
+                                    <option value="Male" 
+                                    <?php if (isset($gender) && $gender == "Male")
                                         echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if (isset($gender) && $gender == "Female")
                                         echo "selected"; ?>>Female</option>
                                     <option value="Other" <?php if (isset($gender) && $gender == "Other")
                                         echo "selected"; ?>>Other</option>
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
+                            <?php } ?>
                         </div>
-
                         <!--Second Row -- College Year, Course of Study -->
                         <div class="row inputField">
                             <div class="col-md-6 col-sm-12 col-lg-6">
