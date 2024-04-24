@@ -16,6 +16,17 @@ body {
   border-bottom: 1px solid #d3d3d3;
 }
 
+.chosen-select {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: none;
+}
+
+
 .line {
   width: 1px;
   height: 75px;

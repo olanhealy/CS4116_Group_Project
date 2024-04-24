@@ -24,6 +24,7 @@ if (isset($_SESSION['targetId'])) {
     $_SESSION['existingLookingFor'] = getLookingFor($targetId);
 
     $_SESSION['existingBio'] = getBio($targetId);
+
     $_SESSION['existingHobbies'] = getHobbies($targetId);
 
     // added in to get the existing profile picture
@@ -39,6 +40,10 @@ if (isset($_SESSION['targetId'])) {
         if (isset($_FILES['profile_pic']) && $_FILES['profile_pic'] !== $_SESSION['existingProfilePic']) {
             $profilePicFilename = $_FILES['profile_pic']['name'];
             setProfilePic($targetId, $profilePicFilename);
+        }
+    
+        if(isset($_POST['gender'])){
+            $gender = htmlspecialchars($_POST['gender']);
         }
 
         // First & Last Name
@@ -104,9 +109,12 @@ if (isset($_SESSION['targetId'])) {
         }
 
         // Hobbies
-        if (isset($_POST['hobbies']) && $_POST['hobbies'] !== $_SESSION['existingHobbies']) {
+        if (isset($_POST['hobbies']) && !empty($_POST['hobbies']) && $_POST['hobbies'] !== $_SESSION['existingHobbies']) {
             $hobbies = $_POST['hobbies'];
+            $hobbies = implode(' ', $hobbies);
             setHobbies($targetId, $hobbies);
+        }else{
+            $hobbies = getHobbies($userId);
         }
 
         // header("Location: showUserAdmin.php");

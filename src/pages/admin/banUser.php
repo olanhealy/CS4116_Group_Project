@@ -4,6 +4,10 @@ include "../db_connection.php";
 include_once "adminHelperFunctions.php";
 include "../helperFunctions.php";
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Check if the user is logged in
 if (isset ($_SESSION['user_id'])) {
     // Retrieve the user ID
