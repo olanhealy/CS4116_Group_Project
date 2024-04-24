@@ -51,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if password is between 8 and 20 characters long
     if (strlen($password) < 8 || strlen($password) > 20) {
-        $errors[] = "Password must be between 8 and 20 characters long";
+        $passwordErrors[] = "Password must be between 8 and 20 characters long";
     }
 
     // Check for at least one capital letter and at least one special character with the inputted password
     if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors[] = "Password must contain at least one capital letter and one special character";
+        $passwordErrors[] = "Password must contain at least one capital letter and one special character";
     }
 
     // Check if the inputted and repeated passwords both match
@@ -73,17 +73,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
         $errors[] = "Please upload a profile picture";
     }
-
+    
 
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
 
     // Call setter methods to make the updates in db
+    //only set age if correct, otherwise error
+    if ($age < 18) {
+        $errors[] = "Must be minimum 18 years old to use Ul Singles";
+    } else {
+        setAge($age, $userId);
+    }
+
+    
 
     setBio($userId, $bio);
     setGender($userId, $gender);
-    setAge($age, $userId);
     setCollegeYear($userId, $collegeYear);
     setPursuing($userId, $pursuing);
     setProfilePic($userId, $profilePicFilename);
@@ -223,9 +230,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- Age -->
                                 <label for="age" class="inputLabelText">Age</label><br>
                                 <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
-                                    <?php if (isset($age))
-                                        echo "value='$age'"; ?> <?php if (isset($age))
-                                        echo "readonly"; ?> required>
+                                <?php if (empty($errors)) { ?>
+                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
+                                    <?php if (isset($age)) echo "value='$age'"; ?> required>
+                                    <?php } else { ?>
+                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." required>
+                                <?php } ?>
                             </div>
 
                             <div class="col-md-4 col-sm-12 col-lg-4">
