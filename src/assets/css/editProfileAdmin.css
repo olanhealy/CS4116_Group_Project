@@ -12,67 +12,70 @@ body {
   margin: 0;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-right: 10px;
-  border-bottom: 0.5px solid #d3d3d3;
+#navbar {
+  border-bottom: 1px solid #d3d3d3;
 }
+
+.chosen-select {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: none;
+}
+
 
 .line {
-  width: 0.5px;
-  height: 80px;
+  width: 1px;
+  height: 75px;
   background-color: #d3d3d3;
 }
-
+  
 .header-img {
   max-width: 130px;
   margin-right: 10px;
   height: 80px;
 }
-
-.images {
+  
+.images{
   display: flex;
   align-items: left;
   max-width: 500px;
 }
-
-#explorebutton {
-  background-color: white;
-  color: #abc99d;
+  
+#adminbutton {
+  background-color: white; 
+  color: #abc99d; 
   border: 3px solid #abc99d;
   padding: 13px 29px;
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
-  border-radius: 0%;
 }
 
-#explorebutton:hover {
+#adminbutton:hover {
   background-color: #abc99d;
   color: white;
 }
 
-#logoutbutton {
+#logoutbutton{
   background-color: #abc99d;
-  color: white;
+  color: white; 
   border: 3px solid #abc99d;
   padding: 13px 29px;
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   transition-duration: 0.4s;
   cursor: pointer;
   float: right;
-  border-radius: 0%;
 }
-
+    
 #logoutbutton:hover {
   background-color: white;
   color: #abc99d;
@@ -80,8 +83,8 @@ body {
 
 
 #iconbutton {
-  background-color: white;
-  color: #abc99d;
+  background-color: white; 
+  color: #abc99d; 
   padding: 10px 20px;
   cursor: pointer;
   outline: none;
@@ -91,7 +94,6 @@ body {
   justify-content: center;
   align-items: center;
   align-content: center;
-  margin-right: 5px;
 }
 
 .dropdown-item-profile {
@@ -100,53 +102,38 @@ body {
   font-size: 20px;
 }
 
-#profiledropdown {
+#profiledropdown{
   background-color: #abc99d;
+  min-width: 10px;
 }
 
-#menu-dropdown {
-  background-color: #e6d1be;
-  color: white;
+#logoutdropdown {
+  font-size: 15px;
+}
+
+#logoutdropdown:hover {
+  background-color: white;
+  color: black;
+}
+
+#admindropdown {
+  font-size: 15px;
+}
+
+#admindropdown:hover {
+  background-color: white;
+  color: black;
+}
+
+hr {
+  margin: 0.2em auto;
+}
+
+#userID{
+  font-size: 30px; 
+  margin-top: 10px; 
+  margin-bottom: 10px;
   text-align: center;
-  padding: 7px 60px;
-  font-size: 18px;
-  font-weight: bold;
-  border-color: #e6d1be;
-  justify-content: left;
-  margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-  .dropdownBtn {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-#menu-dropdown:hover {
-  background-color: #e6d1be;
-  border-color: black;
-  color: white;
-}
-
-#homedropdown {
-  background-color: #faf0e6;
-  border-color: #dabb9e;
-  border-width: 3px;
-}
-
-.dropdown-item {
-  font-weight: bold;
-  color: #dabb9e;
-  font-size: 18px;
-}
-
-.dropdown-item:hover {
-  background-color: #dabb9e;
-  font-weight: bold;
-  color: white;
-  font-size: 18px;
 }
 
 #outline {
@@ -154,6 +141,22 @@ body {
   position: relative;
   width: 80vw;
   margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+#leftcontainer{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#buttoncontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline;
 }
 
 .saveChangesBtn {
@@ -168,17 +171,18 @@ body {
   border-color: #97b189;
 }
 
-.imgContainer {
+#picturecontainer {
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 10px;
 }
 
-.profilePicture {
-  padding-bottom: 20px;
-  padding-top: 20px;
+#profilepicture {
+  padding-top: 10px;
+  padding-bottom: 10px;
   max-width: 65%;
 }
 
@@ -203,9 +207,6 @@ body {
   display: none;
 }
 
-.inputLabelText {
-  font-weight: bold;
-}
 
 .optionDropdown {
   padding: 8px 20px;
@@ -234,7 +235,6 @@ body {
   background-color: #e6d1be;
   color: #fff;
 }
-
 
 .optionDropdown:after {
   content: '\25BC';
@@ -273,15 +273,74 @@ body {
   padding: 5px;
 }
 
-.chosen-select {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background-color: #fff;
-  font-size: 16px;
-  box-sizing: border-box;
-  border: none;
+#inputLabelText {
+  font-weight: bold;
 }
+
+#toprow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+
+#first_name{
+  width: 90%;
+  height: 30px;
+  resize: none;
+}
+
+#last_name{
+  width: 90%;
+  height: 30px;
+  resize: none;
+}
+
+#age{
+  width: 50%;
+  height: 30px;
+  resize: none;
+}
+
+#gender{
+  width: 90%;
+  height: 30px;
+  resize: none;
+}
+
+#middlerow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+#bottomrow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+#biohobbiesrow{
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#bio{
+  width: 100%;
+  height: 50px;
+  resize: none;
+}
+
+#hobbies{
+  width: 100%;
+  height: 50px;
+  resize: none;
+}
+
 
 footer {
   background-color: #e6d1be;
@@ -325,19 +384,10 @@ footer {
   font-weight: bold;
 }
 
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+.container {
+  display: flex;
 }
 
-.container-fluid {
-  position: relative;
-}
-
-.error-message {
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 100%;
+.included-content {
+  margin-right: 20px; /* Adjust spacing between elements */
 }

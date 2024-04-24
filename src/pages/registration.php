@@ -1,8 +1,17 @@
 <?php
 
 // Process #8 verifyStudentEmail verifies by making sure the email ends with '@studentmail.ul.ie'
-function verifyStudentEmail($email){
-    return substr($email, -18) === "@studentmail.ul.ie";
+function verifyStudentEmail($email) {
+    // Check if the email ends with '@studentmail.ul.ie'
+    if (substr($email, -18) !== "@studentmail.ul.ie") {
+        return false;
+    }
+
+    // get the student number part of the email
+    $studentId = substr($email, 0, strpos($email, '@'));
+
+    // Check if it is a student id (i.e. only numbers)  and does not exceed 8 digits (length of a studentId)
+    return preg_match('/^\d{1,8}$/', $studentId);
 }
 
 
@@ -36,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if email is a UL student email using the verifyStudentEmail function. Uses #Process 9, verifyStudentMail by checking if output
     // is false it will end
     if (!verifyStudentEmail($email)) {
-        $errors[] = "Email must end with '@studentmail.ul.ie' (Are you sure you are a UL Student?)";
+        $errors[] = "Email must be a valid UL student email and the student number should not exceed 8 digits.";
     }
 
     // Check if password is between 8 and 20 characters long
@@ -46,13 +55,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check for at least one capital letter and at least one special character with the inputted password
     if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors[] = "Password must contain at least one capital letter and one special character";
+        $errors[] = "Password must be minimum 8 characters long, contain at least one capital letter and one special character";
     }
 
     // Check if the inputted and repeated passwords both match
     if ($_POST['password'] !== $_POST['password-repeat']) {
         $errors[] = "The password and repeated password do not match";
     }
+
+    // Check if first name only contains letters, apostrophes, hyphens, and spaces
+    if (!preg_match('/^[A-Za-z\'\-\s]+$/', $firstName)) {
+    $errors[] = "First name can only contain letters, apostrophes, hyphens, and spaces.";
+    }
+
+    // Check if last name only contains Letters, apostrophes, hyphens, and spaces
+    if (!preg_match('/^[A-Za-z\'\-\s]+$/', $lastName)) {
+    $errors[] = "Last name can only contain letters, apostrophes, hyphens, and spaces.";
+    }
+    //Included apostrophes and hyphens in the regex for names as could have names such as Gary O'Brien or Mary-Anne
 
     //If erros are empty. then procede with Inserting new account into account table of db and setting the  attributes
     if (empty($errors)) {

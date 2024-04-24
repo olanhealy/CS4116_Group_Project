@@ -11,7 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
 // Fetch user details from the database
 $userId = $_SESSION['user_id'];
 
-
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
@@ -29,26 +28,42 @@ $name = getName($userId);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+    if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])){
+        $hobbies = $_POST['hobbies'];
+        $hobbies = implode(' ', $hobbies);
+    }else{
+        $hobbies = getHobbies($userId);;
+    }
+    
+    if(isset($_POST['gender'])){
+        $gender = htmlspecialchars($_POST['gender']);
+    }
+
+    
+    if(isset($_POST['age']) && !empty($_POST['age'])){
+        $age = intval($_POST['age']);
+        setAge($userId, $age); 
+    } else {
+        $age = getAge($userId); 
+    }
+    
     // Validate inputs
     $bio = htmlspecialchars($_POST['bio']);
-    $gender = htmlspecialchars($_POST['gender']);
-    $age = intval($_POST['age']);
     $collegeYear = htmlspecialchars($_POST['college_year']);
     $pursuing = htmlspecialchars($_POST['pursuing']);
     $course = htmlspecialchars($_POST['course']);
-    $hobbies = htmlspecialchars($_POST['hobbies']);
     $lookingFor = htmlspecialchars($_POST['looking_for']);
     $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
     $password = htmlspecialchars($_POST['password']);
 
     // Check if password is between 8 and 20 characters long
     if (strlen($password) < 8 || strlen($password) > 20) {
-        $errors[] = "Password must be between 8 and 20 characters long";
+        $passwordErrors[] = "Password must be between 8 and 20 characters long";
     }
 
     // Check for at least one capital letter and at least one special character with the inputted password
     if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors[] = "Password must contain at least one capital letter and one special character";
+        $passwordErrors[] = "Password must contain at least one capital letter and one special character";
     }
 
     // Check if the inputted and repeated passwords both match
@@ -56,29 +71,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "The password and repeated password do not match";
     }
 
-    var_dump($_SESSION);
+    // Check if at least one hobbie is inputted
+    if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
+        $errors[] = "Please select at least one hobby";
+    }
+
+    // Check if user uploaded a profile picture
+    if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+        $errors[] = "Please upload a profile picture";
+    }
+    
+
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
 
     // Call setter methods to make the updates in db
+   
+
+    
+    
     setBio($userId, $bio);
     setGender($userId, $gender);
-    setAge($age, $userId);
     setCollegeYear($userId, $collegeYear);
     setPursuing($userId, $pursuing);
     setProfilePic($userId, $profilePicFilename);
     setCourse($userId, $course);
     setHobbies($userId, $hobbies);
     setLookingFor($userId, $lookingFor);
-
-    if (empty($errors)) {
-        setPassword($password, $userId);
-    } else {
-        echo "Errors: " . $errors;
-    }
-
-    header("Location: home.php");
+    
 }
 
 ?>
@@ -106,6 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js"></script>
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
 
     <!-- External Stylesheet -->
     <link rel="stylesheet" type="text/css" href="../assets/css/edit_profile.css">
@@ -159,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- End of Navbar -->
 
     <!-- Dropdown Menu Button as long as they have already provided their defails -->
-    <?php if (isset($age)) { ?>
+    <?php if (areUserDetailsSet($userId)) { ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 dropdownBtn">
@@ -197,31 +220,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span id="name"><?php echo htmlspecialchars($name); ?></span>
                             </div>
 
-                            <div class="col-md-4 col-sm-12 col-lg-4">
-                                <!-- Age -->
-                                <label for="age" class="inputLabelText">Age</label><br>
-                                <input type="number" id="age" name="age" class="textInput" placeholder="Type here..."
-                                    <?php if (isset($age))
-                                        echo "value='$age'"; ?> <?php if (isset($age))
-                                               echo "readonly"; ?> required>
-                            </div>
+                            <?php if(isset($age)) { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="age" class="inputLabelText">Age</label><br>
+                                    <span id="age"><?php echo htmlspecialchars($age); ?></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="age" class="inputLabelText">Age</label><br>
+                                    <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18" required>
+                                </div>
+                            <?php } ?>
 
-                            <div class="col-md-4 col-sm-12 col-lg-4">
-                                <!-- Gender -->
-                                <label for="gender" class="inputLabelText">Gender</label><br>
-                                <select id="gender" name="gender" class="optionDropdown" <?php if (isset($gender))
-                                    echo "disabled"; ?> required>
+                            <?php if(isset($gender)) { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <!-- Gender -->
+                                    <label for="gender" class="inputLabelText">Gender</label><br>
+                                    <span id="gender"><?php echo htmlspecialchars($gender); ?></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-md-4 col-sm-12 col-lg-4">
+                                    <label for="gender" class="inputLabelText">Gender</label><br>
+                                    <select id="gender" name="gender" class="optionDropdown" required>
                                     <option value="" disabled selected>Choose..</option>
-                                    <option value="Male" <?php if (isset($gender) && $gender == "Male")
+                                    <option value="Male" 
+                                    <?php if (isset($gender) && $gender == "Male")
                                         echo "selected"; ?>>Male</option>
                                     <option value="Female" <?php if (isset($gender) && $gender == "Female")
                                         echo "selected"; ?>>Female</option>
                                     <option value="Other" <?php if (isset($gender) && $gender == "Other")
                                         echo "selected"; ?>>Other</option>
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
+                            <?php } ?>
                         </div>
-
                         <!--Second Row -- College Year, Course of Study -->
                         <div class="row inputField">
                             <div class="col-md-6 col-sm-12 col-lg-6">
@@ -244,8 +276,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- Course-->
                                 <label for="course" class="inputLabelText">Course of Study</label><br>
                                 <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
-                                    <option value="" selected disabled>Choose..</option>
-                                    <?php echo $options; ?>
+                                <option value="" selected disabled>Choose..</option>
+                                <?php
+                                    foreach (CourseOfStudy::cases() as $case) {
+                                    $value = $case->value;
+                                    // Check if the course is the same as the one in the database so can display previous choice
+                                    $selected = ($course == $value) ? "selected" : "";
+                                    echo "<option value=\"$value\" $selected>" . $value . "</option>";
+                                    }
+                                ?>
                                 </select>
                             </div>
                         </div>
@@ -300,11 +339,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!--Fifth Row -- Hobbies-->
                         <div class="row inputField">
                             <div class="col-md-12 col-sm-12 col-lg-12">
-                                <!-- Hobbies (May need to update this as text for it is meh)-->
-                                <label for="hobbies" class="inputLabelText">Hobbies</label><br>
-                                <input type="text" id="hobbies" name="hobbies" class="textInput"
-                                    placeholder="Type here..." required
-                                    value="<?php echo htmlspecialchars($hobbies); ?>">
+
+                                <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
+                                    <option value=""></option>
+                                    <option>Golf Games</option>
+                                    <option>Karate</option>
+                                    <option>Swimming</option>
+                                    <option>Chess</option>
+                                </select>
                             </div>
                         </div>
 
@@ -367,20 +409,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     </div>
 
-                        <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
-                            <!-- Profile Picture-->
-                            <img class="profilePicture"
-                                src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
-                                alt="Profile Picture">
+                    <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
+                        <!-- Profile Picture-->
+                        <img class="profilePicture"
+                            src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
+                            alt="Profile Picture">
 
-                            <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                            <input type="file" id="profile_pic" name="profile_pic">
+                        <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
+                        <input type="file" id="profile_pic" name="profile_pic">
 
-                            <!-- Button to just update changes made in db -->
-                            <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
-                                Changes</button>
-                        </div>
+                        <!-- Button to just update changes made in db -->
+                        <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
+                            Changes</button>
                     </div>
+
+                    <div class="" id="outline">
+                        <!-- Error Messages -->
+                        <?php
+                    if (!empty($errors)) {
+                        echo "<ul>";
+                        foreach ($errors as $error) {
+                            echo '<div class="alert alert-danger" role="alert">';
+                            echo htmlspecialchars($error);
+                            echo '</div>';
+                            }
+                        echo "</ul>";
+                        }
+                    ?>
+                    </div>
+                </div>
             </form>
 
         </div>
@@ -442,25 +499,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $('#changePasswordModal').on('hidden.bs.modal', function () {
                 $('#password, #password-repeat').removeAttr('required');
             });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+        $(".chosen-select").chosen({
+                no_results_text: "Oops, nothing found!"
+            });
         });
     </script>
 
     <script>
         //Function to display whatever image is inputted in edit profile automatically
-        document.getElementById('profile_pic').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
+        document.getElementById('profile_pic').addEventListener('change', function (event) {
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-            // Get the data and render the image
-            document.querySelector('.profilePicture').src = e.target.result;
-        };
+                reader.onload = function (e) {
+                    // Get the data and render the image
+                    document.querySelector('.profilePicture').src = e.target.result;
+                };
 
-        // Read the image file as a data URL.
-        reader.readAsDataURL(event.target.files[0]);
-    }
-});
-</script>
+                // Read the image file as a data URL.
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+    </script>
 
 </body>
 

@@ -1,18 +1,6 @@
-<?php
-include "../db_connection.php";
-include "adminHelperFunctions.php";
-include "setBanned.php";
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin User List</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,24 +10,24 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../../assets/css/userListAdmin.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/admin.css">
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 <body>
-  
+
     <!-- Start of Navbar -->
     <nav class="navbar navbar-fixed-top" id="navbar">
-        
+
         <!-- Images -->
         <div class="images">
           <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
           <div class="line"></div>
           <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
-        
+
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
             <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
@@ -60,47 +48,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li><a class="dropdown-item-profile d-md-none" href="../logout.php" id="logoutdropdown">Log Out</a></li>
             </ul>
         </div>
-        
+
     </nav>
     <hr>
     <!-- End of Navbar -->
-
-    <!-- User Table -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-custom">
-
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th># Reports</th>
-                                    <th># Banned</th>
-                                </tr>
-                            </thead>
-
-                            <!-- Loads User Data into Table -->
-                            <?php 
-                            require_once "adminHelperFunctions.php";
-                            
-                            showAccounts();
-                            ?>
-
-                    </table>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="p-2">
-        © 2024 Copyright UL Singles. All Rights Reserved
-    </footer>
-
 </body>
 </html>

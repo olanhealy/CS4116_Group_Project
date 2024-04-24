@@ -1,18 +1,10 @@
-<?php
-include "../db_connection.php";
-include "adminHelperFunctions.php";
-include "setBanned.php";
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-?>
+<!-- When signed in as an Admin, this file is displayed when viewing an Admin's account -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin User List</title>
+    <title>Admin Account</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../../assets/css/userListAdmin.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/viewAdminAccount.css">
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -65,42 +57,20 @@ if (session_status() === PHP_SESSION_NONE) {
     <hr>
     <!-- End of Navbar -->
 
-    <!-- User Table -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-custom">
-
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th># Reports</th>
-                                    <th># Banned</th>
-                                </tr>
-                            </thead>
-
-                            <!-- Loads User Data into Table -->
-                            <?php 
-                            require_once "adminHelperFunctions.php";
-                            
-                            showAccounts();
-                            ?>
-
-                    </table>
+    <!-- Main Container -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div id="textContainer">
+                    <div id="description">
+                        <h3>This User is an Admin</h3>
+                        <a id="link" href="usersListAdmin.php">Back to Users Page</a>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="p-2">
-        © 2024 Copyright UL Singles. All Rights Reserved
-    </footer>
 
 </body>
 </html>

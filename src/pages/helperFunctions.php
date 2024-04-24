@@ -85,7 +85,7 @@ function setFirstName($user_id, $first_name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "First name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> First Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -102,7 +102,7 @@ function setLastName($user_id, $last_Name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "Last name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> Last Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -156,11 +156,6 @@ function setBio($user_id, $bio) {
     $set_bio->bind_param("si", $bio, $user_id);
     $set_bio->execute();
 
-    if ($set_bio->affected_rows > 0) {
-        echo "Bio set successfully";
-    } else {
-        echo "Error setting bio";
-    }
 }
 
 // Process #14 to get the user's bio if they already exist in the profiile table of db
@@ -193,12 +188,6 @@ function setGender($user_id, $gender) {
     $set_gender->bind_param("si", $gender, $user_id);
     $set_gender->execute();
 
-    if ($set_gender->affected_rows > 0) {
-        echo "Gender set successfully";
-    } else {
-        echo "Error setting Gender";
-    }
-
     $set_gender->close();
 }
 
@@ -224,19 +213,13 @@ function getGender($user_id) {
 }
 
 // Process #19 to set the user's age in the profile table of the db
-function setAge($age, $user_id) {
+function setAge($userId, $age) {
     global $conn;
 
     $sql_set_age = "UPDATE profile SET age = ? WHERE user_id = ?";
     $set_age = $conn->prepare($sql_set_age);
-    $set_age->bind_param("ii", $age, $user_id);
+    $set_age->bind_param("ii", $age, $userId);
     $set_age->execute();
-
-    if ($set_age->affected_rows > 0) {
-        echo "Age set successfully";
-    } else {
-        echo "Error setting Age";
-    }
 
     $set_age->close();
 }
@@ -271,12 +254,6 @@ function setCollegeYear($user_id, $college_year) {
     $set_college_year->bind_param("si", $college_year, $user_id);
     $set_college_year->execute();
 
-    if ($set_college_year->affected_rows > 0) {
-        echo "College Year set successfully";
-    } else {
-        echo "Error setting College Year";
-    }
-
     $set_college_year->close();
 }
 
@@ -308,12 +285,6 @@ function setPursuing($user_id, $pursuing) {
     $set_pursuing = $conn->prepare($sql_set_pursuing);
     $set_pursuing->bind_param("si", $pursuing, $user_id);
     $set_pursuing->execute();
-
-    if ($set_pursuing->affected_rows > 0) {
-        echo "Pursuing set successfully";
-    } else {
-        echo "Error setting Pursuing";
-    }
 
     $set_pursuing->close();
 }
@@ -419,11 +390,6 @@ function setCourse($user_id, $course) {
     $set_course->bind_param("si", $course, $user_id); 
     $set_course->execute();
 
-    if ($set_course->affected_rows > 0) {
-        echo "Course set successfully";
-    } else {
-        echo "Error setting course";
-    }
 }
 
 // Process #30 to  get the user's course of study from the profile table of the db
@@ -455,11 +421,6 @@ function setHobbies($user_id, $hobbies) {
     $set_hobbies->bind_param("si", $hobbies, $user_id);
     $set_hobbies->execute();
 
-    if ($set_hobbies->affected_rows > 0) {
-        echo "Hobbies set successfully";
-    } else {
-        echo "Error setting hobbies";
-    }
 }
 
 // Process #32 to get the user's hobbies if they already exist in the profiile table of db (incomplete for html side)
@@ -491,11 +452,6 @@ function setLookingFor($user_id, $looking_for) {
     $set_looking_for->bind_param("si", $looking_for, $user_id);
     $set_looking_for->execute();
 
-    if ($set_looking_for->affected_rows > 0) {
-        echo "Looking for set successfully";
-    } else {
-        echo "Error setting looking for";
-    }
 }
 
 // Process #34 to get the user's looking for status if they already exist in the profiile table of db
@@ -536,6 +492,26 @@ function getName($user_id) {
 
     $get_name->close();
     return $name;
+}
+
+function getMatchId($userId, $targetId)
+{
+    global $conn;
+
+    $query = "SELECT match_id FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt !== false) {
+        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['match_id'];
+        }
+    }
+    return false;
 }
 
 function getMatch($userId, $targetId)
@@ -757,5 +733,265 @@ function isUserAdored($userId, $targetId){
     }
     // The current user has not previously adored the logged in user
     return false;
+}
+
+function getMessagesByMatchId($matchId, $currentUserId) {
+    global $conn;
+    $sqlGetMessagesByMatchId = $conn->prepare("SELECT * FROM messages WHERE match_id = ? ORDER BY date ASC");
+    $sqlGetMessagesByMatchId->bind_param("i", $matchId);
+    $sqlGetMessagesByMatchId->execute();
+    $resultSqlGetMessagesByMatchId = $sqlGetMessagesByMatchId->get_result();
+
+    $messages = [];
+    while ($row = $resultSqlGetMessagesByMatchId->fetch_assoc()) {
+        $row['from_self'] = ($row['sender_id'] == $currentUserId);
+        $messages[] = $row;
+    }
+
+    $sqlGetMessagesByMatchId->close();
+
+    return $messages;
+}
+
+
+// process #47 to send a message to target user
+function sendMessage($userId, $matchId, $messageContent) {
+    global $conn;
+    // Determine receiver_id based on match_id
+    $receiverId = getReceiverIdByMatchId($matchId, $userId);
+    //return false if no receiver_id is found (no match id or invalid one)
+    if (!$receiverId) {
+        
+        return false;
+    }
+    //Insert message content into the db
+    $sqlSendMessage = $conn->prepare("INSERT INTO messages (match_id, receiver_id, sender_id, message_content, read_status) VALUES (?, ?, ?, ?, 'delivered')");
+    $sqlSendMessage ->bind_param("iiis", $matchId, $receiverId, $userId, $messageContent);
+    $executeSuccess = $sqlSendMessage ->execute();
+    $sqlSendMessage ->close();
+
+    return $executeSuccess; // Return the success status of the execute (true or false)
+}
+
+// Function to get receiver_id by match_id
+function getReceiverIdByMatchId($matchId, $senderId) {
+    global $conn;
+    //Get the initiator_id and target_id from the matches table
+    $sqlGetReceiverIdByMatchId = $conn->prepare("SELECT initiator_id, target_id FROM matches WHERE match_id = ?");
+    $sqlGetReceiverIdByMatchId->bind_param("i", $matchId);
+    $sqlGetReceiverIdByMatchId->execute();
+    $sqlGetReceiverIdByMatchId->bind_result($initiatorId, $targetId);
+
+    if ($sqlGetReceiverIdByMatchId->fetch()) {
+        // Get the receiver_id based on the match_id
+        $receiverId = ($initiatorId === $senderId) ? $targetId : $initiatorId;
+    } else {
+        $receiverId = null; //if no match excists
+    }
+    $sqlGetReceiverIdByMatchId->close();
+    return $receiverId;
+}
+
+// process #46 to get messages for a user between their specific target
+function getMessages($userId) {
+    global $conn;
+    $conversations = [];
+    // get all matchIds where the user is either the initiator or the target
+    $sqlGetMessages = $conn->prepare("SELECT match_id FROM matches WHERE initiator_id = ? OR target_id = ?");
+    $sqlGetMessages->bind_param("ii", $userId, $userId);
+    $sqlGetMessages->execute();
+    $resultSqlGetMessages = $sqlGetMessages->get_result();
+    while($row = $resultSqlGetMessages->fetch_assoc()) {
+        $conversations[] = $row['match_id'];
+    }
+    $sqlGetMessages->close();
+    return $conversations;
+}
+
+function getNameByMatchId($matchId, $userId) {
+    global $conn;
+    $sqlGetNameByMatchId = "SELECT p.name FROM profile p INNER JOIN matches m ON p.user_id = CASE 
+    WHEN m.initiator_id = ? THEN m.target_id 
+    ELSE m.initiator_id END WHERE m.match_id = ?";
+    $getNameByMatchId = $conn->prepare($sqlGetNameByMatchId);
+    if ($getNameByMatchId !== false) {
+        $getNameByMatchId->bind_param("ii", $userId, $matchId);
+        $getNameByMatchId->execute();
+        $resultGetName = $getNameByMatchId->get_result();
+        if ($resultGetName->num_rows > 0) {
+            $rowGetName = $resultGetName->fetch_assoc();
+            $name = $rowGetName['name'];
+        }
+        $getNameByMatchId->close();
+    }
+    return $name;
+}
+
+function getProfilePictureByMatchId($matchId, $userId) {
+    global $conn;
+    $sqlGetProfilePictureByMatchId = "SELECT profile_pic FROM profile WHERE user_id = (SELECT CASE 
+        WHEN initiator_id = ? THEN target_id 
+        ELSE initiator_id 
+    END FROM matches WHERE match_id = ?)";
+    $getProfilePicture = $conn->prepare($sqlGetProfilePictureByMatchId);
+    if ($getProfilePicture!== false) {
+        $getProfilePicture->bind_param("ii", $userId, $matchId);
+        $getProfilePicture->execute();
+        $resultGetProfilePicture = $getProfilePicture->get_result();
+        if ($resultGetProfilePicture->num_rows > 0) {
+            $rowGetProfilePicture = $resultGetProfilePicture->fetch_assoc();
+            $profilePicture = $rowGetProfilePicture['profile_pic'];
+        }
+        $getProfilePicture->close();
+    }
+    return $profilePicture;
+}
+
+//Process #48 user can unsed a message they sent to a specific user and it will be deleted from the Messages table
+function deleteMessage($userId, $messageId) {
+    global $conn;
+    
+    // Check if the message belongs to the user
+    $sqlDeleteMessage = $conn->prepare("SELECT * FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlDeleteMessage ->bind_param("iii", $messageId, $userId, $userId);
+    $sqlDeleteMessage ->execute();
+    $resultDeleteMessage  = $sqlDeleteMessage ->get_result();
+    if ($resultDeleteMessage ->num_rows === 0) {
+        // Message does not belong to user o
+        return false;
+    }
+
+    // Delete the message from tabke
+    $sqlDeleteMessage  = $conn->prepare("DELETE FROM messages WHERE message_id = ?");
+    $sqlDeleteMessage ->bind_param("i", $messageId);
+    $sqlDeleteMessage ->execute();
+    
+    return $sqlDeleteMessage ->affected_rows > 0;
+}
+
+//Function to get delivery satus (may need)
+function getDeliveryStatus($userId, $messageId) {
+    global $conn;
+    $sqlGetDeliveryStatus = $conn->prepare("SELECT read_status FROM messages WHERE message_id = ? AND (sender_id = ? OR receiver_id = ?)");
+    $sqlGetDeliveryStatus->bind_param("iii", $messageId, $userId, $userId);
+    $sqlGetDeliveryStatus->execute();
+    $resultGetDeliveryStatus = $sqlGetDeliveryStatus->get_result();
+    if ($resultGetDeliveryStatus->num_rows > 0) {
+        $rowGetDeliveryStatus = $resultGetDeliveryStatus->fetch_assoc();
+        $deliveryStatus = $rowGetDeliveryStatus['read_status'];
+    }
+    $sqlGetDeliveryStatus->close();
+    return $deliveryStatus;
+}
+
+// Function to count new messages and matches
+function fetchNotifications($userId) {
+    global $conn;
+    // Initialise the count of notifications
+    $notifications = [
+        'messages' => 0,
+        'matches' => 0
+    ];
+    
+    $matchesAsInitiator = 0;
+    $matchesAsTarget = 0;
+
+    // Sql statement to get the count of new messages
+    $sqlMessages = "SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND read_status = 'delivered'";
+    $sqlGetMessages = $conn->prepare($sqlMessages);
+    $sqlGetMessages->bind_param("i", $userId);
+    $sqlGetMessages->execute();
+    $sqlGetMessages->bind_result($notifications['messages']);
+    $sqlGetMessages->fetch();
+    $sqlGetMessages->close();
+
+    // Sql statement to get the count of new matches for the target
+    $sqlMatchesAstarget = "SELECT COUNT(*) FROM matches WHERE target_id = ? AND viewed_by_target = FALSE";
+    $sqlGetMatchesAstarget = $conn->prepare($sqlMatchesAstarget);
+    $sqlGetMatchesAstarget->bind_param("i", $userId);
+    $sqlGetMatchesAstarget->execute();
+    $sqlGetMatchesAstarget->bind_result($matchesAsTarget);
+    $sqlGetMatchesAstarget->fetch();
+    $sqlGetMatchesAstarget->close();
+
+    // Sql statement to get the count of new matches for the initiator
+    $sqlMatchesAsInitiator = "SELECT COUNT(*) FROM matches WHERE initiator_id = ? AND viewed_by_initiator = FALSE";
+    $sqlGetMatchesAsInitiator = $conn->prepare($sqlMatchesAsInitiator);
+    $sqlGetMatchesAsInitiator->bind_param("i", $userId);
+    $sqlGetMatchesAsInitiator->execute();
+    $sqlGetMatchesAsInitiator->bind_result($matchesAsInitiator);
+    $sqlGetMatchesAsInitiator->fetch();
+    $sqlGetMatchesAsInitiator->close();
+
+    // Sum up the total matches that have not been viewed by the user
+    $notifications['matches'] = $matchesAsTarget + $matchesAsInitiator;
+
+    return $notifications;
+}
+
+//Function to clear the messages notifications when they are viewed
+function clearMessageNotifications($userId) {
+    global $conn;
+    $sqlClearMessages = "UPDATE messages SET read_status = 'read' WHERE receiver_id = ? AND read_status = 'delivered'";
+    $clearMessages = $conn->prepare($sqlClearMessages);
+    $clearMessages->bind_param("i", $userId);
+    $clearMessages->execute();
+    $clearMessages->close();
+}
+
+//function to clear the matches notifications when they are viewed
+function clearMatchNotifications($userId) {
+    global $conn;
+    $sqlClearMatches = "UPDATE matches SET viewed_by_target = TRUE WHERE target_id = ?";
+    $clearMatches = $conn->prepare($sqlClearMatches);
+    $clearMatches->bind_param("i", $userId);
+    $clearMatches->execute();
+    $clearMatches->close();
+
+    $sqlClearMatchesForInitiator = "UPDATE matches SET viewed_by_initiator = TRUE WHERE initiator_id = ?";
+    $clearMatchesForInitiator = $conn->prepare($sqlClearMatchesForInitiator);
+    $clearMatchesForInitiator->bind_param("i", $userId);
+    $clearMatchesForInitiator->execute();
+    $clearMatchesForInitiator->close();
+
+     // Reset session notification counts
+     $_SESSION['notifications'] = fetchNotifications($userId);
+
+}
+//function to iniitalise the notifications on login for that user
+function initialiseNotificationsOnLogin($userId) {
+    $_SESSION['notifications'] = fetchNotifications($userId);
+}
+
+function areUserDetailsSet($userId) {
+    // get user details from db
+    $bio = getBio($userId);
+    $hobbies = getHobbies($userId);
+    $gender = getGender($userId);
+    $age = getAge($userId);
+    $collegeYear = getCollegeYear($userId);
+    $pursuing = getPursuing($userId);
+    $profilePicFilename = getProfilePicture($userId);
+    $course = getCourse($userId);
+    $lookingFor = getLookingFor($userId);
+    $name = getName($userId);
+
+    // If all set, return true otherwise return
+    if (
+        isset($bio) &&
+        isset($hobbies) &&
+        isset($gender) &&
+        isset($age) &&
+        isset($collegeYear) &&
+        isset($pursuing) &&
+        isset($profilePicFilename) &&
+        isset($course) &&
+        isset($lookingFor) &&
+        isset($name)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 ?>

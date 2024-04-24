@@ -40,11 +40,12 @@
 
         <!--check if the user is matched to user, if so show report and messages buttons-->
         <?php
-            if(getMatch($_SESSION['user_id'],$targetUserId) != null){        
+            if(getMatch($_SESSION['user_id'],$targetUserId) != null){ 
+                $matchId = getMatchId($_SESSION['user_id'],$targetUserId);       
         ?>
 
         <!--Messages Link-->        
-        <a href="messages.php?target_user_id=<?php echo $targetUserId; ?>" class="message-link">Message</a>
+        <a href="messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
 
         <!--Report Button-->
         <form action="report.php" method="POST">
@@ -57,6 +58,6 @@
             }
         ?>
 
-    </div>   
+    </div>
 </body>
 </html>
