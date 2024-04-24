@@ -254,8 +254,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- Course-->
                                 <label for="course" class="inputLabelText">Course of Study</label><br>
                                 <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
-                                    <option value="" selected disabled>Choose..</option>
-                                    <?php echo $options; ?>
+                                <option value="" selected disabled>Choose..</option>
+                                <?php
+                                    foreach (CourseOfStudy::cases() as $case) {
+                                    $value = $case->value;
+                                    // Check if the course is the same as the one in the database so can display previous choice
+                                    $selected = ($course == $value) ? "selected" : "";
+                                    echo "<option value=\"$value\" $selected>" . $value . "</option>";
+                                    }
+                                ?>
                                 </select>
                             </div>
                         </div>
