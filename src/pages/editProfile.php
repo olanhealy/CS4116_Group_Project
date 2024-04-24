@@ -312,14 +312,17 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </div>
                      </div>
                      <!--Fourth Row -- Bio-->
-                     <div class="row inputField">
+                    <div class="row inputField">
                         <div class="col-md-12 col-sm-12 col-lg-12">
-                           <!-- Bio -->
-                           <label for="bio" class="inputLabelText">Bio</label><br>
-                           <textarea id="bio" name="bio" class="textInput" placeholder="Type here..."
-                              required><?php echo htmlspecialchars($bio); ?></textarea>
+                        <!-- Bio -->
+                        <label for="bio" class="inputLabelText">Bio</label><br>
+                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..."
+                        equired maxlength="150"><?php echo htmlspecialchars($bio); ?></textarea>
+                            <div id="bio-feedback" class="text-muted">
+                            Characters left: <span id="bio-counter">150</span>
+                            </div>
                         </div>
-                     </div>
+                    </div>
                      <div class="row inputField">
                         <div class="col-md-12 col-sm-12 col-lg-12">
                            <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
@@ -489,26 +492,46 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
     </script>
 
 <script>
-$(document).ready(function () {
-    var maxHobbies = 4;
-    $(".chosen-select").chosen({
-        no_results_text: "Oops, nothing found!"
-    }).on('change', function(evt, params) {
-        var selectedHobbies = $(this).chosen().val();
-        if (selectedHobbies.length > maxHobbies) {
-            // Show message
-            $('#hobby-limit-message').show();
-            // Deselect the last hobby
-            selectedHobbies.pop();
-            $(this).val(selectedHobbies).trigger('chosen:updated');
-        } else {
-            // Hide message
-            $('#hobby-limit-message').hide();
-        }
+    //function for only allowing user to select max 4 hobbies
+    $(document).ready(function () {
+        var maxHobbies = 4;
+        $(".chosen-select").chosen({
+           no_results_text: "Oops, nothing found!"
+     }).on('change', function(evt, params) {
+         var selectedHobbies = $(this).chosen().val();
+         if (selectedHobbies.length > maxHobbies) {
+             // Show message
+             $('#hobby-limit-message').show();
+                // Deselect the last hobby
+                selectedHobbies.pop();
+                $(this).val(selectedHobbies).trigger('chosen:updated');
+            } else {
+              // Hide message
+             $('#hobby-limit-message').hide();
+            }
+     });
     });
-});
 </script>
 
+<script>
+    //function for counting characters in bio
+    $(document).ready(function () {
+        var maxBioLength = 150;
+        $('#bio').keyup(function() {
+            var textLength = $(this).val().length;
+            var textRemaining = maxBioLength - textLength;
+
+            $('#bio-counter').text(textRemaining);
+
+            if (textRemaining < 10) {
+                // if theres less than 1- characters left, highlight colour in red
+                $('#bio-feedback').addClass('text-danger').removeClass('text-muted');
+            } else {
+                $('#bio-feedback').addClass('text-muted').removeClass('text-danger');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
