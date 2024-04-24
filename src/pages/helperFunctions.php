@@ -681,6 +681,9 @@ function getNextMatches($userId)
     } else {
         // Error
         echo '<p> No matches found. <br> Use the Explore page to create new matches!</p>';
+
+        //set up the footer
+        setupFooter();
     }
 
 }
