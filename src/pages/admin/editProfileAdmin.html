@@ -42,7 +42,7 @@
     <!-- Buttons -->
     <div class="btn-group ms-auto" role="group">
         <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
-        <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
+        <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../logout.php'">Log Out</button>
     </div>
 
     <!-- Profile Icon Dropdown -->
@@ -75,14 +75,16 @@
 
                     <!-- User's Profile Picture, Change Picture & Save Changes Buttons -->
                     <div class="col-lg-4 order-lg-1 col-md-12" id="leftcontainer">
-
+                        <div class="col-lg-3 col-md-12 imgContainer"></div>
                         <!-- Profile Picture -->
-                        <img src="/uploads/<?php echo $_SESSION['existingProfilePic']; ?>" id="profilepicture" alt="Profile Picture"><br>
+                        <img class="profilePicture"
+                            src="<?php echo $_SESSION['existingProfilePic'] ? '/' . htmlspecialchars($_SESSION['existingProfilePic']) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
+                            alt="Profile Picture">
 
                         <!-- Change Picture -->
                         <label for="profile_pic" class="fileUploadBtn">Change Profile Picture</label>
                         <input type="file" id="profile_pic" name="profile_pic">
-    
+                        
                         <!-- Save Changes -->
                         <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save Changes</button>
 
@@ -212,6 +214,23 @@
         });
     </script>
 
+    <script>
+        //Function to display whatever image is inputted in edit profile automatically
+        document.getElementById('profile_pic').addEventListener('change', function (event) {
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Get the data and render the image
+                    document.querySelector('.profilePicture').src = e.target.result;
+                };
+
+                // Read the image file as a data URL.
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+    </script>
+    
     <script>
         $(document).ready(function () {
         $(".chosen-select").chosen({
