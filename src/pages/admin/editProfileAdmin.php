@@ -7,15 +7,26 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once '../helperFunctions.php';
 include '../db_connection.php';
 
+
 //var_dump($_SESSION);
 if (isset($_SESSION['targetId'])) {
     $targetId = $_SESSION['targetId'];
 
     // Fetch existing profile information
     $_SESSION['existingName'] = getName($targetId);
-    $_SESSION['existingBio'] = getBio($targetId);
-    $_SESSION['existingHobbies'] = getHobbies($targetId);
+    $_SESSION['existingGender'] = getGender($targetId);
+    $_SESSION['existingAge'] = getAge($targetId);
+
+    $_SESSION['existingCollegeYear'] = getCollegeYear($targetId);
     $_SESSION['existingCourse'] = getCourse($targetId);
+
+    $_SESSION['existingPursuing'] = getPursuing($targetId);
+    $_SESSION['existingLookingFor'] = getLookingFor($targetId);
+
+    $_SESSION['existingBio'] = getBio($targetId);
+
+    $_SESSION['existingHobbies'] = getHobbies($targetId);
+
     // added in to get the existing profile picture
     $_SESSION['existingProfilePic'] = getProfilePicture($targetId);
 
@@ -24,7 +35,18 @@ if (isset($_SESSION['targetId'])) {
     // Check if form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Process form data
+        
+        // Profile Picture
+        if (isset($_FILES['profile_pic']) && $_FILES['profile_pic'] !== $_SESSION['existingProfilePic']) {
+            $profilePicFilename = $_FILES['profile_pic']['name'];
+            setProfilePic($targetId, $profilePicFilename);
+        }
+    
+        if(isset($_POST['gender'])){
+            $gender = htmlspecialchars($_POST['gender']);
+        }
 
+        // First & Last Name
         if (isset($_POST['first_name']) || isset($_POST['last_name']) && $_POST['first_name'] !== explode(' ', $_SESSION['existingName'])[0]|| $_POST['last_name'] !== explode(' ', $_SESSION['existingName'])[1]) {
 
 
@@ -43,29 +65,60 @@ if (isset($_SESSION['targetId'])) {
             setName($firstName, $lastName, $targetId);
 
         }
-
-        // Example: Updating user's bio
-        if (isset($_POST['bio']) && $_POST['bio'] !== $_SESSION['existingBio']) {
-            $bio = $_POST['bio'];
-            setBio($targetId, $bio);
+        
+        // Gender
+        if (isset($_POST['gender']) && $_POST['gender'] !== $_SESSION['existingGender']) {
+            $gender = $_POST['gender'];
+            setGender($targetId, $gender);
         }
 
-        if (isset($_FILES['profile_pic']) && $_FILES['profile_pic'] !== $_SESSION['existingProfilePic']) {
-            $profilePicFilename = $_FILES['profile_pic']['name'];
-            setProfilePic($targetId, $profilePicFilename);
+        // Age
+        if (isset($_POST['age']) && $_POST['age'] != $_SESSION['existingAge'] ) {
+            $age = $_POST['age'];
+            setAge($age, $targetId);
         }
 
-        if (isset($_POST['hobbies']) && $_POST['hobbies'] !== $_SESSION['existingHobbies']) {
-            $hobbies = $_POST['hobbies'];
-            setHobbies($targetId, $hobbies);
+        // Year
+        if (isset($_POST['college_year']) && $_POST['college_year'] !== $_SESSION['existingCollegeYear'] ) {
+            $college_year = $_POST['college_year'];
+            setCollegeYear($targetId, $college_year);
         }
 
+        // Course
         if (isset($_POST['course']) && $_POST['course'] !== $_SESSION['existingCourse']) {
             $course = $_POST['course'];
             setCourse($targetId, $course);
         }
 
-        header("Location: showUserAdmin.php");
+        // Pursuing
+        if (isset($_POST['pursuing']) && $_POST['pursuing'] !== $_SESSION['existingPursuing']) {
+            $pursuing = $_POST['pursuing'];
+            setPursuing($targetId, $pursuing);
+        }
+
+        // Looking For
+        if (isset($_POST['lookingFor']) && $_POST['lookingFor'] !== $_SESSION['existingLookingFor']) {
+            $lookingFor = $_POST['lookingFor'];
+            setLookingFor($targetId, $lookingFor);
+        }
+
+        // Bio
+        if (isset($_POST['bio']) && $_POST['bio'] !== $_SESSION['existingBio']) {
+            $bio = $_POST['bio'];
+            setBio($targetId, $bio);
+        }
+
+        // Hobbies
+        if (isset($_POST['hobbies']) && !empty($_POST['hobbies']) && $_POST['hobbies'] !== $_SESSION['existingHobbies']) {
+            $hobbies = $_POST['hobbies'];
+            $hobbies = implode(' ', $hobbies);
+            setHobbies($targetId, $hobbies);
+        }else{
+            $hobbies = getHobbies($userId);
+        }
+
+        // header("Location: showUserAdmin.php");
+        include "../footer.php";
     }
 
 

@@ -85,7 +85,7 @@ function setFirstName($user_id, $first_name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "First name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> First Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -102,7 +102,7 @@ function setLastName($user_id, $last_Name){
     $set_name->execute();
 
     if ($set_name->affected_rows > 0) {
-        echo "Last name set successfully in account";
+        echo '<a style="font-size:20px; text-align:center;"> Last Name set successfully in Account. </a>';
     } else {
         //TODO: backend: fix messaging for error when jsut editted name
         //echo "Error setting First and Last Name";
@@ -157,9 +157,11 @@ function setBio($user_id, $bio) {
     $set_bio->execute();
 
     if ($set_bio->affected_rows > 0) {
-        echo "Bio set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Bio set successfully.</a>';
     } else {
-        echo "Bio not changed";
+
+        echo '<a style="font-size:20px; text-align:center;"> Bio not changed.</a>';
+
     }
 }
 
@@ -194,9 +196,9 @@ function setGender($user_id, $gender) {
     $set_gender->execute();
 
     if ($set_gender->affected_rows > 0) {
-        echo "Gender set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Gender set successfully.</a>';
     } else {
-        echo "Gender not changed";
+        echo '<a style="font-size:20px; text-align:center;"> Gender not changed.</a>';
     }
 
     $set_gender->close();
@@ -233,9 +235,10 @@ function setAge($age, $user_id) {
     $set_age->execute();
 
     if ($set_age->affected_rows > 0) {
-        echo "Age set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Age set successfully.</a>';
     } else {
-        echo "Age not changed";
+
+        echo '<a style="font-size:20px; text-align:center;"> Age not changed.</a>';
     }
 
     $set_age->close();
@@ -272,9 +275,11 @@ function setCollegeYear($user_id, $college_year) {
     $set_college_year->execute();
 
     if ($set_college_year->affected_rows > 0) {
-        echo "College Year set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> College Year set successfully.</a>';
     } else {
-        echo "College Year not changed";
+
+        echo '<a style="font-size:20px; text-align:center;"> College Year not changed.</a>';
+
     }
 
     $set_college_year->close();
@@ -310,9 +315,10 @@ function setPursuing($user_id, $pursuing) {
     $set_pursuing->execute();
 
     if ($set_pursuing->affected_rows > 0) {
-        echo "Pursuing set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Pursuing set successfully.</a>';
     } else {
-        echo "Pursuing not changed";
+        echo '<a style="font-size:20px; text-align:center;"> Pursuing not changed.</a>';
+
     }
 
     $set_pursuing->close();
@@ -420,9 +426,10 @@ function setCourse($user_id, $course) {
     $set_course->execute();
 
     if ($set_course->affected_rows > 0) {
-        echo "Course set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Course set successfully. </a>';
     } else {
-        echo "Course not changr";
+        echo '<a style="font-size:20px; text-align:center;"> Course not changed. </a>';
+
     }
 }
 
@@ -456,9 +463,10 @@ function setHobbies($user_id, $hobbies) {
     $set_hobbies->execute();
 
     if ($set_hobbies->affected_rows > 0) {
-        echo "Hobbies set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Hobbies set successfully.</a>';
     } else {
-        echo "Hobbies not changed";
+        echo '<a style="font-size:20px; text-align:center;"> Hobbies not changed.</a>';
+
     }
 }
 
@@ -492,9 +500,10 @@ function setLookingFor($user_id, $looking_for) {
     $set_looking_for->execute();
 
     if ($set_looking_for->affected_rows > 0) {
-        echo "Looking for set successfully";
+        echo '<a style="font-size:20px; text-align:center;"> Looking for set successfully.</a>';
     } else {
-        echo "Looking for not changed";
+
+        echo '<a style="font-size:20px; text-align:center;"> Looking for not changed.</a>';
     }
 }
 
