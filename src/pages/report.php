@@ -17,14 +17,20 @@ if ($_POST['action'] == "report_user") {
     $set_report->bind_param('i', $targetId); // Assuming $user_id is already defined
     $set_report->execute();
 
-    //check if the user has been reported successfully
+    // Check if the user has been reported successfully
     if ($set_report->affected_rows > 0) {
-        echo "User has been reported successfully.";
+        // User reported successfully, show success message in a popup
+        echo "<script>alert('User has been reported successfully.');</script>";
+        removeMatch($userId, $targetId);
     } else {
-        echo "User could not be reported.";
+        // User could not be reported, show error message in a popup
+        echo "<script>alert('User could not be reported.');</script>";
     }
 
     $set_report->close();
 
-    removeMatch($userId, $targetId);
+    // Redirect to matches.php
+    echo "<script>window.location.href = 'matches.php';</script>";
+
+    exit();
 }
