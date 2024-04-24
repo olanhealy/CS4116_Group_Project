@@ -64,6 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "The password and repeated password do not match";
     }
 
+    // Check if at least one hobbie is inputted
+    if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
+        $errors[] = "Please select at least one hobby";
+    }
+
+    // Check if user uploaded a profile picture
+    if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+        $errors[] = "Please upload a profile picture";
+    }
+
+
     // Update the user currently logged in profile table in the database
     $userId = $_SESSION['user_id']; //we use this from being logged in
 
@@ -80,13 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setHobbies($userId, $hobbies);
     setLookingFor($userId, $lookingFor);
 
-    if (empty($errors)) {
-        setPassword($password, $userId);
-    } else {
-        echo "Errors: " . $errors;
-    }
+  //  if (empty($errors)) {
+  //      setPassword($password, $userId);
+  //  } else {
+  //      echo "Errors: " . $errors;
+  //  }
 
-    header("Location: home.php");
+
+    
 }
 
 ?>
@@ -399,6 +411,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- Button to just update changes made in db -->
                         <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
                             Changes</button>
+                    </div>
+
+                    <div class="" id="outline">
+                        <!-- Error Messages -->
+                        <?php
+                    if (!empty($errors)) {
+                        echo "<ul>";
+                        foreach ($errors as $error) {
+                            echo '<div class="alert alert-danger" role="alert">';
+                            echo htmlspecialchars($error);
+                            echo '</div>';
+                            }
+                        echo "</ul>";
+                        }
+                    ?>
                     </div>
                 </div>
             </form>
