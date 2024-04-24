@@ -156,13 +156,6 @@ function setBio($user_id, $bio) {
     $set_bio->bind_param("si", $bio, $user_id);
     $set_bio->execute();
 
-    if ($set_bio->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Bio set successfully.</a>';
-    } else {
-
-        echo '<a style="font-size:20px; text-align:center;"> Bio not changed.</a>';
-
-    }
 }
 
 // Process #14 to get the user's bio if they already exist in the profiile table of db
@@ -195,12 +188,6 @@ function setGender($user_id, $gender) {
     $set_gender->bind_param("si", $gender, $user_id);
     $set_gender->execute();
 
-    if ($set_gender->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Gender set successfully.</a>';
-    } else {
-        echo '<a style="font-size:20px; text-align:center;"> Gender not changed.</a>';
-    }
-
     $set_gender->close();
 }
 
@@ -226,20 +213,13 @@ function getGender($user_id) {
 }
 
 // Process #19 to set the user's age in the profile table of the db
-function setAge($age, $user_id) {
+function setAge($userId, $age) {
     global $conn;
 
     $sql_set_age = "UPDATE profile SET age = ? WHERE user_id = ?";
     $set_age = $conn->prepare($sql_set_age);
-    $set_age->bind_param("ii", $age, $user_id);
+    $set_age->bind_param("ii", $age, $userId);
     $set_age->execute();
-
-    if ($set_age->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Age set successfully.</a>';
-    } else {
-
-        echo '<a style="font-size:20px; text-align:center;"> Age not changed.</a>';
-    }
 
     $set_age->close();
 }
@@ -274,14 +254,6 @@ function setCollegeYear($user_id, $college_year) {
     $set_college_year->bind_param("si", $college_year, $user_id);
     $set_college_year->execute();
 
-    if ($set_college_year->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> College Year set successfully.</a>';
-    } else {
-
-        echo '<a style="font-size:20px; text-align:center;"> College Year not changed.</a>';
-
-    }
-
     $set_college_year->close();
 }
 
@@ -313,13 +285,6 @@ function setPursuing($user_id, $pursuing) {
     $set_pursuing = $conn->prepare($sql_set_pursuing);
     $set_pursuing->bind_param("si", $pursuing, $user_id);
     $set_pursuing->execute();
-
-    if ($set_pursuing->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Pursuing set successfully.</a>';
-    } else {
-        echo '<a style="font-size:20px; text-align:center;"> Pursuing not changed.</a>';
-
-    }
 
     $set_pursuing->close();
 }
@@ -425,12 +390,6 @@ function setCourse($user_id, $course) {
     $set_course->bind_param("si", $course, $user_id); 
     $set_course->execute();
 
-    if ($set_course->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Course set successfully. </a>';
-    } else {
-        echo '<a style="font-size:20px; text-align:center;"> Course not changed. </a>';
-
-    }
 }
 
 // Process #30 to  get the user's course of study from the profile table of the db
@@ -462,12 +421,6 @@ function setHobbies($user_id, $hobbies) {
     $set_hobbies->bind_param("si", $hobbies, $user_id);
     $set_hobbies->execute();
 
-    if ($set_hobbies->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Hobbies set successfully.</a>';
-    } else {
-        echo '<a style="font-size:20px; text-align:center;"> Hobbies not changed.</a>';
-
-    }
 }
 
 // Process #32 to get the user's hobbies if they already exist in the profiile table of db (incomplete for html side)
@@ -499,12 +452,6 @@ function setLookingFor($user_id, $looking_for) {
     $set_looking_for->bind_param("si", $looking_for, $user_id);
     $set_looking_for->execute();
 
-    if ($set_looking_for->affected_rows > 0) {
-        echo '<a style="font-size:20px; text-align:center;"> Looking for set successfully.</a>';
-    } else {
-
-        echo '<a style="font-size:20px; text-align:center;"> Looking for not changed.</a>';
-    }
 }
 
 // Process #34 to get the user's looking for status if they already exist in the profiile table of db
@@ -968,5 +915,37 @@ function clearMatchNotifications($userId) {
 //function to iniitalise the notifications on login for that user
 function initialiseNotificationsOnLogin($userId) {
     $_SESSION['notifications'] = fetchNotifications($userId);
+}
+
+function areUserDetailsSet($userId) {
+    // get user details from db
+    $bio = getBio($userId);
+    $hobbies = getHobbies($userId);
+    $gender = getGender($userId);
+    $age = getAge($userId);
+    $collegeYear = getCollegeYear($userId);
+    $pursuing = getPursuing($userId);
+    $profilePicFilename = getProfilePicture($userId);
+    $course = getCourse($userId);
+    $lookingFor = getLookingFor($userId);
+    $name = getName($userId);
+
+    // If all set, return true otherwise return
+    if (
+        isset($bio) &&
+        isset($hobbies) &&
+        isset($gender) &&
+        isset($age) &&
+        isset($collegeYear) &&
+        isset($pursuing) &&
+        isset($profilePicFilename) &&
+        isset($course) &&
+        isset($lookingFor) &&
+        isset($name)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 ?>

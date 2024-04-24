@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check for at least one capital letter and at least one special character with the inputted password
     if (!preg_match('/[A-Z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors[] = "Password must contain at least one capital letter and one special character";
+        $errors[] = "Password must be minimum 8 characters long, contain at least one capital letter and one special character";
     }
 
     // Check if the inputted and repeated passwords both match
