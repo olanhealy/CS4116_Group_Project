@@ -1,47 +1,77 @@
 .messages-container {
   display: flex;
-  flex-direction: row;
-  height: 100vh;
+  flex-direction: column;
+  flex: 1;
 }
 
 .sidebar {
-  width: 25%;
-  background-color: #f7f7f7;
+  max-height: calc(100vh - 240px);
   overflow-y: auto;
+  padding: 10px;
+  border-right: 2px solid #d3d3d3;
 }
 
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+h2 {
+  padding-left: 20px;
+  margin-bottom: 3px;
+  color: #636363;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.svg-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #abc99d;
+}
+
+.bi-send {
+  transform: rotate(45deg);
+}
 
 .content {
-  width: 75%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  overflow-y: auto;
+  max-height: calc(100vh - 240px);
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .messages {
   flex-grow: 1;
   overflow-y: auto;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   padding: 10px;
 }
 
 .message {
-  position: relative; 
+  position: relative;
   margin-bottom: 10px;
   border-radius: 10px;
   max-width: 50%;
+  word-break: break-word;
 }
 
 .my-message {
-  background-color: #90EE90; 
+  background-color: #abc99d;
   margin-left: auto;
   margin-right: 10px;
+  max-width: fit-content;
+  padding: 5px;
 }
 
 .other-message {
-  background-color: #8e8db3; 
+  background-color: #dabb9e;
+  max-width: fit-content;
   margin-left: 10px;
+  padding: 5px;
 }
 
 .my-message .unsend-button {
@@ -49,16 +79,51 @@
   position: absolute;
   top: 5px;
   right: 5px;
+  color: #dabb9e;
+  background-color: #fff;
+  border-color: #dabb9e;
+  font-weight: bold;
   cursor: pointer;
+  word-break: normal;
 }
 
 .my-message:hover .unsend-button {
   display: block;
 }
 
+.unsend-button:hover {
+  color: #fff;
+  background-color: #dabb9e;
+  border-color: #dabb9e;
+}
+
+.profile-picture {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  max-width: 30%;
+}
+
+.match-name {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: bold;
+  color: #abc99d;
+}
+
+#conversation-list li {
+  border: 2px solid #dabb9e;
+  margin-bottom: 10px;
+}
 
 #message-form {
   padding: 10px;
+}
+
+#send-message-form {
+  display: flex;
+  align-items: center;
 }
 
 #send-message-form textarea {
@@ -68,4 +133,47 @@
 
 #send-message-form button {
   width: 100px;
+}
+
+.chatList-btn {
+  display: none;
+}
+
+
+@media (max-width: 766px) {
+  .chatList-btn {
+    display: block;
+    background-color: #abc99d;
+    color: white;
+    text-align: center;
+    padding: 7px 95px;
+    font-size: 15px;
+    font-weight: bold;
+    border-color: #abc99d;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+
+  .chatList-btn:hover {
+    background-color: #97b189;
+    border-color: #97b189;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 17%;
+    left: -250px;
+    width: 250px;
+    max-height: 100vh;
+    background-color: #fff;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    border: 2px solid #808080;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
 }
