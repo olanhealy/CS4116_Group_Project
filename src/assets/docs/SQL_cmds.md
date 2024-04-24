@@ -7,8 +7,8 @@ CREATE TABLE account (
     first_name VARCHAR(26),
     last_name VARCHAR(26),
     user_role ENUM('admin', 'standard') NOT NULL DEFAULT 'standard',
-    banned boolean DEFAULT 0
-    number_of_reports INT(11) DEFAULT 0;
+    banned boolean DEFAULT 0,
+    number_of_reports INT(11) DEFAULT 0
     );
 
 CREATE TABLE profile (
@@ -60,6 +60,8 @@ CREATE TABLE matches (
     initiator_id INT(11),
     target_id INT(11),
     response_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    viewed_by_target BOOLEAN NOT NULL DEFAULT FALSE,
+    viewed_by_initiator BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (initiator_id) REFERENCES Account(user_id),
     FOREIGN KEY (target_id) REFERENCES Account(user_id)
 );

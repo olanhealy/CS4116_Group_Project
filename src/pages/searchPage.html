@@ -16,6 +16,9 @@
 
     <!-- Add jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -76,8 +79,8 @@
                     <li><a class="dropdown-item" href="home.php">Home</a></li>
                     <li><a class="dropdown-item" href="explore.php">Explore</a></li>
                     <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                    <li><a class="dropdown-item" href="messages.php">Messages</a></li>
-                    <li><a class="dropdown-item" href="searchPage.php">Search</a></li>
+                    <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
+                    <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
                 </ul>
                 <svg class="heartFill" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                     class="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -111,10 +114,10 @@
 
                         <div class="row inputField">
                             <div class="col-12">
-                                <!-- Modify name input field -->
-                                <label for="name" class="inputLabelText">Name:</label><br>
-                                <input class="input" type="text" id="name" name="name" autocomplete="off">
-                                <div id="name-suggestions"></div>
+                                <!-- Modify full_name input field -->
+                                <label for="full_name" class="inputLabelText">Name:</label><br>
+                                <input class="input" type="text" id="full_name" name="full_name" autocomplete="off">
+                                <div id="full_name-suggestions"></div>
                             </div>
                         </div>
 
@@ -172,8 +175,8 @@
                                 <label for="looking_for" class="inputLabelText">Looking For:</label><br>
                                 <select id="looking_for" name="looking_for" class="optionDropdown">
                                     <option value="any">Any</option>
-                                    <option value="short_term">Short Term</option>
-                                    <option value="long_term">Long Term</option>
+                                    <option value="Short-Term">Short Term</option>
+                                    <option value="Long-Term">Long Term</option>
                                 </select>
                             </div>
                         </div>
@@ -194,6 +197,18 @@
                 </div>
 
                 <div class="row inputField">
+
+                    <select data-placeholder="Begin typing a hobby to filter..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
+                        <option value=""></option>
+                        <option>Golf Games</option>
+                        <option>Karate</option>
+                        <option>Swimming</option>
+                        <option>Chess</option>
+                    </select>
+
+                </div>
+
+                <div class="row inputField">
                     <div class="col-12 order-lg-3 search">
                         <input type="submit" class="btn btn-secondary mt-2 mb-4 searchBtn" value="Search">
                     </div>
@@ -201,53 +216,65 @@
             </form>
         </div>
     </div>
-    <script>
-        function update_min_age_value(value) {
-            document.getElementById("min_age_value").textContent = value;
-        }
+<!-- Script for updating min and max age values -->
+<script>
+    function update_min_age_value(value) {
+        document.getElementById("min_age_value").textContent = value;
+    }
 
-        function update_max_age_value(value) {
-            document.getElementById("max_age_value").textContent = value;
-        }
+    function update_max_age_value(value) {
+        document.getElementById("max_age_value").textContent = value;
+    }
 
-        function reset_min_age() {
-            document.getElementById("min_age").value = 18;
-            update_min_age_value(18);
-        }
+    function reset_min_age() {
+        document.getElementById("min_age").value = 18;
+        update_min_age_value(18);
+    }
 
-        function reset_max_age() {
-            document.getElementById("max_age").value = 100;
-            update_max_age_value(100);
-        }
-
-
-        $(document).ready(function () {
-            $('#name').keyup(function () {
-                var query = $(this).val();
-                if (query != '') {
-                    $.ajax({
-                        url: "autocomplete.php",
-                        method: "GET",
-                        data: { term: query },
-                        success: function (data) {
-                            $('#name-suggestions').fadeIn();
-                            var suggestions = JSON.parse(data);
-                            $('#name-suggestions').empty();
-                            suggestions.forEach(function (suggestion) {
-                                $('#name-suggestions').append('<li>' + suggestion + '</li>');
-                            });
-                        }
-                    });
-                }
-            });
-
-            $(document).on('click', 'li', function () {
-                $('#name').val($(this).text());
-                $('#name-suggestions').fadeOut();
-            });
+    function reset_max_age() {
+        document.getElementById("max_age").value = 100;
+        update_max_age_value(100);
+    }
+</script>
+<!-- Script for autocomplete and suggestions for the full name input field -->
+<script>
+    $(document).ready(function () {
+        $('#full_name').keyup(function () {
+            var query = $(this).val();
+            if (query != '') {
+                $.ajax({
+                    url: "autocomplete.php",
+                    method: "GET",
+                    data: { term: query },
+                    success: function (data) {
+                        $('#full_name-suggestions').fadeIn();
+                        var suggestions = JSON.parse(data);
+                        $('#full_name-suggestions').empty();
+                        suggestions.forEach(function (suggestion) {
+                            $('#full_name-suggestions').append('<li>' + suggestion + '</li>');
+                        });
+                    }
+                });
+            }
         });
 
-    </script>
+        $(document).on('click', '#full_name-suggestions li', function () {
+            $('#full_name').val($(this).text());
+            $('#full_name-suggestions').fadeOut();
+        });
+    });
+</script>
+
+<!-- Script for applying Chosen plugin only to hobbies select element -->
+<script>
+    $(document).ready(function () {
+        // Ensure that only the hobbies select element is targeted
+        $('#hobbies').chosen({
+            no_results_text: "Oops, nothing found!"
+        });
+    });
+</script>
+
 
     <br>
 
