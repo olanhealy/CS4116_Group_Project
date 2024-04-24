@@ -1,6 +1,7 @@
 <?php
 
 //used for connecting to the database on server
+
 $sname= "sql313.infinityfree.com";
 $unmae= "if0_36038205";
 $password = "cs41162024";
@@ -12,6 +13,7 @@ $db_name = "if0_36038205_ulsingles";
 //  $unmae= "root";
 //  $password = "";
 //  $db_name = "ulsingles";
+
 
 //connect to the database
 $conn = mysqli_connect($sname, $unmae, $password, $db_name);
