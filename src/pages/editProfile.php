@@ -28,11 +28,12 @@ $name = getName($userId);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
-    if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])){
-        $hobbies = $_POST['hobbies'];
+    if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])) {
+        $hobbies = array_slice($_POST['hobbies'], 0, 4); // Take only the first 4 hobbies
         $hobbies = implode(' ', $hobbies);
-    }else{
-        $hobbies = getHobbies($userId);;
+        setHobbies($userId, $hobbies); // Update hobbies in the database
+    } else {
+        $hobbies = getHobbies($userId); // Default to existing hobbies if none provided
     }
     
     if(isset($_POST['gender'])){
@@ -341,12 +342,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-12 col-sm-12 col-lg-12">
 
                                 <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
-                                    <option value=""></option>
-                                    <option>Golf Games</option>
-                                    <option>Karate</option>
-                                    <option>Swimming</option>
-                                    <option>Chess</option>
+                                        <option value=""></option>
+                                        <option>Golf Games</option>
+                                        <option>Karate</option>
+                                        <option>Swimming</option>
+                                        <option>Chess</option>
+                                        <option>Reading</option>
+                                        <option>Writing</option>
+                                        <option>Painting</option>
+                                        <option>Photography</option>
+                                        <option>Music</option>
+                                        <option>Video Games</option>
+                                        <option>Traveling</option>
+                                        <option>Running</option>
+                                        <option>Yoga</option>
+                                        <option>Surfing</option>
+                                        <option>Skateboarding</option>
+                                        <option>Skating</option>
+                                        
                                 </select>
+                                <div id="hobby-limit-message" class="alert alert-warning" style="display: none;">
+                                You can only select up to 4 hobbies.
+                                </div>
+
                             </div>
                         </div>
 
@@ -504,14 +522,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 
     <script>
-        $(document).ready(function () {
-        $(".chosen-select").chosen({
-                no_results_text: "Oops, nothing found!"
-            });
-        });
-    </script>
-
-    <script>
         //Function to display whatever image is inputted in edit profile automatically
         document.getElementById('profile_pic').addEventListener('change', function (event) {
             if (event.target.files && event.target.files[0]) {
@@ -527,6 +537,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     </script>
+
+<script>
+$(document).ready(function () {
+    var maxHobbies = 4;
+    $(".chosen-select").chosen({
+        no_results_text: "Oops, nothing found!"
+    }).on('change', function(evt, params) {
+        var selectedHobbies = $(this).chosen().val();
+        if (selectedHobbies.length > maxHobbies) {
+            // Show message
+            $('#hobby-limit-message').show();
+            // Deselect the last hobby
+            selectedHobbies.pop();
+            $(this).val(selectedHobbies).trigger('chosen:updated');
+        } else {
+            // Hide message
+            $('#hobby-limit-message').hide();
+        }
+    });
+});
+</script>
 
 </body>
 
