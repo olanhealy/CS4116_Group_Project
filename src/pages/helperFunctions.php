@@ -631,6 +631,49 @@ function getAllMatches($userId)
     }
 }
 
+function getBanReason($userId){
+    global $conn;
+    $banReason = "";
+
+    $query = "SELECT reason FROM banned WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $banReason = $row['reason'];
+        }
+    }
+    return $banReason;
+
+}
+
+
+function getDateOfUnban($userId){
+    global $conn;
+    $unbanDate = "";
+
+    $query = "SELECT dateOfUnban FROM banned WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $unbanDate = $row['dateOfUnban'];
+        }
+    }
+    return $unbanDate;
+
+
+}
 function showProfileCard($user_id){
 
     $targetUserId = $user_id;
@@ -960,4 +1003,5 @@ function areUserDetailsSet($userId) {
         return false;
     }
 }
+
 ?>

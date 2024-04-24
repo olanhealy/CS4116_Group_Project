@@ -3,7 +3,7 @@
 include "db_connection.php";
 include "helperFunctions.php";
 
-if(session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -29,7 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Check if user is banned
                 if ($row['banned'] == '1') {
-                    $error = "User banned. Please contact support.";
+
+                    $reason = getBanReason($row['user_id']);
+                    $dateOfUnban = getDateOfUnban($row['user_id']);
+
+                    if ($dateOfUnban == "0000-00-00") {
+                        $dateOfUnban = "Permanent Ban";
+                    }
+                    $error = "User banned. Ban Review on: $dateOfUnban.  Reason: $reason. Please contact support.";
+
                 } else if (password_verify($pass, $row['password_hash'])) {
                     // User authenticated, set session variables
                     $_SESSION['email'] = $row['email'];
@@ -46,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Redirect to home page
                     header("Location: home.php");
                     exit();
-                    
+
                 } else {
                     $error = "Incorrect username or password";
                 }
@@ -113,15 +121,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         alt="ulSingles_symbol">
                     <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
-                    <?php if(isset($error)): ?>
+                    <?php if (isset($error)): ?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo htmlspecialchars($error); ?>
                         </div>
                     <?php endif; ?>
-                    
-                    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
-                    <input type="password" name="password" placeholder="Password" class="form-control"><br>
-                    <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+
+                    <div class="form-container">
+                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
+                        <input type="password" name="password" placeholder="Password" class="form-control"><br>
+                        <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+                    </div>
 
                     <!-- Link to Registration page via button -->
                     <p>Don't have an account? <a href="registration.php">Register here</a></p>
