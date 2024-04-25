@@ -359,7 +359,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-12 col-sm-12 col-lg-12">
                         <!-- Bio -->
                         <label for="bio" class="inputLabelText">Bio</label><br>
-                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." equired
+                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required
                            maxlength="150"><?php echo htmlspecialchars($bio); ?></textarea>
                         <div id="bio-feedback" class="text-muted">
                            Characters left: <span id="bio-counter">150</span>
