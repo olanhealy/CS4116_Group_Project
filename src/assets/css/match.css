@@ -5,7 +5,7 @@ body {
 }
 
 #matches{
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 #profilepicture{
@@ -28,8 +28,8 @@ body {
 }
 
 .carousel-indicators{
-  bottom: -50px;
-  margin-bottom: 40px;
+  bottom: -60px;
+  margin-bottom: 50px;
 }
 
 .carousel-control-prev-icon,
@@ -68,3 +68,76 @@ p {
     text-align: center; /* Center the text */
     /* Add additional styles for the <p> element */
 }
+
+#messageButton{
+  text-align: center;
+  align-items: center;
+  background-color: #abc99d;
+  color: white;
+  width: 84%;
+  padding: 8px;
+  font-size: 20px;
+}
+
+#removeButton{
+  text-align: center;
+  align-items: center;
+  margin-right: 15px;
+  padding: 7px;
+  background-color: red;
+  color: black;
+  width: 95%;
+}
+
+#reportButton{
+  text-align: center;
+  align-items: center;
+  padding: 7px; 
+  margin-bottom: 30px;
+  background-color: red;
+  color: black;
+  width: 100%;
+}
+
+/*
+@media (max-width: 1259px) {
+  #messageButton {
+    font-size: 18px;
+  }
+
+  #removeButton {
+    font-size: 13px;
+  }
+
+  #reportButton {
+    font-size: 13px;
+  } 
+ }
+
+ @media (max-width: 1099px) {
+  #messageButton {
+    font-size: 18px;
+  }
+
+  #removeButton {
+    font-size: 10px;
+  }
+
+  #reportButton {
+    font-size: 10px;
+  } 
+ }
+
+ @media (max-width: 930px) {
+  #messageButton {
+    font-size: 18px;
+  }
+
+  #removeButton {
+    font-size: 8px;
+  }
+
+  #reportButton {
+    font-size: 8px;
+  } 
+ }
