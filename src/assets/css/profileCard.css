@@ -5,6 +5,7 @@
 }
 
 .profile-card {
+    justify-content: center;
     width: 22%;
     margin: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -13,14 +14,21 @@
     border-radius: 10px; /* Round the edges */
 }
 
+
 .profile-card h2 {
     text-align: center; /* Center the text */
 }
 
 .profile-card p {
     /* Set the font size to your desired value */
-    font-size: 14px; /* Example size, change as needed */
-    margin: 5px;
+    font-size: 14px;
+    margin: 1px;
+}
+
+.profile-card img {
+    width: 100%;
+    border-radius: 10px 10px 0 0; 
+    max-height: 150px;
 }
 
 .profile-picture {
@@ -72,6 +80,3 @@
     margin: 10px auto;
     border-radius: 10px;
 }
-
-
-

@@ -254,6 +254,13 @@ h3 {
     border-color: #97b189;
 }
 
+.profile-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+
 
 footer {
     background-color: #e6d1be;
