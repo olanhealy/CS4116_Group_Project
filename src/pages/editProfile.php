@@ -325,6 +325,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                     </div>
                      <div class="row inputField">
                         <div class="col-md-12 col-sm-12 col-lg-12">
+                        <label for="hobbies" class="inputLabelText">Hobbies</label><br>
                            <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
                               <option value=""></option>
                               <?php
