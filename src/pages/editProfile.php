@@ -114,15 +114,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Update the user currently logged in profile table in the database
    $userId = $_SESSION['user_id']; //we use this from being logged in
 
-   // Call setter methods to make the updates in db
-   setBio($userId, $bio);
-   setGender($userId, $gender);
-   setCollegeYear($userId, $collegeYear);
-   setPursuing($userId, $pursuing);
-   setProfilePic($userId, $profilePicFilename);
-   setCourse($userId, $course);
-   setHobbies($userId, $hobbies);
-   setLookingFor($userId, $lookingFor);
+   if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+      // If profile picture is not being uploaded, no need to check for it
+      // Update the user currently logged in profile table in the database
+      $userId = $_SESSION['user_id']; //we use this from being logged in
+
+      // Call setter methods to make the updates in db
+      setBio($userId, $bio);
+      setGender($userId, $gender);
+      setCollegeYear($userId, $collegeYear);
+      setPursuing($userId, $pursuing);
+      setCourse($userId, $course);
+      setHobbies($userId, $hobbies);
+      setLookingFor($userId, $lookingFor);
+
+      
+  }
 
    if (isset($_POST['password']) && !empty($_POST['password'])) {
       if (empty($passwordErrors)) {
@@ -138,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
 
 }
+
 
 //set selectedHobbies to empty array for first time after register as will not have any hobbies yet
 $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [];
