@@ -435,8 +435,9 @@ function getHobbies($user_id) {
     $get_hobbies->store_result();
 
     if ($get_hobbies->num_rows > 0) {
-        $get_hobbies->bind_result($hobbies);
+        $get_hobbies->bind_result($hobbies_str);
         $get_hobbies->fetch();
+        $hobbies = explode(' ', $hobbies_str);
     }
 
     $get_hobbies->close();
