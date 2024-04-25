@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if (isset($_POST['password']) && isset($_POST['password-repeat'])) {
       $password = htmlspecialchars($_POST['password']);
       $passwordRepeat = htmlspecialchars($_POST['password-repeat']);
-   }
+   } 
 
   
   
@@ -92,9 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
 
    // Check if the inputted and repeated passwords both match
+   if (isset($_POST['password']) && isset($_POST['password-repeat'])) {
+      //need check if they are set otherwise undefined keys error
+  
    if ($_POST['password'] !== $_POST['password-repeat']) {
       $passwordErrors[] = "The password and repeated password do not match";
    }
+}
 
    // Check if at least one hobbie is inputted
    if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
