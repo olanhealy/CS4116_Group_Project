@@ -201,12 +201,70 @@
 
                     <select data-placeholder="Begin typing a hobby to filter..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
                         <option value=""></option>
-                        <option>Golf Games</option>
-                        <option>Karate</option>
-                        <option>Swimming</option>
-                        <option>Chess</option>
+                        <option value="Golf">Golf</option>
+                        <option value="Karate">Karate</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Chess">Chess</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Painting">Painting</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Music">Music</option>
+                        <option value="Video Games">Video Games</option>
+                        <option value="Traveling">Traveling</option>
+                        <option value="Running">Running</option>
+                        <option value="Yoga">Yoga</option>
+                        <option value="Surfing">Surfing</option>
+                        <option value="Skateboarding">Skateboarding</option>
+                        <option value="Skating">Skating</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Hiking">Hiking</option>
+                        <option value="Camping">Camping</option>
+                        <option value="Fishing">Fishing</option>
+                        <option value="Hunting">Hunting</option>
+                        <option value="Cooking">Cooking</option>
+                        <option value="Baking">Baking</option>
+                        <option value="Gardening">Gardening</option>
+                        <option value="Knitting">Knitting</option>
+                        <option value="Sewing">Sewing</option>
+                        <option value="Gaelic">Gaelic</option>
+                        <option value="Hurling">Hurling</option>
+                        <option value="Rugby">Rugby</option>
+                        <option value="Soccer">Soccer</option>
+                        <option value="Basketball">Basketball</option>
+                        <option value="Tennis">Tennis</option>
+                        <option value="Volleyball">Volleyball</option>
+                        <option value="Baseball">Baseball</option>
+                        <option value="Football">Football</option>
+                        <option value="American Football">American Football</option>
+                        <option value="Cricket">Cricket</option>
+                        <option value="Badminton">Badminton</option>
+                        <option value="Table Tennis">Table Tennis</option>
+                        <option value="Gymnastics">Gymnastics</option>
+                        <option value="Dancing">Dancing</option>
+                        <option value="Singing">Singing</option>
+                        <option value="Acting">Acting</option>
+                        <option value="Magic">Magic</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Watching Movies">Watching Movies</option>
+                        <option value="Watching TV Shows">Watching TV Shows</option>
+                        <option value="Watching Anime">Watching Anime</option>
+                        <option value="Watching Cartoons">Watching Cartoons</option>
+                        <option value="Watching Documentaries">Watching Documentaries</option>
+                        <option value="Watching YouTube">Watching YouTube</option>
+                        <option value="Watching Netflix">Watching Netflix</option>
+                        <option value="Coding">Coding</option>
+                        <option value="Researching">Researching</option>
+                        <option value="Learning">Learning</option>
+                        <option value="Teaching">Teaching</option>
+                        <option value="Mentoring">Mentoring</option>
+                        <option value="Coaching">Coaching</option>
+                        <option value="Meditation">Meditation</option>
+                        <option value="Praying">Praying</option>
+                        <option value="Volunteering">Volunteering</option>
+                        <option value="Other">Other</option>
                     </select>
-
                 </div>
 
                 <div class="row inputField">
@@ -295,7 +353,10 @@
     $(document).ready(function () {
         // Ensure that only the hobbies select element is targeted
         $('#hobbies').chosen({
-            no_results_text: "Oops, nothing found!"
+            no_results_text: "Oops, nothing found!",
+            max_selected_options: 4
+        }).bind("chosen:maxselected", function () {
+            alert("You can only select up to 4 hobbies.");
         });
     });
 </script>

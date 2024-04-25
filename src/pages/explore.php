@@ -30,13 +30,14 @@ $userLoggedInCourse = getCourse($userLoggedInId);
 $userLoggedInLookingFor = getLookingFor($userLoggedInId);
 
 // as hobbies now in array need to export in in comma seperated strings for display
-function escapeHtml($data) {
+function escapeHtmlForExplore($data) {
     if (is_array($data)) {
         
         $data = implode(', ', $data);
     }
     return htmlspecialchars($data);
 }
+
 //Fucntion for how we are going to differ the weights to display matches. We are going to have a few factors
 function calcMatchWeight($targetUserId)
 {
