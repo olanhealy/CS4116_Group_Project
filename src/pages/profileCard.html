@@ -9,7 +9,9 @@
 
 <body>
     <!--Profile Card Setup-->
-    <div class="profile-card">
+    <div class="profile-card ">
+        <div class="profile-card-info">
+                
         <img src="/<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-picture">
         <h2><?php echo $name; ?></h2>
         <p><strong>Bio:</strong> <?php echo $bio; ?></p>
@@ -20,7 +22,9 @@
         <p><strong>Course:</strong> <?php echo $course; ?></p>
         <p><strong>Hobbies:</strong> <?php echo $hobbies; ?></p>
         <p><strong>Looking For:</strong> <?php echo $lookingFor; ?></p>
+        </div>  
 
+        <div class="profile-card-buttons">
         <!--check if adore button should be shown on the card-->
         <?php 
             global $showingAdoreButton;
@@ -28,6 +32,7 @@
             //if the user is not the same as the target user, show the adore button
             if(isset($showingAdoreButton) && $showingAdoreButton == true) { ?>
 
+        
         <!--Adore Button-->
         <form action="adoreUser.php" method="POST">
             <input type="hidden" name="action" value="adore_user">
@@ -57,7 +62,7 @@
         <?php
             }
         ?>
-
+        </div>
     </div>
 </body>
 </html>
