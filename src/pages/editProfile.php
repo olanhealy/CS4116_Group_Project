@@ -97,12 +97,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
    }
 
-       // Check if user uploaded a profile picture
-       if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
-         $errors[] = "Please upload a profile picture";
-     } else {
-         setProfilePic($userId, $_FILES['profile_pic']);
-     }
+    // Check if a new profile picture is uploaded
+    if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+      // Only add error if there is also no profile picture in the database
+      if (empty($profilePicFilename)) {
+          $errors[] = "Please upload a profile picture";
+      }
+  } else {
+      //set profile pic
+      $uploadResult = setProfilePic($userId, $_FILES['profile_pic']);
+      
+  }
+
 
    // Update the user currently logged in profile table in the database
    $userId = $_SESSION['user_id']; //we use this from being logged in
@@ -180,7 +186,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       </div>
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
-         <?php if (isset($age)) { ?>
+         <?php if (areUserDetailsSet($userId)) { ?>
             <button type="button" id="explorebutton" class="btn button d-none d-md-block"
                onclick="location.href='explore.php'">Explore</button>
          <?php } ?>
@@ -188,7 +194,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             onclick="location.href='logout.php'">Log Out</button>
       </div>
       <!-- Profile Icon -->
-      <?php if (isset($age)) { ?>
+      <?php if (areUserDetailsSet($userId)) { ?>
          <div class="dropdown">
             <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
@@ -373,7 +379,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </div>
                      </div>
                   </div>
-                  <?php if (isset($age)) { ?>
+                  <?php if (areUserDetailsSet($userId)) { ?>
                      <div class="row inputField">
                         <!--Sixth Row -- Password, verify-->
                         <div class="col-md-6 col-sm-12 col-lg-6">
