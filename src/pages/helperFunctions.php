@@ -1014,5 +1014,13 @@ function areUserDetailsSet($userId) {
         return false;
     }
 }
+// as hobbies now in array need to export in in comma seperated strings for display
 
+function escapeHtmlForSearch($data) {
+    if (is_array($data)) {
+        
+        $data = implode(', ', $data);
+    }
+    return htmlspecialchars($data);
+}
 ?>

@@ -1,68 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
+    <head>
 
-    <!-- External Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/profileCard.css">
-</head>
+        <!-- External Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../assets/css/profileCard.css">
+    </head>
 
-<body>
-    <!--Profile Card Setup-->
-    <div class="profile-card ">
-        <div class="profile-card-info">
-                
-        <img src="/<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-picture">
-        <h2><?php echo $name; ?></h2>
-        <p><strong>Bio:</strong> <?php echo $bio; ?></p>
-        <p><strong>Gender:</strong> <?php echo $gender; ?></p>
-        <p><strong>Age:</strong> <?php echo $age; ?></p>
-        <p><strong>College Year:</strong> <?php echo $collegeYear; ?></p>
-        <p><strong>Pursuing:</strong> <?php echo $pursuing; ?></p>
-        <p><strong>Course:</strong> <?php echo $course; ?></p>
-        <p><strong>Hobbies:</strong> <?php echo $hobbies; ?></p>
-        <p><strong>Looking For:</strong> <?php echo $lookingFor; ?></p>
-        </div>  
+    <body>
+        <!--Profile Card Setup-->
+        <div class="profile-card ">
+            <div class="profile-card-info">
+                    
+            <img src="/<?php echo $profilePicture; ?>" alt="Profile Picture" class="profile-picture">
+            <h2><?php echo $name; ?></h2>
+            <p><strong>Bio:</strong> <?php echo $bio; ?></p>
+            <p><strong>Gender:</strong> <?php echo $gender; ?></p>
+            <p><strong>Age:</strong> <?php echo $age; ?></p>
+            <p><strong>College Year:</strong> <?php echo $collegeYear; ?></p>
+            <p><strong>Pursuing:</strong> <?php echo $pursuing; ?></p>
+            <p><strong>Course:</strong> <?php echo $course; ?></p>
+            <p><strong>Hobbies:</strong> <?php echo escapeHtmlForSearch($hobbies); ?></p>
+            <p><strong>Looking For:</strong> <?php echo $lookingFor; ?></p>
+            </div>  
 
-        <div class="profile-card-buttons">
-        <!--check if adore button should be shown on the card-->
-        <?php 
-            global $showingAdoreButton;
+            <div class="profile-card-buttons">
+            <!--check if adore button should be shown on the card-->
+            <?php 
+                global $showingAdoreButton;
 
-            //if the user is not the same as the target user, show the adore button
-            if(isset($showingAdoreButton) && $showingAdoreButton == true) { ?>
+                //if the user is not the same as the target user, show the adore button
+                if(isset($showingAdoreButton) && $showingAdoreButton == true) { ?>
 
-        
-        <!--Adore Button-->
-        <form action="adoreUser.php" method="POST">
-            <input type="hidden" name="action" value="adore_user">
-            <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
-            <input type="submit" value="Adore" class="adore-button">
-        </form>
-        <?php 
-            } 
-        ?>
+            
+            <!--Adore Button-->
+            <form action="adoreUser.php" method="POST">
+                <input type="hidden" name="action" value="adore_user">
+                <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
+                <input type="submit" value="Adore" class="adore-button">
+            </form>
+            <?php 
+                } 
+            ?>
 
-        <!--check if the user is matched to user, if so show report and messages buttons-->
-        <?php
-            if(getMatch($_SESSION['user_id'],$targetUserId) != null){ 
-                $matchId = getMatchId($_SESSION['user_id'],$targetUserId);       
-        ?>
+            <!--check if the user is matched to user, if so show report and messages buttons-->
+            <?php
+                if(getMatch($_SESSION['user_id'],$targetUserId) != null){ 
+                    $matchId = getMatchId($_SESSION['user_id'],$targetUserId);       
+            ?>
 
-        <!--Messages Link-->        
-        <a href="messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
+            <!--Messages Link-->        
+            <a href="messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
 
-        <!--Report Button-->
-        <form action="report.php" method="POST">
-            <input type="hidden" name="action" value="report_user">
-            <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
-            <input type="submit" value="Report" class="report-button">
-        </form>
+            <!--Report Button-->
+            <form action="report.php" method="POST">
+                <input type="hidden" name="action" value="report_user">
+                <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
+                <input type="submit" value="Report" class="report-button">
+            </form>
 
-        <?php
-            }
-        ?>
+            <?php
+                }
+            ?>
+            </div>
         </div>
-    </div>
-</body>
-</html>
+    </body>
+    </html>
