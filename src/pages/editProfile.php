@@ -114,24 +114,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Update the user currently logged in profile table in the database
    $userId = $_SESSION['user_id']; //we use this from being logged in
 
-   if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
-      // If profile picture is not being uploaded, no need to check for it
-      // Update the user currently logged in profile table in the database
-      $userId = $_SESSION['user_id']; //we use this from being logged in
-
-      // Call setter methods to make the updates in db
-      setBio($userId, $bio);
-      setGender($userId, $gender);
-      setCollegeYear($userId, $collegeYear);
-      setPursuing($userId, $pursuing);
-      setCourse($userId, $course);
-      setHobbies($userId, $hobbies);
-      setLookingFor($userId, $lookingFor);
-
-      // Redirect to home page after saving changes as all details are set
-      header("Location: home.php");
-      exit();
-  }
+   // Call setter methods to make the updates in db
+   setBio($userId, $bio);
+   setGender($userId, $gender);
+   setCollegeYear($userId, $collegeYear);
+   setPursuing($userId, $pursuing);
+   setProfilePic($userId, $profilePicFilename);
+   setCourse($userId, $course);
+   setHobbies($userId, $hobbies);
+   setLookingFor($userId, $lookingFor);
 
    if (isset($_POST['password']) && !empty($_POST['password'])) {
       if (empty($passwordErrors)) {
@@ -371,7 +362,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-12 col-sm-12 col-lg-12">
                         <label for="hobbies" class="inputLabelText">Hobbies</label><br>
                         <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]"
-                           id="hobbies" required>
+                           id="hobbies">
                            <option value=""></option>
                            <?php
                            foreach (Hobby::cases() as $case) {
@@ -384,10 +375,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         <div id="hobby-limit-message" class="alert alert-warning" style="display: none;">
                            You can only select up to 4 hobbies.
                         </div>
-                        <div id="hobbies-error" class="alert alert-danger" style="display: none;">
-                           Please select at least one hobby
-                        </div>
-                      </div>
+                     </div>
                   </div>
                   <?php if (isset($age)) { ?>
                      <div class="row inputField">
@@ -561,42 +549,21 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             }
         });
 
-        $(document).ready(function() {
-    // Function to validate hobbies selection
-    function validateHobbies() {
-    var selectedHobbies = $('#hobbies').val();
-    if (!selectedHobbies || selectedHobbies.length === 0) {
-        // If no hobbies selected, show error message (not working TODO: fix)
-        $('#hobbies-error').show();
-        return false; // Return false to prevent form submission
-    }
-    return true; // Return true if hobbies are selected
-}
-
-    // Function to handle form submission
-    $('form').submit(function() {
-        // Validate hobbies selection
-        var hobbiesValid = validateHobbies();
-        // Return true only if all validations pass
-        return hobbiesValid;
-    });
-
-    // multiple selection of hobbies max 4
-    $(".chosen-select").chosen({
-        no_results_text: "Oops, nothing found!"
-    }).on('change', function(evt, params) {
-        var selectedHobbies = $(this).chosen().val();
-        if (selectedHobbies.length > 4) {
-            // If more than 4 hobbies selected, display warning and deselect the last
-            $('#hobby-limit-message').show();
-            selectedHobbies.pop();
-            $(this).val(selectedHobbies).trigger('chosen:updated');
-        } else {
-            // Otherwise, hide the warning message
-            $('#hobby-limit-message').hide();
-        }
-    });
-});
+        // Initialize chosen plugin for multiple selection of hobbies
+        $(".chosen-select").chosen({
+            no_results_text: "Oops, nothing found!"
+        }).on('change', function(evt, params) {
+            var selectedHobbies = $(this).chosen().val();
+            if (selectedHobbies.length > 4) {
+                // If more than 4 hobbies selected, display warning and deselect the last
+                $('#hobby-limit-message').show();
+                selectedHobbies.pop();
+                $(this).val(selectedHobbies).trigger('chosen:updated');
+            } else {
+                // Otherwise, hide the warning message
+                $('#hobby-limit-message').hide();
+            }
+        });
 
         // Character counter for bio text area
         $('#bio').keyup(function() {
