@@ -18,7 +18,6 @@ setupHeader();
 // Get the user's next matches
 $matches = getNextMatches($userId);
 
-
 // Include match.html file
 include "match.html";
 

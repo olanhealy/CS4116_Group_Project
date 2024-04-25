@@ -46,7 +46,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
         <div class="images">
             <img class="header-img d-none d-md-block" src="/src/assets/images/ul_logo.png" alt="ul_logo">
             <div class="line d-none d-md-block"></div>
-            <img class="header-img" src="src/assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+            <img class="header-img" src="/src/assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
         <!-- Buttons -->
