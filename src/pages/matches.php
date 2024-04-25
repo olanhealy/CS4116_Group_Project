@@ -12,14 +12,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
     removeMatch($_POST['userId'], $_POST['targetId']);
 }
 
-// If $matches is null, initialize it as an empty array
-if ($matches === null) {
-    $matches = [];
-}
-
 //sets up the header and dropdown
 setupHeader();
 
+$matches = array();
 // Get the user's next matches
 $matches = getNextMatches($userId);
 

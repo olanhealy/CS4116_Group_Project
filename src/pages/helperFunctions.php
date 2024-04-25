@@ -659,9 +659,6 @@ function getNextMatches($userId)
                 AND response_date IS NOT NULL 
               ORDER BY response_date DESC";
 
-
-    $matches = array();
-
     // Check the result is not empty
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
@@ -670,7 +667,9 @@ function getNextMatches($userId)
             $targetId = $row['other_user_id'];
             $name = getName($targetId);
             $age = getAge($targetId);
-            $matches[] = array('name' => $name, 'age' => $age, 'userId' => $userId, 'targetId' => $targetId);
+            $matchId = getMatchId($userId, $targetId);
+            $profilePicture = getProfilePicture($targetId);
+            $matches[] = array('name' => $name, 'age' => $age, 'userId' => $userId, 'targetId' => $targetId, 'matchId' => $matchId,'profilePicture' => $profilePicture);
 
         }
 
@@ -681,8 +680,7 @@ function getNextMatches($userId)
         echo '<div class="col-md-12 col-lg-12 col-lg-12" id="errorContainer">
         <p id="error"> No matches found. <br> Use the Explore page to create new matches!</p></div>';
 
-        //set up the footer
-        setupFooter();
+        return [];
     }
 
 }
