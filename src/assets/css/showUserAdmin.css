@@ -51,29 +51,6 @@
     margin-left: 10px;
 }
 
-#unbanContainer {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: inline;
-}
-
-#unban{
-  padding: 10px 24px;
-  align-items: center;
-  text-align: center;
-  display: inline;
-  margin-top: 5px;
-}
-
-#unbanButton{
-  background-color:#abc99d;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
 
 @media (max-width: 520px) {
   #makeadminButton {
