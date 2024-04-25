@@ -26,8 +26,11 @@
     //if the account is banned show editProfile, unban, deleteUser
     if(isAccountBanned($targetId)){
         include "editProfileAdmin.php";
+        echo '<div class="col-md-12 col-lg-12 col-lg-12" id="unbanContainer">';
         include "unban.html";
         include "deleteUser.html";
+        echo '</div>';
+        include "../footer.php";
     }else{
     //if the account isn't banned
         //and the account is not an admin show editProfile, makeAdmin, banUser
