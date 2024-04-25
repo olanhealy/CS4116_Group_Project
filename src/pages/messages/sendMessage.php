@@ -2,11 +2,9 @@
 //Include connection and helper files
 include "../db_connection.php";
 include "../helperFunctions.php";
+include_once("../admin/adminHelperFunctions.php");
 
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
+accessCheck();
 // sending out JSON data so set the content type to JSON
 header('Content-Type: application/json');
 

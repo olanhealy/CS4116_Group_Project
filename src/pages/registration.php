@@ -25,7 +25,6 @@ function setUserId($email){
 include "db_connection.php";
 include "helperFunctions.php";
 
-//TODO: Frontend: Change errors to be displayed in a more user friendly way
 //Initalise array of errors which can then be displayed from the html
 $errors = [];
 

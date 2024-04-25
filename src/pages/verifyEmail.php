@@ -2,10 +2,9 @@
 // Include necessary files and functions
 include 'db_connection.php';
 include 'helperFunctions.php';
+include "admin/adminHelperFunctions.php";
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck();
 
 $userId = $_SESSION['user_id'];
 

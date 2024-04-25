@@ -1,5 +1,15 @@
 <?php
-// Process #13 to set the user's bio in the profile table of the db
+function accessCheck()
+{
+    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "standard") {
+        header("Location: /index.php");
+        exit();
+    }
+}
 
 // Process #4 checks if the Account already exists in the account table of db
 function isAccountFound($email, $password)

@@ -2,8 +2,9 @@
 // Include connection and helper
 include "../db_connection.php";
 include "../helperFunctions.php";
+include_once("../admin/adminHelperFunctions.php");
 
-session_start();
+accessCheck();
 
 header('Content-Type: application/json');
 

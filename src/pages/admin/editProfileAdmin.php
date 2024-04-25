@@ -1,12 +1,11 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 // Include the helperFunctions.php file
+include_once 'adminHelperFunctions.php';
 include_once '../helperFunctions.php';
 include '../db_connection.php';
 
+adminAccessCheck();
 
 //var_dump($_SESSION);
 if (isset($_SESSION['targetId'])) {

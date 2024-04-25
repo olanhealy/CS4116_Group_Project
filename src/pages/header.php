@@ -1,4 +1,5 @@
 <?php
+
 $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $pageName = $curPageName;
 $pageName = ucfirst(str_replace('.php', '', $curPageName));
@@ -78,10 +79,10 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
 
         
         <?php if ($notifications['messages'] > 0): ?>
-            <li><a class="dropdown-item-profile" href="messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages</a></li>
+            <li><a class="dropdown-item-profile" href="/src/pages/messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages</a></li>
         <?php endif; ?>
         <?php if ($notifications['matches'] > 0): ?>
-            <li><a class="dropdown-item-profile" href="matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches</a></li>
+            <li><a class="dropdown-item-profile" href="/src/pages/matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches</a></li>
         <?php endif; ?>
     </ul>
 </div>

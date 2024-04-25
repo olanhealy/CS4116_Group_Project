@@ -2,11 +2,9 @@
 
 include "db_connection.php";
 require "helperFunctions.php";
+include_once "admin/adminHelperFunctions.php";
 
-// Start the session
-if (session_status() === PHP_SESSION_NONE) {
-   session_start();
-}
+accessCheck(); 
 
 // Fetch user details from the database
 $userId = $_SESSION['user_id'];
@@ -362,6 +360,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                               Change Password
                            </button>
                         </div>
+                        
                         <!-- Modal for changing password -->
                         <div class="modal fade" id="changePasswordModal" tabindex="-1"
                            aria-labelledby="changePasswordModalLabel" aria-hidden="true">

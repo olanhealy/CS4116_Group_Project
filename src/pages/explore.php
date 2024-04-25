@@ -2,11 +2,9 @@
 
 require "db_connection.php";
 require_once "helperFunctions.php";
+require_once "admin/adminHelperFunctions.php";
 
-// Start session securely
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck(); 
 
 // get user id of user currently accessing the explore page
 $userLoggedInId = $_SESSION['user_id'];

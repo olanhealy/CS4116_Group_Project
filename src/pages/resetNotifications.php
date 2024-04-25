@@ -1,7 +1,9 @@
 <?php
 include 'db_connection.php';
 include 'helperFunctions.php';
-session_start();
+include "admin/adminHelperFunctions.php";
+
+accessCheck();
 
 // let data be json data sent from the client side
 $data = json_decode(file_get_contents('php://input'), true);

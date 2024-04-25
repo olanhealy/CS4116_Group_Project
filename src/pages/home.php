@@ -1,19 +1,11 @@
 <?php
 include_once("helperFunctions.php");
+include_once("admin/adminHelperFunctions.php");
 include_once("db_connection.php");
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-// Check if user is logged in using the session variable
-if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
-    $userId = $_SESSION['user_id'];
-} 
-else {
-    header("Location: index.php");
-    exit();
-}
+accessCheck(); 
 
+$userId = $_SESSION['user_id'];
 $notifications = fetchNotifications($userId);
 $totalNotifications = $notifications['messages'] + $notifications['matches'];
 ?>

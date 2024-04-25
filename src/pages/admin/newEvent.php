@@ -1,4 +1,8 @@
 <?php
+include "../db_connection.php";
+include "adminHelperFunctions.php";
+adminAccessCheck();
+
 $message = '';
 
 if(isset($_POST['submit'])){

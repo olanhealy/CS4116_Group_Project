@@ -2,10 +2,9 @@
 
 include_once "db_connection.php";
 include_once "helperFunctions.php";
+include "admin/adminHelperFunctions.php";
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck();
 
 if ($_POST['action'] == "report_user") {
     $targetId = $_POST['target_user_id'];

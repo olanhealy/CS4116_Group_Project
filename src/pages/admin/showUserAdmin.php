@@ -3,9 +3,7 @@
     include_once "../db_connection.php";
     include_once "adminHelperFunctions.php";
     
-    if(session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    adminAccessCheck();
     
     //targetID set from GET sent from userListAdmin.html
     if (isset($_GET['targetId'])){
