@@ -48,18 +48,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $age = getAge($userId);
    }
 
+       // Only attempt to update the profile picture if a new file has been uploaded
+       if ($_FILES['profile_pic']['error'] !== UPLOAD_ERR_NO_FILE) {
+         // The setProfilePic function now returns the new filename or false
+         $newProfilePic = setProfilePic($userId, $_FILES['profile_pic']);
+         if ($newProfilePic !== false) {
+             $profilePicFilename = $newProfilePic; // Only update if successful
+         }
+     }
+
    //for displaying hobbies when set
    $selectedHobbiesArray = explode(' ', $hobbies);
+
+   $password = '';
+   $passwordRepeat = '';
+   $passwordErrors = [];
+   $errors = [];
+
+   
    // Validate inputs
    $bio = htmlspecialchars($_POST['bio']);
    $collegeYear = htmlspecialchars($_POST['college_year']);
    $pursuing = htmlspecialchars($_POST['pursuing']);
    $course = htmlspecialchars($_POST['course']);
    $lookingFor = htmlspecialchars($_POST['looking_for']);
-   $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
-   $password = htmlspecialchars($_POST['password']);
+   
+   if (isset($_POST['password']) && isset($_POST['password-repeat'])) {
+      $password = htmlspecialchars($_POST['password']);
+      $passwordRepeat = htmlspecialchars($_POST['password-repeat']);
+   }
 
-   $passwordErrors = [];
+  
+  
 
    // Check if password is between 8 and 20 characters long
    if (strlen($password) < 8 || strlen($password) > 20) {
@@ -407,6 +427,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
                   <!-- Profile Picture-->
                   <img class="profilePicture"
+                  
                      src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
                      alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
