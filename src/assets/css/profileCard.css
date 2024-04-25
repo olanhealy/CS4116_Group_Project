@@ -9,26 +9,33 @@
     width: 22%;
     margin: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: #dabb9e; /* Add the background color */
-    color: white; /* Change the text color to white */
-    border-radius: 10px; /* Round the edges */
+    background-color: #dabb9e; 
+    color: white; 
+    border-radius: 10px; 
+    border: 2px solid black;
 }
 
 
 .profile-card h2 {
-    text-align: center; /* Center the text */
+    text-align: center; 
+    margin: 5px;
+    -webkit-text-stroke: 0.5px black;
+    text-stroke: 0.5px black;
 }
 
 .profile-card p {
     /* Set the font size to your desired value */
-    font-size: 14px;
+    font-size: 16px;
     margin: 1px;
+    -webkit-text-stroke: 0.5px black;
+    text-stroke: 0.5px black;
 }
 
 .profile-card img {
     width: 100%;
     border-radius: 10px 10px 0 0; 
     max-height: 200px;
+    border: 2px solid black;
 }
 
 .profile-picture {
