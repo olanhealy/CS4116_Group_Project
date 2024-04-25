@@ -2,6 +2,7 @@
 
 include "db_connection.php";
 include "helperFunctions.php";
+include "admin/adminHelperFunctions.php";
 
 // Start the session
 if (session_status() === PHP_SESSION_NONE) {
@@ -15,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Trim and sanitize user input
         $email = trim($_POST['email']);
         $pass = trim($_POST['password']);
+
+        $banBlock = true;
 
         // Error check email and password
         if (empty($email) || empty($pass)) {
@@ -36,10 +39,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if ($dateOfUnban == "0000-00-00") {
                         $dateOfUnban = "Permanent Ban";
-                    }
-                    $error = "User banned. Ban Review on: $dateOfUnban.  Reason: $reason. Please contact support.";
+                    } else {
+                        // Convert dateOfUnban to a timestamp
+                        $unbanTimestamp = strtotime($dateOfUnban);
+                        $currentTimestamp = time();
 
-                } else if (password_verify($pass, $row['password_hash'])) {
+                        // Check if the unban date has passed
+                        if ($unbanTimestamp < $currentTimestamp) {
+                            $banBlock = false;
+                            setBanned($row['user_id'], 0);
+                        }
+                    }
+                }else{
+                    $banBlock = false;
+                }
+
+                if (password_verify($pass, $row['password_hash']) && $banBlock == false) {
                     // User authenticated, set session variables
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] = $row['user_id'];
@@ -57,7 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
 
                 } else {
-                    $error = "Incorrect username or password";
+                    if ($banBlock == true) {
+                        $error = "User banned. Unbanned on: $dateOfUnban.  Reason: $reason. Please contact support.";
+                    } else {
+                        $error = "Incorrect username or password";
+                    }
+                    
                 }
             } else {
                 $error = "Incorrect username or password";
