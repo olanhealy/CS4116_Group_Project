@@ -12,7 +12,6 @@ $userId = $_SESSION['user_id'];
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
-$hobbies = getHobbies($userId);
 $gender = getGender($userId);
 $age = getAge($userId);
 $collegeYear = getCollegeYear($userId);
@@ -21,18 +20,27 @@ $profilePicFilename = getProfilePicture($userId);
 $course = getCourse($userId);
 $lookingFor = getLookingFor($userId);
 $name = getName($userId);
+$selectedHobbiesArray = getHobbies($userId);
+
+$hobbiesArray = getHobbies($userId);
+$hobbiesString = is_array($hobbiesArray) ? implode(' ', $hobbiesArray) : $hobbiesArray;
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+   $password = '';
+   $passwordRepeat = '';
+   $passwordErrors = [];
+   $errors = [];
+
    //Hobbies (Sets max to 4 hobbies, if more than 4 hobbies are selected, only the first 4 will be saved in the database)
-   if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])) {
-      $hobbies = array_slice($_POST['hobbies'], 0, 4); // Take only the first 4 hobbies
-      $hobbies = implode(' ', $hobbies);
-      setHobbies($userId, $hobbies); // Update hobbies in the database
-   } else {
-      $hobbies = getHobbies($userId); // Default to existing hobbies if none provided
-   }
+   if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
+      $errors[] = "Please select at least one hobby";
+  } else {
+      $hobbiesSelected = array_slice($_POST['hobbies'], 0, 4);
+      $hobbiesString = implode(' ', $hobbiesSelected);
+      setHobbies($userId, $hobbiesString);
+  }
 
    if (isset($_POST['gender'])) {
       $gender = htmlspecialchars($_POST['gender']);
@@ -46,22 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $age = getAge($userId);
    }
 
-       // Only attempt to update the profile picture if a new file has been uploaded
-       if ($_FILES['profile_pic']['error'] !== UPLOAD_ERR_NO_FILE) {
-         // The setProfilePic function now returns the new filename or false
-         $newProfilePic = setProfilePic($userId, $_FILES['profile_pic']);
-         if ($newProfilePic !== false) {
-             $profilePicFilename = $newProfilePic; // Only update if successful
-         }
-     }
 
    //for displaying hobbies when set
-   $selectedHobbiesArray = explode(' ', $hobbies);
+   $selectedHobbiesArray = explode(' ', $hobbiesString);
 
-   $password = '';
-   $passwordRepeat = '';
-   $passwordErrors = [];
-   $errors = [];
+  
 
    
    // Validate inputs
@@ -96,30 +93,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if ($_POST['password'] !== $_POST['password-repeat']) {
       $passwordErrors[] = "The password and repeated password do not match";
    }
-}
-
-   // Check if at least one hobbie is inputted
-   if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
-      $errors[] = "Please select at least one hobby";
    }
 
-   // Check if user uploaded a profile picture
-   if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
-      $errors[] = "Please upload a profile picture";
-   }
+    // Check if a new profile picture is uploaded
+    if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+      // Only add error if there is also no profile picture in the database
+      if (empty($profilePicFilename)) {
+          $errors[] = "Please upload a profile picture";
+      }
+  } else {
+      //set profile pic
+      $uploadResult = setProfilePic($userId, $_FILES['profile_pic']);
+      
+  }
+
 
    // Update the user currently logged in profile table in the database
    $userId = $_SESSION['user_id']; //we use this from being logged in
+   
 
-   // Call setter methods to make the updates in db
-   setBio($userId, $bio);
-   setGender($userId, $gender);
-   setCollegeYear($userId, $collegeYear);
-   setPursuing($userId, $pursuing);
-   setProfilePic($userId, $profilePicFilename);
-   setCourse($userId, $course);
-   setHobbies($userId, $hobbies);
-   setLookingFor($userId, $lookingFor);
+      // Call setter methods to make the updates in db
+      setBio($userId, $bio);
+      setGender($userId, $gender);
+      setCollegeYear($userId, $collegeYear);
+      setPursuing($userId, $pursuing);
+      setCourse($userId, $course);
+      setLookingFor($userId, $lookingFor);
+      
+
+      
+  }
 
    if (isset($_POST['password']) && !empty($_POST['password'])) {
       if (empty($passwordErrors)) {
@@ -134,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
    }
 
-}
+
 
 //set selectedHobbies to empty array for first time after register as will not have any hobbies yet
 $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [];
@@ -181,7 +184,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       </div>
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
-         <?php if (isset($age)) { ?>
+         <?php if (areUserDetailsSet($userId)) { ?>
             <button type="button" id="explorebutton" class="btn button d-none d-md-block"
                onclick="location.href='explore.php'">Explore</button>
          <?php } ?>
@@ -189,7 +192,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             onclick="location.href='logout.php'">Log Out</button>
       </div>
       <!-- Profile Icon -->
-      <?php if (isset($age)) { ?>
+      <?php if (areUserDetailsSet($userId)) { ?>
          <div class="dropdown">
             <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
@@ -349,7 +352,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-12 col-sm-12 col-lg-12">
                         <!-- Bio -->
                         <label for="bio" class="inputLabelText">Bio</label><br>
-                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." equired
+                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required
                            maxlength="150"><?php echo htmlspecialchars($bio); ?></textarea>
                         <div id="bio-feedback" class="text-muted">
                            Characters left: <span id="bio-counter">150</span>
@@ -375,7 +378,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </div>
                      </div>
                   </div>
-                  <?php if (isset($age)) { ?>
+                  <?php if (areUserDetailsSet($userId)) { ?>
                      <div class="row inputField">
                         <!--Sixth Row -- Password, verify-->
                         <div class="col-md-6 col-sm-12 col-lg-6">
@@ -435,7 +438,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
                      alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                  <input type="file" id="profile_pic" name="profile_pic">
+                  <input type="file" id="profile_pic" name="profile_pic" >
                   <!-- Button to just update changes made in db -->
                   <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
                      Changes</button>
@@ -447,7 +450,6 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          <div class="errors">
             <!-- Error Messages -->
             <?php
-
             if (!empty($errors)) {
                echo "<ul>";
                foreach ($errors as $error) {

@@ -445,8 +445,9 @@ function getHobbies($user_id) {
     $get_hobbies->store_result();
 
     if ($get_hobbies->num_rows > 0) {
-        $get_hobbies->bind_result($hobbies);
+        $get_hobbies->bind_result($hobbies_str);
         $get_hobbies->fetch();
+        $hobbies = explode(' ', $hobbies_str);
     }
 
     $get_hobbies->close();
@@ -995,18 +996,18 @@ function areUserDetailsSet($userId) {
     $lookingFor = getLookingFor($userId);
     $name = getName($userId);
 
-    // If all set, return true otherwise return
+    // If all not null, return true else its false
     if (
-        isset($bio) &&
-        isset($hobbies) &&
-        isset($gender) &&
-        isset($age) &&
-        isset($collegeYear) &&
-        isset($pursuing) &&
-        isset($profilePicFilename) &&
-        isset($course) &&
-        isset($lookingFor) &&
-        isset($name)
+        !is_null($bio) && !empty($bio) &&
+        !is_null($hobbies) && !empty($hobbies) &&
+        !is_null($gender) && !empty($gender) &&
+        !is_null($age) && !empty($age) &&
+        !is_null($collegeYear) && !empty($collegeYear) &&
+        !is_null($pursuing) && !empty($pursuing) &&
+        !is_null($profilePicFilename) && !empty($profilePicFilename) &&
+        !is_null($course) && !empty($course) &&
+        !is_null($lookingFor) && !empty($lookingFor) &&
+        !is_null($name) && !empty($name)
     ) {
         return true;
     } else {
