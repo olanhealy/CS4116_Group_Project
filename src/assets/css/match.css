@@ -58,14 +58,13 @@ body {
  }
 }
 
+#errorContainer {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+}
+
 p {
-  padding: 10px;
-  text-align: center;
-  font-size: larger;
-  font-weight: bold;
-  font-style: italic;
-  position: fixed;
-  top: 50%;
-  left: 50%; 
-  transform: translate(-50%, -50%);
+    text-align: center; /* Center the text */
+    /* Add additional styles for the <p> element */
 }
