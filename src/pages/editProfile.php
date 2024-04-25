@@ -14,7 +14,6 @@ $userId = $_SESSION['user_id'];
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
-$hobbies = getHobbies($userId);
 $gender = getGender($userId);
 $age = getAge($userId);
 $collegeYear = getCollegeYear($userId);
@@ -25,17 +24,25 @@ $lookingFor = getLookingFor($userId);
 $name = getName($userId);
 $selectedHobbiesArray = getHobbies($userId);
 
+$hobbiesArray = getHobbies($userId);
+$hobbiesString = is_array($hobbiesArray) ? implode(' ', $hobbiesArray) : $hobbiesArray;
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+   $password = '';
+   $passwordRepeat = '';
+   $passwordErrors = [];
+   $errors = [];
+
    //Hobbies (Sets max to 4 hobbies, if more than 4 hobbies are selected, only the first 4 will be saved in the database)
-   if (isset($_POST['hobbies']) && !empty($_POST['hobbies'])) {
-      $hobbies = array_slice($_POST['hobbies'], 0, 4); // Take only the first 4 hobbies
-      $hobbies = implode(' ', $hobbies);
-      setHobbies($userId, $hobbies); // Update hobbies in the database
-   } else {
-      $hobbies = getHobbies($userId); // Default to existing hobbies if none provided
-   }
+   if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
+      $errors[] = "Please select at least one hobby";
+  } else {
+      $hobbiesSelected = array_slice($_POST['hobbies'], 0, 4);
+      $hobbiesString = implode(' ', $hobbiesSelected);
+      setHobbies($userId, $hobbiesString);
+  }
 
    if (isset($_POST['gender'])) {
       $gender = htmlspecialchars($_POST['gender']);
@@ -49,22 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $age = getAge($userId);
    }
 
-       // Only attempt to update the profile picture if a new file has been uploaded
-       if ($_FILES['profile_pic']['error'] !== UPLOAD_ERR_NO_FILE) {
-         // The setProfilePic function now returns the new filename or false
-         $newProfilePic = setProfilePic($userId, $_FILES['profile_pic']);
-         if ($newProfilePic !== false) {
-             $profilePicFilename = $newProfilePic; // Only update if successful
-         }
-     }
 
    //for displaying hobbies when set
-   $selectedHobbiesArray = explode(' ', $hobbies);
+   $selectedHobbiesArray = explode(' ', $hobbiesString);
 
-   $password = '';
-   $passwordRepeat = '';
-   $passwordErrors = [];
-   $errors = [];
+  
 
    
    // Validate inputs
@@ -99,25 +95,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if ($_POST['password'] !== $_POST['password-repeat']) {
       $passwordErrors[] = "The password and repeated password do not match";
    }
-}
-
-   // Check if at least one hobbie is inputted
-   if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
-      $errors[] = "Please select at least one hobby";
    }
 
-   // Check if user uploaded a profile picture
-   if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
-      $errors[] = "Please upload a profile picture";
-   }
+       // Check if user uploaded a profile picture
+       if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
+         $errors[] = "Please upload a profile picture";
+     } else {
+         setProfilePic($userId, $_FILES['profile_pic']);
+     }
 
    // Update the user currently logged in profile table in the database
    $userId = $_SESSION['user_id']; //we use this from being logged in
-
-   if (!isset($_FILES['profile_pic']) || $_FILES['profile_pic']['error'] == UPLOAD_ERR_NO_FILE) {
-      // If profile picture is not being uploaded, no need to check for it
-      // Update the user currently logged in profile table in the database
-      $userId = $_SESSION['user_id']; //we use this from being logged in
+   
 
       // Call setter methods to make the updates in db
       setBio($userId, $bio);
@@ -125,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       setCollegeYear($userId, $collegeYear);
       setPursuing($userId, $pursuing);
       setCourse($userId, $course);
-      setHobbies($userId, $hobbies);
       setLookingFor($userId, $lookingFor);
+      
 
       
   }
@@ -144,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
    }
 
-}
 
 
 //set selectedHobbies to empty array for first time after register as will not have any hobbies yet
@@ -444,7 +432,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
                      alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
-                  <input type="file" id="profile_pic" name="profile_pic">
+                  <input type="file" id="profile_pic" name="profile_pic" >
                   <!-- Button to just update changes made in db -->
                   <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
                      Changes</button>
@@ -456,7 +444,6 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          <div class="errors">
             <!-- Error Messages -->
             <?php
-
             if (!empty($errors)) {
                echo "<ul>";
                foreach ($errors as $error) {
