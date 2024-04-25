@@ -74,8 +74,8 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
 
 
         <!-- Dropdown menu items -->
-        <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
-        <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+        <li><a class="dropdown-item-profile" href="/src/pages/editProfile.php">Edit Profile</a></li>
+        <li><a class="dropdown-item-profile d-md-none" href="/src/pages/logout.php">Log Out</a></li>
 
         
         <?php if ($notifications['messages'] > 0): ?>
