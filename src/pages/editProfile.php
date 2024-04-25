@@ -48,18 +48,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $age = getAge($userId);
    }
 
+       // Only attempt to update the profile picture if a new file has been uploaded
+       if ($_FILES['profile_pic']['error'] !== UPLOAD_ERR_NO_FILE) {
+         // The setProfilePic function now returns the new filename or false
+         $newProfilePic = setProfilePic($userId, $_FILES['profile_pic']);
+         if ($newProfilePic !== false) {
+             $profilePicFilename = $newProfilePic; // Only update if successful
+         }
+     }
+
    //for displaying hobbies when set
    $selectedHobbiesArray = explode(' ', $hobbies);
+
+   $password = '';
+   $passwordRepeat = '';
+   $passwordErrors = [];
+   $errors = [];
+
+   
    // Validate inputs
    $bio = htmlspecialchars($_POST['bio']);
    $collegeYear = htmlspecialchars($_POST['college_year']);
    $pursuing = htmlspecialchars($_POST['pursuing']);
    $course = htmlspecialchars($_POST['course']);
    $lookingFor = htmlspecialchars($_POST['looking_for']);
-   $profilePicFilename = htmlspecialchars($_FILES['profile_pic']['name']);
-   $password = htmlspecialchars($_POST['password']);
+   
+   if (isset($_POST['password']) && isset($_POST['password-repeat'])) {
+      $password = htmlspecialchars($_POST['password']);
+      $passwordRepeat = htmlspecialchars($_POST['password-repeat']);
+   } 
 
-   $passwordErrors = [];
+  
+  
 
    // Check if password is between 8 and 20 characters long
    if (strlen($password) < 8 || strlen($password) > 20) {
@@ -72,9 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
 
    // Check if the inputted and repeated passwords both match
+   if (isset($_POST['password']) && isset($_POST['password-repeat'])) {
+      //need check if they are set otherwise undefined keys error
+  
    if ($_POST['password'] !== $_POST['password-repeat']) {
       $passwordErrors[] = "The password and repeated password do not match";
    }
+}
 
    // Check if at least one hobbie is inputted
    if (!isset($_POST['hobbies']) || empty($_POST['hobbies'])) {
@@ -407,6 +431,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
                   <!-- Profile Picture-->
                   <img class="profilePicture"
+                  
                      src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
                      alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
@@ -462,112 +487,102 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
    </footer>
    <!-- JavaScript code for course options -->
    <script>
-      $('#course').select2({
-         placeholder: "Choose..",
-         allowClear: true
-      });
-   </script>
+    // Initialise plugin for course selection
+    $('#course').select2({
+        placeholder: "Choose..",
+        allowClear: true
+    });
 
-   <script>
-      $(document).ready(function () {
-         $('#verifyEmailBtn').click(function () {
-            // AJAX request to update verification status
+    $(document).ready(function() {
+        $('#verifyEmailBtn').click(function() {
+            // AJAX request to server to trigger email verification
             $.ajax({
-               url: 'verifyEmail.php', // Update with the endpoint to handle email verification
-               type: 'POST',
-               data: { emailVerified: true }, // If needed, provide any data required by the PHP script
-               success: function (response) {
-                  // Handle successful response here
-                  alert('Email verification email sent');
-               },
-               error: function (xhr, status, error) {
-                  // Handle error response here
-                  alert('Error occurred while verifying email: ' + error);
-               }
+                url: 'verifyEmail.php', // Endpoint for email verification
+                type: 'POST',
+                data: { emailVerified: true }, // Data to send, if needed
+                success: function(response) {
+                    // On success, alert the user
+                    alert('Email verification email sent');
+                },
+                error: function(xhr, status, error) {
+                    // On error, alert the user
+                    alert('Error occurred while verifying email: ' + error);
+                }
             });
-         });
+        });
       });
-   </script>
 
-   <script>
-      // Function to clear input fields when modal is closed
-      $('#changePasswordModal').on('hidden.bs.modal', function () {
-         $(this).find('form').trigger('reset');
-      });
-   </script>
-
-   <script>
-      $(document).ready(function () {
-         // Function to add or remove the required attribute based on modal state
-         $('#changePasswordModal').on('show.bs.modal', function () {
-            $('#password, #password-repeat').attr('required', true);
-         });
-
+         // Function to clear input fields when modal is closed
          $('#changePasswordModal').on('hidden.bs.modal', function () {
-            $('#password, #password-repeat').removeAttr('required');
-         });
+            $(this).find('form').trigger('reset');
+        });
 
-      });
-   </script>
+        
 
-   <script>
-      //Function to display whatever image is inputted in edit profile automatically
-      document.getElementById('profile_pic').addEventListener('change', function (event) {
-         if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
+        $(document).ready(function () {
+            // Function to add or remove the required attribute based on modal state
+            $('#changePasswordModal').on('show.bs.modal', function () {
+                $('#password, #password-repeat').attr('required', true);
+            });
 
-            reader.onload = function (e) {
-               // Get the data and render the image
-               document.querySelector('.profilePicture').src = e.target.result;
-            };
+            $('#changePasswordModal').on('hidden.bs.modal', function () {
+                $('#password, #password-repeat').removeAttr('required');
+            });
 
-            // Read the image file as a data URL.
-            reader.readAsDataURL(event.target.files[0]);
-         }
-      });
-   </script>
-
-   <script>
-      //function for only allowing user to select max 4 hobbies
-      $(document).ready(function () {
-         var maxHobbies = 4;
-         $(".chosen-select").chosen({
-            no_results_text: "Oops, nothing found!"
-         }).on('change', function (evt, params) {
-            var selectedHobbies = $(this).chosen().val();
-            if (selectedHobbies.length > maxHobbies) {
-               // Show message
-               $('#hobby-limit-message').show();
-               // Deselect the last hobby
-               selectedHobbies.pop();
-               $(this).val(selectedHobbies).trigger('chosen:updated');
+        // Preview uploaded image file in edit profile page
+        $('#profile_pic').change(function() {
+            var file = this.files[0];
+            var fileType = file.type;
+            var validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            if ($.inArray(fileType, validImageTypes) < 0) {
+                // If file type is not valid, alert the user and clear input
+                alert('Sorry, only JPG, JPEG, and PNG files are allowed.');
+                this.value = '';
             } else {
-               // Hide message
-               $('#hobby-limit-message').hide();
+                // If valid, read the file and set as source for the image
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.profilePicture').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
             }
-         });
-      });
-   </script>
+        });
 
-   <script>
-      //function for counting characters in bio
-      $(document).ready(function () {
-         var maxBioLength = 150;
-         $('#bio').keyup(function () {
+        // Initialize chosen plugin for multiple selection of hobbies
+        $(".chosen-select").chosen({
+            no_results_text: "Oops, nothing found!"
+        }).on('change', function(evt, params) {
+            var selectedHobbies = $(this).chosen().val();
+            if (selectedHobbies.length > 4) {
+                // If more than 4 hobbies selected, display warning and deselect the last
+                $('#hobby-limit-message').show();
+                selectedHobbies.pop();
+                $(this).val(selectedHobbies).trigger('chosen:updated');
+            } else {
+                // Otherwise, hide the warning message
+                $('#hobby-limit-message').hide();
+            }
+        });
+
+        // Character counter for bio text area
+        $('#bio').keyup(function() {
             var textLength = $(this).val().length;
-            var textRemaining = maxBioLength - textLength;
+            var textRemaining = 150 - textLength;
 
             $('#bio-counter').text(textRemaining);
 
+            // If less than 10 characters left, show warning
             if (textRemaining < 10) {
-               // if theres less than 1- characters left, highlight colour in red
-               $('#bio-feedback').addClass('text-danger').removeClass('text-muted');
+                $('#bio-feedback').addClass('text-danger').removeClass('text-muted');
             } else {
-               $('#bio-feedback').addClass('text-muted').removeClass('text-danger');
+                $('#bio-feedback').addClass('text-muted').removeClass('text-danger');
             }
-         });
-      });
-   </script>
+        });
+    });
+</script>
+
+
+
 </body>
 
 </html>
