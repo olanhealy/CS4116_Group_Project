@@ -25,6 +25,7 @@ if (isset($_SESSION['targetId'])) {
     $_SESSION['existingBio'] = getBio($targetId);
 
     $_SESSION['existingHobbies'] = getHobbies($targetId);
+    
 
     // added in to get the existing profile picture
     $_SESSION['existingProfilePic'] = getProfilePicture($targetId);
