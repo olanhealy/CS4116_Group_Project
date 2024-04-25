@@ -2,8 +2,10 @@
 
 include "db_connection.php";
 include "helperFunctions.php";
+include "admin/adminHelperFunctions.php";
 
-if(session_status() === PHP_SESSION_NONE) {
+// Start the session
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -14,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Trim and sanitize user input
         $email = trim($_POST['email']);
         $pass = trim($_POST['password']);
+
+        $banBlock = true;
 
         // Error check email and password
         if (empty($email) || empty($pass)) {
@@ -29,8 +33,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Check if user is banned
                 if ($row['banned'] == '1') {
-                    $error = "User banned. Please contact support.";
-                } else if (password_verify($pass, $row['password_hash'])) {
+
+                    $reason = getBanReason($row['user_id']);
+                    $dateOfUnban = getDateOfUnban($row['user_id']);
+
+                    if ($dateOfUnban == "0000-00-00") {
+                        $dateOfUnban = "Permanent Ban";
+                    } else {
+                        // Convert dateOfUnban to a timestamp
+                        $unbanTimestamp = strtotime($dateOfUnban);
+                        $currentTimestamp = time();
+
+                        // Check if the unban date has passed
+                        if ($unbanTimestamp < $currentTimestamp) {
+                            $banBlock = false;
+                            setBanned($row['user_id'], 0);
+                        }
+                    }
+                }else{
+                    $banBlock = false;
+                }
+
+                if (password_verify($pass, $row['password_hash']) && $banBlock == false) {
                     // User authenticated, set session variables
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] = $row['user_id'];
@@ -46,9 +70,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Redirect to home page
                     header("Location: home.php");
                     exit();
-                    
+
                 } else {
-                    $error = "Incorrect username or password";
+                    if ($banBlock == true) {
+                        $error = "User banned. Unbanned on: $dateOfUnban.  Reason: $reason. Please contact support.";
+                    } else {
+                        $error = "Incorrect username or password";
+                    }
+                    
                 }
             } else {
                 $error = "Incorrect username or password";
@@ -113,15 +142,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         alt="ulSingles_symbol">
                     <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
-                    <?php if(isset($error)): ?>
+                    <?php if (isset($error)): ?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo htmlspecialchars($error); ?>
                         </div>
                     <?php endif; ?>
-                    
-                    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
-                    <input type="password" name="password" placeholder="Password" class="form-control"><br>
-                    <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+
+                    <div class="form-container">
+                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
+                        <input type="password" name="password" placeholder="Password" class="form-control"><br>
+                        <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+                    </div>
 
                     <!-- Link to Registration page via button -->
                     <p>Don't have an account? <a href="registration.php">Register here</a></p>

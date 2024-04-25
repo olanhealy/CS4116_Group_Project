@@ -3,9 +3,7 @@
 include_once "adminHelperFunctions.php";
 include_once "../db_connection.php";
 
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+adminAccessCheck();
 
 //if the request is a post request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

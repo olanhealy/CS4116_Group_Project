@@ -4,23 +4,20 @@ include "db_connection.php";
 include "helperFunctions.php";
 include "admin/adminHelperFunctions.php";
 
-// Start the session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['hobbies'])){
+    if (isset($_POST['hobbies'])) {
         $searchHobbies = $_POST['hobbies'];
-    }else{
+    } else {
         $searchHobbies = NULL;
     }
     // Get the search parameters from the form
 
-    if (isset($_POST['full_name'])){
-    $searchName = $_POST['full_name'];
-    }else{
+    if (isset($_POST['full_name'])) {
+        $searchName = $_POST['full_name'];
+    } else {
         $searchName = "";
     }
 
@@ -64,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $params[] = '%' . $hobby . '%';
         }
     }
-    
+
     // The prepared minimum entry for the bind_param function
     $types = 'ii';
 
@@ -88,10 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //sets up the header and dropdown
     setupHeader();
 
-    // create a container for the profile cards
-    echo '<div class="profile-cards-container">';
+
 
     if ($result->num_rows > 0) {
+
+        // create a container for the profile cards
+        echo '<div class="profile-cards-container">';
 
         while ($row = $result->fetch_assoc()) {
 

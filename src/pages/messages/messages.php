@@ -2,10 +2,9 @@
     //db connection and helper file
     include "../db_connection.php";
     include "../helperFunctions.php";
+    include_once("../admin/adminHelperFunctions.php");
 
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    accessCheck();
 
     // Make sure user is logged in
     if (!isset($_SESSION['user_id'])) {

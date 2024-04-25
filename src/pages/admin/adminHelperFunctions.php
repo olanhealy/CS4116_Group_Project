@@ -1,4 +1,15 @@
 <?php
+function adminAccessCheck()
+{
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "admin") {
+        header("Location: /index.php");
+        exit();
+    }
+}
 
 //show all the accounts in a list
 function showAccounts()

@@ -3,9 +3,7 @@ include "../db_connection.php";
 include "adminHelperFunctions.php";
 include "setBanned.php";
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+adminAccessCheck();
 
 ?>
 
@@ -43,7 +41,8 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
             <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
-            <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='logout.php'">Log Out</button>
+            <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
+                onclick="location.href='../logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon Dropdown -->

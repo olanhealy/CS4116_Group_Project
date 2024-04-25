@@ -2,11 +2,9 @@
 
 include_once "db_connection.php";
 include "helperFunctions.php";
+include "admin/adminHelperFunctions.php";
 
-// Start the session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck(); 
 
 // Get the user ID from the URL
 $targetUserId = $_GET['target_user_id'];

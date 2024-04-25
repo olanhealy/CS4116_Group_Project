@@ -1,10 +1,9 @@
 <?php
 include "db_connection.php";
 require_once 'helperFunctions.php';
+include "admin/adminHelperFunctions.php";
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+accessCheck(); 
 
 $userId = $_SESSION['user_id'];
 

@@ -1,5 +1,15 @@
 <?php
-// Process #13 to set the user's bio in the profile table of the db
+function accessCheck()
+{
+    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "standard") {
+        header("Location: /index.php");
+        exit();
+    }
+}
 
 // Process #4 checks if the Account already exists in the account table of db
 function isAccountFound($email, $password)
@@ -574,6 +584,18 @@ function removeMatch($userId, $targetId)
 
     global $conn;
 
+    $matchId = getMatchId($userId, $targetId);
+
+    $query = "DELETE FROM messages WHERE match_id = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt !== false) {
+        $stmt->bind_param("i", $matchId);
+        $stmt->execute();
+    } else {
+        die("Error in SQL query: " . $conn->error . "<br>");
+    }
+
     $query = "DELETE FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
     $stmt = $conn->prepare($query);
 
@@ -666,6 +688,49 @@ function getNextMatches($userId)
 }
 
 
+function getBanReason($userId){
+    global $conn;
+    $banReason = "";
+
+    $query = "SELECT reason FROM banned WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $banReason = $row['reason'];
+        }
+    }
+    return $banReason;
+
+}
+
+
+function getDateOfUnban($userId){
+    global $conn;
+    $unbanDate = "";
+
+    $query = "SELECT dateOfUnban FROM banned WHERE user_id = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $unbanDate = $row['dateOfUnban'];
+        }
+    }
+    return $unbanDate;
+
+
+}
 function showProfileCard($user_id){
 
     $targetUserId = $user_id;
@@ -995,4 +1060,5 @@ function areUserDetailsSet($userId) {
         return false;
     }
 }
+
 ?>

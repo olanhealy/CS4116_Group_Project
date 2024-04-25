@@ -94,13 +94,13 @@
 
     <br>
 
+    
     <div class="container-fluid border border-2 col-12" id="outline">
         <div class="row">
             <form action="searchPage.php" method="POST" id="search">
 
                 <div class="row">
                     <div class="col-12 order-lg-1 searchContainer">
-
 
                         <div class="row inputField">
                             <div class="col-12">
@@ -139,8 +139,9 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="min_age" class="inputLabelText">Minimum
                                     Age: <span id="min_age_value">18</span></label><br>
-                                <input class="input" type="range" id="min_age" name="min_age" min="18" max="100" value="18"
-                                    oninput="update_min_age_value(this.value)">
+                                    <input class="input" type="range" id="min_age" name="min_age" min="18" max="100" value="18"
+                                    oninput="update_min_age_value(this.value)" onchange="validate_age_range()">
+                                
                                 <button type="button" onclick="reset_min_age()"
                                     class="btn btn-outline-primary resetBtn">Reset</button>
                             </div>
@@ -216,14 +217,17 @@
             </form>
         </div>
     </div>
+
 <!-- Script for updating min and max age values -->
 <script>
     function update_min_age_value(value) {
         document.getElementById("min_age_value").textContent = value;
+        validate_age_range(); // Call validation function when minimum age changes
     }
 
     function update_max_age_value(value) {
         document.getElementById("max_age_value").textContent = value;
+        validate_age_range(); // Call validation function when maximum age changes
     }
 
     function reset_min_age() {
@@ -235,7 +239,28 @@
         document.getElementById("max_age").value = 100;
         update_max_age_value(100);
     }
+
+    // Validation function to ensure max age is at least one above min age
+    function validate_age_range() {
+        var min_age = parseInt(document.getElementById("min_age").value);
+        var max_age = parseInt(document.getElementById("max_age").value);
+        
+        if (max_age <= min_age) {
+            // Increment max age by one to ensure it's one above min age
+            max_age = min_age + 1;
+            document.getElementById("max_age").value = max_age;
+            update_max_age_value(max_age);
+        }
+        // Ensure max age cannot be set lower than min age
+        if (max_age < min_age) {
+            min_age = max_age - 1;
+            document.getElementById("min_age").value = min_age;
+            update_min_age_value(min_age);
+        }
+    }
 </script>
+
+
 <!-- Script for autocomplete and suggestions for the full name input field -->
 <script>
     $(document).ready(function () {
