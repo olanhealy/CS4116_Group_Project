@@ -29,6 +29,14 @@ $userLoggedInPursuing = getPursuing($userLoggedInId);
 $userLoggedInCourse = getCourse($userLoggedInId);
 $userLoggedInLookingFor = getLookingFor($userLoggedInId);
 
+// as hobbies now in array need to export in in comma seperated strings for display
+function escapeHtml($data) {
+    if (is_array($data)) {
+        
+        $data = implode(', ', $data);
+    }
+    return htmlspecialchars($data);
+}
 //Fucntion for how we are going to differ the weights to display matches. We are going to have a few factors
 function calcMatchWeight($targetUserId)
 {
@@ -72,8 +80,8 @@ function calcMatchWeight($targetUserId)
                 break;
             //case for hobbies    
             case 'hobbies':
-                $userHobbies = explode(',', $userLoggedInHobbies);
-                $targetUserHobbies = explode(',', $targetUserIdHobbies);
+                $userHobbies = $userLoggedInHobbies; // Assuming this is now an array
+                $targetUserHobbies = $targetUserIdHobbies; // Assuming this is now an array
                 $matchingHobbies = array_intersect($userHobbies, $targetUserHobbies);
 
                 // If hobbies match, for the amount that 2 multply it by 50 score
@@ -129,8 +137,9 @@ function getUsersForExplore($userLoggedInId, $adoredUsers, $ignoredUsers)
         //initalise array to explore users that will eventually pass the criteria made for user logged in 
         $usersToExplore = array();
 
-        // for getting all users, is a process so placeholder for now
-        $sqlUsersToExplore = "SELECT user_id FROM profile WHERE user_id != ?";
+        // for getting all users, excluding the user logged in and admins
+        $sqlUsersToExplore = "SELECT p.user_id FROM profile p
+        JOIN account a ON p.user_id = a.user_id WHERE p.user_id != ? AND a.user_role = 'standard'";
 
         // check if the the user adores other user, if they do exclude them from being displayed
         if (!empty($adoredUsers)) {

@@ -172,7 +172,7 @@
                         <!-- Hobbies (May need to update this as text for it is meh)-->
                         <label for="hobbies" class="inputLabelText">Hobbies</label><br>
                         <span id="hobbies">
-                            <?php echo htmlspecialchars($nextUserHobbies); ?>
+                            <?php echo escapeHtml($nextUserHobbies);  ?>
                         </span>
                     </div>
                 </div>
