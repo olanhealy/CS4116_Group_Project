@@ -252,7 +252,8 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         <div class="col-md-4 col-sm-12 col-lg-4">
                            <label for="age" class="inputLabelText">Age</label><br>
                            <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18" max ="120"
-                              required>
+                              required oninvalid="this.setCustomValidity('Please enter your age')" 
+                              oninput="this.setCustomValidity('')">
                         </div>
                      <?php } ?>
                      <?php if (isset($gender)) { ?>
@@ -281,19 +282,14 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- College Year -->
                         <label for="college_year" class="inputLabelText">College Year</label><br>
-                        <select id="college_year" name="college_year" class="optionDropdown" required>
-                           <option value="" disabled selected>Choose..</option>
-                           <option value="Undergrad" <?php if ($collegeYear == "Undergrad")
-                              echo "selected"; ?>>
-                              Undergrad
-                           </option>
-                           <option value="Masters" <?php if ($collegeYear == "Masters")
-                              echo "selected"; ?>>
-                              Masters
-                           </option>
-                           <option value="PhD" <?php if ($collegeYear == "PhD")
-                              echo "selected"; ?>>PhD</option>
-                        </select>
+                           <select id="college_year" name="college_year" class="optionDropdown" required 
+                              oninvalid="this.setCustomValidity('Please select your college year from the list')" 
+                              oninput="this.setCustomValidity('')">
+                              <option value="" disabled <?php if ($collegeYear == "") echo "selected"; ?>>Choose..</option>
+                              <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
+                              <option value="Masters" <?php if ($collegeYear == "Masters") echo "selected"; ?>>Masters</option>
+                              <option value="PhD" <?php if ($collegeYear == "PhD") echo "selected"; ?>>PhD</option>
+                           </select>
                      </div>
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- Course-->
