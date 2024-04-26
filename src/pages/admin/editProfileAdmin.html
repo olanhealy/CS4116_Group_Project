@@ -182,8 +182,10 @@
                             <!-- Bio -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="bio" id="inputLabelText">Bio</label><br>
-                                <textarea id="bio" name="bio"><?php echo $_SESSION['existingBio']; ?></textarea><br>
-                            </div>
+                                <textarea id="bio" name="bio" class="textInput" placeholder="Type your bio here..." required minlength="1" maxlength="150"><?php echo $_SESSION['existingBio']; ?></textarea>
+                                <div class="form-text">Characters left: <span id="bio-counter">150</span>
+                                </div>
+                            </div>       
 
                             <!-- Hobbies -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -256,7 +258,7 @@
                 max_selected_options: 4  // Limit the number of selectable hobbies to 4
                 }).on('chosen:maxselected', function(evt, params) {
              alert("You can only select up to 4 hobbies.");
-        });
+        });  
     
     // Validate having at least one hobby selected before submission
     $('#profileForm').submit(function(event) {
@@ -264,6 +266,20 @@
             if (selectedHobbiesCount < 1) {
                 alert("You must select at least one hobby.");
                 event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        //similar to edit profile, a max character count for bio 
+        $('#bio').on('input', function() {
+            var maxLength = 150;
+            var currentLength = $(this).val().length;
+            var remainingLength = maxLength - currentLength;
+            $('#bio-counter').text(remainingLength);
+
+            if (remainingLength <= 10) {
+                $('#bio-counter').css('color', 'red');
+            } else {
+                $('#bio-counter').css('color', 'black');
             }
         });
     });
