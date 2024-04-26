@@ -843,7 +843,7 @@ function sendMessage($userId, $matchId, $messageContent) {
 function getReceiverIdByMatchId($matchId, $senderId) {
     global $conn;
     //Get the initiator_id and target_id from the matches table
-    $sqlGetReceiverIdByMatchId = $conn->prepare("SELECT initiatorid, target_id FROM matches WHERE match_id = ?");
+    $sqlGetReceiverIdByMatchId = $conn->prepare("SELECT initiator_id, target_id FROM matches WHERE match_id = ?");
     $sqlGetReceiverIdByMatchId->bind_param("i", $matchId);
     $sqlGetReceiverIdByMatchId->execute();
     $sqlGetReceiverIdByMatchId->bind_result($initiatorId, $targetId);
