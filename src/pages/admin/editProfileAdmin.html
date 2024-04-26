@@ -101,13 +101,17 @@
                             <!-- First Name -->
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label for="first_name" id="inputLabelText">First Name:</label><br>
-                                <textarea id="first_name" name="first_name"><?php echo explode(' ', $_SESSION['existingName'])[0]; ?></textarea><br>
-                            </div>
+                                    <textarea id="first_name" name="first_name" class="form-control" required 
+                                    oninvalid="this.setCustomValidity('Please enter a First Name')" 
+                                    oninput="this.setCustomValidity('')"><?php echo htmlspecialchars(explode(' ', trim($_SESSION['existingName']))[0]); ?></textarea>
+                                </div>
 
                             <!-- Last Name -->
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label for="last_name" id="inputLabelText">Last Name:</label><br>
-                                <textarea id="last_name" name="last_name"><?php echo explode(' ', $_SESSION['existingName'])[1]; ?></textarea><br>
+                                <textarea id="last_name" name="last_name" class="form-control" required 
+                                oninvalid="this.setCustomValidity('Please enter a Last Name')" 
+                                oninput="this.setCustomValidity('')"><?php echo htmlspecialchars(explode(' ', trim($_SESSION['existingName']))[1]); ?></textarea>
                             </div>
 
                             <!-- Gender -->
