@@ -72,7 +72,7 @@ if (isset($_SESSION['targetId'])) {
         // Age
         if (isset($_POST['age']) && $_POST['age'] != $_SESSION['existingAge'] ) {
             $age = $_POST['age'];
-            setAge($age, $targetId);
+            setAge($targetId, $age);
         }
 
         // Year
@@ -94,8 +94,8 @@ if (isset($_SESSION['targetId'])) {
         }
 
         // Looking For
-        if (isset($_POST['lookingFor']) && $_POST['lookingFor'] !== $_SESSION['existingLookingFor']) {
-            $lookingFor = $_POST['lookingFor'];
+        if (isset($_POST['looking_for']) && $_POST['looking_for'] !== $_SESSION['existingLookingFor']) {
+            $lookingFor = $_POST['looking_for'];
             setLookingFor($targetId, $lookingFor);
         }
 
