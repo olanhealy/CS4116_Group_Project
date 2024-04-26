@@ -1,0 +1,98 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#matches{
+  margin-top: 5px;
+}
+
+#profilepicture{
+  max-width: 100%;
+}
+
+.age {
+  font-size: 0.8em;
+  margin-left: 8px;
+}
+
+.carousel-inner{
+  margin-bottom: 20px;
+}
+
+#indicators {
+  fill: #abc99d;
+  color: #abc99d;
+  background-color: #abc99d;
+}
+
+.carousel-indicators{
+  bottom: -60px;
+  margin-bottom: 50px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  fill: #abc99d !important;
+  background-color: #abc99d !important;
+}
+
+
+@media (max-width: 767px) {
+  .card-container {
+    max-width: 60%;
+    margin: 0 auto;
+ }
+
+  .carousel-indicators{
+    bottom: -50px;
+   }
+}
+
+@media (max-width: 576px) {
+ .card-container {
+    max-width: 70%;
+    margin: 0 auto;
+ }
+}
+
+#errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  text-align: center;
+}
+
+#messageButton{
+  text-align: center;
+  align-items: center;
+  background-color: #abc99d;
+  color: white;
+  width: 84%;
+  padding: 8px;
+  font-size: 20px;
+}
+
+#removeButton{
+  text-align: center;
+  align-items: center;
+  margin-right: 15px;
+  padding: 7px;
+  background-color: red;
+  color: black;
+  width: 95%;
+}
+
+#reportButton{
+  text-align: center;
+  align-items: center;
+  padding: 7px; 
+  margin-bottom: 30px;
+  background-color: red;
+  color: black;
+  width: 100%;
+}

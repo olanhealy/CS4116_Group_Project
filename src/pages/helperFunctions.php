@@ -608,6 +608,7 @@ function removeMatch($userId, $targetId)
     }
 }
 
+// Gets all of the users matches
 function getAllMatches($userId)
 {
     global $conn;
@@ -631,6 +632,7 @@ function getAllMatches($userId)
             $targetId = $row['other_user_id'];
             
             $name = getName($targetId);
+            $age = getAge($targetId);
             $profilePicture = getProfilePicture($targetId);
 
             //include the user list html for each row
@@ -641,6 +643,49 @@ function getAllMatches($userId)
         echo "0 results found";
     }
 }
+
+// Gets the users next match
+function getNextMatches($userId)
+{
+    global $conn;
+    
+    // Get next matches for user
+    $query = "SELECT 
+                CASE 
+                    WHEN initiator_id = $userId THEN target_id 
+                    ELSE initiator_id 
+                END AS other_user_id 
+              FROM matches 
+              WHERE (initiator_id = $userId OR target_id = $userId)
+                AND response_date IS NOT NULL 
+              ORDER BY response_date DESC";
+
+    // Check the result is not empty
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        // Fetch each match and add it to the matches array
+        while ($row = $result->fetch_assoc()) {
+            $targetId = $row['other_user_id'];
+            $name = getName($targetId);
+            $age = getAge($targetId);
+            $matchId = getMatchId($userId, $targetId);
+            $profilePicture = getProfilePicture($targetId);
+            $matches[] = array('name' => $name, 'age' => $age, 'userId' => $userId, 'targetId' => $targetId, 'matchId' => $matchId,'profilePicture' => $profilePicture);
+
+        }
+
+        return $matches;
+
+    } else {
+        // Error
+        echo '<div class="col-md-12 col-lg-12 col-lg-12" id="errorContainer">
+        <p id="error"> No matches found. <br> Use the Explore page to create new matches!</p></div>';
+
+        return [];
+    }
+
+}
+
 
 function getBanReason($userId){
     global $conn;
