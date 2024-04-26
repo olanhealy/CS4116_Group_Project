@@ -265,7 +265,9 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <?php } else { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
                            <label for="gender" class="inputLabelText">Gender</label><br>
-                           <select id="gender" name="gender" class="optionDropdown" required>
+                           <select id="gender" name="gender" class="optionDropdown" required 
+                              oninvalid="this.setCustomValidity('Please select a gender from the list')"
+                              oninput="this.setCustomValidity('')">
                               <option value="" disabled selected>Choose..</option>
                               <option value="Male" <?php if (isset($gender) && $gender == "Male")
                                  echo "selected"; ?>>Male</option>
@@ -294,7 +296,9 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- Course-->
                         <label for="course" class="inputLabelText">Course of Study</label><br>
-                        <select class="optionDropdown" style="width: 100%" id="course" name="course" required>
+                        <select class="optionDropdown" style="width: 100%" id="course" name="course" required 
+                              oninvalid="this.setCustomValidity('Please select a course from the list')"
+                              oninput="this.setCustomValidity('')">>
                            <option value="" selected disabled>Choose..</option>
                            <?php
                            foreach (CourseOfStudy::cases() as $case) {
@@ -312,7 +316,9 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!--  pursuing -->
                         <label for="pursuing" class="inputLabelText">Pursuing</label><br>
-                        <select id="pursuing" name="pursuing" class="optionDropdown" required>
+                        <select id="pursuing" name="pursuing" class="optionDropdown" required 
+                              oninvalid="this.setCustomValidity('Please select what gender you wish to pursue')"
+                              oninput="this.setCustomValidity('')">>
                            <option value="" disabled selected>Choose..</option>
                            <option value="Male" <?php if ($pursuing == "Male")
                               echo "selected"; ?>>Male</option>
@@ -327,7 +333,9 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- Looking for-->
                         <label for="looking_for" class="inputLabelText">Looking For</label><br>
-                        <select id="looking_for" name="looking_for" class="optionDropdown" required>
+                        <select id="looking_for" name="looking_for" class="optionDropdown" required 
+                              oninvalid="this.setCustomValidity('Please select what type of relationship you are looking for ')"
+                              oninput="this.setCustomValidity('')">>
                            <option value="" disabled selected>Choose..</option>
                            <option value="Short-term" <?php if ($lookingFor == "Short-term")
                               echo "selected"; ?>>
@@ -349,7 +357,8 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         <!-- Bio -->
                         <label for="bio" class="inputLabelText">Bio</label><br>
                         <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required
-                           maxlength="150"><?php echo htmlspecialchars($bio); ?></textarea>
+                           maxlength="150"  oninvalid="this.setCustomValidity('Please input text for your bio')"
+                           oninput="this.setCustomValidity('')"><?php echo htmlspecialchars($bio); ?></textarea>
                         <div id="bio-feedback" class="text-muted">
                            Characters left: <span id="bio-counter">150</span>
                         </div>
