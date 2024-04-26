@@ -127,7 +127,7 @@
                             <!-- Age -->
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label for="age" id="inputLabelText">Age:</label><br>
-                                <input type="number" id="age" name="age" class="form-control" value="<?php echo htmlspecialchars($_SESSION['existingAge']); ?>" min="19" max="120" required>
+                                <input type="number" id="age" name="age" class="form-control" value="<?php echo htmlspecialchars($_SESSION['existingAge']); ?>" min="18" max="120" required>
                             </div>
 
                         </div>
@@ -186,10 +186,9 @@
                             <!-- Bio -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="bio" id="inputLabelText">Bio</label><br>
-                                <textarea id="bio" name="bio" class="textInput" placeholder="Type your bio here..." required minlength="1" maxlength="150"><?php echo $_SESSION['existingBio']; ?></textarea>
-                                <div class="form-text">Characters left: <span id="bio-counter">150</span>
-                                </div>
-                            </div>       
+                                <textarea id="bio" name="bio" class="textInput" placeholder="Type your bio here..." required minlength="1" maxlength="150" oninvalid="this.setCustomValidity('Please input text for bio')" oninput="this.setCustomValidity('')"><?php echo htmlspecialchars($_SESSION['existingBio']); ?></textarea>
+                                <div class="form-text">Characters left: <span id="bio-counter">150</span></div>
+                            </div>      
 
                             <!-- Hobbies -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -265,9 +264,9 @@
            $('#profile_pic').change(function() {
                var file = this.files[0];
                var fileType = file['type'];
-               var validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/svg+xml'];
+               var validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
                if (!validImageTypes.includes(fileType)) {
-                   alert('Invalid file type. Please upload an image file (e.g., .jpg, .png, .gif, .bmp, .svg).');
+                   alert('Sorry, only JPG, JPEG, and PNG files are allowed.');
                    this.value = ''; // Clear the input.
                    // Makes sure and invalid image doesn't display and keeps displaying old image, wouldn;t set the profile pic anyways because of how setProfilePic setup
                } else {
