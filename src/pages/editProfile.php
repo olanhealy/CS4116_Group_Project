@@ -251,7 +251,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <?php } else { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
                            <label for="age" class="inputLabelText">Age</label><br>
-                           <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18"
+                           <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18" max ="120"
                               required>
                         </div>
                      <?php } ?>

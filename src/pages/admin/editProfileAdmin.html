@@ -70,7 +70,7 @@
     <!-- Main Container -->
     <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
         <div class="row">
-            <form class="container-fluid" method="POST" action="editProfileAdmin.php" enctype="multipart/form-data">
+            <form class="container-fluid" method="POST" action="editProfileAdmin.php" enctype="multipart/form-data" id="profileForm">
                 <div class="row">
 
                     <!-- User's Profile Picture, Change Picture & Save Changes Buttons -->
@@ -123,7 +123,7 @@
                             <!-- Age -->
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label for="age" id="inputLabelText">Age:</label><br>
-                                <textarea id="age" name="age"><?php echo explode(' ', $_SESSION['existingAge'])[0]; ?></textarea>
+                                <input type="number" id="age" name="age" class="form-control" value="<?php echo htmlspecialchars($_SESSION['existingAge']); ?>" min="19" max="120" required>
                             </div>
 
                         </div>
@@ -182,18 +182,38 @@
                             <!-- Bio -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="bio" id="inputLabelText">Bio</label><br>
-                                <textarea id="bio" name="bio"><?php echo $_SESSION['existingBio']; ?></textarea><br>
-                            </div>
+                                <textarea id="bio" name="bio" class="textInput" placeholder="Type your bio here..." required minlength="1" maxlength="150"><?php echo $_SESSION['existingBio']; ?></textarea>
+                                <div class="form-text">Characters left: <span id="bio-counter">150</span>
+                                </div>
+                            </div>       
 
                             <!-- Hobbies -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="hobbies" id="inputLabelText">Hobbies</label><br>
                                 <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
-                                    <option value=""></option>
-                                    <option>Golf Games</option>
-                                    <option>Karate</option>
-                                    <option>Swimming</option>
-                                    <option>Chess</option>
+                                    <?php
+                                    // List of all hobbies
+                                    $allHobbies = [
+                                        "Golf", "Karate", "Swimming", "Chess", "Reading", "Writing",
+                                        "Painting", "Photography", "Music", "Video Games", "Traveling",
+                                        "Running", "Yoga", "Surfing", "Skateboarding", "Skating", "Cycling",
+                                        "Hiking", "Camping", "Fishing", "Hunting", "Cooking", "Baking",
+                                        "Gardening", "Knitting", "Sewing", "Gaelic", "Hurling", "Rugby",
+                                        "Soccer", "Basketball", "Tennis", "Volleyball", "Baseball", "Football",
+                                        "American Football", "Cricket", "Badminton", "Table Tennis", "Gymnastics",
+                                        "Dancing", "Singing", "Acting", "Magic", "Comedy", "Drama", "Watching Movies",
+                                        "Watching TV Shows", "Watching Anime", "Watching Cartoons", "Watching Documentaries",
+                                        "Watching YouTube", "Watching Netflix", "Coding", "Researching", "Learning",
+                                        "Teaching", "Mentoring", "Coaching", "Meditation", "Praying", "Volunteering", "Other"
+                                    ];
+                            
+                                    // Loop through all hobbies and mark as selected if they are in the session
+                                    foreach ($allHobbies as $hobby) {
+                                        // Check if the hobby is in the existing hobbies array
+                                        $selected = in_array($hobby, $_SESSION['existingHobbies']) ? 'selected="selected"' : '';
+                                        echo "<option value=\"{$hobby}\" {$selected}>{$hobby}</option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
 
@@ -204,39 +224,65 @@
             </form>
         </div>
     </div>
-
-
-    <!-- JavaScript code for course options -->
+    <!-- Javascript -->
     <script>
-        $('#course').select2({
-            placeholder: "Choose..",
-            allowClear: true
-        });
-    </script>
+        $(document).ready(function() {
+           $(".chosen-select").chosen({
+               no_results_text: "Oops, nothing found!",
+               max_selected_options: 4 // Limit the number of selectable hobbies to 4
+           }).on('chosen:maxselected', function(evt, params) {
+               alert("You can only select up to 4 hobbies.");
+           });
 
-    <script>
-        //Function to display whatever image is inputted in edit profile automatically
-        document.getElementById('profile_pic').addEventListener('change', function (event) {
-            if (event.target.files && event.target.files[0]) {
-                var reader = new FileReader();
+           // Validate having at least one hobby selected before submission
+           $('#profileForm').submit(function(event) {
+               var selectedHobbiesCount = $('#hobbies').val() ? $('#hobbies').val().length : 0;
+               if (selectedHobbiesCount < 1) {
+                   alert("You must select at least one hobby.");
+                   event.preventDefault(); // Prevent form submission
+               }
+           });
 
-                reader.onload = function (e) {
-                    // Get the data and render the image
-                    document.querySelector('.profilePicture').src = e.target.result;
-                };
+           //similar to edit profile, a max character count for bio 
+           $('#bio').on('input', function() {
+               var maxLength = 150;
+               var currentLength = $(this).val().length;
+               var remainingLength = maxLength - currentLength;
+               $('#bio-counter').text(remainingLength);
 
-                // Read the image file as a data URL.
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        });
-    </script>
-    
-    <script>
-        $(document).ready(function () {
-        $(".chosen-select").chosen({
-                no_results_text: "Oops, nothing found!"
-            });
-        });
+               if (remainingLength <= 10) {
+                   $('#bio-counter').css('color', 'red');
+               } else {
+                   $('#bio-counter').css('color', 'black');
+               }
+           });
+
+           //Function to display whatever image is inputted in edit profile automatically
+           $('#profile_pic').change(function() {
+               var file = this.files[0];
+               var fileType = file['type'];
+               var validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/svg+xml'];
+               if (!validImageTypes.includes(fileType)) {
+                   alert('Invalid file type. Please upload an image file (e.g., .jpg, .png, .gif, .bmp, .svg).');
+                   this.value = ''; // Clear the input.
+                   // Makes sure and invalid image doesn't display and keeps displaying old image, wouldn;t set the profile pic anyways because of how setProfilePic setup
+               } else {
+                   var reader = new FileReader();
+                   reader.onload = function(e) {
+                       $('.profilePicture').attr('src', e.target.result); // Set the preview to new image thats uploaded
+                   };
+                   reader.readAsDataURL(file); 
+               }
+           });
+
+           //let the hobbies display in course dropdown
+           $('#course').select2({
+               placeholder: "Choose..",
+               allowClear: true
+           });
+       });
+            
+        
     </script>
 
 </body>
