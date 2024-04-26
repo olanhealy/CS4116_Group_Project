@@ -6,6 +6,8 @@ include_once '../helperFunctions.php';
 include '../db_connection.php';
 
 adminAccessCheck();
+//turn on output buffering so output only sent when all code is done and enables it to go striaight to the userList page
+ob_start(); 
 
 //var_dump($_SESSION);
 if (isset($_SESSION['targetId'])) {
@@ -42,13 +44,9 @@ if (isset($_SESSION['targetId'])) {
             setProfilePic($targetId, $profilePicFilename);
         }
 
-        if(isset($_POST['gender'])){
-            $gender = htmlspecialchars($_POST['gender']);
-        }
 
         // First & Last Name
-        if (isset($_POST['first_name']) || isset($_POST['last_name']) && $_POST['first_name'] !== explode(' ', $_SESSION['existingName'])[0]|| $_POST['last_name'] !== explode(' ', $_SESSION['existingName'])[1]) {
-
+        if ((isset($_POST['first_name']) || isset($_POST['last_name'])) && ($_POST['first_name'] !== explode(' ', $_SESSION['existingName'])[0] || $_POST['last_name'] !== explode(' ', $_SESSION['existingName'])[1])) {
 
             if ($_POST['first_name'] === explode(' ', $_SESSION['existingName'])[0]) {
                 $firstName = explode(' ', $_SESSION['existingName'])[0];
@@ -63,11 +61,10 @@ if (isset($_SESSION['targetId'])) {
             }
 
             setName($firstName, $lastName, $targetId);
-
         }
-        
-        // Gender
-        if (isset($_POST['gender']) && $_POST['gender'] !== $_SESSION['existingGender']) {
+
+         // Gender
+         if (isset($_POST['gender']) && $_POST['gender'] !== $_SESSION['existingGender']) {
             $gender = $_POST['gender'];
             setGender($targetId, $gender);
         }
@@ -117,8 +114,10 @@ if (isset($_SESSION['targetId'])) {
             $hobbies = getHobbies($targetId);
         }
 
-        
         include "../footer.php";
+
+        header('Location: usersListAdmin.php');
+        exit();
     }
 
 
@@ -126,3 +125,4 @@ if (isset($_SESSION['targetId'])) {
     echo "Target ID is not set.";
     exit();
 }
+?>
