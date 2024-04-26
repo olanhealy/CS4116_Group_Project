@@ -19,9 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $banBlock = true;
 
+        //used for remembering the email in the form if the user fails to login (incorrect credentials)
+        $_SESSION['form_email'] = $email;
+
         // Error check email and password
-        if (empty($email) || empty($pass)) {
-            $error = "Please provide email and password";
+        if ( empty($pass)) {
+            $error = "Please provide a UL student email and password"; 
+        } else if (!str_ends_with($email, '@studentmail.ul.ie')) {
+            $error = "Email must end with '@studentmail.ul.ie'"; 
         } else {
             // SQL query to retrieve user information based on email
             $sql = "SELECT * FROM account WHERE email='$email'";
@@ -75,12 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($banBlock == true) {
                         $error = "User banned. Unbanned on: $dateOfUnban.  Reason: $reason. Please contact support.";
                     } else {
-                        $error = "Incorrect username or password";
+                        $error = "Incorrect UL student email or password";
                     }
                     
                 }
             } else {
-                $error = "Incorrect username or password";
+                $error = "Incorrect UL student email or password";
             }
         }
     } else {
@@ -149,7 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php endif; ?>
 
                     <div class="form-container">
-                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus><br>
+                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus 
+                        value="<?php echo isset($_SESSION['form_email']) ? htmlspecialchars($_SESSION['form_email']) : ''; ?>"><br>
                         <input type="password" name="password" placeholder="Password" class="form-control"><br>
                         <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
                     </div>
