@@ -145,13 +145,13 @@ function getUsersForExplore($userLoggedInId, $adoredUsers, $ignoredUsers)
         // check if the the user adores other user, if they do exclude them from being displayed
         if (!empty($adoredUsers)) {
             $placeholder = implode(",", array_fill(0, count($adoredUsers), "?"));
-            $sqlUsersToExplore .= " AND user_id NOT IN ($placeholder)";
+            $sqlUsersToExplore .= " AND p.user_id NOT IN ($placeholder)";
         }
 
         // check if the user ignores other users, if they do exclude them from being displayed
         if (!empty($ignoredUsers)) {
             $placeholders = implode(",", array_fill(0, count($ignoredUsers), "?"));
-            $sqlUsersToExplore .= " AND user_id NOT IN ($placeholders)";
+            $sqlUsersToExplore .= " AND p.user_id NOT IN ($placeholders)";
         }
 
         /*
