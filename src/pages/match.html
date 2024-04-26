@@ -25,7 +25,7 @@
                       <div class="col-md-3 col-lg-3 col-sm-8 mb-3 card-container">
                         <!-- User Card -->
                           <div class="card border">
-                              <img src="/<?php echo htmlspecialchars($profilePicture); ?>" class="card-img-top" alt="Profile Picture">
+                              <img src="/<?php echo $userData['profilePicture']; ?>" class="card-img-top" alt="Profile Picture">
                               <div class="card-body">
                                   <h5 class="card-title">
                                       <?php echo $userData['name']; ?> <span class="age"><?php echo $userData['age']; ?></span>
@@ -35,7 +35,6 @@
                                 <!-- Message Match Button -->
                                 <div class="justify-content-center">
                                     <form action="messages/messages.php" method="GET" style="text-align: center;">
-                                        <input type="hidden" name="matchId" value="<?php echo $matchId; ?>">
                                         <button id="messageButton" type="submit" class="btn btn-block">Message User 💬</button>
                                     </form>
                                 </div>
