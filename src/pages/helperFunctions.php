@@ -1068,4 +1068,23 @@ function escapeHtmlForSearch($data) {
     }
     return htmlspecialchars($data);
 }
+
+//get base url so e can use our header.php in different pags
+function getBaseUrl() {
+    // Check if HTTPS or HTTP is used
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+    
+    // Get the server name 
+    $domainName = $_SERVER['HTTP_HOST'];
+
+    // Construct the base URL
+    $baseUrl = $protocol . $domainName;
+
+    //get path where header.css is used
+    $extraPath = '/src/assets/';
+
+    //add this url so we can use it to find the css file in header.php for every page
+    return rtrim($baseUrl, '/') . $extraPath;
+}
+
 ?>

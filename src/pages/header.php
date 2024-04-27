@@ -1,4 +1,5 @@
 <?php
+include_once("helperFunctions.php");
 
 $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $pageName = $curPageName;
@@ -34,7 +35,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- External Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/header.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo getBaseUrl(); ?>css/header.css">
 </head>
 
 <body>
