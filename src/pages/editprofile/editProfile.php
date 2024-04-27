@@ -439,10 +439,14 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                </div>
                <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
                   <!-- Profile Picture-->
-                  <img class="profilePicture"
-                  
-                     src="<?php echo $profilePicFilename ? '/' . htmlspecialchars($profilePicFilename) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
-                     alt="Profile Picture">
+                  <?php
+                  // Handle profile picture caching issue, on first time putting in picutre it wouldn't show up until you refresehd page
+                  $profilePicPath = getProfilePicture($userId);
+                  // Get document root so have actual path of profile pic, then use fikemtime to get last modified time of file si browser is not relying on cahce
+                  $updatedProfilePic = $profilePicPath ? '/' . htmlspecialchars($profilePicPath) . '?v=' . filemtime($_SERVER['DOCUMENT_ROOT'] . '/' . $profilePicPath) : '/src/assets/images/defaultProfilePic.jpg';
+                  ?>
+
+                  <img class="profilePicture" src="<?php echo $updatedProfilePic; ?>" alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                   <input type="file" id="profile_pic" name="profile_pic" >
                   <!-- Button to just update changes made in db -->
