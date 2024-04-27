@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/match.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/match.css">
 </head>
 <body>
     
@@ -51,7 +51,7 @@
 
                               
                                 <!-- Report User Button -->  
-                                <form action="report.php" method="POST" style="text-align: center;">
+                                <form action="../helpers/report.php" method="POST" style="text-align: center;">
                                     <input type="hidden" name="action" value="report_user">
                                     <input type="hidden" name="target_user_id" value="<?php echo $userData['targetId']; ?>">
                                     <button id="reportButton" type="submit" class="btn btn-block mt-3">Report User 🚨</button>

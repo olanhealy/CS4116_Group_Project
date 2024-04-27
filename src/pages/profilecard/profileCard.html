@@ -4,7 +4,7 @@
     <head>
 
         <!-- External Stylesheet -->
-        <link rel="stylesheet" type="text/css" href="../assets/css/profileCard.css">
+        <link rel="stylesheet" type="text/css" href="../../assets/css/profileCard.css">
     </head>
 
     <body>
@@ -34,7 +34,7 @@
 
             
             <!--Adore Button-->
-            <form action="adoreUser.php" method="POST">
+            <form action="../helpers/adoreUser.php" method="POST">
                 <input type="hidden" name="action" value="adore_user">
                 <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
                 <input type="submit" value="Adore" class="adore-button">
@@ -50,7 +50,7 @@
             ?>
 
             <!--Messages Link-->        
-            <a href="messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
+            <a href="../messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
 
             <!--Report Button-->
             <form action="report.php" method="POST">
