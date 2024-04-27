@@ -2,8 +2,8 @@
 
 // Include the helperFunctions.php file
 include_once 'adminHelperFunctions.php';
-include_once '../helperFunctions.php';
-include '../db_connection.php';
+include_once '../helpers/helperFunctions.php';
+include '../helpers/db_connection.php';
 
 adminAccessCheck();
 //turn on output buffering so output only sent when all code is done and enables it to go striaight to the userList page
