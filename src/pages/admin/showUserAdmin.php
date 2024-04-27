@@ -57,6 +57,7 @@
         <head>
             <!-- Style Sheet -->
             <link rel="stylesheet" type="text/css" href="../../assets/css/showUserAdmin.css">
+            <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
         </head>
 
         <body>

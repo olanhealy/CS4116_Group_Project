@@ -46,6 +46,7 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Image</title>
+    <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
 </head>
 <body>
 <a href="admin.html">Admin Home</a>

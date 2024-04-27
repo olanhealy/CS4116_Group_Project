@@ -13,6 +13,8 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>UL Singles</title>
+    <link rel="icon" href="../../assets/images/logo.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
