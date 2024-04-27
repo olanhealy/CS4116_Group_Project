@@ -6,7 +6,7 @@ function adminAccessCheck()
         session_start();
     }
     if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "admin") {
-        header("Location: ../../../index.php");
+        header("Location: /src/pages/errors/unauthorisedaccess.html");
         exit();
     }
 }
