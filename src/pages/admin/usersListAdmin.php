@@ -1,5 +1,5 @@
 <?php
-include "../db_connection.php";
+include "../helpers/db_connection.php";
 include "adminHelperFunctions.php";
 include "setBanned.php";
 
@@ -42,7 +42,7 @@ adminAccessCheck();
         <div class="btn-group ms-auto" role="group">
             <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-                onclick="location.href='../logout.php'">Log Out</button>
+                onclick="location.href='../helpers/logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon Dropdown -->
@@ -56,7 +56,7 @@ adminAccessCheck();
             <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
                 <li><a class="dropdown-item-profile d-md-none" href="admin.html" id="admindropdown">Admin</a></li>
                 <li><hr class="dropdown-divider d-md-none"></li>
-                <li><a class="dropdown-item-profile d-md-none" href="../logout.php" id="logoutdropdown">Log Out</a></li>
+                <li><a class="dropdown-item-profile d-md-none" href="../helpers/logout.php" id="logoutdropdown">Log Out</a></li>
             </ul>
         </div>
         

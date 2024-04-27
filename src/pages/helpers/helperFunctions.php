@@ -6,7 +6,7 @@ function accessCheck()
         session_start();
     }
     if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "standard") {
-        header("Location: /index.php");
+        header("Location: /src/pages/errors/unauthorisedaccess.html");
         exit();
     }
 }
@@ -744,7 +744,7 @@ function showProfileCard($user_id){
     $hobbies = getHobbies($user_id);
     $lookingFor = getLookingFor($user_id);
 
-    include "profileCard.html";
+    include "../profilecard/profileCard.html";
 }
 
 function setupHeader(){

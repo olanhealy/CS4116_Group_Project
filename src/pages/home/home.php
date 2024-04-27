@@ -1,7 +1,7 @@
 <?php
-include_once("helperFunctions.php");
-include_once("admin/adminHelperFunctions.php");
-include_once("db_connection.php");
+include_once("../helpers/helperFunctions.php");
+include_once("../admin/adminHelperFunctions.php");
+include_once("../helpers/db_connection.php");
 
 accessCheck(); 
 
@@ -18,7 +18,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/home.css">
 
 </head>
 <body>
@@ -38,13 +38,13 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                 </div>
     
                 <div class="container col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
-                    <img id="deal" class="img-fluid" src="../assets/images/event.jpeg" alt="Stables Deal">
+                    <img id="deal" class="img-fluid" src="../../assets/images/event.jpeg" alt="Stables Deal">
                 </div>
 
             </div>
             
             <div class="col-lg-6 d-lg-flex justify-content-center align-items-center order-lg-2" style="text-align: center">
-                <img id="picture" class="img-fluid" src="../assets/images/holdinghands.jpg" alt="homepage_image">
+                <img id="picture" class="img-fluid" src="../../assets/images/holdinghands.jpg" alt="homepage_image">
             </div>
         </div>
     </div>

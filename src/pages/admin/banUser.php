@@ -1,8 +1,8 @@
 <?php
 
-include "../db_connection.php";
+include "../helpers/db_connection.php";
 include_once "adminHelperFunctions.php";
-include "../helperFunctions.php";
+include "../helpers/helperFunctions.php";
 
 adminAccessCheck();
 
