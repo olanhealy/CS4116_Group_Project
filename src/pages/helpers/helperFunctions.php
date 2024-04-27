@@ -744,7 +744,7 @@ function showProfileCard($user_id){
     $hobbies = getHobbies($user_id);
     $lookingFor = getLookingFor($user_id);
 
-    include "profileCard.html";
+    include "../profilecard/profileCard.html";
 }
 
 function setupHeader(){

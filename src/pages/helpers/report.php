@@ -2,7 +2,7 @@
 
 include_once "db_connection.php";
 include_once "helperFunctions.php";
-include "admin/adminHelperFunctions.php";
+include "../admin/adminHelperFunctions.php";
 
 accessCheck();
 
@@ -29,7 +29,7 @@ if ($_POST['action'] == "report_user") {
     $set_report->close();
 
     // Redirect to matches.php
-    echo "<script>window.location.href = 'matches.php';</script>";
+    echo "<script>window.location.href = '../home/home.php';</script>";
 
     exit();
 }

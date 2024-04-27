@@ -1,8 +1,8 @@
 <?php
 
-include "db_connection.php";
-require "helperFunctions.php";
-include_once "admin/adminHelperFunctions.php";
+include "../helpers/db_connection.php";
+require "../helpers/helperFunctions.php";
+include_once "../admin/adminHelperFunctions.php";
 
 accessCheck(); 
 
@@ -127,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if (isset($_POST['password']) && !empty($_POST['password'])) {
       if (empty($passwordErrors)) {
          setPassword($password, $userId);
-         header("Location: home.php");
+        
+         header("Location: editprofile.php");
       } else {
          // Store the errors in session for displaying below the form
          $_SESSION['password_errors'] = $passwordErrors;
@@ -166,21 +167,21 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
    <!-- External Stylesheet -->
-   <link rel="stylesheet" type="text/css" href="../assets/css/edit_profile.css">
+   <link rel="stylesheet" type="text/css" href="../../assets/css/edit_profile.css">
 </head>
 
 <body>
    <!-- CourseOfStudy Enum -->
-   <?php include '../assets/enums/CourseOfStudy.php'; ?>
+   <?php include '../../assets/enums/CourseOfStudy.php'; ?>
    <!-- hobbies  Enum -->
-   <?php include '../assets/enums/hobbies.php'; ?>
+   <?php include '../../assets/enums/hobbies.php'; ?>
    <!-- Start of Navbar -->
    <nav class="navbar navbar-fixed-top" id="navbar">
       <!-- Images -->
       <div class="images">
-         <img class="header-img d-none d-md-block" src="../assets/images/ul_logo.png" alt="ul_logo">
+         <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
          <div class="line d-none d-md-block"></div>
-         <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+         <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
       </div>
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
@@ -189,7 +190,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                onclick="location.href='explore.php'">Explore</button>
          <?php } ?>
          <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-            onclick="location.href='logout.php'">Log Out</button>
+            onclick="location.href='../helpers/logout.php'">Log Out</button>
       </div>
       <!-- Profile Icon -->
       <?php if (areUserDetailsSet($userId)) { ?>
@@ -204,7 +205,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             </button>
             <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
                <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
-               <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+               <li><a class="dropdown-item-profile d-md-none" href="../helpers/logout.php">Log Out</a></li>
             </ul>
          </div>
       <?php } ?>
@@ -219,11 +220,11 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                   Edit Profile
                </button>
                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
-                  <li><a class="dropdown-item" href="home.php">Home</a></li>
-                  <li><a class="dropdown-item" href="explore.php">Explore</a></li>
-                  <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                  <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
-                  <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
+                  <li><a class="dropdown-item" href="../home/home.php">Home</a></li>
+                  <li><a class="dropdown-item" href="../explore/explore.php">Explore</a></li>
+                  <li><a class="dropdown-item" href="../matches/matches.php">Matches</a></li>
+                  <li><a class="dropdown-item" href="../messages/messages.php">Messages</a></li>
+                  <li><a class="dropdown-item" href="../search/searchPage.html">Search</a></li>
                </ul>
             </div>
          </div>

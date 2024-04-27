@@ -1,8 +1,8 @@
 <?php
 
-require "db_connection.php";
-require_once "helperFunctions.php";
-require_once "admin/adminHelperFunctions.php";
+require "../helpers/db_connection.php";
+require_once "../helpers/helperFunctions.php";
+require_once "../admin/adminHelperFunctions.php";
 
 accessCheck(); 
 
