@@ -2,7 +2,7 @@
 
 include "db_connection.php";
 include "helperFunctions.php";
-include "admin/adminHelperFunctions.php";
+include "../admin/adminHelperFunctions.php";
 
 accessCheck();
 
@@ -20,5 +20,5 @@ if ($_POST['action'] == "adore_user") {
     }
 }
 
-header("Location: searchPage.html");
+header("Location: ../search/searchPage.html");
 

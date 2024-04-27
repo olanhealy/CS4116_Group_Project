@@ -22,8 +22,8 @@ function setUserId($email){
     return $userId;
 }
 
-include "../db_connection.php";
-include "../helperFunctions.php";
+include "../helpers/db_connection.php";
+include "../helpers/helperFunctions.php";
 
 //Initalise array of errors which can then be displayed from the html
 $errors = [];
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                 // Redirect to the edit profile page
-                header("Location: editProfile.php");
+                header("Location: ../editprofile/editProfile.php");
             } else {
                 $errors[] = "Error occurred during registration";
             }

@@ -1,6 +1,6 @@
 <?php
 
-    include_once "../db_connection.php";
+    include_once "../helpers/db_connection.php";
     include_once "adminHelperFunctions.php";
     
     adminAccessCheck();
@@ -30,7 +30,7 @@
         include "unban.html";
         include "deleteUser.html";
         echo '</div>';
-        include "../footer.php";
+        include "../helpers/footer.php";
     }else{
     //if the account isn't banned
         //and the account is not an admin show editProfile, makeAdmin, banUser
@@ -49,7 +49,7 @@
         //close div
         echo '</div>';
         //always include footer on all pages
-        include "../footer.php";
+        include "../helpers/footer.php";
     }
 ?>
 

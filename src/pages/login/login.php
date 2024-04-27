@@ -1,7 +1,7 @@
 <?php
 
-include "../db_connection.php";
-include "../helperFunctions.php";
+include "../helpers/db_connection.php";
+include "../helpers/helperFunctions.php";
 include "../admin/adminHelperFunctions.php";
 
 // Start the session
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
 
                     // Redirect to home page
-                    header("Location: home.php");
+                    header("Location: ../home/home.php");
                     exit();
 
                 } else {
