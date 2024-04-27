@@ -22,8 +22,8 @@ function setUserId($email){
     return $userId;
 }
 
-include "db_connection.php";
-include "helperFunctions.php";
+include "../db_connection.php";
+include "../helperFunctions.php";
 
 //Initalise array of errors which can then be displayed from the html
 $errors = [];
