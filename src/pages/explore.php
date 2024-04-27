@@ -336,6 +336,12 @@ if ($nextUser) {
     $displayUser = false; // if no users left to explore, reset to false
 }
 
+//Set up Header & Dropdown
+setupHeader();
+
 //include the HTML file
 include "explore.html";
+
+//Set up Footer
+setupFooter();
 ?>
