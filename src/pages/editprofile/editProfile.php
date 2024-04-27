@@ -1,8 +1,8 @@
 <?php
 
-include "db_connection.php";
-require "helperFunctions.php";
-include_once "admin/adminHelperFunctions.php";
+include "../db_connection.php";
+require "../helperFunctions.php";
+include_once "../admin/adminHelperFunctions.php";
 
 accessCheck(); 
 
@@ -166,21 +166,21 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
    <!-- External Stylesheet -->
-   <link rel="stylesheet" type="text/css" href="../assets/css/edit_profile.css">
+   <link rel="stylesheet" type="text/css" href="../../assets/css/edit_profile.css">
 </head>
 
 <body>
    <!-- CourseOfStudy Enum -->
-   <?php include '../assets/enums/CourseOfStudy.php'; ?>
+   <?php include '../../assets/enums/CourseOfStudy.php'; ?>
    <!-- hobbies  Enum -->
-   <?php include '../assets/enums/hobbies.php'; ?>
+   <?php include '../../assets/enums/hobbies.php'; ?>
    <!-- Start of Navbar -->
    <nav class="navbar navbar-fixed-top" id="navbar">
       <!-- Images -->
       <div class="images">
-         <img class="header-img d-none d-md-block" src="../assets/images/ul_logo.png" alt="ul_logo">
+         <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
          <div class="line d-none d-md-block"></div>
-         <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+         <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
       </div>
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">

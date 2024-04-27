@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
 
                     // Redirect to home page
-                    header("Location: home.php");
+                    header("Location: ../home/home.php");
                     exit();
 
                 } else {
