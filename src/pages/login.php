@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-12 login">
                 <!-- login form  -->
                 <form action="" method="post">
-                    <img class="mt-4 mb-4 img-fluid" src="../assets/images/ulSinglesSymbolTransparent.png" height="200"
+                    <img class="mt-4 mb-4 img-fluid logoSymbol" src="../assets/images/ulSinglesSymbolTransparent.png" height="200"
                         alt="ulSingles_symbol">
                     <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
