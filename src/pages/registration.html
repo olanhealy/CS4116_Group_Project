@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,9 +50,9 @@
 
                 <h1 class="h3 mb-3 font-weight-normal text-center mb-4 mx-1 mt-4">Create an account</h1>
 
-                        <!-- In editProfile.php, any errors that may be encountered while registering are stored
+                <!-- In editProfile.php, any errors that may be encountered while registering are stored
                         In an array. If there are erros, display them in a div here-->
-                    <?php
+                <?php
                     if (!empty($errors)) {
                         echo "<ul>";
                         foreach ($errors as $error) {
@@ -68,16 +67,22 @@
 
                 <form class="mx-1 mx-md-4" action="registration.php" method="post">
 
-                    <div class="form-input mb-4">
-                        <!-- Email  -->
-                        <input type="email" class="form-control" placeholder="Email" name="email" required
-                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                    <div class="input mb-4">
+                        <div class="form-input">
+                            <!-- Email  -->
+                            <input type="email" class="form-control" placeholder="Email" name="email" required
+                                value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                        </div>
+                        <p class="input-info">**Email must end with @studentmail.ul.ie</p>
                     </div>
 
-
-                    <div class="form-input mb-4">
+                    <div class="input mb-4">
+                    <div class="form-input">
                         <!-- Password  -->
                         <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                    <p class="input-info">**must be between 8-20 characters</p>
+                    <p class="input-info">**include one capital letter and one special character (_, $ etc)</p>
                     </div>
 
                     <div class="form-input mb-4">
@@ -91,7 +96,7 @@
                         <input type="text" class="form-control" placeholder="First Name" name="first_name" required
                             value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>">
                     </div>
-                
+
                     <div class="form-input mb-4">
                         <!-- Last Name  -->
                         <input type="text" class="form-control" placeholder="Last Name" name="last_name" required
