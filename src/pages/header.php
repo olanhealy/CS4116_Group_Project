@@ -57,8 +57,10 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                 onclick="location.href='/src/pages/logout.php'">Log Out</button>
         </div>
 
+
         <!-- Profile Icon -->
         <div class="dropdown">
+
             <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
                     class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -66,28 +68,36 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                     <path fill-rule="evenodd"
                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                 </svg>
-            </button><?php if ($totalNotifications > 0): ?>
-            <span class="badge bg-danger"><?php echo $totalNotifications; ?></span>
-        <?php endif; ?>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+
+            </button>
 
 
-        <!-- Dropdown menu items -->
-        <li><a class="dropdown-item-profile" href="/src/pages/editProfile.php">Edit Profile</a></li>
-        <li><a class="dropdown-item-profile d-md-none" href="/src/pages/logout.php">Log Out</a></li>
+            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
 
+                <!-- Dropdown menu items -->
+                <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/editProfile.php">Edit Profile 👤</a></li>
+                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="/src/pages/logout.php">Log Out 👋</a></li>
+                <li><hr class="dropdown-divider"></li>
+
+                <?php if ($notifications['messages'] > 0): ?>
+                    <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages! 💬</a></li>
+                <?php endif; ?>
+                <?php if ($notifications['matches'] > 0): ?>
+                    <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches! 👀</a></li>
+                <?php endif; ?>
+
+            </ul>
+        </div>
         
-        <?php if ($notifications['messages'] > 0): ?>
-            <li><a class="dropdown-item-profile" href="/src/pages/messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages</a></li>
-        <?php endif; ?>
-        <?php if ($notifications['matches'] > 0): ?>
-            <li><a class="dropdown-item-profile" href="/src/pages/matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches</a></li>
-        <?php endif; ?>
-    </ul>
-</div>
+        <div id="notifdiv">
+            <button id="notifbutton" ><?php if ($totalNotifications > 0): ?>
+                <span class="badge bg-danger"><?php echo $totalNotifications; ?></span>
+                <?php endif; ?>
+            </button>
+        </div>
 
     </nav>
+    <!-- End of Navbar -->
 
     <!-- Dropdown Menu Button -->
     <div class="container-fluid">
@@ -110,8 +120,8 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
     </div>
 
     <br>
-    <!-- End of Navbar -->
     <script>
+
     //Js function to clear notifications if they should be cleared
 function clearNotifications(type, userId) {
     // Create a new instance of XMLHttpRequest which is used to make an HTTP request to the server
@@ -137,4 +147,24 @@ function clearNotifications(type, userId) {
     xhr.send(JSON.stringify({ type: type, user_id: userId }));
 }
 </script>
+
+
+<!-- Profile dropdown divider script -->
+<script>
+        // Checks if theres notifications to show or hide divider
+        function toggleDivider(show) {
+            var divider = document.querySelector('.dropdown-divider');
+            if (show) {
+                divider.style.display = 'block';
+            } else {
+                divider.style.display = 'none';
+            }
+        }
+
+        // Check for notifications and toggles divider
+        var hasNotifications = <?php echo ($totalNotifications > 0) ? 'true' : 'false'; ?>;
+        toggleDivider(hasNotifications);
+</script>
+
+
 </body>
