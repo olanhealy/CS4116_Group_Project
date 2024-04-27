@@ -112,8 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
+
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -143,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-12 login">
                 <!-- login form  -->
                 <form action="" method="post">
-                    <img class="mt-4 mb-4 img-fluid" src="../assets/images/ulSinglesSymbolTransparent.png" height="200"
+                    <img class="mt-4 mb-4 img-fluid" src="../../assets/images/ulSinglesSymbolTransparent.png" height="200"
                         alt="ulSingles_symbol">
                     <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
@@ -161,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <!-- Link to Registration page via button -->
-                    <p>Don't have an account? <a href="registration.php">Register here</a></p>
+                    <p>Don't have an account? <a href="../registration/registration.php">Register here</a></p>
                 </form>
 
             </div>
