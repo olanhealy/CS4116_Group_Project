@@ -1,8 +1,8 @@
 <?php
 
-include "db_connection.php";
-include "helperFunctions.php";
-include "admin/adminHelperFunctions.php";
+include "../db_connection.php";
+include "../helperFunctions.php";
+include "../admin/adminHelperFunctions.php";
 
 // Start the session
 if (session_status() === PHP_SESSION_NONE) {
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     // Redirect to admin page if user is admin  
                     if ($row['user_role'] == 'admin') {
-                        header("Location: admin/admin.html");
+                        header("Location: ../admin/admin.html");
                         exit();
                     }
 
@@ -112,13 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
+
 
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/login.css">
 
 </head>
 
@@ -126,14 +125,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav class="navbar navbar-fixed-top">
         <div class="images">
-            <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
+            <img class="header-img" src="../../assets/images/ul_logo.png" alt="ul_logo">
             <div class="line"></div>
-            <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+            <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
         <div class="btn-group buttons d-none d-lg-block" role="group">
             <button type="button" class="btn button" onclick="location.href='login.php'">Log In</button>
-            <button type="button" class="btn button" onclick="location.href='registration.php'">Sign Up</button>
+            <button type="button" class="btn button" onclick="location.href='../registration/registration.php'">Sign Up</button>
         </div>
 
     </nav>
@@ -143,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-12 login">
                 <!-- login form  -->
                 <form action="" method="post">
-                    <img class="mt-4 mb-4 img-fluid logoSymbol" src="../assets/images/ulSinglesSymbolTransparent.png" height="200"
+                    <img class="mt-4 mb-4 img-fluid" src="../../assets/images/ulSinglesSymbolTransparent.png" height="200"
                         alt="ulSingles_symbol">
                     <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
@@ -161,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <!-- Link to Registration page via button -->
-                    <p>Don't have an account? <a href="registration.php">Register here</a></p>
+                    <p>Don't have an account? <a href="../registration/registration.php">Register here</a></p>
                 </form>
 
             </div>
