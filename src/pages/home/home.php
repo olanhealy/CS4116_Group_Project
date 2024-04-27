@@ -1,7 +1,7 @@
 <?php
-include_once("../helperFunctions.php");
+include_once("../helpers/helperFunctions.php");
 include_once("../admin/adminHelperFunctions.php");
-include_once("../db_connection.php");
+include_once("../helpers/db_connection.php");
 
 accessCheck(); 
 
