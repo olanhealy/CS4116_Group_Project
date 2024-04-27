@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     // Redirect to admin page if user is admin  
                     if ($row['user_role'] == 'admin') {
-                        header("Location: admin/admin.html");
+                        header("Location: ../admin/admin.html");
                         exit();
                     }
 
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/login.css">
 
 </head>
 
@@ -126,14 +126,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav class="navbar navbar-fixed-top">
         <div class="images">
-            <img class="header-img" src="../assets/images/ul_logo.png" alt="ul_logo">
+            <img class="header-img" src="../../assets/images/ul_logo.png" alt="ul_logo">
             <div class="line"></div>
-            <img class="header-img" src="../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
+            <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
         <div class="btn-group buttons d-none d-lg-block" role="group">
             <button type="button" class="btn button" onclick="location.href='login.php'">Log In</button>
-            <button type="button" class="btn button" onclick="location.href='registration.php'">Sign Up</button>
+            <button type="button" class="btn button" onclick="location.href='../registration/registration.php'">Sign Up</button>
         </div>
 
     </nav>
