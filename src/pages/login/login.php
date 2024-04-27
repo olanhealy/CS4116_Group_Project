@@ -1,8 +1,8 @@
 <?php
 
-include "db_connection.php";
-include "helperFunctions.php";
-include "admin/adminHelperFunctions.php";
+include "../db_connection.php";
+include "../helperFunctions.php";
+include "../admin/adminHelperFunctions.php";
 
 // Start the session
 if (session_status() === PHP_SESSION_NONE) {

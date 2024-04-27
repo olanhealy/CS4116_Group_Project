@@ -45,8 +45,8 @@
         
         <img src="/src/assets/images/ulSinglesTrasparent.png" alt="ulSingles_symbol">
         <p>Explore, Adore, Ignore</p>
-        <a href="/src/pages/login.php">Login</a>
-        <a href="/src/pages/registration.php">Register Here</a>
+        <a href="/src/pages/login/login.php">Login</a>
+        <a href="/src/pages/registration/registration.php">Register Here</a>
     </div>
 </body>
 </html>
