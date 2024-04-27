@@ -115,6 +115,7 @@ h2 {
 #conversation-list li {
   border: 2px solid #dabb9e;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 #message-form {
