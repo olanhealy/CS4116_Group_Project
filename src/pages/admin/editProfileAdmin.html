@@ -78,9 +78,17 @@
                     <div class="col-lg-4 order-lg-1 col-md-12" id="leftcontainer">
                         <div class="col-lg-3 col-md-12 imgContainer"></div>
                         <!-- Profile Picture -->
+                        <?php
+                        
+                        // Using this to handle caching issue, similar to edit profile by using timestamp
+                        $profilePicSrc = $_SESSION['existingProfilePic'] ? '/' . htmlspecialchars($_SESSION['existingProfilePic']) : '/src/assets/images/defaultProfilePic.jpg';
+                        
+                        // Append a unique timestamp to the image source URL to prevent caching
+                        $updatedProfilcePic = $profilePicSrc . '?t=' . time();
+                        ?>
                         <img class="profilePicture"
-                            src="<?php echo $_SESSION['existingProfilePic'] ? '/' . htmlspecialchars($_SESSION['existingProfilePic']) : '/src/assets/images/defaultProfilePic.jpg'; ?>"
-                            alt="Profile Picture">
+                        src="<?php echo $updatedProfilcePic; ?>"
+                        alt="Profile Picture">
 
                         <!-- Change Picture -->
                         <label for="profile_pic" class="fileUploadBtn">Change Profile Picture</label>
