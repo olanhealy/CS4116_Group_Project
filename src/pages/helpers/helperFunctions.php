@@ -6,7 +6,7 @@ function accessCheck()
         session_start();
     }
     if (!isset($_SESSION['user_id']) || getUserRole($_SESSION['user_id']) != "standard") {
-        header("Location: /index.php");
+        header("Location: ../../../index.php");
         exit();
     }
 }
