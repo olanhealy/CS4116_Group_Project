@@ -53,7 +53,7 @@
             <a href="../messages/messages.php?matchId=<?php echo $matchId; ?>" class="message-link">Message</a>
 
             <!--Report Button-->
-            <form action="report.php" method="POST">
+            <form action="../helpers/report.php" method="POST">
                 <input type="hidden" name="action" value="report_user">
                 <input type="hidden" name="target_user_id" value="<?php echo $targetUserId; ?>">
                 <input type="submit" value="Report" class="report-button">

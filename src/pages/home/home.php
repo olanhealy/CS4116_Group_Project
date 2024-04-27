@@ -44,7 +44,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
             </div>
             
             <div class="col-lg-6 d-lg-flex justify-content-center align-items-center order-lg-2" style="text-align: center">
-                <img id="picture" class="img-fluid" src="../assets/images/holdinghands.jpg" alt="homepage_image">
+                <img id="picture" class="img-fluid" src="../../assets/images/holdinghands.jpg" alt="homepage_image">
             </div>
         </div>
     </div>

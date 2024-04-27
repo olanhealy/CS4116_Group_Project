@@ -6,6 +6,8 @@ include "../admin/adminHelperFunctions.php";
 
 accessCheck();
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['hobbies'])) {

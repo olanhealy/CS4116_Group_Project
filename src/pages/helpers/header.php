@@ -55,7 +55,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
             <button type="button" id="explorebutton" class="btn button d-none d-md-block"
                 onclick="location.href='/src/pages/explore/explore.php'">Explore</button>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-                onclick="location.href='/src/pages/logout.php'">Log Out</button>
+                onclick="location.href='/src/pages/helpers/logout.php'">Log Out</button>
         </div>
 
 
@@ -76,8 +76,8 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
             <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
 
                 <!-- Dropdown menu items -->
-                <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/editProfile.php">Edit Profile 👤</a></li>
-                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="/src/pages/logout.php">Log Out 👋</a></li>
+                <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/editprofile/editProfile.php">Edit Profile 👤</a></li>
+                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="/src/pages/helpers/logout.php">Log Out 👋</a></li>
                 <li><hr class="dropdown-divider"></li>
 
                 <?php if ($notifications['messages'] > 0): ?>
@@ -129,7 +129,7 @@ function clearNotifications(type, userId) {
     var xhr = new XMLHttpRequest();
 
     //Make a POST request to the server where "resetNotifications.php" is the server-side script that will handle the request
-    xhr.open("POST", 'resetNotifications.php', true);
+    xhr.open("POST", '../helpers/resetNotifications.php', true);
 
     //  Content type is set to JSON 
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

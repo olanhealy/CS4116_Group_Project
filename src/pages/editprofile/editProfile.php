@@ -1,7 +1,7 @@
 <?php
 
-include "../db_connection.php";
-require "../helperFunctions.php";
+include "../helpers/db_connection.php";
+require "../helpers/helperFunctions.php";
 include_once "../admin/adminHelperFunctions.php";
 
 accessCheck(); 
@@ -127,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if (isset($_POST['password']) && !empty($_POST['password'])) {
       if (empty($passwordErrors)) {
          setPassword($password, $userId);
-         header("Location: home.php");
+        
+         header("Location: editprofile.php");
       } else {
          // Store the errors in session for displaying below the form
          $_SESSION['password_errors'] = $passwordErrors;
@@ -189,7 +190,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                onclick="location.href='explore.php'">Explore</button>
          <?php } ?>
          <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-            onclick="location.href='logout.php'">Log Out</button>
+            onclick="location.href='../helpers/logout.php'">Log Out</button>
       </div>
       <!-- Profile Icon -->
       <?php if (areUserDetailsSet($userId)) { ?>
@@ -204,7 +205,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             </button>
             <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
                <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
-               <li><a class="dropdown-item-profile d-md-none" href="logout.php">Log Out</a></li>
+               <li><a class="dropdown-item-profile d-md-none" href="../helpers/logout.php">Log Out</a></li>
             </ul>
          </div>
       <?php } ?>
@@ -219,11 +220,11 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                   Edit Profile
                </button>
                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
-                  <li><a class="dropdown-item" href="home.php">Home</a></li>
-                  <li><a class="dropdown-item" href="explore.php">Explore</a></li>
-                  <li><a class="dropdown-item" href="matches.php">Matches</a></li>
-                  <li><a class="dropdown-item" href="messages/messages.php">Messages</a></li>
-                  <li><a class="dropdown-item" href="searchPage.html">Search</a></li>
+                  <li><a class="dropdown-item" href="../home/home.php">Home</a></li>
+                  <li><a class="dropdown-item" href="../explore/explore.php">Explore</a></li>
+                  <li><a class="dropdown-item" href="../matches/matches.php">Matches</a></li>
+                  <li><a class="dropdown-item" href="../messages/messages.php">Messages</a></li>
+                  <li><a class="dropdown-item" href="../search/searchPage.html">Search</a></li>
                </ul>
             </div>
          </div>

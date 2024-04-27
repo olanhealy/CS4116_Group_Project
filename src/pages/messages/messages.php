@@ -7,11 +7,7 @@
     accessCheck();
 
     // Make sure user is logged in
-    if (!isset($_SESSION['user_id'])) {
-        // Redirect to login page or error page
-        header('Location: login.php');
-        exit;
-    }
+   
 
     // Set user ID
     $userId = $_SESSION['user_id'];
