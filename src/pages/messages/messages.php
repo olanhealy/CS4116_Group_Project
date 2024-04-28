@@ -68,11 +68,18 @@
                 <div class="sidebar col-lg-3 col-md-3 col-sm-12" id="sidebar">
                     <ul id="conversation-list" class="list-unstyled">
                         <?php foreach ($allConversations as $conversationMatchId) : ?>
+                            <!-- Get the name and profile picture of the match, also notifications if unread -->
                             <?php $matchName = getNameByMatchId($conversationMatchId, $userId); ?>
                             <?php $profilePic = getProfilePictureByMatchId($conversationMatchId, $userId); ?>
-                            <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)">
+                            <?php $unreadCount = countUnreadMessages($userId, $conversationMatchId); ?>
+                            
+                            <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)" >
                                 <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
                                 <span class="match-name"><?php echo htmlspecialchars($matchName); ?> </span>
+                                <?php if ($unreadCount > 0): ?>
+                                    <!-- Display the unread message count -->
+                                    <span class="unread-badge"><?php echo $unreadCount; ?></span>
+                                <?php endif; ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -149,6 +156,7 @@
 
                         var messageBody = document.querySelector('#message-content');
                         messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+                        $(listItem).removeClass('highlight-unread');
                     }
                 });
             }

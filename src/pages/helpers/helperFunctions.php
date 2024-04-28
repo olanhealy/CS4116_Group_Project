@@ -1109,4 +1109,20 @@ function getBaseUrl() {
     return rtrim($baseUrl, '/') . $extraPath;
 }
 
+function countUnreadMessages($userId, $conversationMatchId, ) {
+    global $conn;
+    $query = "SELECT COUNT(*) FROM messages 
+              WHERE match_id = ? 
+              AND read_status = 'delivered' 
+              AND receiver_id = ?";
+
+    $sqlUnreadMessages = $conn->prepare($query);
+    $sqlUnreadMessages->bind_param("ii", $conversationMatchId, $userId);
+    $sqlUnreadMessages->execute();
+    $sqlUnreadMessages->bind_result($count);
+    $sqlUnreadMessages->fetch();
+    $sqlUnreadMessages->close();
+
+    return $count;
+}
 ?>
