@@ -412,7 +412,12 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                               <!-- Button to verify email -->
                               <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
                            </div>
-                        <?php } ?>
+                        <?php }  else if (getVerified($userId) == 1) { ?>
+                           <div class="col-md-6 col-sm-12 col-lg-6">
+                           <!-- Display verified status -->
+                           <p class="text-success">Email Verified</p>
+                        </div>
+                     <?php } ?>
                      </div>
                   <?php } ?>
                </div>
