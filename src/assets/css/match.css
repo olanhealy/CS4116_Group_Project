@@ -65,6 +65,11 @@ body {
 
 p {
   text-align: center;
+  padding: 10px;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+  font-style: italic;
 }
 
 #messageButton{
