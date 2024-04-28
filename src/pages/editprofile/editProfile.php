@@ -154,22 +154,25 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
 <html lang="en">
 
 <head>
+   <title>Edit Profile</title>
+   <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Edit Profile</title>
-   <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
    <!-- Bootstrap Stylesheet -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
    <!-- Bootstrap Icon -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
    <!-- Scripts -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.min.css" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.min.js"></script>
    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
    <!-- External Stylesheet -->
    <link rel="stylesheet" type="text/css" href="../../assets/css/edit_profile.css">
 </head>
@@ -177,16 +180,20 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
 <body>
    <!-- CourseOfStudy Enum -->
    <?php include '../../assets/enums/CourseOfStudy.php'; ?>
+
    <!-- hobbies  Enum -->
    <?php include '../../assets/enums/hobbies.php'; ?>
+   
    <!-- Start of Navbar -->
    <nav class="navbar navbar-fixed-top" id="navbar">
+
       <!-- Images -->
       <div class="images">
          <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
          <div class="line d-none d-md-block"></div>
          <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
       </div>
+
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
          <?php if (areUserDetailsSet($userId)) { ?>
@@ -194,23 +201,30 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
          <?php } ?>
       </div>
+
       <!-- Profile Icon -->
       <?php if (areUserDetailsSet($userId)) { ?>
          <div class="dropdown">
+
             <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-               <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-               </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
             </button>
+
             <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
-               <li><a class="dropdown-item-profile" href="editProfile.php">Edit Profile</a></li>
-               <li><a class="dropdown-item-profile d-md-none" href="../helpers/logout.php">Log Out</a></li>
+               <!-- Dropdown Menu Item -->
+               <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="/src/pages/helpers/logout.php">Log Out 👋</a></li>
             </ul>
          </div>
       <?php } ?>
+
    </nav>
    <!-- End of Navbar -->
+
    <!-- Dropdown Menu Button as long as they have already provided their defails -->
    <?php if (areUserDetailsSet($userId)) { ?>
       <div class="container-fluid">
@@ -224,13 +238,15 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                   <li><a class="dropdown-item" href="../explore/explore.php">Explore</a></li>
                   <li><a class="dropdown-item" href="../matches/matches.php">Matches</a></li>
                   <li><a class="dropdown-item" href="../messages/messages.php">Messages</a></li>
-                  <li><a class="dropdown-item" href="../search/searchPage.html">Search</a></li>
+                  <li><a class="dropdown-item" href="../search/search.php">Search</a></li>
                </ul>
             </div>
          </div>
       </div>
    <?php } ?>
+
    <br>
+
    <!-- Form -->
    <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
       <div class="row">
