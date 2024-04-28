@@ -9,6 +9,16 @@ accessCheck();
 // Fetch user details from the database
 $userId = $_SESSION['user_id'];
 
+// empty variable to store password success message
+$successMessage = '';
+
+// if password set success store it to display
+if (isset($_SESSION['password_change_success'])) {
+    $successMessage = $_SESSION['password_change_success'];
+    // Unset session variable so it only shows once
+    unset($_SESSION['password_change_success']);
+}
+
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
@@ -123,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_POST['password']) && !empty($_POST['password'])) {
    if (empty($passwordErrors)) {
       setPassword($password, $userId);
-
+      $_SESSION['password_change_success'] = "Password changed successfully.";
       header("Location: editprofile.php");
    } else {
       // Store the errors in session for displaying below the form
@@ -179,7 +189,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
          <?php if (areUserDetailsSet($userId)) { ?>
-            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='explore.php'">Explore</button>
+            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='../explore/explore.php'">Explore</button>
             <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
          <?php } ?>
       </div>
@@ -427,6 +437,15 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          </form>
 
          <div class="errors">
+            
+
+            <!-- Success message display -->
+            <?php if ($successMessage): ?>
+               <div class="alert alert-success" role="alert">
+                  <?php echo $successMessage; ?>
+               </div>
+            <?php endif; ?>
+            
             <!-- Error Messages -->
             <?php
             if (!empty($errors)) {
@@ -455,6 +474,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                echo "</div>";
                // Clear errors from session
                unset($_SESSION['password_errors']);
+               
             }
             ?>
          </div>
