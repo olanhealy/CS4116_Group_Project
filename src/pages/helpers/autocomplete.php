@@ -36,7 +36,7 @@ if(isset($_GET['term'])){
         }
 
         // Build the link for each name
-        $link = "<a href='../profilecard/profileCard.php?target_user_id=" . $targetUserId . "&showingAdoreButton=" . $showingAdoreButton . "'>" . $row['name'];
+        $link = "<a href='../profilecard/profileCard.php?target_user_id=" . $targetUserId . "&showingAdoreButton=" . $showingAdoreButton . "&individualCard=" . true . "'>" . $row['name'];
         $names[] = $link;
     }
     echo json_encode($names);

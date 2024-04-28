@@ -6,8 +6,6 @@ include "../admin/adminHelperFunctions.php";
 
 accessCheck();
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['hobbies'])) {
@@ -86,8 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //sets up the header and dropdown
     setupHeader();
-
-
 
     if ($result->num_rows > 0) {
 
