@@ -7,7 +7,7 @@
     accessCheck();
 
     // Make sure user is logged in
-   
+
 
     // Set user ID
     $userId = $_SESSION['user_id'];
@@ -140,6 +140,9 @@
                         $('#message-content').html(messagesHtml);
                         $('#message-title').text(matchName);
                         $('#message-form').show();
+
+                        var messageBody = document.querySelector('#message-content');
+                        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
                     }
                 });
             }
