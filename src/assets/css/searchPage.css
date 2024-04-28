@@ -276,6 +276,8 @@ footer {
     border: 1px solid #4d4d4d;
     padding: 5px; 
     list-style-type: none;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 #full_name-suggestions li {
