@@ -40,7 +40,12 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                 </div>
     
                 <div class="container col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
-                    <img id="deal" class="img-fluid" src="../../assets/images/event.jpeg" alt="Stables Deal">
+                    <img id="deal" class="img-fluid" src="../../assets/images/event.jpeg" alt="Current Event">
+                </div>
+
+                <div class="container col-lg-9 col-md-7 col-sm-7" style="text-align: center; margin-bottom: 10px;">
+                    <a id="info">This week's event is the perfect chance to get to know some of your new matches better! </a>
+                    <a>😉</a>
                 </div>
 
             </div>
@@ -58,7 +63,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
 
     <!-- Slogan -->
     <section class="slogan">
-        <div class="container-fluid text-center d-none d-md-block">
+        <div class="container-fluid text-center">
             <div class="col-sm">
                 Explore. Adore. Ignore.
             </div>
