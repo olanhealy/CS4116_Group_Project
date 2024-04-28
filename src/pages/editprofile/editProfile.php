@@ -134,7 +134,7 @@ if (isset($_POST['password']) && !empty($_POST['password'])) {
    if (empty($passwordErrors)) {
       setPassword($password, $userId);
       $_SESSION['password_change_success'] = "Password changed successfully.";
-      header("Location: editprofile.php");
+      header("Location: editProfile.php");
    } else {
       // Store the errors in session for displaying below the form
       $_SESSION['password_errors'] = $passwordErrors;
