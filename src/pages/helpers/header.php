@@ -84,7 +84,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                     <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/messages/messages.php" onclick="clearNotifications('messages', <?php echo $userId; ?>)">You have new messages! 💬</a></li>
                 <?php endif; ?>
                 <?php if ($notifications['matches'] > 0): ?>
-                    <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches! 👀</a></li>
+                    <li><a class="dropdown-item" id="dropdown-item-profile" href="/src/pages/matches/matches.php" onclick="clearNotifications('matches', <?php echo $userId; ?>)">You have new matches! 👀</a></li>
                 <?php endif; ?>
 
             </ul>

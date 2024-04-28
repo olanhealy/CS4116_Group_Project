@@ -85,6 +85,28 @@ function setPassword($password, $user_id)
     $set_password->close();
 }
 
+function setPasswordForChange($password, $user_id)
+{
+    global $conn;
+
+    // Hash the password for security 
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update the password in the Accounts table
+    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
+    $set_password = $conn->prepare($sql_set_password);
+    $set_password->bind_param('si', $hashed_password, $user_id);
+    $set_password->execute();
+
+    if ($set_password->affected_rows > 0) {
+        echo "Password set successfully";
+    } else {
+        echo "Error setting password";
+    }
+
+    $set_password->close();
+}
+
 function setFirstName($user_id, $first_name){
     global $conn;
 
@@ -1087,4 +1109,20 @@ function getBaseUrl() {
     return rtrim($baseUrl, '/') . $extraPath;
 }
 
+function countUnreadMessages($userId, $conversationMatchId, ) {
+    global $conn;
+    $query = "SELECT COUNT(*) FROM messages 
+              WHERE match_id = ? 
+              AND read_status = 'delivered' 
+              AND receiver_id = ?";
+
+    $sqlUnreadMessages = $conn->prepare($query);
+    $sqlUnreadMessages->bind_param("ii", $conversationMatchId, $userId);
+    $sqlUnreadMessages->execute();
+    $sqlUnreadMessages->bind_result($count);
+    $sqlUnreadMessages->fetch();
+    $sqlUnreadMessages->close();
+
+    return $count;
+}
 ?>

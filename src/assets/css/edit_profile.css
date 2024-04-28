@@ -291,7 +291,7 @@ body {
 }
 
 .chosen-select {
-  width: 100%;
+  width: 100% !important;
   padding: 8px;
   border: none;
   background-color: #fff;
@@ -340,6 +340,36 @@ footer {
   line-height: 40px;
   padding-left: 15px;
   font-weight: bold;
+}
+
+/* Overridng chosen css */
+.chosen-container {
+  width: 100% !important;
+}
+
+.chosen-container .chosen-results {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.chosen-container .chosen-results li.highlighted {
+  background-color: #e6d1be;
+  background-image: none;
+  color: #fff
+}
+
+.chosen-container-multi .chosen-choices {
+  border-radius: 4px;
+}
+
+.chosen-container-active .chosen-choices {
+ border: 1px solid #e6d1be;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+  background-color: #e6d1be;
+  background-image: none;
+  color: #fff;
 }
 
 .error-message {

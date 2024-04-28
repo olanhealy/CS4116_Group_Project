@@ -9,6 +9,16 @@ accessCheck();
 // Fetch user details from the database
 $userId = $_SESSION['user_id'];
 
+// empty variable to store password success message
+$successMessage = '';
+
+// if password set success store it to display
+if (isset($_SESSION['password_change_success'])) {
+    $successMessage = $_SESSION['password_change_success'];
+    // Unset session variable so it only shows once
+    unset($_SESSION['password_change_success']);
+}
+
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
 //Moved all the getter methods into "helperFunctions.php" for reuseability  
 $bio = getBio($userId);
@@ -122,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (isset($_POST['password']) && !empty($_POST['password'])) {
    if (empty($passwordErrors)) {
-      setPassword($password, $userId);
-
-      header("Location: editprofile.php");
+      setPasswordForChange($password, $userId);
+      $_SESSION['password_change_success'] = "Password changed successfully.";
+      header("Location: editProfile.php");
    } else {
       // Store the errors in session for displaying below the form
       $_SESSION['password_errors'] = $passwordErrors;
@@ -149,7 +159,6 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
    <!-- Bootstrap Stylesheet -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -188,10 +197,8 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
          <?php if (areUserDetailsSet($userId)) { ?>
-            <button type="button" id="explorebutton" class="btn button d-none d-md-block"
-                onclick="location.href='/src/pages/explore/explore.php'">Explore</button>
-            <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
-                onclick="location.href='/src/pages/helpers/logout.php'">Log Out</button>
+            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='../explore/explore.php'">Explore</button>
+            <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
          <?php } ?>
       </div>
 
@@ -422,7 +429,12 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                               <!-- Button to verify email -->
                               <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
                            </div>
-                        <?php } ?>
+                        <?php }  else if (getVerified($userId) == 1) { ?>
+                           <div class="col-md-6 col-sm-12 col-lg-6">
+                           <!-- Display verified status -->
+                           <p class="text-success">Email Verified</p>
+                        </div>
+                     <?php } ?>
                      </div>
                   <?php } ?>
                </div>
@@ -447,6 +459,15 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          </form>
 
          <div class="errors">
+            
+
+            <!-- Success message display -->
+            <?php if ($successMessage): ?>
+               <div class="alert alert-success" role="alert">
+                  <?php echo $successMessage; ?>
+               </div>
+            <?php endif; ?>
+            
             <!-- Error Messages -->
             <?php
             if (!empty($errors)) {
@@ -475,6 +496,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                echo "</div>";
                // Clear errors from session
                unset($_SESSION['password_errors']);
+               
             }
             ?>
          </div>

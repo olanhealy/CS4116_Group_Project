@@ -42,7 +42,7 @@
                                 <!-- Modify full_name input field -->
                                 <label for="full_name" class="inputLabelText">Name:</label><br>
                                 <input class="input" type="text" id="full_name" name="full_name" autocomplete="off">
-                                <div id="full_name-suggestions"></div>
+                                <div id="full_name-suggestions" style="display: none;"></div>
                             </div>
                         </div>
 
@@ -256,20 +256,26 @@
                     method: "GET",
                     data: { term: query },
                     success: function (data) {
-                        $('#full_name-suggestions').fadeIn();
-                        var suggestions = JSON.parse(data);
-                        $('#full_name-suggestions').empty();
+                    var suggestions = JSON.parse(data);
+                    $('#full_name-suggestions').empty();
+                    if (suggestions.length > 0) {
+                        $('#full_name-suggestions').show();
                         suggestions.forEach(function (suggestion) {
                             $('#full_name-suggestions').append('<li>' + suggestion + '</li>');
                         });
+                    } else {
+                        $('#full_name-suggestions').hide();
                     }
-                });
-            }
-        });
+                }
+            });
+        } else {
+            $('#full_name-suggestions').hide();
+        }
+    });
 
         $(document).on('click', '#full_name-suggestions li', function () {
             $('#full_name').val($(this).text());
-            $('#full_name-suggestions').fadeOut();
+            $('#full_name-suggestions').hide();
         });
     });
 </script>

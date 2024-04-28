@@ -128,12 +128,63 @@ h3 {
 .profile-cards-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content:center;
+    justify-content: center;
 }
 
 .heartFill {
     color: #e6d1be;
     padding: 3px;
+}
+
+#full_name-suggestions{
+    border: 1px solid #4d4d4d;
+    padding: 5px; 
+    list-style-type: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#full_name-suggestions li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#full_name-suggestions a {
+    color: #97b189;
+    text-decoration: none;
+}
+
+#full_name-suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.chosen-container {
+    width: 100% !important;
+}
+
+.chosen-container .chosen-results {
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.chosen-container .chosen-results li.highlighted {
+    background-color: #e6d1be;
+    background-image: none;
+    color: #fff
+}
+
+.chosen-container-multi .chosen-choices {
+    border-radius: 4px;
+}
+
+.chosen-container-active .chosen-choices {
+    border: 1px solid #e6d1be;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+    background-color: #e6d1be;
+    background-image: none;
+    color: #fff;
 }
 
 @media (max-width: 1199.98px) {
@@ -147,4 +198,3 @@ h3 {
         width: 80vw;
     }
 }
-

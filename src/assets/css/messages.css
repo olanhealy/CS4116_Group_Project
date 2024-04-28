@@ -116,6 +116,25 @@ h2 {
   border: 2px solid #dabb9e;
   margin-bottom: 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#conversation-list li:hover {
+  background-color: #e6d1be; 
+}
+
+.unread-badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: 1em; 
+  background-color: #dc3545; 
+  color: white; 
+  font-size: 0.75em;
+  font-weight: bold;
+  vertical-align: middle;
+  margin-left: 0.5em; 
+  position: relative; 
+  top: -0.5em; 
 }
 
 #message-form {
