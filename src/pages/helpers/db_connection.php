@@ -7,7 +7,6 @@ $unmae= "if0_36038205";
 $password = "cs41162024";
 $db_name = "if0_36038205_ulsingles";
 
-
 //used for connecting to the database on local machine
 //  $sname= "localhost";
 //  $unmae= "root";
