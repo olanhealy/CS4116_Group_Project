@@ -1,5 +1,5 @@
 <?php
-include "../db_connection.php";
+include "../helpers/db_connection.php";
 include "adminHelperFunctions.php";
 adminAccessCheck();
 
@@ -43,7 +43,8 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin</title>
+    <title>Upload Image</title>
+    <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,9 +116,7 @@ if(isset($_POST['submit'])){
             <p><?php echo $message; ?></p>
         </div>
     </div>
-
-
-
+    
     <!-- Footer -->
     <footer class="p-2">
         © 2024 Copyright UL Singles. All Rights Reserved
