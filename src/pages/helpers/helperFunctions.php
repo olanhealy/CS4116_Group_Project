@@ -1050,6 +1050,7 @@ function initialiseNotificationsOnLogin($userId) {
     $_SESSION['notifications'] = fetchNotifications($userId);
 }
 
+
 function areUserDetailsSet($userId) {
     // get user details from db
     $bio = getBio($userId);
@@ -1066,7 +1067,7 @@ function areUserDetailsSet($userId) {
     // If all not null, return true else its false
     if (
         !is_null($bio) && !empty($bio) &&
-        !is_null($hobbies) && !empty($hobbies) &&
+        !is_null($hobbies) && $hobbies[0] !== "" &&
         !is_null($gender) && !empty($gender) &&
         !is_null($age) && !empty($age) &&
         !is_null($collegeYear) && !empty($collegeYear) &&
