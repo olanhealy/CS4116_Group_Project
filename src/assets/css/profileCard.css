@@ -19,17 +19,16 @@
 .profile-card h2 {
     text-align: center; 
     margin: 5px;
-    -webkit-text-stroke: 0.5px black;
-    text-stroke: 0.5px black;
     overflow-wrap: break-word;
 }
 
 .profile-card p {
     /* Set the font size to your desired value */
-    font-size: 16px;
-    margin: 1px;
-    -webkit-text-stroke: 0.5px black;
-    text-stroke: 0.5px black;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 1px;
+    margin-top: 1px;
     overflow-wrap: break-word;
 }
 
