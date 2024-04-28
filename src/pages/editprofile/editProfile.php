@@ -215,7 +215,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                 </svg>
             </button>
 
-            <ul class="dropdown-menu" aria-labelledby="iconbutton" id="profiledropdown">
+            <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
                <!-- Dropdown Menu Item -->
                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="/src/pages/helpers/logout.php">Log Out 👋</a></li>
             </ul>
