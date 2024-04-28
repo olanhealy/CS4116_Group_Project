@@ -85,6 +85,28 @@ function setPassword($password, $user_id)
     $set_password->close();
 }
 
+function setPasswordForChange($password, $user_id)
+{
+    global $conn;
+
+    // Hash the password for security 
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Update the password in the Accounts table
+    $sql_set_password = "UPDATE account SET password_hash = ? WHERE user_id = ?";
+    $set_password = $conn->prepare($sql_set_password);
+    $set_password->bind_param('si', $hashed_password, $user_id);
+    $set_password->execute();
+
+    if ($set_password->affected_rows > 0) {
+        echo "Password set successfully";
+    } else {
+        echo "Error setting password";
+    }
+
+    $set_password->close();
+}
+
 function setFirstName($user_id, $first_name){
     global $conn;
 

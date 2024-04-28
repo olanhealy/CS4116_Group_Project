@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (isset($_POST['password']) && !empty($_POST['password'])) {
    if (empty($passwordErrors)) {
-      setPassword($password, $userId);
+      setPasswordForChange($password, $userId);
       $_SESSION['password_change_success'] = "Password changed successfully.";
       header("Location: editProfile.php");
    } else {
