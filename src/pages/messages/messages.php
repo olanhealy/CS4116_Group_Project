@@ -112,6 +112,12 @@
                 $('#contentArea').removeClass('show');
             });
 
+            // AJAX poll to get messages every 5 seconds so more like real-time massaging not having to refresh the page
+            setInterval(function() {
+                if (currentMatchId) {
+                    loadMessages(currentMatchId);
+                }
+            }, 5000);
 
             var currentMatchId = null;
 
