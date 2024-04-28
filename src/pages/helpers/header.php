@@ -114,7 +114,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                     <li><a class="dropdown-item" href="/src/pages/explore/explore.php">Explore</a></li>
                     <li><a class="dropdown-item" href="/src/pages/matches/matches.php">Matches</a></li>
                     <li><a class="dropdown-item" href="/src/pages/messages/messages.php">Messages</a></li>
-                    <li><a class="dropdown-item" href="/src/pages/search/search.php">Search</a></li>
+                    <li><a class="dropdown-item" href="/src/pages/search/searchPage.html">Search</a></li>
                 </ul>
             </div>
         </div>

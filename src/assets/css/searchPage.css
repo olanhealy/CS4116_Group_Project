@@ -131,6 +131,13 @@ h3 {
     justify-content: center;
 }
 
+footer {
+    background-color: #e6d1be;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+}
+
 .heartFill {
     color: #e6d1be;
     padding: 3px;
@@ -194,6 +201,12 @@ h3 {
 }
 
 @media (max-width: 768px) {
+    .dropdownBtn {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
     #outline {
         width: 80vw;
     }
