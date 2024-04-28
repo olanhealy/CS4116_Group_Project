@@ -272,6 +272,28 @@ footer {
     padding: 3px;
 }
 
+#full_name-suggestions{
+    border: 1px solid #4d4d4d;
+    padding: 5px; 
+    list-style-type: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+#full_name-suggestions li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#full_name-suggestions a {
+    color: #97b189;
+    text-decoration: none;
+}
+
+#full_name-suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
 .chosen-container {
     width: 100% !important;
 }
