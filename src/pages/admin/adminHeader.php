@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
 
     <!-- Bootstrap Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -32,7 +32,8 @@
         <!-- Buttons -->
         <div class="btn-group ms-auto" role="group">
             <button type="button" id="adminbutton" class="btn button d-none d-md-block" onclick="location.href='admin.html'">Admin</button>
-            <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
+            <button type="button" id="logoutbutton" class="btn button d-none d-md-block"
+                onclick="location.href='../helpers/logout.php'">Log Out</button>
         </div>
 
         <!-- Profile Icon Dropdown -->
@@ -44,14 +45,13 @@
                 </svg>
             </button>
             <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
-                <li><a class="dropdown-item-profile d-md-none" href="admin.html" id="admindropdown">Admin</a></li>
-                <li><hr class="dropdown-divider d-md-none"></li>
-                <li><a class="dropdown-item-profile d-md-none" href="../helpers/logout.php" id="logoutdropdown">Log Out</a></li>
+                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="admin.html">Admin</a></li>
+                <li><a class="dropdown-item d-md-none" id="dropdown-item-profile" href="../helpers/logout.php">Log Out</a></li>
             </ul>
         </div>
 
     </nav>
-    <hr>
     <!-- End of Navbar -->
+
 </body>
 </html>
