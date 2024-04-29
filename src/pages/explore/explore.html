@@ -24,7 +24,7 @@
                         <!-- Name -->
                         <label for="name" class="inputLabelText">Name</label> <br>
                         <span id="name">
-                            <?php echo htmlspecialchars($nextUserName); ?>
+                            <?php echo htmlspecialchars_decode($nextUserName, ENT_QUOTES); ?>
                         </span>
                     </div>
 

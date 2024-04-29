@@ -258,7 +258,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-4 col-sm-12 col-lg-4">
                         <!-- Name -->
                         <label for="name" class="inputLabelText">Name</label> <br>
-                        <span id="name"><?php echo htmlspecialchars($name); ?></span>
+                        <span id="name"><?php echo htmlspecialchars_decode($name, ENT_QUOTES);; ?></span>
                      </div>
                      <?php if (isset($age)) { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
@@ -361,7 +361,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      <div class="col-md-12 col-sm-12 col-lg-12">
                         <!-- Bio -->
                         <label for="bio" class="inputLabelText">Bio</label><br>
-                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required maxlength="150" oninvalid="this.setCustomValidity('Please input text for your bio')" oninput="this.setCustomValidity('')"><?php echo htmlspecialchars($bio); ?></textarea>
+                        <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required maxlength="150" oninvalid="this.setCustomValidity('Please input text for your bio')" oninput="this.setCustomValidity('')"><?php echo htmlspecialchars_decode($bio, ENT_QUOTES); ?></textarea>
                         <div id="bio-feedback" class="text-muted">
                            Characters left: <span id="bio-counter">150</span>
                         </div>

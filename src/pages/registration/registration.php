@@ -63,12 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check if first name only contains letters, apostrophes, hyphens, and spaces
-    if (!preg_match('/^[A-Za-z\'\-\s]+$/', $firstName)) {
-    $errors[] = "First name can only contain letters, apostrophes, hyphens, and spaces.";
+    if (!preg_match('/^[A-Za-z\-\s]+$/', $firstName)) {
+    $errors[] = "First name can only contain letters, hyphens, and spaces.";
     }
 
     // Check if last name only contains Letters, apostrophes, hyphens, and spaces
-    if (!preg_match('/^[A-Za-z\'\-\s]+$/', $lastName)) {
+    if (!preg_match('/^[A-Za-z\'\- ]+$/', $lastName) && !preg_match('/^[A-Za-z&#039;\- ]+$/', $lastName)) {
     $errors[] = "Last name can only contain letters, apostrophes, hyphens, and spaces.";
     }
     //Included apostrophes and hyphens in the regex for names as could have names such as Gary O'Brien or Mary-Anne

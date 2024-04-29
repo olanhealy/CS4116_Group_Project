@@ -1,4 +1,5 @@
 <?php
+$conn->set_charset("utf8mb4");
 function accessCheck()
 {
     
@@ -204,6 +205,7 @@ function getBio($user_id) {
     if ($get_bio->num_rows > 0) {
         $get_bio->bind_result($bio);
         $get_bio->fetch();
+        $bio = htmlspecialchars_decode($bio, ENT_QUOTES); 
     }
 
     $get_bio->close();
