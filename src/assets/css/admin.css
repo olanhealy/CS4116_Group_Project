@@ -4,13 +4,19 @@ body {
     flex-direction: column;
 }
 
-#navbar {
-    border-bottom: 1px solid #d3d3d3;
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    border-bottom: 0.5px solid #d3d3d3;
 }
 
 .line {
-    width: 1px;
-    height: 75px;
+    width: 0.5px;
+    height: 80px;
     background-color: #d3d3d3;
 }
 
@@ -20,23 +26,24 @@ body {
     height: 80px;
 }
 
-.images{
+.images {
     display: flex;
     align-items: left;
     max-width: 500px;
 }
 
 #adminbutton {
-    background-color: white; 
-    color: #abc99d; 
+    background-color: white;
+    color: #abc99d;
     border: 3px solid #abc99d;
     padding: 13px 29px;
     text-align: center;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     transition-duration: 0.4s;
     cursor: pointer;
     float: right;
+    border-radius: 0%;
 }
 
 #adminbutton:hover {
@@ -44,17 +51,18 @@ body {
     color: white;
 }
 
-#logoutbutton{
+#logoutbutton {
     background-color: #abc99d;
-    color: white; 
+    color: white;
     border: 3px solid #abc99d;
     padding: 13px 29px;
     text-align: center;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     transition-duration: 0.4s;
     cursor: pointer;
     float: right;
+    border-radius: 0%;
 }
 
 #logoutbutton:hover {
@@ -62,10 +70,9 @@ body {
     color: #abc99d;
 }
 
-
 #iconbutton {
-    background-color: white; 
-    color: #abc99d; 
+    background-color: white;
+    color: #abc99d;
     padding: 10px 20px;
     cursor: pointer;
     outline: none;
@@ -75,39 +82,34 @@ body {
     justify-content: center;
     align-items: center;
     align-content: center;
+    margin-right: 25px;
+    position: relative;
 }
 
-.dropdown-item-profile {
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-}
-
-#profiledropdown{
-    background-color: #abc99d;
+#profiledropdown {
+    background-color: #f3ffed;
+    border-color: #abc99d;
+    border-width: 3px;
+    margin-top: 18px;
     min-width: 10px;
+    word-wrap: break-word;
 }
-
-#logoutdropdown {
+  
+#dropdown-item-profile {
+    font-weight: bold;
+    color:#abc99d;
     font-size: 15px;
+    text-decoration: none;
+    white-space: normal;
+    word-wrap: break-word;
+    width: 100%;
 }
-
-#logoutdropdown:hover {
-    background-color: white;
-    color: black;
-}
-
-#admindropdown {
+  
+#dropdown-item-profile:hover {
+    background-color: #abc99d;
+    font-weight: bold;
+    color: white;
     font-size: 15px;
-}
-
-#admindropdown:hover {
-    background-color: white;
-    color: black;
-}
-
-hr {
-    margin: 0.2em auto;
 }
 
 
