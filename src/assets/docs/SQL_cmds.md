@@ -21,7 +21,7 @@ CREATE TABLE profile (
     pursuing ENUM('Male', 'Female', 'Other'),
     verified boolean,
     college_year ENUM('Undergrad', 'Masters', 'PhD'),
-    course VARCHAR(26),
+    course VARCHAR(50),
     hobbies VARCHAR(50),
     looking_for ENUM('Short-term', 'Long-term', 'Unsure'),
     FOREIGN KEY (user_id) REFERENCES Account(user_id)
