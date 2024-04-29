@@ -238,7 +238,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                   <li><a class="dropdown-item" href="../explore/explore.php">Explore</a></li>
                   <li><a class="dropdown-item" href="../matches/matches.php">Matches</a></li>
                   <li><a class="dropdown-item" href="../messages/messages.php">Messages</a></li>
-                  <li><a class="dropdown-item" href="../search/search.php">Search</a></li>
+                  <li><a class="dropdown-item" href="../search/searchPage.html">Search</a></li>
                </ul>
             </div>
          </div>
