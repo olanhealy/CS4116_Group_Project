@@ -16,7 +16,7 @@ function showAccounts()
 {
     global $conn;
     //get all account information
-    $query = "SELECT * FROM account";
+    $query = "SELECT * FROM account ORDER BY user_id ASC";
 
     //check the result is not empty
     $result = $conn->query($query);
