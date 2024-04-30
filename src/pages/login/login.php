@@ -127,25 +127,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar navbar-fixed-top">
         <div class="images">
             <img class="header-img" src="../../assets/images/ul_logo.png" alt="ul_logo">
-            <div class="line"></div>
+            <div class="line img-divider"></div>
             <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
-        <div class="btn-group buttons d-none d-lg-block" role="group">
-            <button type="button" class="btn button" onclick="location.href='login.php'">Log In</button>
-            <button type="button" class="btn button" onclick="location.href='../registration/registration.php'">Sign Up</button>
+        <div class="btn-group d-none d-lg-block" role="group">
+            <button type="button" class="btn header-button" onclick="location.href='login.php'">Log In</button>
+            <button type="button" class="btn header-button" onclick="location.href='../registration/registration.php'">Sign Up</button>
         </div>
 
     </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 login">
+            <div class="col-12 login-container">
                 <!-- login form  -->
                 <form action="" method="post">
                     <img class="mt-4 mb-4 img-fluid logoSymbol" src="../../assets/images/ulSinglesSymbolTransparent.png" height="200"
                         alt="ulSingles_symbol">
-                    <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+                    <h3 class="mb-3 font-weight-normal">Log In</h3>
 
                     <?php if (isset($error)): ?>
                         <div class="alert alert-danger" role="alert">
@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="text" name="email" class="form-control" placeholder="Email" required autofocus 
                         value="<?php echo isset($_SESSION['form_email']) ? htmlspecialchars($_SESSION['form_email']) : ''; ?>"><br>
                         <input type="password" name="password" placeholder="Password" class="form-control"><br>
-                        <button type="submit" class="btn btn-secondary mb-4 custom-btn">Log in</button>
+                        <button type="submit" class="btn btn-secondary mb-4 login-btn">Log in</button>
                     </div>
 
                     <!-- Link to Registration page via button -->

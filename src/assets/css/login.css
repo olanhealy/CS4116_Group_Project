@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
 
 .navbar {
   display: flex;
@@ -16,7 +22,7 @@
   border-bottom: 0.5px solid #d3d3d3;
 }
 
-.line {
+.img-divider {
   width: 0.5px;
   height: 80px;
   background-color: #d3d3d3;
@@ -34,7 +40,7 @@
   max-width: 500px;
 }
 
-.button {
+.header-button {
   background-color: white;
   color: #abc99d;
   border: solid #abc99d;
@@ -48,33 +54,13 @@
   border-radius: 0%;
 }
 
-.button:hover {
+.header-button:hover {
   background-color: #abc99d;
   color: white;
 }
 
-.login {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.custom-btn {
-  width: 262px;
-  font-size: 18px;
-}
-
 .logoSymbol {
   max-height: 72px;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
 }
 
 .container-fluid {
@@ -84,6 +70,24 @@ body {
   align-items: center;
 }
 
+.login-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.form-container {
+  width: 300px; 
+  margin: 0 auto; 
+}
+
+.login-btn {
+  width: 262px;
+  font-size: 18px;
+}
+
 footer {
   background-color: #e6d1be;
   text-align: center;
@@ -91,7 +95,3 @@ footer {
   margin-top: auto;
 }
 
-.form-container {
-  width: 300px; 
-  margin: 0 auto; 
-}
