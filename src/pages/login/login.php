@@ -121,8 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav class="navbar navbar-fixed-top">
         <div class="images">
-            <img class="header-img" src="../../assets/images/ul_logo.png" alt="ul_logo">
-            <div class="line img-divider"></div>
+            <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
+            <div class="line img-divider d-none d-md-block"></div>
             <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
