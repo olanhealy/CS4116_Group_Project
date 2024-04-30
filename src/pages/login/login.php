@@ -23,10 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['form_email'] = $email;
 
         // Error check email and password
-        if ( empty($pass)) {
-            $error = "Please provide a UL student email and password"; 
+        if (empty($pass)) {
+            $error = "Please provide a UL student email and password";
         } else if (!str_ends_with($email, '@studentmail.ul.ie')) {
-            $error = "Email must end with '@studentmail.ul.ie'"; 
+            $error = "Email must end with '@studentmail.ul.ie'";
         } else {
             // SQL query to retrieve user information based on email
             $sql = "SELECT * FROM account WHERE email='$email'";
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             setBanned($row['user_id'], 0);
                         }
                     }
-                }else{
+                } else {
                     $banBlock = false;
                 }
 
@@ -75,14 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Redirect to home page
                     header("Location: ../home/home.php");
                     exit();
-
                 } else {
                     if ($banBlock == true) {
                         $error = "User banned. Unbanned on: $dateOfUnban.  Reason: $reason. Please contact support.";
                     } else {
                         $error = "Incorrect UL student email or password";
                     }
-                    
                 }
             } else {
                 $error = "Incorrect UL student email or password";
@@ -107,11 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
 
     <!-- Bootstrap Stylesheet -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 
 
@@ -143,24 +138,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-12 login-container">
                 <!-- login form  -->
                 <form action="" method="post">
-                    <img class="mt-4 mb-4 img-fluid logoSymbol" src="../../assets/images/ulSinglesSymbolTransparent.png" height="200"
-                        alt="ulSingles_symbol">
+                    <img class="mt-4 mb-4 img-fluid logoSymbol" src="../../assets/images/ulSinglesSymbolTransparent.png" height="200" alt="ulSingles_symbol">
                     <h3 class="mb-3 font-weight-normal">Log In</h3>
 
-                    <?php if (isset($error)): ?>
+                    <?php if (isset($error)) : ?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo htmlspecialchars($error); ?>
                         </div>
                     <?php endif; ?>
 
                     <div class="form-container">
-                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus 
-                        value="<?php echo isset($_SESSION['form_email']) ? htmlspecialchars($_SESSION['form_email']) : ''; ?>"><br>
+                        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus value="<?php echo isset($_SESSION['form_email']) ? htmlspecialchars($_SESSION['form_email']) : ''; ?>"><br>
                         <input type="password" name="password" placeholder="Password" class="form-control"><br>
                         <button type="submit" class="btn btn-secondary mb-4 login-btn">Log in</button>
                     </div>
 
-                    <!-- Link to Registration page via button -->
+                    <!-- Link to Registration page via link -->
                     <p>Don't have an account? <a href="../registration/registration.php">Register here</a></p>
                 </form>
 
