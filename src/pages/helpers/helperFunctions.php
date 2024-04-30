@@ -1,6 +1,6 @@
 <?php
-global $conn;
-$conn->set_charset("utf8mb4");
+
+
 function accessCheck()
 {
     
@@ -111,6 +111,7 @@ function setPasswordForChange($password, $user_id)
 
 function setFirstName($user_id, $first_name){
     global $conn;
+    $conn->set_charset("utf8mb4");
 
     $sql_set_name = "UPDATE account SET first_name = ? WHERE user_id = ?";
 
@@ -128,6 +129,7 @@ function setFirstName($user_id, $first_name){
 
 function setLastName($user_id, $last_Name){
     global $conn;
+    $conn->set_charset("utf8mb4");
 
     $sql_set_name = "UPDATE account SET last_name = ? WHERE user_id = ?";
 
@@ -147,6 +149,7 @@ function setLastName($user_id, $last_Name){
 function setName($first_name, $last_name, $user_id)
 {
     global $conn;
+    $conn->set_charset("utf8mb4");
 
     setFirstName($user_id, $first_name);
     setLastName($user_id, $last_name);
@@ -184,6 +187,7 @@ function setName($first_name, $last_name, $user_id)
 
 function setBio($user_id, $bio) {
     global $conn;
+    $conn->set_charset("utf8mb4");
 
     $sql_set_bio = "UPDATE profile SET bio = ? WHERE user_id = ?";
     $set_bio = $conn->prepare($sql_set_bio);
@@ -195,6 +199,7 @@ function setBio($user_id, $bio) {
 // Process #14 to get the user's bio if they already exist in the profiile table of db
 function getBio($user_id) {
     global $conn; 
+    $conn->set_charset("utf8mb4");
     $bio = "";
 
     $sql_get_bio = "SELECT bio FROM profile WHERE user_id = ?";
@@ -513,6 +518,7 @@ function getLookingFor($user_id) {
 // function to get name used in explore.php
 function getName($user_id) {
     global $conn;
+    $conn->set_charset("utf8mb4");
     $name = "";
 
     $sql_get_name = "SELECT name FROM profile WHERE user_id = ?";
@@ -900,6 +906,7 @@ function getMessages($userId) {
 
 function getNameByMatchId($matchId, $userId) {
     global $conn;
+    $conn->set_charset("utf8mb4");
     $sqlGetNameByMatchId = "SELECT p.name FROM profile p INNER JOIN matches m ON p.user_id = CASE 
     WHEN m.initiator_id = ? THEN m.target_id 
     ELSE m.initiator_id END WHERE m.match_id = ?";
