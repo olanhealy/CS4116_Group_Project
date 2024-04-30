@@ -1,4 +1,5 @@
 <?php
+global $conn;
 $conn->set_charset("utf8mb4");
 function accessCheck()
 {
