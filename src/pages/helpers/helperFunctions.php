@@ -162,10 +162,6 @@ function setName($first_name, $last_name, $user_id)
         $insert_new_profile->bind_param('is', $user_id, $full_name);
         $insert_new_profile->execute();
 
-        //TODO: backend: fix messaging for error when jsut editted name
-        // if ($insert_new_profile->affected_rows <= 0) {
-        //     echo "Error inserting into the Profile table";
-        // }
 
         $insert_new_profile->close();
     }else{
@@ -175,13 +171,6 @@ function setName($first_name, $last_name, $user_id)
         $update_profile->bind_param("si", $full_name, $user_id);
         $update_profile->execute();
 
-        //TODO: backend: fix messaging for error when jsut editted name
-        // if ($update_profile->affected_rows > 0) {
-        //     echo "Name set successfully";
-        // } else {
-        //     echo "Error setting Name";
-        // }
-    
     }
 }
 
@@ -541,15 +530,15 @@ function getMatchId($userId, $targetId)
     global $conn;
 
     $query = "SELECT match_id FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
-    $stmt = $conn->prepare($query);
-    if ($stmt !== false) {
-        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    $sqlGetmatchId = $conn->prepare($query);
+    if ($sqlGetmatchId !== false) {
+        $sqlGetmatchId->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $sqlGetmatchId->execute();
+        $matchId = $sqlGetmatchId->get_result();
+        $sqlGetmatchId->close();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($matchId->num_rows > 0) {
+            $row = $matchId->fetch_assoc();
             return $row['match_id'];
         }
     }
@@ -561,14 +550,14 @@ function getMatch($userId, $targetId)
     global $conn;
 
     $query = "SELECT * FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
-    $stmt = $conn->prepare($query);
-    if ($stmt !== false) {
-        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    $sqlGetMatch = $conn->prepare($query);
+    if ($sqlGetMatch !== false) {
+        $sqlGetMatch->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $sqlGetMatch->execute();
+        $match = $sqlGetMatch->get_result();
+        $sqlGetMatch->close();
 
-        if ($result->num_rows > 0) {
+        if ($match->num_rows > 0) {
             return true;
         }
     }
@@ -581,10 +570,10 @@ function addMatch($initiatorId, $targetId)
     global $conn;
 
     $query = "INSERT INTO matches (initiator_id, target_id) VALUES (?, ?)";
-    $stmt = $conn->prepare($query);
-    if ($stmt !== false) {
-        $stmt->bind_param("ii", $initiatorId, $targetId);
-        $stmt->execute();
+    $sqlAddMatch = $conn->prepare($query);
+    if ($sqlAddMatch !== false) {
+        $sqlAddMatch->bind_param("ii", $initiatorId, $targetId);
+        $sqlAddMatch->execute();
     } else {
         die("Error in SQL query: " . $conn->error . "<br>");
     }
@@ -596,13 +585,13 @@ function isItAMatch($initiatorId, $targetId)
 
     $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("ii", $targetId , $initiatorId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    if ($sqlIsItMatch = $conn->prepare($query)) {
+        $sqlIsItMatch->bind_param("ii", $targetId , $initiatorId);
+        $sqlIsItMatch->execute();
+        $isItMatch = $sqlIsItMatch->get_result();
+        $sqlIsItMatch->close();
 
-        if ($result->num_rows > 0) {
+        if ($isItMatch->num_rows > 0) {
             // The current user has previously adored the logged in user
             return true;
         }
@@ -619,21 +608,21 @@ function removeMatch($userId, $targetId)
     $matchId = getMatchId($userId, $targetId);
 
     $query = "DELETE FROM messages WHERE match_id = ?";
-    $stmt = $conn->prepare($query);
+    $sqlRemoveMatch = $conn->prepare($query);
 
-    if ($stmt !== false) {
-        $stmt->bind_param("i", $matchId);
-        $stmt->execute();
+    if ($sqlRemoveMatch !== false) {
+        $sqlRemoveMatch->bind_param("i", $matchId);
+        $sqlRemoveMatch->execute();
     } else {
         die("Error in SQL query: " . $conn->error . "<br>");
     }
 
     $query = "DELETE FROM matches WHERE initiator_id = ? AND target_id = ? OR initiator_id = ? AND target_id = ?";
-    $stmt = $conn->prepare($query);
+    $sqlRemoveMatch = $conn->prepare($query);
 
-    if ($stmt !== false) {
-        $stmt->bind_param("iiii", $userId, $targetId, $targetId, $userId);
-        $stmt->execute();
+    if ($sqlRemoveMatch !== false) {
+        $sqlRemoveMatch->bind_param("iiii", $userId, $targetId, $targetId, $userId);
+        $sqlRemoveMatch->execute();
     } else {
         die("Error in SQL query: " . $conn->error . "<br>");
     }
@@ -724,14 +713,14 @@ function getBanReason($userId){
 
     $query = "SELECT reason FROM banned WHERE user_id = ?";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    if ($sqlGetBanReason = $conn->prepare($query)) {
+        $sqlGetBanReason->bind_param("i", $userId);
+        $sqlGetBanReason->execute();
+        $getBanReason = $sqlGetBanReason->get_result();
+        $sqlGetBanReason->close();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($getBanReason->num_rows > 0) {
+            $row = $getBanReason->fetch_assoc();
             $banReason = $row['reason'];
         }
     }
@@ -746,14 +735,14 @@ function getDateOfUnban($userId){
 
     $query = "SELECT dateOfUnban FROM banned WHERE user_id = ?";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    if ($sqlGetDateOfUnban = $conn->prepare($query)) {
+        $sqlGetDateOfUnban->bind_param("i", $userId);
+        $sqlGetDateOfUnban->execute();
+        $getDateOfUnban = $sqlGetDateOfUnban->get_result();
+        $sqlGetDateOfUnban->close();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($getDateOfUnban->num_rows > 0) {
+            $row = $getDateOfUnban->fetch_assoc();
             $unbanDate = $row['dateOfUnban'];
         }
     }
@@ -816,13 +805,13 @@ function isUserAdored($userId, $targetId){
 
     $query = "SELECT * FROM adore WHERE user_id = ? AND adored_user_id = ?";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param("ii", $userId, $targetId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
+    if ($sqlIsUserAdored = $conn->prepare($query)) {
+        $sqlIsUserAdored->bind_param("ii", $userId, $targetId);
+        $sqlIsUserAdored->execute();
+        $isUserAdored = $sqlIsUserAdored->get_result();
+        $sqlIsUserAdored->close();
 
-        if ($result->num_rows > 0) {
+        if ($isUserAdored->num_rows > 0) {
             // The current user has previously adored the logged in user
             return true;
         }
