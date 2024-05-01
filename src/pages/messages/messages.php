@@ -75,7 +75,7 @@
                             
                             <li onclick="loadMessages(<?php echo $conversationMatchId; ?>)" >
                                 <img src="/<?php echo htmlspecialchars($profilePic); ?> " class="profile-picture" alt="Profile Picture">
-                                <span class="match-name"><?php echo htmlspecialchars($matchName); ?> </span>
+                                <span class="match-name"><?php echo htmlspecialchars_decode($matchName, ENT_QUOTES); ?> </span>
                                 <?php if ($unreadCount > 0): ?>
                                     <!-- Display the unread message count -->
                                     <span class="unread-badge"><?php echo $unreadCount; ?></span>
