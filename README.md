@@ -37,7 +37,7 @@ Experience UL Singles: [https://ulsingles.infinityfreeapp.com/?i=1](https://ulsi
 
 3. Clone the repository:
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/olanhealy/CS4116_Group_Project.git
 
 4. Navigate to the cloned directory and import the SQL structure from `/src/docs/SQL_cmds.md` into your database in phpMyAdmin.
 
