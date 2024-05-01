@@ -49,6 +49,8 @@ if (isset($_GET['match_id'])) {
     $matchName = getNameByMatchId($matchId, $userId);
     $messages = getMessagesByMatchId($matchId, $userId);
 
+    $matchName = htmlspecialchars_decode($matchName, ENT_QUOTES);
+
     $response = [
         'matchName' => $matchName,
         'messages' => $messages

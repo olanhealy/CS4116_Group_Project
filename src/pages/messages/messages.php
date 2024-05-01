@@ -58,6 +58,7 @@
         <!-- Define the userId JavaScript variable -->
         <script type="text/javascript">
             var userId = <?php echo json_encode($userId); ?>;
+            var matchName = <?php echo htmlspecialchars_decode($matchName, ENT_QUOTES); ?>;
         </script>
     </head>
 
