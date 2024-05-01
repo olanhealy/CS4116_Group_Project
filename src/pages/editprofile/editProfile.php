@@ -14,9 +14,9 @@ $successMessage = '';
 
 // if password set success store it to display
 if (isset($_SESSION['password_change_success'])) {
-    $successMessage = $_SESSION['password_change_success'];
-    // Unset session variable so it only shows once
-    unset($_SESSION['password_change_success']);
+   $successMessage = $_SESSION['password_change_success'];
+   // Unset session variable so it only shows once
+   unset($_SESSION['password_change_success']);
 }
 
 //Call getter method so if the user has registered and navitage to edit_profile page, they will see their previous inpts
@@ -183,22 +183,22 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
 
    <!-- hobbies  Enum -->
    <?php include '../../assets/enums/hobbies.php'; ?>
-   
+
    <!-- Start of Navbar -->
    <nav class="navbar navbar-fixed-top" id="navbar">
 
       <!-- Images -->
       <div class="images">
          <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
-         <div class="line d-none d-md-block"></div>
+         <div class="line img-divider d-none d-md-block"></div>
          <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
       </div>
 
       <!-- Buttons -->
       <div class="btn-group ms-auto" role="group">
          <?php if (areUserDetailsSet($userId)) { ?>
-            <button type="button" id="explorebutton" class="btn button d-none d-md-block" onclick="location.href='../explore/explore.php'">Explore</button>
-            <button type="button" id="logoutbutton" class="btn button d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
+            <button type="button" id="explorebutton" class="btn explore-btn d-none d-md-block" onclick="location.href='../explore/explore.php'">Explore</button>
+            <button type="button" id="logoutbutton" class="btn logout-btn d-none d-md-block" onclick="location.href='../helpers/logout.php'">Log Out</button>
          <?php } ?>
       </div>
 
@@ -206,13 +206,11 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       <?php if (areUserDetailsSet($userId)) { ?>
          <div class="dropdown">
 
-            <button class="btn-secondary" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor"
-                    class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                    <path fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                </svg>
+            <button class="btn-secondary icon-btn" id="iconbutton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+               <svg xmlns="http://www.w3.org/2000/svg" width="45" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+               </svg>
             </button>
 
             <ul class="dropdown-menu d-md-none" aria-labelledby="iconbutton" id="profiledropdown">
@@ -230,7 +228,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
       <div class="container-fluid">
          <div class="row">
             <div class="col-12 dropdownBtn">
-               <button class="btn btn-primary dropdown-toggle" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
+               <button class="btn btn-primary dropdown-toggle menu-dropdown" type="button" id="menu-dropdown" data-bs-toggle="dropdown">
                   Edit Profile
                </button>
                <ul class="dropdown-menu" aria-labelledby="menu-dropdown" id="homedropdown">
@@ -247,39 +245,40 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
 
    <br>
 
-   <!-- Form -->
-   <div class="container-fluid border border-2 col-md-12 col-lg-12 col-sm-12" id="outline">
+   <!-- Edit Profile Form -->
+   <div class="container-fluid outline col-md-12 col-lg-12 col-sm-12">
       <div class="row">
          <form class="container-fluid" action="editProfile.php" method="post" enctype="multipart/form-data">
             <div class="row">
-               <div class="col-lg-7 order-lg-2 col-md-12 info-box">
+               <div class="col-lg-7 order-lg-2 col-md-12 information-box">
+
                   <!-- Top Row -- Name, Age, Gender -->
                   <div class="row inputField">
                      <div class="col-md-4 col-sm-12 col-lg-4">
                         <!-- Name -->
-                        <label for="name" class="inputLabelText">Name</label> <br>
+                        <label for="name" class="inputLabel">Name</label> <br>
                         <span id="name"><?php echo htmlspecialchars_decode($name, ENT_QUOTES);; ?></span>
                      </div>
                      <?php if (isset($age)) { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
-                           <label for="age" class="inputLabelText">Age</label><br>
+                           <label for="age" class="inputLabel">Age</label><br>
                            <span id="age"><?php echo htmlspecialchars($age); ?></span>
                         </div>
                      <?php } else { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
-                           <label for="age" class="inputLabelText">Age</label><br>
+                           <label for="age" class="inputLabel">Age</label><br>
                            <input type="number" id="age" name="age" class="textInput" placeholder="Type here..." min="18" max="120" required oninvalid="this.setCustomValidity('Please enter your age')" oninput="this.setCustomValidity('')">
                         </div>
                      <?php } ?>
                      <?php if (isset($gender)) { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
                            <!-- Gender -->
-                           <label for="gender" class="inputLabelText">Gender</label><br>
+                           <label for="gender" class="inputLabel">Gender</label><br>
                            <span id="gender"><?php echo htmlspecialchars($gender); ?></span>
                         </div>
                      <?php } else { ?>
                         <div class="col-md-4 col-sm-12 col-lg-4">
-                           <label for="gender" class="inputLabelText">Gender</label><br>
+                           <label for="gender" class="inputLabel">Gender</label><br>
                            <select id="gender" name="gender" class="optionDropdown" required oninvalid="this.setCustomValidity('Please select a gender from the list')" oninput="this.setCustomValidity('')">
                               <option value="" disabled selected>Choose..</option>
                               <option value="Male" <?php if (isset($gender) && $gender == "Male")
@@ -292,11 +291,12 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </div>
                      <?php } ?>
                   </div>
+
                   <!--Second Row -- College Year, Course of Study -->
                   <div class="row inputField">
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- College Year -->
-                        <label for="college_year" class="inputLabelText">College Year</label><br>
+                        <label for="college_year" class="inputLabel">College Year</label><br>
                         <select id="college_year" name="college_year" class="optionDropdown" required oninvalid="this.setCustomValidity('Please select your college year from the list')" oninput="this.setCustomValidity('')">
                            <option value="" disabled <?php if ($collegeYear == "") echo "selected"; ?>>Choose..</option>
                            <option value="Undergrad" <?php if ($collegeYear == "Undergrad") echo "selected"; ?>>Undergrad</option>
@@ -306,7 +306,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      </div>
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- Course-->
-                        <label for="course" class="inputLabelText">Course of Study</label><br>
+                        <label for="course" class="inputLabel">Course of Study</label><br>
                         <select class="optionDropdown" style="width: 100%" id="course" name="course" required oninvalid="this.setCustomValidity('Please select a course from the list')" oninput="this.setCustomValidity('')">>
                            <option value="" selected disabled>Choose..</option>
                            <?php
@@ -320,11 +320,12 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </select>
                      </div>
                   </div>
+
                   <!--Third Row -- Pursuing, Looking For -->
                   <div class="row inputField">
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!--  pursuing -->
-                        <label for="pursuing" class="inputLabelText">Pursuing</label><br>
+                        <label for="pursuing" class="inputLabel">Pursuing</label><br>
                         <select id="pursuing" name="pursuing" class="optionDropdown" required oninvalid="this.setCustomValidity('Please select what gender you wish to pursue')" oninput="this.setCustomValidity('')">>
                            <option value="" disabled selected>Choose..</option>
                            <option value="Male" <?php if ($pursuing == "Male")
@@ -339,7 +340,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                      </div>
                      <div class="col-md-6 col-sm-12 col-lg-6">
                         <!-- Looking for-->
-                        <label for="looking_for" class="inputLabelText">Looking For</label><br>
+                        <label for="looking_for" class="inputLabel">Looking For</label><br>
                         <select id="looking_for" name="looking_for" class="optionDropdown" required oninvalid="this.setCustomValidity('Please select what type of relationship you are looking for ')" oninput="this.setCustomValidity('')">>
                            <option value="" disabled selected>Choose..</option>
                            <option value="Short-term" <?php if ($lookingFor == "Short-term")
@@ -356,20 +357,23 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </select>
                      </div>
                   </div>
+
                   <!--Fourth Row -- Bio-->
                   <div class="row inputField">
                      <div class="col-md-12 col-sm-12 col-lg-12">
                         <!-- Bio -->
-                        <label for="bio" class="inputLabelText">Bio</label><br>
+                        <label for="bio" class="inputLabel">Bio</label><br>
                         <textarea id="bio" name="bio" class="textInput" placeholder="Type here..." required maxlength="150" oninvalid="this.setCustomValidity('Please input text for your bio')" oninput="this.setCustomValidity('')"><?php echo htmlspecialchars_decode($bio, ENT_QUOTES); ?></textarea>
                         <div id="bio-feedback" class="text-muted">
                            Characters left: <span id="bio-counter">150</span>
                         </div>
                      </div>
                   </div>
+
+                  <!-- Fifth Row -- Hobbies -->
                   <div class="row inputField">
                      <div class="col-md-12 col-sm-12 col-lg-12">
-                        <label for="hobbies" class="inputLabelText">Hobbies</label><br>
+                        <label for="hobbies" class="inputLabel">Hobbies</label><br>
                         <select data-placeholder="Hobbies..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
                            <option value=""></option>
                            <?php
@@ -385,12 +389,13 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                         </div>
                      </div>
                   </div>
+
                   <?php if (areUserDetailsSet($userId)) { ?>
                      <div class="row inputField">
                         <!--Sixth Row -- Password, verify-->
-                        <div class="col-md-6 col-sm-12 col-lg-6">
+                        <div class="col-md-6 col-sm-6 col-lg-6">
                            <!-- Change Password button -->
-                           <button type="button" id="changePasswordBtn" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                           <button type="button" id="changePasswordBtn" class="btn btn-secondary mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                               Change Password
                            </button>
                         </div>
@@ -425,20 +430,21 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                            </div>
                         </div>
                         <?php if (getVerified($userId) == 0) { ?>
-                           <div class="col-md-6 col-sm-12 col-lg-6">
+                           <div class="col-md-6 col-sm-6 col-lg-6">
                               <!-- Button to verify email -->
-                              <button type="button" id="verifyEmailBtn" class="btn btn-primary">Verify Email</button>
+                              <button type="button" id="verifyEmailBtn" class="btn btn-primary mt-2 mb-2">Verify Email</button>
                            </div>
-                        <?php }  else if (getVerified($userId) == 1) { ?>
-                           <div class="col-md-6 col-sm-12 col-lg-6">
-                           <!-- Display verified status -->
-                           <p class="text-success">Email Verified</p>
-                        </div>
-                     <?php } ?>
+                        <?php } else if (getVerified($userId) == 1) { ?>
+                           <div class="col-md-6 col-sm-6 col-lg-6">
+                              <!-- Display verified status -->
+                              <p class="text-success">Email Verified</p>
+                           </div>
+                        <?php } ?>
                      </div>
                   <?php } ?>
                </div>
-               <div class="col-lg-5 order-lg-1 col-md-12 imgContainer">
+
+               <div class="col-lg-5 order-lg-1 col-md-12 img-box">
                   <!-- Profile Picture-->
                   <?php
                   // Handle profile picture caching issue, on first time putting in picutre it wouldn't show up until you refresehd page
@@ -450,6 +456,7 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                   <img class="profilePicture" src="<?php echo $updatedProfilePic; ?>" alt="Profile Picture">
                   <label for="profile_pic" class="fileUploadBtn">Upload/Change profile picture</label>
                   <input type="file" id="profile_pic" name="profile_pic">
+
                   <!-- Button to just update changes made in db -->
                   <button type="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Save
                      Changes</button>
@@ -459,15 +466,15 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          </form>
 
          <div class="errors">
-            
+
 
             <!-- Success message display -->
-            <?php if ($successMessage): ?>
+            <?php if ($successMessage) : ?>
                <div class="alert alert-success" role="alert">
                   <?php echo $successMessage; ?>
                </div>
             <?php endif; ?>
-            
+
             <!-- Error Messages -->
             <?php
             if (!empty($errors)) {
@@ -496,18 +503,16 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
                echo "</div>";
                // Clear errors from session
                unset($_SESSION['password_errors']);
-               
             }
             ?>
          </div>
 
       </div>
    </div>
-   <br>
+
    <!-- Footer -->
-   <footer class="p-2">
-      © 2024 Copyright UL Singles. All Rights Reserved
-   </footer>
+   <?php setupFooter() ?>
+
    <!-- JavaScript code for course options -->
    <script>
       // Initialise plugin for course selection
@@ -605,8 +610,6 @@ $selectedHobbiesArray = isset($selectedHobbiesArray) ? $selectedHobbiesArray : [
          });
       });
    </script>
-
-
 
 </body>
 
