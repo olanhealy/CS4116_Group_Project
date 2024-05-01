@@ -27,27 +27,28 @@
 
     <nav class="navbar navbar-fixed-top">
         <div class="images">
-            <img class="header-img" src="../../assets/images/ul_logo.png" alt="ul_logo">
-            <div class="line"></div>
+            <img class="header-img d-none d-md-block" src="../../assets/images/ul_logo.png" alt="ul_logo">
+            <div class="line img-divider d-none d-md-block"></div>
             <img class="header-img" src="../../assets/images/ulSinglesTrasparent.png" alt="ulSingles_logo">
         </div>
 
-        <div class="btn-group buttons d-none d-lg-block" role="group">
-            <button type="button" class="btn button" onclick="location.href='../login/login.php'">Log In</button>
-            <button type="button" class="btn button" onclick="location.href='registration.php'">Sign Up</button>
+        <div class="btn-group d-none d-lg-block" role="group">
+            <button type="button" class="btn header-button" onclick="location.href='../login/login.php'">Log In</button>
+            <button type="button" class="btn header-button" onclick="location.href='registration.php'">Sign Up</button>
         </div>
 
     </nav>
 
     <div class="container-fluid">
         <div class="row">
+            <!-- left side of registration container with logo image -->
             <div class="col-md-6 register-left">
                 <img src="../../assets/images/ulSinglesTrasparent.png" class="img-fluid image" alt="UL Singles Logo">
             </div>
 
+            <!-- right side of registration container with form -->
             <div class="col-md-6 register-right">
-
-                <h1 class="h3 mb-3 font-weight-normal text-center mb-4 mx-1 mt-4">Create an account</h1>
+                <h3 class="mb-3 font-weight-normal text-center mb-4 mx-1 mt-4">Create an account</h3>
 
                 <!-- In editProfile.php, any errors that may be encountered while registering are stored
                         In an array. If there are erros, display them in a div here-->
@@ -63,10 +64,10 @@
                         }
                     ?>
 
-
+                <!-- registration form -->
                 <form class="mx-1 mx-md-4" action="registration.php" method="post">
 
-                    <div class="input mb-4">
+                    <div class="input-field mb-4">
                         <div class="form-input">
                             <!-- Email  -->
                             <input type="email" class="form-control" placeholder="Email" name="email" required
@@ -75,13 +76,13 @@
                         <p class="input-info">**Email must end with @studentmail.ul.ie</p>
                     </div>
 
-                    <div class="input mb-4">
-                    <div class="form-input">
-                        <!-- Password  -->
-                        <input type="password" class="form-control" placeholder="Password" name="password" required>
-                    </div>
-                    <p class="input-info">**must be between 8-20 characters</p>
-                    <p class="input-info">**include one capital letter and one special character (_, $ etc)</p>
+                    <div class="input-field mb-4">
+                        <div class="form-input">
+                            <!-- Password  -->
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        </div>
+                        <p class="input-info">**must be between 8-20 characters</p>
+                        <p class="input-info">**include one capital letter and one special character (_, $ etc)</p>
                     </div>
 
                     <div class="form-input mb-4">
@@ -110,10 +111,12 @@
 
                     <div class="d-flex justify-content-center mb-4">
                         <input type="hidden" name="submitted" value="1">
-                        <button class="btn btn-secondary custom-btn" type="submit">Sign Up</button>
+                        <button class="btn btn-secondary signUp-btn" type="submit">Sign Up</button>
                     </div>
 
-                    <p class="d-flex justify-content-center">Already have an account? <a href="../login/login.php">Log in
+                    <!-- Link to Login page via link -->
+                    <p class="d-flex justify-content-center">Already have an account? <a href="../login/login.php">Log
+                            in
                             here</a></p>
 
                 </form>

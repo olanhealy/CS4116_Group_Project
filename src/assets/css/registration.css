@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
 .navbar {
   display: flex;
   align-items: center;
@@ -15,7 +23,7 @@
   border-bottom: 0.5px solid #d3d3d3;
 }
 
-.line {
+.img-divider {
   width: 0.5px;
   height: 80px;
   background-color: #d3d3d3;
@@ -33,7 +41,7 @@
   max-width: 500px;
 }
 
-.button {
+.header-button {
   background-color: white;
   color: #abc99d;
   border: solid #abc99d;
@@ -47,14 +55,16 @@
   border-radius: 0%;
 }
 
-.button:hover {
+.header-button:hover {
   background-color: #abc99d;
   color: white;
 }
 
-.custom-btn {
-  width: 300px;
-  font-size: 18px;
+.container-fluid {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .register-left {
@@ -81,18 +91,16 @@ input[type="password"] {
   align-items: center;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-}
-
-.container-fluid {
-  flex: 1;
+.input-info {
   display: flex;
   justify-content: center;
-  align-items: center;
+  font-size: 10px;
+  margin-bottom: 0;
+}
+
+.signUp-btn {
+  width: 300px;
+  font-size: 18px;
 }
 
 footer {
@@ -100,15 +108,4 @@ footer {
   text-align: center;
   padding: 10px;
   margin-top: auto;
-}
-
-.border {
-  border: 2px solid #000;
-}
-
-.input-info {
-  display: flex;
-  justify-content: center;
-  font-size: 10px;
-  margin-bottom: 0;
 }

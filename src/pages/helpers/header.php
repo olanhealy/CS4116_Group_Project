@@ -23,6 +23,7 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageName; ?></title>
+    <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
 
     <!-- Bootstrap Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -116,6 +117,11 @@ $totalNotifications = $notifications['messages'] + $notifications['matches'];
                     <li><a class="dropdown-item" href="/src/pages/messages/messages.php">Messages</a></li>
                     <li><a class="dropdown-item" href="/src/pages/search/searchPage.html">Search</a></li>
                 </ul>
+                <svg class="heartFill" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                </svg>
             </div>
         </div>
     </div>

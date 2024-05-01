@@ -97,10 +97,10 @@
     <br>
 
     
-    <div class="container-fluid border border-2 col-12" id="outline">
+    <div class="container-fluid col-12 outline">
         <div class="row">
+            <!-- Search Form -->
             <form action="searchPage.php" method="POST" id="search">
-
                 <div class="row">
                     <div class="col-12 order-lg-1 searchContainer">
 
@@ -116,7 +116,7 @@
 
                         <div class="row inputField">
                             <div class="col-12">
-                                <!-- Modify full_name input field -->
+                                <!-- Name Search -->
                                 <label for="full_name" class="inputLabelText">Name:</label><br>
                                 <input class="input" type="text" id="full_name" name="full_name" autocomplete="off">
                                 <div id="full_name-suggestions" style="display: none;"></div>
@@ -138,6 +138,7 @@
                         </div>
 
                         <div class="row rangeInputField">
+                            <!-- Age Range Filter -->
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="min_age" class="inputLabelText">Minimum
                                     Age: <span id="min_age_value">18</span></label><br>
@@ -161,6 +162,7 @@
 
 
                         <div class="row inputField">
+                            <!-- Gender Filter -->
                             <div class="col-12">
                                 <label for="gender" class="inputLabelText">Gender:</label><br>
                                 <select id="gender" name="gender" class="optionDropdown">
@@ -174,6 +176,7 @@
 
 
                         <div class="row inputField">
+                            <!-- Looking For Filter -->
                             <div class="col-12">
                                 <label for="looking_for" class="inputLabelText">Looking For:</label><br>
                                 <select id="looking_for" name="looking_for" class="optionDropdown">
@@ -186,6 +189,7 @@
 
 
                         <div class="row inputField">
+                            <!-- College Year Filter -->
                             <div class="col-12">
                                 <label for="college_year" class="inputLabelText">College Year:</label><br>
                                 <select id="college_year" name="college_year" class="optionDropdown">
@@ -200,7 +204,8 @@
                 </div>
 
                 <div class="row inputField">
-
+                    <!-- Hobbies Filter -->
+                    <label for="hobbies" class="inputLabelText">Hobbies:</label><br>
                     <select data-placeholder="Begin typing a hobby to filter..." multiple class="chosen-select" name="hobbies[]" id="hobbies">
                         <option value=""></option>
                         <option value="Golf">Golf</option>

@@ -22,7 +22,7 @@ body {
   border-bottom: 0.5px solid #d3d3d3;
 }
 
-.line {
+.img-divider {
   width: 0.5px;
   height: 80px;
   background-color: #d3d3d3;
@@ -40,7 +40,7 @@ body {
   max-width: 500px;
 }
 
-#explorebutton {
+.explore-btn {
   background-color: white;
   color: #abc99d;
   border: 3px solid #abc99d;
@@ -54,12 +54,12 @@ body {
   border-radius: 0%;
 }
 
-#explorebutton:hover {
+.explore-btn:hover {
   background-color: #abc99d;
   color: white;
 }
 
-#logoutbutton {
+.logout-btn {
   background-color: #abc99d;
   color: white;
   border: 3px solid #abc99d;
@@ -73,13 +73,12 @@ body {
   border-radius: 0%;
 }
 
-#logoutbutton:hover {
+.logout-btn:hover {
   background-color: white;
   color: #abc99d;
 }
 
-
-#iconbutton {
+.icon-btn {
   background-color: white;
   color: #abc99d;
   padding: 10px 20px;
@@ -106,7 +105,7 @@ body {
 
 #dropdown-item-profile {
   font-weight: bold;
-  color:#abc99d;
+  color: #abc99d;
   font-size: 15px;
   text-decoration: none;
   white-space: normal;
@@ -166,61 +165,32 @@ body {
   font-size: 18px;
 }
 
-#outline {
-  border-color: #4d4d4d !important;
+.heartFill {
+  color: #e6d1be;
+  padding: 3px;
+}
+
+.container-fluid {
+  position: relative;
+}
+
+.outline {
+  border: 2px solid #4d4d4d;
   position: relative;
   width: 80vw;
   margin: 0 auto;
 }
 
-.saveChangesBtn {
-  width: 65%;
-  font-size: 18px;
-  background-color: #abc99d;
-  border-color: #abc99d;
+.information-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.saveChangesBtn:hover {
-  background-color: #97b189;
-  border-color: #97b189;
+.inputField {
+  padding: 5px;
 }
 
-.imgContainer {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.profilePicture {
-  padding-bottom: 20px;
-  padding-top: 20px;
-  max-width: 65%;
-}
-
-.fileUploadBtn {
-  display: inline-block;
-  width: 65%;
-  font-size: 18px;
-  padding: 8px 8px;
-  background-color: #e6d1be;
-  color: #fff;
-  border: none;
-  border-radius: 5.5px;
-  cursor: pointer;
-}
-
-
-.fileUploadBtn:hover {
-  background-color: #dabb9e;
-}
-
-#profile_pic {
-  display: none;
-}
-
-.inputLabelText {
+.inputLabel {
   font-weight: bold;
 }
 
@@ -252,15 +222,6 @@ body {
   color: #fff;
 }
 
-
-.optionDropdown:after {
-  content: '\25BC';
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-}
-
 .textInput {
   width: 100%;
   padding: 8px;
@@ -271,23 +232,10 @@ body {
   border: none;
 }
 
-.textInput[readonly] {
-  background-color: #f0f0f0;
-}
-
 .textInput:focus {
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
-}
-
-.info-box {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.inputField {
-  padding: 5px;
 }
 
 .chosen-select {
@@ -298,13 +246,6 @@ body {
   font-size: 16px;
   box-sizing: border-box;
   border: none;
-}
-
-footer {
-  background-color: #e6d1be;
-  text-align: center;
-  padding: 10px;
-  margin-top: auto;
 }
 
 /* Overriding select2 css */
@@ -363,7 +304,7 @@ footer {
 }
 
 .chosen-container-active .chosen-choices {
- border: 1px solid #e6d1be;
+  border: 1px solid #e6d1be;
 }
 
 .chosen-container-multi .chosen-choices li.search-choice {
@@ -372,14 +313,56 @@ footer {
   color: #fff;
 }
 
+.img-box {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.saveChangesBtn {
+  width: 65%;
+  font-size: 18px;
+  background-color: #abc99d;
+  border-color: #abc99d;
+}
+
+.saveChangesBtn:hover {
+  background-color: #97b189;
+  border-color: #97b189;
+}
+
+.profilePicture {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  max-width: 65%;
+}
+
+.fileUploadBtn {
+  display: inline-block;
+  width: 65%;
+  font-size: 18px;
+  padding: 8px 8px;
+  background-color: #e6d1be;
+  color: #fff;
+  border: none;
+  border-radius: 5.5px;
+  cursor: pointer;
+}
+
+.fileUploadBtn:hover {
+  background-color: #dabb9e;
+}
+
+#profile_pic {
+  display: none;
+}
+
 .error-message {
   color: red;
   font-size: 14px;
   margin-top: 5px;
-}
-
-.container-fluid {
-  position: relative;
 }
 
 .error-message {
@@ -387,4 +370,11 @@ footer {
   bottom: -20px;
   left: 0;
   width: 100%;
+}
+
+footer {
+  background-color: #e6d1be;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
 }
