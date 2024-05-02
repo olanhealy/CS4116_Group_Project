@@ -114,6 +114,7 @@ if (isset($_SESSION['targetId'])) {
             $hobbies = getHobbies($targetId);
         }
 
+        // Add Footer
         include "../footer.php";
 
         header('Location: usersListAdmin.php');

@@ -1,3 +1,5 @@
+/* Styles the editProfileAdmin.html file */
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -51,6 +53,7 @@ body {
   color: #fff;
 }
 
+/* Header */
 .navbar {
   display: flex;
   align-items: center;
@@ -180,6 +183,7 @@ body {
   text-align: center;
 }
 
+/* Main Container */
 #outline {
   border-color: #4d4d4d !important;
   position: relative;
@@ -230,6 +234,7 @@ body {
   max-width: 65%;
 }
 
+/* Change User Profile Picture */
 .fileUploadBtn {
   display: inline-block;
   width: 65%;
@@ -328,7 +333,7 @@ body {
   margin-bottom: 5px;
 }
 
-
+/* User Details */
 #first_name{
   width: 90%;
   height: 30px;
@@ -433,5 +438,5 @@ footer {
 }
 
 .included-content {
-  margin-right: 20px; /* Adjust spacing between elements */
+  margin-right: 20px;
 }

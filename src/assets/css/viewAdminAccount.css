@@ -1,7 +1,6 @@
+/* Styles the viewAdminAccount.html file */
 
-/* This file styles the viewAdminAccount.html file */
-
-
+/* Header */
 .navbar {
     display: flex;
     align-items: center;
@@ -110,7 +109,7 @@
     font-size: 15px;
 }
 
-
+/* Main Container */
 #textContainer {
     height: 40vh; 
     position: relative; 
