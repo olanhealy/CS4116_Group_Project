@@ -1,9 +1,12 @@
+/* Styles the usersListAdmin.php file */
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+/* Header */
 .navbar {
     display: flex;
     align-items: center;
@@ -112,7 +115,7 @@ body {
     font-size: 15px;
 }
 
-
+/* Main Container */
 .container-fluid {
     flex: 1;
     display: flex;
@@ -120,6 +123,7 @@ body {
     align-items: center;
 }
 
+/* Bootstrap Table */
 .table-custom {
     text-align: center;
     background-color: #f8f9fa;
