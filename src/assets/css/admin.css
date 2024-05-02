@@ -1,9 +1,12 @@
+/* Styles the admin.html file */
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+/* Header */
 .navbar {
     display: flex;
     align-items: center;
@@ -112,14 +115,13 @@ body {
     font-size: 15px;
 }
 
-
+/* Main Container */
 .container-fluid {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 
 #header {
     font-size: 40px;

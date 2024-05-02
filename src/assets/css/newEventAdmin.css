@@ -1,9 +1,12 @@
+/* Styles the newEvent.php file */
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+/* Header */
 .navbar {
     display: flex;
     align-items: center;
@@ -112,6 +115,7 @@ body {
     font-size: 15px;
 }
 
+/* Main Container */
 .container-fluid {
     flex: 1;
     display: flex;
@@ -123,6 +127,8 @@ body {
     font-size: 30px;
 }
 
+
+/* Save Changes Button */
 .saveChangesBtn {
   width: 65%;
   font-size: 18px;
@@ -135,7 +141,7 @@ body {
   border-color: #97b189;
 }
 
-
+/* Upload New File Button */
 .fileUploadBtn {
   display: inline-block;
   width: 65%;
@@ -148,15 +154,14 @@ body {
   cursor: pointer;
 }
 
-
 .fileUploadBtn:hover {
   background-color: #dabb9e;
 }
 
+/* Hide default html choose file button */
 #image {
   display: none;
 }
-
 
 
 footer {

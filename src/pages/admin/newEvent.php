@@ -1,3 +1,5 @@
+<!-- Admin Change Current Event Page -->
+
 <?php
 include "../helpers/db_connection.php";
 include "adminHelperFunctions.php";
@@ -101,7 +103,8 @@ if(isset($_POST['submit'])){
         <div class="container-l" style="text-align: center;">
             <h1 id="header">Change Current Event on Home Page</h1>
             <br><br>
-
+            
+            <!-- Form -->
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
                 <!-- Choose File -->
                 <label for="image" class="fileUploadBtn">Choose File</label>
@@ -111,6 +114,7 @@ if(isset($_POST['submit'])){
                 <button type="submit" name="submit" class="btn btn-secondary mt-2 mb-4 saveChangesBtn">Upload Image</button>
             </form>
 
+            <!-- Output confirmation or error message -->
             <p><?php echo $message; ?></p>
         </div>
     </div>
