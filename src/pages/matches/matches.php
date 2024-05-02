@@ -1,3 +1,5 @@
+<!-- Matches Page -->
+
 <?php
 include "../helpers/db_connection.php";
 require_once '../helpers/helperFunctions.php';
@@ -12,22 +14,20 @@ if (isset($_POST['action']) && $_POST['action'] === 'removeMatch') {
     removeMatch($_POST['userId'], $_POST['targetId']);
 }
 
-
-
-//sets up the header and dropdown
+// Header & Dropdown Menu
 setupHeader();
 
-
-// Get the user's next matches
+// Get the users next matches
 $matches = getNextMatches($userId);
 
 if ($matches === null) {
     exit();
 }
+
 // Include match.html file
 include "match.html";
 
-//set up the footer
+//Footer
 setupFooter();
 
 ?>

@@ -1,18 +1,25 @@
+<!-- Matches Page -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Matches</title>
     <link rel="icon" href="/ulSinglesSymbolTransparent.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Main Stylesheet -->
     <link rel="stylesheet" type="text/css" href="../../assets/css/match.css">
+
 </head>
 <body>
     
-
 <!-- Bootstrap Carousel -->
 <div id="matches" class="carousel slide" data-bs-ride="carousel">
   <!-- Bottom Indicators -->
   <div class="carousel-indicators">
+    <!-- Displays an indicator for each match present and doesn't display if there's no matches available -->
       <?php for ($i = 0; $i < count($matches); $i++) : ?>
           <button type="button" id="indicators" data-bs-target="#matches" data-bs-slide-to="<?php echo $i; ?>" <?php echo $i === 0 ? 'class="active"' : ''; ?> aria-label="Slide <?php echo $i + 1; ?>"></button>
       <?php endfor; ?>
@@ -20,6 +27,7 @@
 
   <!-- Main Container -->
   <div class="carousel-inner">
+    <!-- Creates a new carousel slide for each new match -->
       <?php foreach ($matches as $index => $userData) : ?>
           <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
               <div class="container-fluid">
@@ -27,6 +35,7 @@
                       <div class="col-md-3 col-lg-3 col-sm-8 mb-3 card-container">
                         <!-- User Card -->
                           <div class="card border">
+                            <!-- Profile Picture -->
                               <img src="/<?php echo $userData['profilePicture']; ?>" class="card-img-top" alt="Profile Picture">
                               <div class="card-body">
                                   <h5 class="card-title">
@@ -70,7 +79,7 @@
       <?php endforeach; ?>
   </div>
 
-  <!-- Previous & Next Buttons-->
+  <!-- Previous & Next Slide Buttons -->
   <!-- Don't display buttons when matches = 0 -->
   <?php if(count($matches) > 1): ?> 
   <button class="carousel-control-prev" type="button" data-bs-target="#matches" data-bs-slide="prev">
@@ -97,3 +106,4 @@
 </script>
 
 </body>
+</html>
