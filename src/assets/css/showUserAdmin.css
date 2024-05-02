@@ -1,6 +1,6 @@
+/* Styles the showUserAdmin.php file */
 
-/* Buttons */
-
+/* Container to hold Buttons */
 #linkContainer {
   text-align: center;
   margin-top: 10px;
@@ -16,12 +16,12 @@
 }
 
 #makeadminButton{
-    background-color:#abc99d;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    margin-right: 10px;
+  background-color:#abc99d;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-right: 10px;
 }
 
 #banUser{
@@ -43,12 +43,12 @@
 }
 
 #deleteUserButton{
-    background-color:#abc99d;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    margin-left: 10px;
+  background-color:#abc99d;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 10px;
 }
 
 #unbanContainer {
@@ -74,6 +74,7 @@
   text-align: center;
 }
 
+/* Media queries to enhance responsiveness */
 @media (max-width: 520px) {
   #makeadminButton {
     font-size: 13px;

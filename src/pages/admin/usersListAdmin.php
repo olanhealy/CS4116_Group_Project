@@ -1,3 +1,5 @@
+<!-- Admin User List Page -->
+
 <?php
 include "../helpers/db_connection.php";
 include "adminHelperFunctions.php";
@@ -63,11 +65,12 @@ adminAccessCheck();
     </nav>
     <!-- End of Navbar -->
 
-    <!-- User Table -->
+    <!-- Main Container -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
 
+                <!-- Bootstrap Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-custom">
 
